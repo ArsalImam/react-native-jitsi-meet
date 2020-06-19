@@ -6,14 +6,12 @@
     "name": "Sébastien Krafft",
     "email": "skrafft@gmail.com"
   },
-  "contributors": [
-  ],
+  "contributors": [],
   "homepage": "https://github.com/skrafft/react-native-jitsi-meet",
   "bugs": {
     "url": "https://github.com/skrafft/react-native-jitsi-meet/issues"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "keywords": [
     "jitsi",
     "jitsi meet",

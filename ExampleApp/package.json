@@ -1,5 +1,5 @@
 {
-  "name": "Exemple",
+  "name": "telmed",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -12,7 +12,8 @@
   "dependencies": {
     "react": "16.11.0",
     "react-native": "0.62.2",
-    "react-native-jitsi-meet": "^2.1.1"
+    "react-native-jitsi-meet": "^2.1.1",
+    "react-native-splash-screen": "^3.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
@@ -23,6 +24,11 @@
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.58.0",
     "react-test-renderer": "16.11.0"
+  },
+  "rnpm": {
+    "assets": [
+      "./src/assets/fonts"
+    ]
   },
   "jest": {
     "preset": "react-native"
