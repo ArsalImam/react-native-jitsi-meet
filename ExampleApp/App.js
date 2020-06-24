@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 // import JitsiMeet, { JitsiMeetView } from 'react-native-jitsi-meet';
+import Routes from "./src/Routes";
+import { View } from "react-native";
 import SplashScreen from 'react-native-splash-screen'
-// SplashScreen.hide();
 
 class App extends React.Component {
 
@@ -14,6 +15,7 @@ class App extends React.Component {
 
   render() {
     return (
+      // <View></View>
       <Routes />
     )
   };

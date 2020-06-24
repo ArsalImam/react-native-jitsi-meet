@@ -18,19 +18,21 @@ import Patients from './screens/patient/Patients';
 import AppointmentRoom from './screens/AppointmentRoom';
 import Sample from './screens/patient/Sample';
 
-class Routes extends React.Component {
+const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
+
+export default class Routes extends React.Component {
+
+  _getDrawerComponent() {
+    return (
+      <Drawer.Navigator drawerContent={props => <MenuSlider {...props} />}>
+        <Drawer.Screen name="Dashboard" component={Dashboard} />
+      </Drawer.Navigator>
+    );
+  }
+
+
   render() {
-    const Drawer = createDrawerNavigator();
-    const Stack = createStackNavigator();
-
-    function MyDrawer() {
-      return (
-        <Drawer.Navigator drawerContent={props => <MenuSlider {...props} />}>
-          <Drawer.Screen name="Dashboard" component={Dashboard} />
-        </Drawer.Navigator>
-      );
-    }
-
     return (
       <NavigationContainer>
         <Stack.Navigator>
@@ -41,7 +43,7 @@ class Routes extends React.Component {
 
           <Stack.Screen
             name="MyDrawer"
-            component={MyDrawer}
+            component={this._getDrawerComponent}
             options={{ headerShown: false }} />
 
           <Stack.Screen
@@ -73,7 +75,7 @@ class Routes extends React.Component {
             component={MadicationAdd}
             options={{ headerShown: false }} />
 
-          
+
           <Stack.Screen
             name="MedicalCondition"
             component={MedicalCondition}
@@ -109,5 +111,3 @@ class Routes extends React.Component {
     );
   }
 }
-
-export default Routes;

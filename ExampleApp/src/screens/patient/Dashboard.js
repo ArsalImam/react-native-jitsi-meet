@@ -5,7 +5,7 @@ import { FlatGrid } from 'react-native-super-grid'
 import { CommonStyles } from '../../CommonStyles';
 import { AsyncStorage } from 'react-native';
 import { Configs } from '../../Configs';
-
+import Api from '../../Api';
 
 export default class Dashboard extends React.Component {
 
@@ -18,35 +18,8 @@ export default class Dashboard extends React.Component {
         this.arrayholder = [];
     }
     componentDidMount() {
-        console.log('dashboard');
-        this._retrieveData().then((res) => {
-            console.log(JSON.parse(res));
-        })
-
-        fetch(`${Configs.baseUrl}Clients`)
-            .then(response => response.json())
-            .then((responseJson) => {
-                this.setState({
-                    loading: false,
-                    data: responseJson
-                })
-            })
-            .catch(error => console.log(error)) //to catch the errors if any
     }
 
-
-    _retrieveData = async () => {
-        try {
-            const value = await AsyncStorage.getItem('userObject');
-            if (value !== null) {
-                // We have data!!
-
-                return value;
-            }
-        } catch (error) {
-            // Error retrieving data
-        }
-    };
 
     render() {
 
@@ -105,7 +78,7 @@ export default class Dashboard extends React.Component {
                                                     </Text>
                                                 </View>
                                                 <View style={[styles.gContainer, { alignItems: 'flex-end', alignSelf: 'flex-end', justifyContent: 'center', marginRight: 5, paddingRight: 13 }]}>
-                                                    <Text style={{ fontSize: 14, color: '#335a07', lineHeight: 30}}>
+                                                    <Text style={{ fontSize: 14, color: '#335a07', lineHeight: 30 }}>
                                                         <Text style={CommonStyles.DINProLight, { fontSize: 12, color: '#335a07' }}>{`Next Appointment\n          In `}</Text>
                                                         <Text style={CommonStyles.DINProRegular, { fontSize: 17, color: '#000' }}>15 min</Text>
                                                         <Text style={CommonStyles.DINProLight, { fontSize: 12, color: '#335a07' }}>{`\n                      Time\n`}</Text>
@@ -150,15 +123,11 @@ export default class Dashboard extends React.Component {
 
                                 </ImageBackground>
                             </View>
-
-
                             <TouchableOpacity style={styles.ButtonStyle}
-                                onPress={() => this.props.navigation.navigate('AppointmentRoom')}
-                            >
-                                <Text style={[CommonStyles.DINProMedium, { color: '#fff', fontSize: 15 }]}>CREATE APPOINTMENT</Text>
+                                onPress={() => this.goToPatientsRooms()}>
+                                <Text style={[CommonStyles.DINProMedium, { color: '#fff', fontSize: 15 }]}>CONSULTATION ROOM</Text>
                             </TouchableOpacity>
                         </View>
-
                     </View>
                     <View
                         style={[
@@ -180,6 +149,23 @@ export default class Dashboard extends React.Component {
                 </ImageBackground>
             </View>
         );
+    }
+
+    goToPatientsRooms() {
+        // appointments
+        var _navigateToRoom = (appointments) => {
+            if (appointments.length == 0) {
+                alert('No appointments has been scheduled for your patient');
+                return;
+            }
+            var appointmentId = appointments.reverse()[0].id;
+            this.props.navigation.navigate('AppointmentRoom', { appointmentId });
+        };
+        
+        Api.instance()
+            .getMyAppointments()
+            .then(appointments => _navigateToRoom(appointments))
+            .catch(err => alert(err))
     }
 }
 

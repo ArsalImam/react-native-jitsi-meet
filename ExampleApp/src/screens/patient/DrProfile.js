@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, ImageBackground, StatusBar, Image } from 'react
 import { FlatGrid } from 'react-native-super-grid';
 import { ListItem, CheckBox, Divider } from 'react-native-elements';
 import { CommonStyles } from '../../CommonStyles';
-import { color } from 'react-native-reanimated';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class DrProfile extends Component {

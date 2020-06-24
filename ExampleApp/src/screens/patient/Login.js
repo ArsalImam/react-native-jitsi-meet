@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Image, ImageBackground, TextInput, StatusBar } from 'react-native';
 import CommonStyles from '../../CommonStyles';
-import { Item, Label, Input, Content, Container, } from 'native-base';
+import { Item, Input, Container, } from 'native-base';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
-import { Configs } from '../../Configs';
-import AsyncStorage from '@react-native-community/async-storage';
+import Api from '../../Api';
 
 class Login extends Component {
 
@@ -15,40 +14,18 @@ class Login extends Component {
     }
 
     componentDidMount() {
-        AsyncStorage.getItem('userObject').then(data => {
-            if (data) {
-                this.props.navigation.replace('MyDrawer');
-            }
-        });
     }
 
     _submitForm = () => {
-        const { email, password } = this.state;
-
-        fetch(`${Configs.baseUrl}Clients/login?include=user`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, password })
-        })
-            .then(response => response.json())
-            .then((responseJson) => {
-                this._storeData(responseJson);
-                this.props.navigation.replace('MyDrawer')
-            }).catch(e => { console.log(JSON.stringify(e)) })
-    };
-
-    _storeData = async (res) => {
-        try {
-            await AsyncStorage.setItem(
-                'userObject',
-                JSON.stringify(res)
-            );
-        } catch (error) {
-            // Error saving data
-            console.log(JSON.stringify(e))
-        }
+        Api.instance()
+            .login(this.state.email, this.state.password)
+            .then(data => {
+                this.props.navigation.navigate('MyDrawer', {user: data.user})
+            })
+            .catch(err => {
+                console.warn(err);
+                alert(err);
+            });
     };
 
     render() {
@@ -126,9 +103,6 @@ class Login extends Component {
                         </View>
                     </ImageBackground>
                 </KeyboardAwareScrollView>
-
-
-
                 <View style={styles.buttonStyle}>
                     <TouchableOpacity style={{
                         width: '50%',
@@ -183,7 +157,7 @@ const styles = StyleSheet.create({
         },
     },
     buttonStyle: {
-       // position: 'absolute',
+        // position: 'absolute',
         right: 0,
         bottom: 0,
         left: 0,
