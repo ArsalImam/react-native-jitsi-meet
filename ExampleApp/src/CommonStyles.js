@@ -1,6 +1,9 @@
 import {StyleSheet} from 'react-native';
 
-export const CommonStyles = StyleSheet.create({
+const CommonStyles = StyleSheet.create ({
+  appRedColor: {
+    color: '#FF0000',
+  },
   container: {
     flex: 1,
   },
@@ -13,7 +16,6 @@ export const CommonStyles = StyleSheet.create({
   },
   topBarHeight: {
     // height: 60,
-    flex: 1,
   },
   linearGradientBottomToTop: {
     position: 'absolute',
@@ -21,6 +23,7 @@ export const CommonStyles = StyleSheet.create({
     width: '100%',
     bottom: 0,
     left: 0,
+    flex: 1,
     opacity: 0.7,
   },
   fitToParent: {
@@ -39,6 +42,11 @@ export const CommonStyles = StyleSheet.create({
     left: 0,
     right: 0,
   },
+  fitToBottom: {
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
   crossIcon: {
     position: 'absolute',
     top: 12,
@@ -53,8 +61,6 @@ export const CommonStyles = StyleSheet.create({
     marginRight: 3,
   },
   backgroundImage: {
-    height: '100%',
-    width: '100%',
     resizeMode: 'cover',
   },
   linearGradient: {
@@ -80,7 +86,6 @@ export const CommonStyles = StyleSheet.create({
     },
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
-
     elevation: 6,
   },
   buttonCenterText: {
@@ -89,6 +94,9 @@ export const CommonStyles = StyleSheet.create({
   },
   margin: {
     margin: 10,
+  },
+  padding: {
+    padding: 10,
   },
   buttonStyle: {
     shadowOffset: {height: 0, width: 0},
@@ -115,17 +123,23 @@ export const CommonStyles = StyleSheet.create({
   ml10: {
     marginLeft: 20,
   },
+  mll10: {
+    marginLeft: 10,
+  },
   mr10: {
     marginRight: 20,
   },
   mt10: {
     marginTop: 20,
   },
+  m10: {
+    marginTop: 20,
+  },
   mtt10: {
     marginTop: 10,
   },
   textSizeLarge: {
-    fontSize: 21,
+    fontSize: 22,
   },
   textSizeIcon: {
     fontSize: 26,
@@ -136,46 +150,31 @@ export const CommonStyles = StyleSheet.create({
   textSizeAverage: {
     fontSize: 14,
   },
+  loginItemStyle: {
+    borderColor: '#C5D4E8',
+    alignSelf: 'center',
+    borderRadius: 6,
+    borderWidth: 1,
+    shadowColor: '#8BB3E9',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+  },
   textSizeMedium: {
     fontSize: 18,
   },
   textSizeSmall: {
     fontSize: 12,
   },
-  backImage: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'contain'
+  fontMedium: {
+    fontFamily: 'DINPro-Medium',
   },
-  DINProLight: {
-    fontFamily: 'DINPro-Light'
-  },
-  DINProBold: {
-    fontFamily: 'DINPro-Bold'
-  },
-  DINProRegular: {
-    fontFamily: 'DINPro-Regular'
-  },
-  DINProMedium: {
-    fontFamily: 'DINPro-Medium'
-  },
-  DINAltBold: {
+  fontRegular: {
     fontFamily: 'DINPro-Regular',
-    fontWeight: 'normal'
-    
   },
-  SFProLight: {
-    fontFamily: 'SFProText-Light'
+  fontBold: {
+    fontFamily: 'DINPro-Bold',
   },
-  SFProSemiBold: {
-    fontFamily: 'SFProText-Bold'
-  },
-  SFProBold: {
-    fontFamily: 'SFProText-Semibold'
-  },
-
-  
-
-
 });
 export default CommonStyles;

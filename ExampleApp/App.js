@@ -1,75 +1,37 @@
-import React, { useEffect } from 'react';
-// import JitsiMeet, { JitsiMeetView } from 'react-native-jitsi-meet';
-import Routes from "./src/Routes";
-import { View } from "react-native";
-import SplashScreen from 'react-native-splash-screen'
+/**
+
+ * @format
+ * @flow
+ */
+import 'react-native-gesture-handler';
+import SplashScreen from 'react-native-splash-screen';
+import React, {Component} from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {Root} from 'native-base';
+import Routes from './src/Routes';
+import CommonStyles from './src/CommonStyles';
+import {View, StyleSheet, StatusBar, SafeAreaView} from 'react-native';
 
 class App extends React.Component {
 
-  componentDidMount() {
+  componentDidMount () {
     // do stuff while splash screen is shown
     // After having done stuff (such as async tasks) hide the splash screen
-    SplashScreen.hide();
+    SplashScreen.hide ();
   }
 
-
-  render() {
+  render () {
     return (
-      // <View></View>
-      <Routes />
-    )
-  };
+      <Root>
+        <StatusBar barStyle="dark-content" />
+        <SafeAreaView style={CommonStyles.container}>
+          <NavigationContainer>
+            <Routes />
+          </NavigationContainer>
+        </SafeAreaView>
+      </Root>
+    );
+  }
 }
 
 export default App;
-
-
-// function App() {
-
-//   useEffect(() => {
-//     setTimeout(() => {
-//       const url = 'https://conference.evotelemedicine.live/5ee4aa17d1c97362026226c5';
-//       const userInfo = {
-//         displayName: 'User',
-//         email: 'user@example.com',
-//         avatar: 'https:/gravatar.com/avatar/abc123',
-//       };
-//       JitsiMeet.call(url, userInfo);
-//       /* Você também pode usar o JitsiMeet.audioCall (url) para chamadas apenas de áudio */
-//       /* Você pode terminar programaticamente a chamada com JitsiMeet.endCall () */
-//     }, 1000);
-//   }, [])
-
-//   useEffect(() => {
-//     return () => {
-//       JitsiMeet.endCall();
-//     };
-//   });
-
-//   function onConferenceTerminated(nativeEvent) {
-//     /* Conference terminated event */
-//     console.log(nativeEvent)
-//   }
-
-//   function onConferenceJoined(nativeEvent) {
-//     /* Conference joined event */
-//     console.log(nativeEvent)
-//   }
-
-//   function onConferenceWillJoin(nativeEvent) {
-//     /* Conference will join event */
-//     console.log(nativeEvent)
-//   }
-//   return (
-//     <JitsiMeetView
-//       onConferenceTerminated={e => onConferenceTerminated(e)}
-//       onConferenceJoined={e => onConferenceJoined(e)}
-//       onConferenceWillJoin={e => onConferenceWillJoin(e)}
-//       style={{
-//         flex: 1,
-//         height: '100%',
-//         width: '100%',
-//       }}
-//     />
-//   )
-// }

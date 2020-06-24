@@ -5,6 +5,7 @@ import { FlatGrid } from 'react-native-super-grid'
 import { CommonStyles } from '../../CommonStyles';
 import { AsyncStorage } from 'react-native';
 import { Configs } from '../../Configs';
+import {ViewUtils} from '../../Utils'
 import Api from '../../Api';
 
 export default class Dashboard extends React.Component {
@@ -155,7 +156,7 @@ export default class Dashboard extends React.Component {
         // appointments
         var _navigateToRoom = (appointments) => {
             if (appointments.length == 0) {
-                alert('No appointments has been scheduled for your patient');
+                ViewUtils.showToast('No appointments has been scheduled for your patient');
                 return;
             }
             var appointmentId = appointments.reverse()[0].id;
@@ -165,7 +166,7 @@ export default class Dashboard extends React.Component {
         Api.instance()
             .getMyAppointments()
             .then(appointments => _navigateToRoom(appointments))
-            .catch(err => alert(err))
+            .catch(err => ViewUtils.showToast(err))
     }
 }
 
