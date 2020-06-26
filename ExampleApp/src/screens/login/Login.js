@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Text,
   View,
@@ -8,48 +8,65 @@ import {
   ImageBackground,
   TextInput,
   StatusBar,
+  ActivityIndicator,
 } from 'react-native';
 import CommonStyles from '../../CommonStyles';
-import {Item, Input, Container} from 'native-base';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import { Item, Input, Container } from 'native-base';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import Api from '../../Api';
-import {ViewUtils} from '../../Utils';
+import { ViewUtils } from '../../Utils';
+import Loader from '../../components/Loader';
 
 class Login extends Component {
-  state = {email: '', password: ''};
+  state = { email: '', password: '', showLoader: false };
 
-  constructor () {
-    super ();
+  constructor(props) {
+    super(props);
+    this._submitForm = this._submitForm.bind(this)
+
   }
 
-  componentDidMount () {}
+  showLoader = () => { this.setState({ showLoader: true }); };
+  //showLoader = () => { this.setState({ showLoader: true }); };
+
+  componentDidMount() { }
 
   _submitForm = () => {
-    Api.instance ()
-      .login (this.state.email, this.state.password)
-      .then (data => {
-        this.props.navigation.navigate ('MyDrawer', {user: data.user});
+    this.showLoader()
+
+    Api.instance()
+      .login(this.state.email, this.state.password)
+      .then(data => {
+        this.props.navigation.navigate('MyDrawer', { user: data.user });
+
       })
-      .catch (err => {
-        ViewUtils.showToast (err);
+      .catch(err => {
+        ViewUtils.showToast(err);
       })
       .finally(() => {
-        //hide loader
+        this.setState({ showLoader: false })
       });
   };
 
-  render () {
+  render() {
     return (
       <View style={[CommonStyles.container]}>
+
+
+
+        {/* {this.state.showLoader ? <View style={[CommonStyles.loaderContainer]} >
+          <ActivityIndicator size="large" style={[CommonStyles.loaderIndicatorStyle]} />
+        </View> : ( */}
+
         <ImageBackground
           style={[CommonStyles.container, CommonStyles.backgroundImage]}
-          source={require ('../../assets/img/loginbg.png')}
+          source={require('../../assets/img/loginbg.png')}
         >
           <KeyboardAwareScrollView style={CommonStyles.container}>
             <View
               style={[
                 CommonStyles.margin,
-                {paddingTop: 30, paddingHorizontal: 10},
+                { paddingTop: 30, paddingHorizontal: 10 },
               ]}
             >
               <Text
@@ -67,7 +84,7 @@ class Login extends Component {
                 style={[
                   CommonStyles.textSizeAverage,
                   CommonStyles.textColorWhite,
-                  {marginTop: 5},
+                  { marginTop: 5 },
                 ]}
               >
                 Please enter your details to get the latest
@@ -77,14 +94,14 @@ class Login extends Component {
                 your doctorrightaway !!!
               </Text>
               <Image
-                style={[CommonStyles.mt10, {width: 96, height: 123}]}
-                source={require ('../../assets/img/layer_2.png')}
+                style={[CommonStyles.mt10, { width: 96, height: 123 }]}
+                source={require('../../assets/img/layer_2.png')}
               />
               <View style={[CommonStyles.mt10]}>
                 <Item regular style={CommonStyles.loginItemStyle}>
                   <Input
                     value={this.state.email}
-                    onChangeText={username => this.setState ({email: username})}
+                    onChangeText={username => this.setState({ email: username })}
                     name="username"
                     placeholder={'Email Address'}
                     placeholderTextColor="#FFF"
@@ -106,7 +123,7 @@ class Login extends Component {
                 >
                   <Input
                     value={this.state.password}
-                    onChangeText={password => this.setState ({password})}
+                    onChangeText={password => this.setState({ password })}
                     secureTextEntry
                     autoCapitalize="none"
                     returnKeyType="done"
@@ -129,6 +146,7 @@ class Login extends Component {
           </KeyboardAwareScrollView>
         </ImageBackground>
 
+
         <View
           style={[
             CommonStyles.fitToBottom,
@@ -144,7 +162,7 @@ class Login extends Component {
             style={[
               CommonStyles.container,
               CommonStyles.centerText,
-              {borderRightWidth: 0.5, borderColor: '#cfd2d6'},
+              { borderRightWidth: 0.5, borderColor: '#cfd2d6' },
             ]}
             onPress={this._submitForm}
           >
@@ -155,7 +173,7 @@ class Login extends Component {
                 CommonStyles.centerText,
                 CommonStyles.margin,
                 CommonStyles.padding,
-                {opacity: 0.5},
+                { opacity: 0.5 },
               ]}
             >
               Login
@@ -164,7 +182,7 @@ class Login extends Component {
 
           <TouchableOpacity
             style={[CommonStyles.container, CommonStyles.centerText]}
-            onPress={this._submitForm}
+          //  onPress={() => { this.props.navigation.navigate('MyDrawer') }}
           >
             <Text
               style={[
@@ -173,13 +191,23 @@ class Login extends Component {
                 CommonStyles.centerText,
                 CommonStyles.margin,
                 CommonStyles.padding,
-                {opacity: 0.5},
+                { opacity: 0.5 },
               ]}
             >
               Create Account
             </Text>
+
           </TouchableOpacity>
         </View>
+
+
+        <Loader
+          loading={this.state.showLoader} />
+
+        {/* <View style={{ position: 'absolute', top: "50%", right: 0, left: 0}}>
+          <ActivityIndicator  animating={this.state.showLoader} size="large" color="#fff" />
+        </View> */}
+
       </View>
     );
   }

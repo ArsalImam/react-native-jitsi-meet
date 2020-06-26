@@ -1,156 +1,14 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Image, ImageBackground, ScrollView, StatusBar, Button, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { FlatGrid } from 'react-native-super-grid'
-import { CommonStyles } from '../../CommonStyles';
+import CommonStyles from '../../CommonStyles';
 import { AsyncStorage } from 'react-native';
 import { Configs } from '../../Configs';
-import {ViewUtils} from '../../Utils'
+import { ViewUtils } from '../../Utils';
 import Api from '../../Api';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 
-export default class Dashboard extends React.Component {
-
-    constructor() {
-        super();
-        this.state = {
-            data: [],
-            isLoading: true,
-        };
-        this.arrayholder = [];
-    }
-    componentDidMount() {
-    }
-
-
-    render() {
-
-        const { data, isLoading } = this.state;
-
-        const main = [
-            { name: 'APPOINTMENTS', code: '#9ed75f', number: '10', icon: 'calendar', route: '' }
-        ];
-        const items = [
-            { name: 'TOTAL CONSULTATIONS', number: '34', code: '#00000000', icon: 'bars', route: 'Patients' },
-            { name: 'VIEW DOCTORS PROFILE', number: '98', code: '#00000000', icon: 'bars', route: 'DrProfile' },
-        ];
-        return (
-            <View style={[CommonStyles.container, { justifyContent: 'space-between' }]}>
-                <ImageBackground style={CommonStyles.backgroundImage} source={require('../../assets/drawable-xhdpi/background.png')}>
-                    <StatusBar translucent backgroundColor="transparent" barStyle={'dark-content'} />
-                    <View style={styles.myView1}>
-                        <View style={styles.View1}>
-                            <View style={styles.imageView}>
-                                <Image style={{ width: '100%', height: '100%', resizeMode: 'contain' }} source={require('../../assets/drawable-xxxhdpi/Rectangle.png')}></Image>
-                            </View>
-                            <View style={styles.TextView}>
-                                <Text style={[CommonStyles.DINAltBold, { fontSize: 21, lineHeight: 28, }]}>Hi, Akbar Raza</Text>
-                                <Text style={[CommonStyles.DINAltBold, { fontSize: 12, }]}>
-                                    <Text>Welcome to your</Text>
-                                    <Text style={[CommonStyles.SFProBold, { color: '#5698FF', fontSize: 12, fontWeight: '500' }]}> Health Dashboard </Text>
-                                </Text>
-                            </View>
-                        </View>
-
-                    </View>
-                    <View style={styles.myView2}>
-
-                        <View style={styles.View2}>
-                            <FlatGrid
-                                itemDimension={320} items={main}
-                                style={styles.gridView}
-                                //staticDimension={300}
-                                //fixed
-                                // spacing={20}
-                                renderItem={({ item, index }) => (
-                                    <View style={[styles.greenBoxContainer]}>
-                                        <ImageBackground style={{ width: null, height: null, resizeMode: 'cover', borderRadius: 5 }} source={require('../../assets/drawable-xhdpi/greenback.png')}>
-                                            <View style={styles.flexDirectionView}>
-                                                <View style={[styles.gContainer, { justifyContent: 'space-evenly', width: '56%', paddingLeft: 13 }]}>
-                                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                                        <Icon name={item.icon} size={26} color="#335a07" />
-                                                        <View style={{ backgroundColor: '#7aB43B', height: 50, width: 59, alignItems: 'center', justifyContent: 'center', borderRadius: 5 }}>
-                                                            <Text style={CommonStyles.DINAltBold, { fontSize: 40, color: '#fff' }}>{item.number}</Text>
-                                                        </View>
-                                                    </View>
-                                                    <Text>
-                                                        <Text style={CommonStyles.DINProLight, { fontSize: 14, color: '#335a07', lineHeight: 19 }}>{`TOTAL UPCOMING\n`}</Text>
-
-                                                        <Text style={[CommonStyles.DINProRegular, { fontSize: 20, color: '#333333', lineHeight: 30 }]}>{item.name}</Text>
-                                                    </Text>
-                                                </View>
-                                                <View style={[styles.gContainer, { alignItems: 'flex-end', alignSelf: 'flex-end', justifyContent: 'center', marginRight: 5, paddingRight: 13 }]}>
-                                                    <Text style={{ fontSize: 14, color: '#335a07', lineHeight: 30 }}>
-                                                        <Text style={CommonStyles.DINProLight, { fontSize: 12, color: '#335a07' }}>{`Next Appointment\n          In `}</Text>
-                                                        <Text style={CommonStyles.DINProRegular, { fontSize: 17, color: '#000' }}>15 min</Text>
-                                                        <Text style={CommonStyles.DINProLight, { fontSize: 12, color: '#335a07' }}>{`\n                      Time\n`}</Text>
-                                                        <Text style={CommonStyles.DINProRegular, { fontSize: 17, color: '#000' }}>        9.15 am</Text>
-                                                    </Text>
-                                                </View>
-                                            </View>
-                                        </ImageBackground>
-                                    </View>
-                                )}
-                            />
-                            <FlatGrid
-                                itemDimension={146}
-                                items={items}
-                                style={styles.gridView}
-                                //staticDimension={300}
-                                // fixed
-                                // spacing={20}
-                                renderItem={({ item, index }) => (
-                                    <TouchableOpacity onPress={() => this.props.navigation.navigate(`${item.route}`)}>
-
-                                        <View style={[styles.itemContainer, { backgroundColor: item.code }]}>
-                                            <View style={styles.flexDirectionView}>
-                                                <Icon name={item.icon} size={18} color="#C9D7EA" />
-                                                <View style={styles.TextNumberView}>
-                                                    <Text style={[CommonStyles.DINAltBold, { fontSize: 32, color: '#297dec' }]}>{item.number}</Text>
-                                                </View>
-                                            </View>
-                                            <Text style={[CommonStyles.DINProMedium, { fontSize: 13, lineHeight: 20 }]}>{item.name}</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                )} />
-                        </View>
-
-                        <View style={styles.View3}>
-
-                            <View style={{ width: 148, height: 29, marginLeft: -50, marginBottom: 8 }}>
-                                <ImageBackground style={{ width: '100%', height: '100%', resizeMode: 'center' }} source={require('../../assets/drawable-xxxhdpi/Oval.png')}>
-                                    <View style={{ width: 150, height: 94, marginTop: -75, marginLeft: 25 }}>
-                                        <Image style={{ width: '100%', height: '100%', resizeMode: 'contain' }} source={require('../../assets/drawable-xxxhdpi/calendar.png')}></Image>
-                                    </View>
-
-                                </ImageBackground>
-                            </View>
-                            <TouchableOpacity style={styles.ButtonStyle}
-                                onPress={() => this.goToPatientsRooms()}>
-                                <Text style={[CommonStyles.DINProMedium, { color: '#fff', fontSize: 15 }]}>CONSULTATION ROOM</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                    <View
-                        style={[
-                            {
-                                position: 'absolute',
-                                right: 0,
-                                top: 40,
-                                width: 60,
-                                height: 60,
-                                borderRadius: 30,
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            },
-                        ]}>
-                        <TouchableOpacity onPress={() => { this.props.navigation.openDrawer(); }}>
-                            <Icon name='bars' size={21} color='#303030' />
-                        </TouchableOpacity>
-                    </View>
-                </ImageBackground>
-            </View>
-        );
-    }
+class Dashboard extends React.Component {
 
     goToPatientsRooms() {
         // appointments
@@ -162,99 +20,164 @@ export default class Dashboard extends React.Component {
             var appointmentId = appointments.reverse()[0].id;
             this.props.navigation.navigate('AppointmentRoom', { appointmentId });
         };
-        
+
         Api.instance()
             .getMyAppointments()
             .then(appointments => _navigateToRoom(appointments))
             .catch(err => ViewUtils.showToast(err))
     }
+
+    render() {
+        return (
+            <View style={[CommonStyles.container]}>
+                <ImageBackground
+                    style={[CommonStyles.container, CommonStyles.backgroundImage]}
+                    source={require('../../assets/img/background.png')}
+                >
+                    <KeyboardAwareScrollView style={[CommonStyles.container, CommonStyles.mt30,
+                    { padding: 15 }]}>
+
+                        <View style={{ flexDirection: 'row' }}>
+                            <View style={{ width: 53, height: 53, marginRight: 10 }}>
+                                <Image style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/img/Rectangle.png')}></Image>
+                            </View>
+                            <View style={{ justifyContent: 'flex-end' }}>
+                                <Text style={[CommonStyles.fontMedium,
+                                { fontSize: 21 }]}>Hi, Akbar Raza</Text>
+                                <Text style={[CommonStyles.fontMedium,
+                                CommonStyles.textSizeSmall]}>
+                                    <Text>Welcome to your </Text>
+                                    <Text style={[CommonStyles.fontMedium,
+                                    CommonStyles.textSizeSmall,
+                                    { color: '#5698FF' }]}>
+                                        Health Dashboard </Text>
+                                </Text>
+                            </View>
+                        </View>
+
+                        <View style={{ height: 4, backgroundColor: '#297DEC', marginTop: 10, width: '80%' }}></View>
+
+                        <View style={[CommonStyles.container, CommonStyles.mt10, CommonStyles.br5,
+                        { height: 146, backgroundColor: '#9cd85b' }]}>
+                            <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]}
+                                source={require('../../assets/img/greenback.png')}>
+
+                                <View style={[CommonStyles.container, CommonStyles.horizontalContainer, { padding: 15, }]}>
+                                    <View style={[CommonStyles.container, { justifyContent: 'space-between', }]}>
+                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                            <Icon name='calendar' size={26} color="#335a07" />
+                                            <View style={[CommonStyles.br5, CommonStyles.padding, { backgroundColor: '#7aB43B' }]}>
+                                                <Text style={CommonStyles.fontMedium, CommonStyles.centerText,
+
+                                                    { fontSize: 29, color: '#fff' }}>34</Text>
+                                            </View>
+                                        </View>
+                                        <Text>
+                                            <Text style={CommonStyles.fontMedium, { fontSize: 14, color: '#335a07' }}>{`TOTAL UPCOMING\n`}</Text>
+
+                                            <Text style={[CommonStyles.fontMedium, { fontSize: 20, color: '#333333' }]}>APPOINTMENTS</Text>
+                                        </Text>
+                                    </View>
+                                    <View style={[CommonStyles.container, { justifyContent: 'space-between', alignSelf: 'flex-end', alignItems: 'flex-end' }]}>
+                                        <Text style={{ fontSize: 14, color: '#335a07', lineHeight: 27,  }}>
+                                            <Text style={CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#335a07' }}>{`Next Appointment\n            In `}</Text>
+                                            <Text style={CommonStyles.fontMedium, { fontSize: 17, color: '#000' }}>15 min</Text>
+                                            <Text style={CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#335a07' }}>{`\n                      Time\n`}</Text>
+                                            <Text style={CommonStyles.fontMedium, { fontSize: 17, color: '#000' }}>          9.15 am</Text>
+                                        </Text>
+                                    </View>
+
+                                </View>
+                            </ImageBackground>
+                        </View>
+
+                        <View style={[CommonStyles.mt10, CommonStyles.horizontalContainer, ,
+                        { height: 146 }]}>
+
+
+
+                            <View style={[CommonStyles.container, CommonStyles.br5,
+                            { borderColor: '#C9D7EA', borderWidth: 2, padding: 15, justifyContent: 'space-between', marginRight: 5 }]}>
+                                <View style={[CommonStyles.horizontalContainer]}>
+                                    <Icon name="bars" size={18} color="#C9D7EA" />
+                                    <View style={[CommonStyles.centerText, CommonStyles.br5, { backgroundColor: '#ebf2f9' }]} >
+                                        <Text style={[CommonStyles.fontMedium,
+                                        CommonStyles.padding,
+                                        CommonStyles.centerText,
+                                        { fontSize: 32, color: '#297dec' }]}>34</Text>
+                                    </View>
+                                </View>
+                                <Text style={[CommonStyles.fontMedium, { fontSize: 14, }]}>TOTAL CONSULTATION</Text>
+                            </View>
+
+
+
+
+                            <View style={[CommonStyles.container, CommonStyles.br5,
+                            { borderColor: '#C9D7EA', borderWidth: 2, padding: 15, justifyContent: 'space-between', marginLeft: 5 }]}>
+                                <View style={[CommonStyles.horizontalContainer]}>
+                                    <Icon name="bars" size={18} color="#C9D7EA" />
+                                    <View style={[CommonStyles.centerText, CommonStyles.padding,
+                                    CommonStyles.br5, { backgroundColor: '#ebf2f9' }]} >
+                                        <Text style={[CommonStyles.fontMedium, { fontSize: 32, color: '#297dec' }]}>34</Text>
+                                    </View>
+                                </View>
+                                <Text style={[CommonStyles.fontMedium,
+                                { fontSize: 14 }]}>VIEW DOCTORS PROFILE</Text>
+                            </View>
+                        </View>
+                        <View style={[CommonStyles.container, { justifyContent: 'center', alignSelf: 'center', marginTop: 130 }
+                        ]}>
+
+                            <View style={{ width: 148, height: 29, marginLeft: -50, }}>
+                                <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/img/Oval.png')}>
+                                    <View style={{ width: 150, height: 94, marginTop: -75, marginLeft: 25 }}>
+                                        <Image style={{ width: '100%', height: '100%', resizeMode: 'contain' }}
+                                            source={require('../../assets/img/calendar.png')}></Image>
+                                    </View>
+
+                                </ImageBackground>
+                            </View>
+
+                        </View>
+
+
+                        <TouchableOpacity
+                            onPress={() => this.goToPatientsRooms()}
+                            style={[CommonStyles.container,
+                            CommonStyles.mt10,
+                            CommonStyles.centerText,
+                            CommonStyles.br5,
+                            { backgroundColor: '#297DEC' }]}>
+                            <Text style={[CommonStyles.fontMedium,
+                            CommonStyles.padding,
+                            CommonStyles.centerText,
+                            { color: '#fff', fontSize: 15, margin: 5 }]}>
+                                CONSULTATION ROOM</Text>
+                        </TouchableOpacity>
+                    </KeyboardAwareScrollView>
+
+                    <View
+                        style={[
+                            {
+                                position: 'absolute',
+                                right: 15,
+                                top: 60,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            },
+                        ]}>
+                        <TouchableOpacity onPress={() => { this.props.navigation.openDrawer(); }}>
+                            <Icon name='bars' size={21} color='#303030' />
+                        </TouchableOpacity>
+                    </View>
+
+                    
+
+                </ImageBackground >
+            </View >
+        );
+    }
 }
 
-const styles = StyleSheet.create({
-    View1: {
-        flexDirection: 'row',
-    },
-    myView1: {
-        borderBottomWidth: 5,
-        borderColor: '#297DEC',
-        flex: 1.5,
-        justifyContent: 'flex-end',
-        marginLeft: '6%',
-        marginRight: '25%',
-    },
-    myView2: {
-        flex: 8,
-        alignSelf: 'center',
-        marginHorizontal: 8,
-        marginVertical: 10,
-        justifyContent: 'space-between',
-    },
-    imageView: {
-        width: 53,
-        height: 53,
-        borderRadius: 5,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    TextView: {
-        marginLeft: 12,
-        height: 65,
-        justifyContent: 'center'
-    },
-    View2: {
-        flexGrow: 2,
-        alignSelf: 'center',
-        width: '100%',
-
-    },
-    View3: {
-        flexGrow: 0.8,
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-    },
-    ButtonStyle: {
-        height: 52,
-        width: '91%',
-        shadowColor: '#8BB3E9',
-        marginVertical: 10,
-        borderRadius: 4,
-        backgroundColor: '#297dec',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    gridView: {
-        flex: 1
-    },
-    gContainer: {
-        borderRadius: 5,
-        height: 146,
-    },
-    itemContainer: {
-        justifyContent: 'space-evenly',
-        borderRadius: 5,
-        paddingHorizontal: 16,
-        height: 146,
-        borderWidth: 2,
-        borderColor: '#C9D7EA'
-
-    },
-    greenBoxContainer: {
-        height: '100%',
-        borderRadius: 5,
-        borderWidth: 1,
-        borderColor: '#9cd85b',
-        backgroundColor: '#9cd85b',
-    },
-    TextNumberView: {
-        width: 60,
-        height: 60,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#ebf2f9',
-        borderRadius: 4
-    },
-    flexDirectionView: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    },
-})
+export default Dashboard;

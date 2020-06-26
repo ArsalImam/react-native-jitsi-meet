@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import { sin } from 'react-native-reanimated';
 
 const CommonStyles = StyleSheet.create ({
   appRedColor: {
@@ -132,6 +133,10 @@ const CommonStyles = StyleSheet.create ({
   mt10: {
     marginTop: 20,
   },
+
+  mt30: {
+    marginTop: 30,
+  },
   m10: {
     marginTop: 20,
   },
@@ -176,5 +181,20 @@ const CommonStyles = StyleSheet.create ({
   fontBold: {
     fontFamily: 'DINPro-Bold',
   },
+  br5: {
+    borderRadius: 5
+  },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#eeeeee',
+    opacity: 0.5,
+  },
+  loaderIndicatorStyle: {
+    color: '#297dec',
+
+  }
 });
+
 export default CommonStyles;

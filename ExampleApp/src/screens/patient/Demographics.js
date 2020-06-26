@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TouchableOpacity, ImageBackground, ScrollView, StatusBar } from 'react-native';
 import { Container, Header, Content, DatePicker, Text, Item, Label, Input, ScrollableTab, } from 'native-base';
-import { CommonStyles } from '../../CommonStyles';
+import  CommonStyles from '../../CommonStyles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { Icon } from 'react-native-elements';
 
