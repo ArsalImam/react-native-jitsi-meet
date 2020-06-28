@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TouchableOpacity, ImageBackground, ScrollView, StatusBar} from 'react-native';
 import { Container, Header, Content, DatePicker, Text, Item, Label, Input, ScrollableTab, } from 'native-base';
-import { CommonStyles } from '../../CommonStyles';
+import  CommonStyles  from '../../CommonStyles';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 
-export default class MadicationAdd extends Component {
+export default class MadicationAdd extends React.Component {
     constructor(props) {
         super(props);
         this.state = { chosenDate: new Date() };
@@ -15,10 +15,10 @@ export default class MadicationAdd extends Component {
     }
     render() {
         return (
-            <View style={styles.container}>
+            <View style={[CommonStyles.container]}>
                 
-                <ImageBackground style={CommonStyles.backgroundImage} source={require('../../assets/drawable-xhdpi/bwback.png')}>
-                <StatusBar translucent backgroundColor="transparent"  barStyle={'light-content'}/>
+                <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/drawable-xhdpi/bwback.png')}>
+             
                     <View style={styles.View1}>
                         <Text style={{marginHorizontal: '7%', marginBottom: 12,}}>
                             <Text style={[CommonStyles.DINAltBold, CommonStyles.textSizeLarge, {color: '#FFf', lineHeight: 28}]} >{`Medicine Add\n`}</Text>

@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, ImageBackground, StatusBar, Image } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, StatusBar, Image , TouchableOpacity } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
-import { ListItem, CheckBox, Divider } from 'react-native-elements';
-import { CommonStyles } from '../../CommonStyles';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import  CommonStyles  from '../../CommonStyles';
 
-export default class DrProfile extends Component {
+export default class DrProfile extends React.Component {
 
     constructor() {
         super();
@@ -27,10 +25,9 @@ export default class DrProfile extends Component {
         ];
         return (
 
-            <View style={CommonStyles.container}>
+            <View style={[CommonStyles.container]}>
 
-                <ImageBackground style={CommonStyles.backgroundImage} source={require('../../assets/drawable-xhdpi/drback1.png')}>
-                    <StatusBar translucent backgroundColor="transparent" barStyle={'light-content'} />
+                <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/drawable-xhdpi/drback1.png')}>
                     <View style={styles.MyView}></View>
                     <View style={styles.MyView1}>
                         <View style={{ height: 111, width: '100%', flexDirection: 'row', alignItems: 'flex-end', alignContent: 'flex-end'}}>

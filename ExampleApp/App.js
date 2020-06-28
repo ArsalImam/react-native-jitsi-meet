@@ -23,8 +23,7 @@ class App extends React.Component {
   render () {
     return (
       <Root>
-        <StatusBar translucent backgroundColor='#00000000' barStyle="dark-content" />
-        <SafeAreaView style={CommonStyles.container}>
+          <SafeAreaView style={CommonStyles.container}>
           <NavigationContainer>
             <Routes />
           </NavigationContainer>

@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {Text} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import { Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import Login from './screens/login/Login';
 import Dashboard from './screens/patient/Dashboard';
 import Demographics from './screens/patient/Demographics';
@@ -16,13 +16,17 @@ import Vital from './screens/patient/Vital';
 import DrProfile from './screens/patient/DrProfile';
 import Patients from './screens/patient/Patients';
 import AppointmentRoom from './screens/AppointmentRoom';
-import Sample from './screens/patient/Sample';
+import ScheduledBooking from './screens/patient/ScheduledBooking';
+import CompleteBookings from './screens/patient/CompleteBookings';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Icon } from 'native-base';
 
-const Drawer = createDrawerNavigator ();
-const Stack = createStackNavigator ();
+const Tab = createBottomTabNavigator();
+const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
 export default class Routes extends React.Component {
-  _getDrawerComponent () {
+  _getDrawerComponent() {
     return (
       <Drawer.Navigator drawerContent={props => <MenuSlider {...props} />}>
         <Drawer.Screen name="Dashboard" component={Dashboard} />
@@ -30,7 +34,52 @@ export default class Routes extends React.Component {
     );
   }
 
-  render () {
+  _getTabBarComponent() {
+    return (
+      <Tab.Navigator
+
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size, type }) => {
+            let iconName;
+            let iconType;
+
+            if (route.name === 'ALL') {
+              iconName = focused ? 'navicon' : 'navicon';
+              iconType = 'EvilIcons'
+            } else if (route.name === 'COMPLETED') {
+              iconName = focused ? 'playlist-check' : 'playlist-check';
+              iconType = 'MaterialCommunityIcons'
+            }
+            else if (route.name === 'SCHEDULED') {
+              iconName = focused ? 'schedule' : 'schedule';
+              iconType = 'MaterialIcons'
+            }
+            return <Icon name={iconName} type={iconType} color={color}/>;
+          },
+        })}
+
+        tabBarOptions={{
+          pressColor: '#297dec',
+          activeTintColor: '#297dec',
+          inactiveTintColor: '#000',
+        
+          tabStyle: {borderWidth: 3, 
+            borderColor: '#fff', 
+            borderRadius: 7, 
+            backgroundColor: '#F7FAFE',
+          },
+          labelPosition: 'beside-icon',
+      
+        }} >
+
+        <Tab.Screen name="ALL" component={BookingList} />
+        <Tab.Screen name="COMPLETED" component={CompleteBookings} />
+        <Tab.Screen name="SCHEDULED" component={ScheduledBooking} />
+      </Tab.Navigator>
+    )
+  }
+
+  render() {
     return (
       <Stack.Navigator>
         <Stack.Screen
@@ -39,62 +88,62 @@ export default class Routes extends React.Component {
           options={{
             headerShown: false,
             headerTitleAlign: 'center',
-            headerStyle: {backgroundColor: '#c0d4e2'},
+            headerStyle: { backgroundColor: '#c0d4e2' },
           }}
         />
 
         <Stack.Screen
           name="MyDrawer"
           component={this._getDrawerComponent}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
-          name="BookingList"
-          component={BookingList}
-          options={{headerShown: false}}
+          name="MyTabs"
+          component={this._getTabBarComponent}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
           name="AppointmentRoom"
           component={AppointmentRoom}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
           name="Demographics"
           component={Demographics}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
           name="VitalAdd"
           component={VitalAdd}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
           name="MadicationAdd"
           component={MadicationAdd}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
           name="MedicalCondition"
           component={MedicalCondition}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
           name="AddReport"
           component={AddReport}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
           name="Vital"
           component={Vital}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
@@ -103,10 +152,10 @@ export default class Routes extends React.Component {
           options={{
             headerShown: true,
             title: '',
-            headerStyle: {backgroundColor: 'transparent'},
+            headerStyle: { backgroundColor: 'transparent' },
             headerTransparent: true,
             headerTitleAlign: 'center',
-            headerTitleStyle: {color: '#fff'},
+            headerTitleStyle: { color: '#fff' },
             headerTintColor: '#fff',
           }}
         />
@@ -114,14 +163,9 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="Patients"
           component={Patients}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
 
-        <Stack.Screen
-          name="Sample"
-          component={Sample}
-          options={{headerShown: false}}
-        />
       </Stack.Navigator>
     );
   }

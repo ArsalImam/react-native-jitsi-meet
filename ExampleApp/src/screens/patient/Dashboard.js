@@ -79,7 +79,7 @@ class Dashboard extends React.Component {
                                         </Text>
                                     </View>
                                     <View style={[CommonStyles.container, { justifyContent: 'space-between', alignSelf: 'flex-end', alignItems: 'flex-end' }]}>
-                                        <Text style={{ fontSize: 14, color: '#335a07', lineHeight: 27,  }}>
+                                        <Text style={{ fontSize: 14, color: '#335a07', lineHeight: 27, }}>
                                             <Text style={CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#335a07' }}>{`Next Appointment\n            In `}</Text>
                                             <Text style={CommonStyles.fontMedium, { fontSize: 17, color: '#000' }}>15 min</Text>
                                             <Text style={CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#335a07' }}>{`\n                      Time\n`}</Text>
@@ -95,9 +95,14 @@ class Dashboard extends React.Component {
                         { height: 146 }]}>
 
 
-
-                            <View style={[CommonStyles.container, CommonStyles.br5,
-                            { borderColor: '#C9D7EA', borderWidth: 2, padding: 15, justifyContent: 'space-between', marginRight: 5 }]}>
+                            <TouchableOpacity style={[CommonStyles.container, CommonStyles.br5,
+                            { borderColor: '#C9D7EA', 
+                            borderWidth: 2, 
+                            padding: 15, 
+                            justifyContent: 'space-between', 
+                            marginRight: 5 }]} 
+                            onPress={() => this.props.navigation.navigate('MyTabs')}
+                            >
                                 <View style={[CommonStyles.horizontalContainer]}>
                                     <Icon name="bars" size={18} color="#C9D7EA" />
                                     <View style={[CommonStyles.centerText, CommonStyles.br5, { backgroundColor: '#ebf2f9' }]} >
@@ -108,13 +113,17 @@ class Dashboard extends React.Component {
                                     </View>
                                 </View>
                                 <Text style={[CommonStyles.fontMedium, { fontSize: 14, }]}>TOTAL CONSULTATION</Text>
-                            </View>
+                            </TouchableOpacity>
 
 
 
 
-                            <View style={[CommonStyles.container, CommonStyles.br5,
-                            { borderColor: '#C9D7EA', borderWidth: 2, padding: 15, justifyContent: 'space-between', marginLeft: 5 }]}>
+
+
+                            <TouchableOpacity style={[CommonStyles.container, CommonStyles.br5,
+                            { borderColor: '#C9D7EA', borderWidth: 2, padding: 15, justifyContent: 'space-between', marginLeft: 5 }]}
+                            onPress={() => this.props.navigation.navigate('DrProfile')}
+                            >
                                 <View style={[CommonStyles.horizontalContainer]}>
                                     <Icon name="bars" size={18} color="#C9D7EA" />
                                     <View style={[CommonStyles.centerText, CommonStyles.padding,
@@ -124,7 +133,9 @@ class Dashboard extends React.Component {
                                 </View>
                                 <Text style={[CommonStyles.fontMedium,
                                 { fontSize: 14 }]}>VIEW DOCTORS PROFILE</Text>
-                            </View>
+                            </TouchableOpacity>
+
+
                         </View>
                         <View style={[CommonStyles.container, { justifyContent: 'center', alignSelf: 'center', marginTop: 130 }
                         ]}>
@@ -172,7 +183,7 @@ class Dashboard extends React.Component {
                         </TouchableOpacity>
                     </View>
 
-                    
+
 
                 </ImageBackground >
             </View >

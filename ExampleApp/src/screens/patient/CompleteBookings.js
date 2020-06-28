@@ -5,7 +5,7 @@ import { ListItem, CheckBox, Divider } from 'react-native-elements';
 import CommonStyles from '../../CommonStyles';
 import { Configs } from '../../Configs';
 
-export default class BookingList extends Component {
+export default class CompleteBookings extends Component {
 
     constructor(props) {
         super(props);
@@ -17,6 +17,7 @@ export default class BookingList extends Component {
         };
     }
     render() {
+
         const main = [
             { name: 'SHAZ QURESHI', code: '#9ed75f', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
             { name: 'SHAZ QURESHI', code: '#9ed75f', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
@@ -38,7 +39,7 @@ export default class BookingList extends Component {
                     <View style={styles.View3}>
 
                         <Text numberOfLines={3} style={{ color: '#fff', marginHorizontal: 15, marginBottom: 15, }}>
-                            <Text style={[CommonStyles.DINAltBold, CommonStyles.textSizeLarge, { lineHeight: 28 }]} >{`Bookings\n`}</Text>
+                            <Text style={[CommonStyles.DINAltBold, CommonStyles.textSizeLarge, { lineHeight: 28 }]} >{`Completed\n`}</Text>
                             <Text style={[CommonStyles.SFProLight, CommonStyles.textSizeSmall, { lineHeight: 16 }]}>It is a list of your all booking patients </Text>
                         </Text>
                     </View>
@@ -49,15 +50,15 @@ export default class BookingList extends Component {
                             items={main}
                             renderItem={({ item }) => (
 
-                                <View style={[CommonStyles.container, CommonStyles.centerText, { height: 105 }]}>
+                                <View style={{ height: 105, justifyContent: 'center', alignItems: "center" }}>
                                     <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/img/Fill-1.png')}>
 
                                         <View style={[styles.itemContainer, { flexDirection: 'row' }]}>
 
                                             <View style={[styles.view1, { paddingLeft: 16, }]}>
                                                 <Text>
-                                                    <Text style={[CommonStyles.SFProLight, CommonStyles.textSizeSmall, { color: '#333333', lineHeight: 16 }]}>{`Patient Name\n`}</Text>
-                                                    <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', lineHeight: 20 }]}>{item.name}</Text>
+                                                    <Text style={[CommonStyles.DINProLight, CommonStyles.textSizeSmall, { color: '#333333', lineHeight: 16 }]}>{`Patient Name\n`}</Text>
+                                                    <Text style={[CommonStyles.DINAltBold, CommonStyles.textSizeAverage, { color: '#333333', lineHeight: 20 }]}>{item.name}</Text>
                                                 </Text>
 
                                                 <Text style={[CommonStyles.textSizeAverage, { color: '#333333' }]}>
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
     },
     itemContainer: {
         flex: 1,
-        height: 105,
+        height: 101,
     },
     View3: {
         flex: 2,
@@ -117,7 +118,7 @@ const styles = StyleSheet.create({
     View2: {
         marginTop: 10,
         flex: 8,
-        marginHorizontal: 8
+       marginHorizontal: 8
     },
     view1: {
         height: '100%',

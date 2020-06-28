@@ -12,7 +12,6 @@ export default class AddReport extends Component {
             <View style={styles.container}>
                
                     <ImageBackground style={CommonStyles.backgroundImage} source={require('../../assets/drawable-xhdpi/bwback.png')}>
-                        <StatusBar translucent backgroundColor="transparent" barStyle={'light-content'} />
 
                         <View style={styles.View1}>
                             <Text style={{ marginHorizontal: '7%', marginBottom: 12, }}>

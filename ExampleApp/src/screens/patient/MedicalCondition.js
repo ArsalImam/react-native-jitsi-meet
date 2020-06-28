@@ -15,11 +15,10 @@ export default class MedicalCondition extends React.Component {
     }
     render() {
         return (
-            <View style={styles.container}>
+            <View style={[CommonStyles.container]}>
                 
-                <ImageBackground style={CommonStyles.backgroundImage} source={require('../../assets/drawable-xhdpi/bwback.png')}>
-                <StatusBar translucent backgroundColor="transparent"  barStyle={'light-content'}/>
-                    <View style={styles.View1}>
+                <ImageBackground style={[ CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/drawable-xhdpi/bwback.png')}>
+                            <View style={styles.View1}>
                         <Text style={{marginHorizontal: '7%', marginBottom: 12,}}>
                             <Text style={[CommonStyles.DINAltBold, CommonStyles.textSizeLarge, {color: '#FFf', lineHeight: 28}]} >{`Medical Condition\n`}</Text>
                             <Text style={[CommonStyles.SFProLight, CommonStyles.textSizeSmall, {color: '#fff', lineHeight: 16}]}>It is a list of your all booking patients </Text>

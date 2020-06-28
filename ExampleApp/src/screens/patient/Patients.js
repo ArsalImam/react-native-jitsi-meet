@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
 import { ListItem, CheckBox, Divider } from 'react-native-elements';
-import { CommonStyles } from '../../CommonStyles';
+import  CommonStyles  from '../../CommonStyles';
 
 export default class Patients extends Component {
   constructor() {
@@ -30,16 +30,10 @@ export default class Patients extends Component {
       { name: 'Mehmet Seluri', code: '#9ed75f', route: '' },
     ];
     return (
-      <View style={CommonStyles.container}>
+      <View style={[CommonStyles.container]}>
         <ImageBackground
-          style={CommonStyles.backgroundImage}
+          style={[CommonStyles.container, CommonStyles.backgroundImage]}
           source={require('../../assets/drawable-xhdpi/bwback.png')}>
-          <StatusBar
-            translucent
-            backgroundColor="transparent"
-            barStyle={'light-content'}
-          />
-
           <View style={styles.View3}>
             <Text
               numberOfLines={3}
