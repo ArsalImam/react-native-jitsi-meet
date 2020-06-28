@@ -17,7 +17,6 @@ export default class Vital extends Component {
             <View style={styles.container}>
 
                 <ImageBackground style={[ CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/drawable-xhdpi/bwback.png')}>
-                    <StatusBar translucent backgroundColor="transparent" barStyle={'light-content'} />
                     <View style={styles.View1}>
                         <Text style={{ marginHorizontal: '7%', marginBottom: 15 }}>
                             <Text style={[CommonStyles.DINAltBold, CommonStyles.textSizeLarge, { color: '#FFf', lineHeight: 28}]} >{`Vital Add\n`}</Text>

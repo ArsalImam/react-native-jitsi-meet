@@ -11,7 +11,7 @@ export default class AddReport extends Component {
         return (
             <View style={styles.container}>
                
-                    <ImageBackground style={CommonStyles.backgroundImage} source={require('../../assets/drawable-xhdpi/bwback.png')}>
+                    <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/drawable-xhdpi/bwback.png')}>
 
                         <View style={styles.View1}>
                             <Text style={{ marginHorizontal: '7%', marginBottom: 12, }}>

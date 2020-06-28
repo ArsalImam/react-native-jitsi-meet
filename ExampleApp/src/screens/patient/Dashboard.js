@@ -34,7 +34,7 @@ class Dashboard extends React.Component {
                     style={[CommonStyles.container, CommonStyles.backgroundImage]}
                     source={require('../../assets/img/background.png')}
                 >
-                    <KeyboardAwareScrollView style={[CommonStyles.container, CommonStyles.mt30,
+                    <KeyboardAwareScrollView style={[CommonStyles.container,
                     { padding: 15 }]}>
 
                         <View style={{ flexDirection: 'row' }}>
@@ -173,7 +173,7 @@ class Dashboard extends React.Component {
                             {
                                 position: 'absolute',
                                 right: 15,
-                                top: 60,
+                                top: 40,
                                 justifyContent: 'center',
                                 alignItems: 'center',
                             },

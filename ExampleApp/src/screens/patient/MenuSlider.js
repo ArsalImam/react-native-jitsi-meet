@@ -7,78 +7,127 @@ import CommonStyles from '../../CommonStyles';
 
 class MenuSlider extends React.Component {
     render() {
-        const main = [
+
+        const PersonalProfile = [
+            { name: 'Demographics', iconName: 'clipboard-notes', iconFamily: 'Foundation', iconSize: '18', route: 'Demographics' },
+               
+        ];
+        
+        const clinicList = [
+            { name: 'Create Clinic', iconName: 'activity', iconFamily: 'Feather', iconSize: '18', route: 'Vital' },
+            { name: 'Clinic List', iconName: 'medicinebox', iconFamily: 'AntDesign', iconSize: '18', route: 'MadicationAdd' },
+            
+        ];
+
+        const medicalProfile = [
             { name: 'Vital', iconName: 'activity', iconFamily: 'Feather', iconSize: '18', route: 'Vital' },
             { name: 'Medication', iconName: 'medicinebox', iconFamily: 'AntDesign', iconSize: '18', route: 'MadicationAdd' },
             { name: 'Medical Condition', iconName: 'bed', iconFamily: 'FontAwesome', iconSize: '18', route: 'MedicalCondition' },
-            { name: 'Allergies', iconName: 'ios-flower', iconFamily: 'Ionicon', iconSize: '18', route: 'MyTabs' },
+            { name: 'Allergies', iconName: 'ios-flower', iconFamily: 'Ionicon', iconSize: '18', route: '' },
             { name: 'Surgeries', iconName: 'box-cutter', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: '' },
-            { name: 'Dental Issue', iconName: 'tooth-outline', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: '' },
-            { name: 'Reports', iconName: 'notebook', iconFamily: 'SimpleLineIcons', iconSize: '20', route: '' },       
+            { name: 'Dental Issue', iconName: 'tooth-outline', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: 'AddReport' },
+            { name: 'Reports', iconName: 'notebook', iconFamily: 'SimpleLineIcons', iconSize: '20', route: '' },
         ];
 
         return (
-            <View style={[CommonStyles.container, CommonStyles.padding, { backgroundColor: '#297dec', }]}>
+            <View style={[CommonStyles.container, CommonStyles.padding, { backgroundColor: '#ffffff'}]}>
                 <Content>
-                    <View 
-                        style={[CommonStyles.padding, CommonStyles.mtt10, {borderColor: "#fff", borderBottomColor: '#FFF', borderBottomWidth: 1 }]} >
-                        <Label style={[CommonStyles.fontRegular, { color: '#fff' }]}> Personal Profile</Label>
+
+                    <View
+                        style={[CommonStyles.padding, CommonStyles.mtt10]} >
+                        <Label style={[CommonStyles.fontBold, CommonStyles.textSizeLarge]}>TeleMedicine</Label>
                     </View>
 
-                    <View style={[CommonStyles.container,
-                    { flexDirection: 'row', paddingLeft: 25 , marginTop: 10 }]}>
-                        <Icon style={[CommonStyles.padding, { fontSize: 20, color: '#FFF' }]}
-                            name='clipboard-notes' type='Foundation' ></Icon>
-                        <Text style={[CommonStyles.fontRegular,
-                        CommonStyles.padding,
-                        //CommonStyles.margin,
-                        CommonStyles.centerText,
-                        { color: '#FFF', }
-                        ]}>Demographics</Text>
+                    <View
+                        style={[CommonStyles.padding, CommonStyles.mtt10, { borderBottomWidth: 1 }]} >
+                        <Label style={[CommonStyles.fontMedium]}> Personal Profile</Label>
                     </View>
-                    
-                    <View 
-                        style={[CommonStyles.padding, CommonStyles.mtt10, {borderColor: "#fff", borderBottomColor: '#FFF', borderBottomWidth: 1 }]} >
-                        <Label style={[CommonStyles.fontRegular, { color: '#fff' }]}> Medical Profile</Label>
-                    </View>
-
 
                     <FlatGrid
-                        style={[CommonStyles.container, {marginTop: 5}]}
+                        style={[CommonStyles.container, { marginTop: 5 }]}
                         itemDimension={400}
-                        items={main}
+                        items={PersonalProfile}
                         renderItem={({ item }) => (
                             <TouchableOpacity onPress={() => this.props.navigation.navigate(`${item.route}`)}>
                                 <View style={[CommonStyles.container,
-                                { flexDirection: 'row', marginLeft: item.marginleft, paddingLeft: 15 }]}>
-                                    <Icon style={[CommonStyles.padding, { fontSize: 20, color: '#FFF' }]}
+                                { flexDirection: 'row', }]}>
+                                    <Icon style={[CommonStyles.padding, { fontSize: 22}]}
                                         name={item.iconName} type={item.iconFamily} ></Icon>
-                                    <Text style={[CommonStyles.fontRegular,
+                                    <Text style={[CommonStyles.fontMedium,
                                     CommonStyles.padding,
-                                    //CommonStyles.margin,
+                                    CommonStyles.textSizeNormal,
                                     CommonStyles.centerText,
-                                    { color: '#FFF', }
+                                
                                     ]}>{item.name}</Text>
                                 </View>
                             </TouchableOpacity>
                         )}
                     />
 
-                  
+                    <View
+                        style={[CommonStyles.padding, { borderBottomWidth: 1 }]} >
+                        <Label style={[CommonStyles.fontMedium]}>Clinic</Label>
+                    </View>
+
+                    <FlatGrid
+                        style={[CommonStyles.container, { marginTop: 5 }]}
+                        itemDimension={400}
+                        items={clinicList}
+                        renderItem={({ item }) => (
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate(`${item.route}`)}>
+                                <View style={[CommonStyles.container,
+                                { flexDirection: 'row', }]}>
+                                    <Icon style={[CommonStyles.padding, { fontSize: 22}]}
+                                        name={item.iconName} type={item.iconFamily} ></Icon>
+                                    <Text style={[CommonStyles.fontMedium,
+                                    CommonStyles.padding,
+                                    CommonStyles.textSizeNormal,
+                                    CommonStyles.centerText,
+                                
+                                    ]}>{item.name}</Text>
+                                </View>
+                            </TouchableOpacity>
+                        )}
+                    />
+                    
+                    <View
+                        style={[CommonStyles.padding,, { borderBottomWidth: 1 }]} >
+                        <Label style={[CommonStyles.fontMedium]}> Medical Profile</Label>
+                    </View>
+
+                    <FlatGrid
+                        style={[CommonStyles.container, { marginTop: 5 }]}
+                        itemDimension={400}
+                        items={medicalProfile}
+                        renderItem={({ item }) => (
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate(`${item.route}`)}>
+                                <View style={[CommonStyles.container,
+                                { flexDirection: 'row', }]}>
+                                    <Icon style={[CommonStyles.padding, { fontSize: 22}]}
+                                        name={item.iconName} type={item.iconFamily} ></Icon>
+                                    <Text style={[CommonStyles.fontMedium,
+                                    CommonStyles.padding,
+                                    CommonStyles.centerText,
+                                    CommonStyles.textSizeNormal,
+                                    ]}>{item.name}</Text>
+                                </View>
+                            </TouchableOpacity>
+                        )}
+                    />
+
                 </Content>
 
 
-                <View style={[CommonStyles.fitToBottom, 
-                    { flexDirection: 'row', paddingLeft: 15, borderWidth: 1, borderColor: '#fff'}]}>
-                        <Icon style={[CommonStyles.padding, { fontSize: 20, color: '#FFF' }]}
-                            name='exit-to-app' type='MaterialCommunityIcons' ></Icon>
-                        <Text style={[CommonStyles.fontRegular,
-                        CommonStyles.padding,
-                        //CommonStyles.margin,
-                        CommonStyles.centerText,
-                        { color: '#FFF', }
-                        ]}>Sign Out</Text>
-                    </View>
+                <View style={[CommonStyles.fitToBottom,
+                { flexDirection: 'row', borderWidth: 1, }]}>
+                    <Icon style={[CommonStyles.padding, { fontSize: 22, }]}
+                        name='exit-to-app' type='MaterialCommunityIcons' ></Icon>
+                    <Text style={[CommonStyles.fontMedium,
+                    CommonStyles.padding,
+                    CommonStyles.centerText,
+                    CommonStyles.textSizeNormal,
+                    ]}>Sign Out</Text>
+                </View>
 
             </View>
         )
@@ -86,165 +135,3 @@ class MenuSlider extends React.Component {
 }
 
 export default MenuSlider;
-
-
-// <View style={styles.container}>
-//         <DrawerContentScrollView>                              <Icon
-//                             name="adduser"
-//                             color={color}
-//                             size={size}
-//                             type='antdesign'
-//                         />
-//                     )}
-//                     label="Medical Profile"
-//                 //onPress={() => {props.navigation.navigate('Profile')}}
-//                 />
-//                 <DrawerItem style={{ marginLeft: '23%' }}
-//                     icon={({ color, size }) => (
-//                         <Icon
-//                             name="activity"
-//                             color={color}
-//                             size={size}
-//                             type='feather'
-//                         />
-//                     )}
-//                     label="Vital"
-//                     onPress={() => { props.navigation.navigate('Vital') }}
-//                 />
-//                 <DrawerItem style={{ marginLeft: '23%' }}
-//                     icon={({ color, size }) => (
-//                         <Icon
-//                             name="medicinebox"
-//                             color={color}
-//                             size={size}
-//                             type='antdesign'
-//                         />
-//                     )}
-//                     label="Medication"
-//                     onPress={() => { props.navigation.navigate('MadicationAdd') }}
-//                 />
-//                 <DrawerItem style={{ marginLeft: '23%' }}
-//                     icon={({ color, size }) => (
-//                         <Icon
-//                             name="bed"
-//                             color={color}
-//                             size={size}
-//                             type='font-awesome'
-//                         />
-//                     )}
-//                     label="Medical Condition"
-//                     onPress={() => {props.navigation.navigate('MedicalCondition')}}
-//                 />
-//                 <DrawerItem style={{ marginLeft: '23%' }}
-//                     icon={({ color, size }) => (
-//                         <Icon
-//                             name="ios-flower"
-//                             color={color}
-//                             size={size}
-//                             type='ionicon'
-//                         />
-//                     )}
-//                     label="Allergies"
-//                     onPress={() => { props.navigation.navigate('BookingList') }}
-//                 />
-//                 <DrawerItem style={{ marginLeft: '23%' }}
-//                     icon={({ color, size }) => (
-//                         <Icon
-//                             name="box-cutter"
-//                             color={color}
-//                             size={size}
-//                             type='material-community'
-//                         />
-//                     )}
-//                     label="Surgeries"
-//                  //   onPress={() => { props.navigation.navigate('Sample') }}
-//                 />
-//                 <DrawerItem style={{ marginLeft: '23%' }}
-//                     icon={({ color, size }) => (
-//                         <Icon
-//                             name="tooth-outline"
-//                             color={color}
-//                             size={size}
-//                             type='material-community'
-//                         />
-//                     )}
-//                     label="Dental Issue"
-//                // onPress={() => {props.navigation.navigate('Patients')}}
-//                 />
-//                 <DrawerItem style={{ marginLeft: '25%' }}
-//                     icon={({ color, size }) => (
-//                         <Icon
-//                             name="clipboard-notes"
-//                             color={color}
-//                             size={size}
-//                             type='foundation'
-//                         />
-//                     )}
-//                     label="Reports"
-//                     onPress={() => { props.navigation.navigate('AddReport') }}
-//                 />
-//                 <DrawerItem
-//                     icon={({ color, size }) => (
-//                         <Icon
-//                             name="settings"
-//                             color={color}
-//                             size={size}
-//                             type='feather'
-//                         />
-//                     )}
-//                     label="Settings"
-//                 //onPress={() => {props.navigation.navigate('Profile')}}
-//                 />
-//                 <DrawerItem style={{ marginLeft: '23%' }}
-//                     icon={({ color, size }) => (
-//                         <Icon
-//                             name="bell"
-//                             color={color}
-//                             size={size}
-//                             type='feather'
-//                         />
-//                     )}
-//                     label="Change Ringtone"
-//                   //  onPress={() => { props.navigation.navigate('VitalAdd') }}
-//                 />
-
-//             </Drawer.Section>
-
-//         </DrawerContentScrollView>
-
-//         <Drawer.Section style={styles.bottomDrawerSection}>
-//             <DrawerItem
-//                 icon={({ color, size }) => (
-//                     <Icon
-//                         name="exit-to-app"
-//                         color={color}
-//                         size={size}
-//                     />
-//                 )}
-//                 label="Sign Out"
-//                 onPress={() => { props.navigation.navigate('Login')}}
-//             />
-//         </Drawer.Section>
-// </View>
-
-
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         backgroundColor: '#ebf2f9',
-//         alignContent: 'center',
-//     },
-//     textStyle: {
-//         fontSize: 22,
-//         color: '#fff',
-//         justifyContent: 'center',
-//         alignSelf: 'center',
-//         padding: 12
-//     },
-//     buttonStyle: {
-//         width: '80%',
-//         height: 60,
-//         backgroundColor: 'black',
-//         borderRadius: 10,
-//     }
-// })

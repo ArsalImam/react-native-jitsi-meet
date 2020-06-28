@@ -30,11 +30,17 @@ export default class Routes extends React.Component {
     return (
       <Drawer.Navigator drawerContent={props => <MenuSlider {...props} />}>
         <Drawer.Screen name="Dashboard" component={Dashboard} />
+        <Drawer.Screen name="Vital" component={Vital} />
+        <Drawer.Screen name="MadicationAdd" component={MadicationAdd} />
+        <Drawer.Screen name="MedicalCondition" component={MedicalCondition} />
+        <Drawer.Screen name="Demographics" component={Demographics} />
+        <Drawer.Screen name="AddReport" component={AddReport} />
+
       </Drawer.Navigator>
     );
   }
 
-  _getTabBarComponent() {
+  _getAppointmentRoute() {
     return (
       <Tab.Navigator
 
@@ -42,19 +48,22 @@ export default class Routes extends React.Component {
           tabBarIcon: ({ focused, color, size, type }) => {
             let iconName;
             let iconType;
+            let iconColor;
 
-            if (route.name === 'ALL') {
+            if (route.name === 'AVIAILABLE') {
               iconName = focused ? 'navicon' : 'navicon';
               iconType = 'EvilIcons'
+              iconColor
             } else if (route.name === 'COMPLETED') {
               iconName = focused ? 'playlist-check' : 'playlist-check';
+              iconColor = color ? 'red' : 'green';
               iconType = 'MaterialCommunityIcons'
             }
             else if (route.name === 'SCHEDULED') {
               iconName = focused ? 'schedule' : 'schedule';
               iconType = 'MaterialIcons'
             }
-            return <Icon name={iconName} type={iconType} color={color}/>;
+            return <Icon name={iconName} type={iconType} style={color= `${iconColor}`}/>;
           },
         })}
 
@@ -72,7 +81,7 @@ export default class Routes extends React.Component {
       
         }} >
 
-        <Tab.Screen name="ALL" component={BookingList} />
+        <Tab.Screen name="AVAILABLE" component={BookingList} />
         <Tab.Screen name="COMPLETED" component={CompleteBookings} />
         <Tab.Screen name="SCHEDULED" component={ScheduledBooking} />
       </Tab.Navigator>
@@ -100,8 +109,14 @@ export default class Routes extends React.Component {
 
         <Stack.Screen
           name="MyTabs"
-          component={this._getTabBarComponent}
-          options={{ headerShown: false }}
+          component={this._getAppointmentRoute}
+          options={{ headerShown: true , 
+          title: '',
+          headerStyle: { backgroundColor: 'transparent' },
+          headerTransparent: true,
+          headerTitleAlign: 'center',
+          headerTitleStyle: { color: '#fff' },
+          headerTintColor: '#fff', }}
         />
 
         <Stack.Screen
