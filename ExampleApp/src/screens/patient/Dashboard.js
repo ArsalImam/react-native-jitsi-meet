@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Image, ImageBackground, ScrollView, StatusBar, Button, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { Container, Header, Content, Tab, Tabs, TabHeading, } from 'native-base';
 import CommonStyles from '../../CommonStyles';
 import { AsyncStorage } from 'react-native';
 import { Configs } from '../../Configs';
@@ -9,6 +10,11 @@ import Api from '../../Api';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 
 class Dashboard extends React.Component {
+
+    constructor(props) {
+        super(props)
+        this.state = { initialPage: 1, activeTab: 1 }
+    }
 
     goToPatientsRooms() {
         // appointments
@@ -30,14 +36,16 @@ class Dashboard extends React.Component {
     render() {
         return (
             <View style={[CommonStyles.container]}>
+
+
                 <ImageBackground
                     style={[CommonStyles.container, CommonStyles.backgroundImage]}
                     source={require('../../assets/img/background.png')}
                 >
                     <KeyboardAwareScrollView style={[CommonStyles.container,
-                    { padding: 15 }]}>
+                    { paddingHorizontal: 15, }]}>
 
-                        <View style={{ flexDirection: 'row' }}>
+                        <View style={[CommonStyles.container, CommonStyles.mt30, { flexDirection: 'row' }]}>
                             <View style={{ width: 53, height: 53, marginRight: 10 }}>
                                 <Image style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/img/Rectangle.png')}></Image>
                             </View>
@@ -57,8 +65,10 @@ class Dashboard extends React.Component {
 
                         <View style={{ height: 4, backgroundColor: '#297DEC', marginTop: 10, width: '80%' }}></View>
 
-                        <View style={[CommonStyles.container, CommonStyles.mt10, CommonStyles.br5,
-                        { height: 146, backgroundColor: '#9cd85b' }]}>
+                        <TouchableOpacity style={[CommonStyles.container, CommonStyles.mt10, CommonStyles.br5,
+                        { backgroundColor: '#9cd85b' }]}
+                            onPress={() => { this.props.navigation.navigate('MyTabs') }}
+                        >
                             <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]}
                                 source={require('../../assets/img/greenback.png')}>
 
@@ -72,7 +82,7 @@ class Dashboard extends React.Component {
                                                     { fontSize: 29, color: '#fff' }}>34</Text>
                                             </View>
                                         </View>
-                                        <Text>
+                                        <Text style={{ marginTop: 10 }}>
                                             <Text style={CommonStyles.fontMedium, { fontSize: 14, color: '#335a07' }}>{`TOTAL UPCOMING\n`}</Text>
 
                                             <Text style={[CommonStyles.fontMedium, { fontSize: 20, color: '#333333' }]}>APPOINTMENTS</Text>
@@ -89,19 +99,21 @@ class Dashboard extends React.Component {
 
                                 </View>
                             </ImageBackground>
-                        </View>
+                        </TouchableOpacity>
 
                         <View style={[CommonStyles.mt10, CommonStyles.horizontalContainer, ,
-                        { height: 146 }]}>
+                        {}]}>
 
 
                             <TouchableOpacity style={[CommonStyles.container, CommonStyles.br5,
-                            { borderColor: '#C9D7EA', 
-                            borderWidth: 2, 
-                            padding: 15, 
-                            justifyContent: 'space-between', 
-                            marginRight: 5 }]} 
-                            onPress={() => this.props.navigation.navigate('MyTabs')}
+                            {
+                                borderColor: '#C9D7EA',
+                                borderWidth: 2,
+                                padding: 15,
+                                justifyContent: 'space-between',
+                                marginRight: 5
+                            }]}
+                                onPress={() => this.props.navigation.navigate('MyTabs')}
                             >
                                 <View style={[CommonStyles.horizontalContainer]}>
                                     <Icon name="bars" size={18} color="#C9D7EA" />
@@ -112,7 +124,7 @@ class Dashboard extends React.Component {
                                         { fontSize: 32, color: '#297dec' }]}>34</Text>
                                     </View>
                                 </View>
-                                <Text style={[CommonStyles.fontMedium, { fontSize: 14, }]}>TOTAL CONSULTATION</Text>
+                                <Text style={[CommonStyles.fontMedium, { fontSize: 14, marginTop: 10 }]}>TOTAL CONSULTATION</Text>
                             </TouchableOpacity>
 
 
@@ -122,7 +134,7 @@ class Dashboard extends React.Component {
 
                             <TouchableOpacity style={[CommonStyles.container, CommonStyles.br5,
                             { borderColor: '#C9D7EA', borderWidth: 2, padding: 15, justifyContent: 'space-between', marginLeft: 5 }]}
-                            onPress={() => this.props.navigation.navigate('DrProfile')}
+                                onPress={() => this.props.navigation.navigate('DrProfile')}
                             >
                                 <View style={[CommonStyles.horizontalContainer]}>
                                     <Icon name="bars" size={18} color="#C9D7EA" />
@@ -132,23 +144,21 @@ class Dashboard extends React.Component {
                                     </View>
                                 </View>
                                 <Text style={[CommonStyles.fontMedium,
-                                { fontSize: 14 }]}>VIEW DOCTORS PROFILE</Text>
+                                { fontSize: 14, marginTop: 10 }]}>VIEW DOCTORS PROFILE</Text>
                             </TouchableOpacity>
 
 
                         </View>
-                        <View style={[CommonStyles.container, { justifyContent: 'center', alignSelf: 'center', marginTop: 130 }
+                        <View style={[CommonStyles.container, { justifyContent: 'center', alignSelf: 'center', marginTop: 70 }
                         ]}>
 
-                            <View style={{ width: 148, height: 29, marginLeft: -50, }}>
-                                <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/img/Oval.png')}>
-                                    <View style={{ width: 150, height: 94, marginTop: -75, marginLeft: 25 }}>
-                                        <Image style={{ width: '100%', height: '100%', resizeMode: 'contain' }}
-                                            source={require('../../assets/img/calendar.png')}></Image>
-                                    </View>
-
-                                </ImageBackground>
+                            <View style={[CommonStyles.container]}>
+                                <Image style={[CommonStyles.container, CommonStyles.backgroundImage]}
+                                    source={require('../../assets/img/calendar.png')}></Image>
                             </View>
+
+
+
 
                         </View>
 
@@ -159,11 +169,12 @@ class Dashboard extends React.Component {
                             CommonStyles.mt10,
                             CommonStyles.centerText,
                             CommonStyles.br5,
-                            { backgroundColor: '#297DEC' }]}>
+                            { backgroundColor: '#297DEC', marginBottom: 15 }]}>
                             <Text style={[CommonStyles.fontMedium,
                             CommonStyles.padding,
                             CommonStyles.centerText,
-                            { color: '#fff', fontSize: 15, margin: 5 }]}>
+
+                            { color: '#fff', fontSize: 15, margin: 5, }]}>
                                 CONSULTATION ROOM</Text>
                         </TouchableOpacity>
                     </KeyboardAwareScrollView>

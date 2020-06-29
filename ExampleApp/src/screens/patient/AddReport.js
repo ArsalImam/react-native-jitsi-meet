@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TouchableOpacity, ImageBackground, ScrollView, StatusBar } from 'react-native';
 import { Container, Header, Content, DatePicker, Text, Item, Label, Input, ScrollableTab, } from 'native-base';
-import { CommonStyles } from '../../CommonStyles';
+import  CommonStyles  from '../../CommonStyles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { Icon } from 'react-native-elements';
 
@@ -11,10 +11,8 @@ export default class AddReport extends Component {
         return (
             <View style={styles.container}>
                 
-                    <ImageBackground style={CommonStyles.backgroundImage}
+                    <ImageBackground style={[CommonStyles.container,  CommonStyles.backgroundImage]}
                         source={require('../../assets/drawable-xhdpi/bwback.png')}>
-                        
-                        <StatusBar translucent backgroundColor="transparent" barStyle={'light-content'} />
 
                         <View style={styles.View1}>
                             <Text style={{ marginHorizontal: '7%', marginBottom: 12, }}>

@@ -1,7 +1,7 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import { sin } from 'react-native-reanimated';
 
-const CommonStyles = StyleSheet.create ({
+const CommonStyles = StyleSheet.create({
   appRedColor: {
     color: '#FF0000',
   },
@@ -82,11 +82,11 @@ const CommonStyles = StyleSheet.create ({
   shadow: {
     shadowColor: '#000',
     shadowOffset: {
-      width: 0,
-      height: 3,
+      width: 1,
+      height: 10,
     },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
+    shadowOpacity: 0.8,
+    shadowRadius: 6,
     elevation: 6,
   },
   buttonCenterText: {
@@ -100,7 +100,7 @@ const CommonStyles = StyleSheet.create ({
     padding: 10,
   },
   buttonStyle: {
-    shadowOffset: {height: 0, width: 0},
+    shadowOffset: { height: 0, width: 0 },
     shadowOpacity: 0,
     elevation: 0,
     borderRadius: 25,
@@ -166,8 +166,14 @@ const CommonStyles = StyleSheet.create ({
       height: 1,
     },
   },
+  itemStyle: {
+    marginTop: 10,
+    alignSelf: 'center',
+    width: '88%',
+    borderColor: '#707070',
+  },
   textSizeMedium: {
-    fontSize: 18,
+    fontSize: 18,   
   },
   textSizeSmall: {
     fontSize: 12,
