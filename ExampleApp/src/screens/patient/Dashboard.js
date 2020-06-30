@@ -19,6 +19,7 @@ import {Configs} from '../../Configs';
 import {ViewUtils} from '../../Utils';
 import Api from '../../Api';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import moment from 'moment';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -40,34 +41,36 @@ class Dashboard extends React.Component {
       .then(appointments => {
         let schAppointment = appointments.filter(x => x.status == 'Scheduled');
         if (schAppointment.length > 0) {
-          var lastAppointment = schAppointment.reverse()[0];
-            this.setState({
-            // appointments,
+          let lastAppointment = schAppointment.reverse()[0];
+          let date = moment(lastAppointment.date);
+          let diff = '';
+
+          if (date.isAfter(moment(Date.now()))) {
+            console.warn('lastAppointment ===========> ', date);
+            diff = date.fromNow();
+          } else {
+            console.warn('lastAppointment else ===========> ',  moment(Date.now()).milliseconds);
+            let duration = moment.duration(
+              moment(Date.now()).milliseconds() - date.milliseconds(),
+              'milliseconds',
+            );
+            diff = moment(duration.milliseconds()).format('mm[m] ss[s]');
+          }
+          let lastestAppointment = {
+            time: moment(lastAppointment.date).format('hh:mm a'),
+            timeLeft: diff,
+          };
+
+          this.setState({
             upComingCount: schAppointment.length,
-            lastestAppointment: {time: '0:00 am', timeLeft: '0 mins'}
-            // lastestAppointment,
+            lastestAppointment,
           });
-        //   return;
         }
-
-        // lastestAppointment = schAppointment.reverse()[0];
-        // this.setState({
-        //   appointments,
-        //   upComingCount: schAppointment.length,
-        //   lastestAppointment,
-        // });
-
-
-        // this.state = {
-        //     upComingCount: 0,
-        //     totalConsultation: 0,
-        //     totalPatients: 0,
-        //     appointments: [],
-        //     user: {},
-        //     lastestAppointment: {time: '0:00 am', timeLeft: '0 mins'},
-        //   };
       })
-      .catch(err => ViewUtils.showToast(err));
+      .catch(err => {
+        ViewUtils.showToast(err);
+        console.warn('err', JSON.stringify(err));
+      });
 
     //getting user data
     Api.instance()

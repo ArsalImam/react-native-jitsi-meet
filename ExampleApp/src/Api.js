@@ -68,16 +68,11 @@ export default class Api {
   async getMyAppointments() {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
-
+    console.warn(JSON.stringify(_user));
     let id_param = this._relationalParamByRole(_user.role);
     let response = await this.client.get(
       this.getUrl(`Appointments?filter[where][${id_param}]=${_user.id}`),
     );
-
-    console.warn(
-      this.getUrl(`Appointments?filter[where][${id_param}]=${_user.id}`),
-    );
-    // &filter[where][status]=Scheduled
     let data = response.data;
     if (data.error) throw data.error.message;
     return data;
