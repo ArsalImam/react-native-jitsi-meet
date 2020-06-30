@@ -38,24 +38,24 @@ export default class BookingList extends Component {
 
                     <View style={[CommonStyles.container,
                     CommonStyles.padding,
-                    {marginTop: '15%' }
+                    { flex: 2, }
                     ]}>
-
-                        <Text style={{ color: '#FFFFFF', paddingLeft: 15}}>
+                        <Text style={{ color: '#FFFFFF', paddingLeft: 12, marginTop: '15%' }}>
                             <Text style={[CommonStyles.DINAltBold, CommonStyles.textSizeLarge,]} >{`Available\n`}</Text>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>It is a list of your all booking patients </Text>
                         </Text>
-
+                    </View>
+                    <View style={{ flex: 8, paddingHorizontal: 2}} >
                         <FlatGrid
                             itemDimension={320}
                             items={main}
                             style={[CommonStyles.container,
-                            { marginTop: '11%' },
+    
                             ]}
                             renderItem={({ item }) => (
 
-                                <TouchableOpacity style={[CommonStyles.container, CommonStyles.shadow ]}
-                                onPress={() => {this.props.navigation.navigate(`${item.route}`)}}
+                                <TouchableOpacity style={[CommonStyles.container, CommonStyles.shadow]}
+                                    onPress={() => { this.props.navigation.navigate(`${item.route}`) }}
                                 >
                                     <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/drawable-mdpi/Fill-1.png')}>
 

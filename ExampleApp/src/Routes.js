@@ -49,6 +49,8 @@ export default class Routes extends React.Component {
     return (
       <Tab.Navigator
 
+    
+
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size, type }) => {
             let iconName;
@@ -74,6 +76,8 @@ export default class Routes extends React.Component {
         })}
 
         tabBarOptions={{
+
+          
           activeTintColor: '#297dec',
           inactiveTintColor: '#000',
 
@@ -93,8 +97,9 @@ export default class Routes extends React.Component {
           }
 
         }} >
+        
 
-        <Tab.Screen name="Available" component={Available} />
+        <Tab.Screen name="Available" component={Available}/>
         <Tab.Screen name="Scheduled" component={Scheduled} />
         <Tab.Screen name="Completed" component={Completed} />
       </Tab.Navigator>

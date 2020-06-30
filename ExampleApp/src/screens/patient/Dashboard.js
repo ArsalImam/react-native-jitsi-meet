@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Image, ImageBackground, ScrollView, StatusBar, Button, ActivityIndicator } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Image, ImageBackground, ScrollView, StatusBar, Button, ActivityIndicator ,} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { Container, Header, Content, Tab, Tabs, TabHeading, } from 'native-base';
 import CommonStyles from '../../CommonStyles';
@@ -8,36 +8,39 @@ import { Configs } from '../../Configs';
 import { ViewUtils } from '../../Utils';
 import Api from '../../Api';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+ 
 
 class Dashboard extends React.Component {
-  
+
     constructor(props) {
         super(props)
-        this.state = { initialPage: 1, activeTab: 1, appointments:[],
-            user:{} }
+        this.state = {
+            initialPage: 1, activeTab: 1, appointments: [],
+            user: {}
+        }
     }
 
     componentDidMount() {
         // debugger;
         //getting appointment data
         Api.instance()
-        .getMyAppointments()
-        .then(appointments => this.setState({
-            appointments
-        }))
-        .catch(err => ViewUtils.showToast(err));
+            .getMyAppointments()
+            .then(appointments => this.setState({
+                appointments
+            }))
+            .catch(err => ViewUtils.showToast(err));
 
         //getting user data
         Api.instance()
-        ._user()
-        .then(user => {
-            if (user == null) return
-            this.setState({
-                user
-            })
+            ._user()
+            .then(user => {
+                if (user == null) return
+                this.setState({
+                    user
+                })
 
-        })
-        .catch(err => ViewUtils.showToast(err));
+            })
+            .catch(err => ViewUtils.showToast(err));
     }
 
     goToPatientsRooms() {
@@ -51,13 +54,15 @@ class Dashboard extends React.Component {
             this.props.navigation.navigate('AppointmentRoom', { appointmentId });
         };
 
-        
+
     }
 
     render() {
-        return (
-            <View style={[CommonStyles.container]}>
 
+        return (
+
+
+            <View style={[CommonStyles.container]}>
 
                 <ImageBackground
                     style={[CommonStyles.container, CommonStyles.backgroundImage]}
@@ -88,7 +93,7 @@ class Dashboard extends React.Component {
 
                         <TouchableOpacity style={[CommonStyles.container, CommonStyles.mt10, CommonStyles.br5,
                         { backgroundColor: '#9cd85b' }]}
-                            onPress={() => { this.props.navigation.navigate('MyTabs') }}
+                            onPress={() => { this.props.navigation.navigate('MyTabs')}}
                         >
                             <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]}
                                 source={require('../../assets/img/greenback.png')}>

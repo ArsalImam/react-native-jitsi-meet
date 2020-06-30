@@ -66,7 +66,7 @@ export default class Api {
     }
 
     async getMyAppointments() {
-        debugger;
+      //  debugger;
         let user = await this._user();
         let _user = JSON.parse(user);
         let id_param = this._relationalParamByRole(_user.role);
