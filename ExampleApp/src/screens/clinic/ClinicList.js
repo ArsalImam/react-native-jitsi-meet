@@ -4,6 +4,7 @@ import CommonStyles from '../../CommonStyles';
 import { ListItem, CheckBox, Divider } from 'react-native-elements';
 import { FlatGrid } from 'react-native-super-grid';
 import { StyleSheet, Text, View, ImageBackground, StatusBar, ActivityIndicator, FlatList } from 'react-native';
+import moment from 'moment';
 
 export default class ClinicList extends Component {
 
@@ -91,7 +92,7 @@ export default class ClinicList extends Component {
                                                     /> */}
                                                     <Text style={{ marginBottom: 6 }}>
                                                         <Text style={[CommonStyles.textSizeSmall, CommonStyles.fontRegular, { color: '#333333' }]}>{`Date: `}</Text>
-                                                        <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333' }]}>{item.joinedDate}</Text>
+                                                        <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333' }]}>{moment(item.joinedDate).format('ll')}</Text>
                                                     </Text>
                                                 </View>
                                             </View>
