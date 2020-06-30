@@ -35,9 +35,9 @@ export default class Api {
     }
 
 // Clinic
+// create clinic
     async createClinic(data) {
-        console.log(data);
-        try {
+                try {
             let response = await this.client.post(
                 this.getUrl('Clinics/CreateClinic'),
                 {data: data},
@@ -48,6 +48,18 @@ export default class Api {
             console.log(error)
         }
     }
+
+// clinic list
+    async getClinicList() {
+     
+        let _user = JSON.parse(await this._user());
+        console.log(_user);
+        let response = await this.client.get(this.getUrl(`Clinics?filter[where][doctorId]=${_user.id}`));
+        let data = response.data;
+        if (data.error) throw data.error.message;
+        return data;
+    }
+
 
     _relationalParamByRole(role) {
         var id_param = 'patientId';

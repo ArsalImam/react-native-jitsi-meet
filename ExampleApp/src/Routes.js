@@ -23,6 +23,7 @@ import Completed from './screens/patient/CompleteBookings';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'native-base';
 import CreateClinic from "./screens/clinic/CreateClinic";
+import ClinicList from "./screens/clinic/ClinicList";
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -35,6 +36,7 @@ export default class Routes extends React.Component {
         <Drawer.Screen name="Dashboard" component={Dashboard} />
         <Drawer.Screen name="Vital" component={Vital} />
         <Drawer.Screen name="CreateClinic" component={CreateClinic} />
+        <Drawer.Screen name="ClinicList" component={ClinicList} />
         <Drawer.Screen name="MadicationAdd" component={MadicationAdd} />
         <Drawer.Screen name="MedicalCondition" component={MedicalCondition} />
         <Drawer.Screen name="Demographics" component={Demographics} />
@@ -165,6 +167,12 @@ export default class Routes extends React.Component {
           <Stack.Screen
               name="CreateClinic"
               component={CreateClinic}
+              options={{ headerShown: false }}
+          />
+          
+          <Stack.Screen
+              name="ClinicList"
+              component={ClinicList}
               options={{ headerShown: false }}
           />
         <Stack.Screen
