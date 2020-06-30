@@ -65,13 +65,43 @@ export default class Api {
     return id_param;
   }
 
-  async getMyAppointments() {
+  async getMyAppointments(status = '', requirePatient = false) {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
-    console.warn(JSON.stringify(_user));
+
+    let id_param = this._relationalParamByRole(_user.role);
+    let includes = '';
+    let wheres = '';
+    if (requirePatient) {
+      includes = `&filter[include]=patient`;
+    }
+
+    if (status != '') {
+      wheres = `&filter[where][status]=${status}`;
+    }
+
+    let response = await this.client.get(
+      this.getUrl(
+        `Appointments?filter[where][${id_param}]=${
+          _user.id
+        }${includes}${wheres}`,
+      ),
+    );
+    let data = response.data;
+    if (data.error) throw data.error.message;
+    return data;
+  }
+
+  async getMyPatients() {
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
     let id_param = this._relationalParamByRole(_user.role);
     let response = await this.client.get(
-      this.getUrl(`Appointments?filter[where][${id_param}]=${_user.id}`),
+      this.getUrl(
+        `Clients?filter[where][${id_param}]=${_user.id}&[where]][role]${
+          Roles.patient
+        }`,
+      ),
     );
     let data = response.data;
     if (data.error) throw data.error.message;

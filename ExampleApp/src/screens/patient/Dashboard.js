@@ -33,8 +33,7 @@ class Dashboard extends React.Component {
       lastestAppointment: {time: '0:00 am', timeLeft: '0 mins'},
     };
   }
-
-  componentDidMount() {
+  _getAllAppointments() {
     //getting appointment data
     Api.instance()
       .getMyAppointments()
@@ -46,10 +45,8 @@ class Dashboard extends React.Component {
           let diff = '';
 
           if (date.isAfter(moment(Date.now()))) {
-            console.warn('lastAppointment ===========> ', date);
             diff = date.fromNow();
           } else {
-            console.warn('lastAppointment else ===========> ',  moment(Date.now()).milliseconds);
             let duration = moment.duration(
               moment(Date.now()).milliseconds() - date.milliseconds(),
               'milliseconds',
@@ -66,11 +63,31 @@ class Dashboard extends React.Component {
             lastestAppointment,
           });
         }
+        this.setState({
+          totalConsultation: appointments.length,
+          appointments,
+        });
       })
       .catch(err => {
         ViewUtils.showToast(err);
-        console.warn('err', JSON.stringify(err));
       });
+  }
+
+  _getAllPatients() {
+    Api.instance()
+      .getMyPatients()
+      .then(patients => this.setState({totalPatients: patients.length}))
+      .catch(err => {
+        ViewUtils.showToast(err);
+      });
+  }
+
+  componentDidMount() {
+    //updating appointments
+    this._getAllAppointments();
+
+    //updating patients
+    this._getAllPatients();
 
     //getting user data
     Api.instance()

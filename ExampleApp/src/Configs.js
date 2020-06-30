@@ -19,4 +19,17 @@ const Roles = {
   assistant: "ROLE_ASSISTANT",
 }
 
-export {Configs, Roles};
+const AppointmentStatus = {
+  completed: "Completed",
+  scheduled: "Scheduled",
+  available: "Waiting",
+}
+// "Waiting",
+//         "Unscheduled",
+//         "Completed",
+//         "Cancelled",
+//         "Missed",
+//         "In progress",
+//         "Scheduled"
+
+export {Configs, Roles, AppointmentStatus};
