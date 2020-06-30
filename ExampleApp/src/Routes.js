@@ -22,6 +22,7 @@ import Completed from './screens/patient/CompleteBookings';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'native-base';
+import CreateClinic from "./screens/clinic/CreateClinic";
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();

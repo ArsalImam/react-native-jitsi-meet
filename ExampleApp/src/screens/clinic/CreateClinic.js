@@ -47,13 +47,17 @@ export default class CreateClinic extends Component {
     }
 
     SelectattendAt = (event) => {
+
         let timeStamp = event.nativeEvent.timestamp;
-        event.type === 'set' ? this.setState({attendAt: new Date(timeStamp),showStartTimePicker:false}) : this.setState({attendAt: null,showStartTimePicker:false});
+        event.type === 'set' ? this.setState({attendAt: new Date(timeStamp),showStartTimePicker: false}) : this.setState({attendAt: null, showStartTimePicker: false});
 
     };
     SelectleftAt = (event) => {
         let timeStamp = event.nativeEvent.timestamp;
-        event.type === 'set' ? this.setState({leftAt: new Date(timeStamp),showEndTimePicker:false}) : this.setState({leftAt: null,showEndTimePicker:false});
+        event.type === 'set' ? this.setState({
+            leftAt: new Date(timeStamp),
+            showEndTimePicker: false
+        }) : this.setState({leftAt: null, showEndTimePicker: false});
     };
 
     showTimepicker = (time) => {
@@ -65,25 +69,18 @@ export default class CreateClinic extends Component {
             clinicFrequency: value
         });
     }
-
-
-
-    titleChange = (event) => {
-        if (/^\d+$/.test(event)) {
-            this.setState({
-                clinicTitle: event
-            });
-        }
+     formatAMPM(dateToConvert) {
+        var hours = dateToConvert.getHours();
+        var minutes = dateToConvert.getMinutes();
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0'+minutes : minutes;
+        var strTime = hours + ':' + minutes + ' ' + ampm;
+        var formattedDate=new Date("1970-01-01"+JSON.stringify(strTime));
+        return formattedDate;
     }
 
-    handleInputChangeWeeks = (text) => {
-
-        if (/^\d+$/.test(text)) {
-            this.setState({
-                numberOfClinics: text
-            });
-        }
-    }
     handleInputChangeSlots = (event) => {
         if (/^\d+$/.test(event)) {
             this.setState({
@@ -94,76 +91,83 @@ export default class CreateClinic extends Component {
 
 
     createClinic() {
+        let appSlot = parseInt(this.state.appointmentSlots);
+        switch (appSlot) {
+            case 300000:
+                this.state.appointmentSlotsText = '5 Minutes';
+                break;
+            case 600000:
+                this.state.appointmentSlotsText = '10 Minutes';
+                break;
 
-          switch (parseInt(this.state.appointmentSlots)) {
-              case 300000:
-                  this.setState({appointmentSlotsText: '5 Minutes'});
-                  break;
-              case 600000:
-                  this.setState({appointmentSlotsText: '10 Minutes'});
-                  break;
+            case 900000:
+                this.state.appointmentSlotsText = '15 Minutes';
+                break;
 
-              case 900000:
-                  this.setState({appointmentSlotsText: '15 Minutes'});
+            case 1200000:
+                this.state.appointmentSlotsText = '20 Minutes';
+                break;
+            case 1800000:
+                this.state.appointmentSlotsText = '30 Minutes';
+                break;
 
-                  break;
+            default:
+                break;
 
-              case 1200000:
-                  this.setState({appointmentSlotsText: '20 Minutes'});
+        }
 
-                  break;
-              case 1800000:
-                  this.setState({appointmentSlotsText: '30 Minutes'});
+        let freq = parseInt(this.state.clinicFrequency);
 
-                  break;
+        switch (freq) {
+            case 604799000:
+                this.state.clinicFrequencyText = 'Every Week';
+                break;
+            case 1209599000:
+                this.state.clinicFrequencyText = 'Alternate Week';
+                break;
 
-              default:
-                  break;
+            default:
+                break;
 
-          }
-
-
-          switch (parseInt(this.state.clinicFrequency)) {
-              case 604799000:
-                  this.setState({clinicFrequencyText: 'Every Week'});
-                  break;
-              case 1209599000:
-                  this.setState({clinicFrequencyText: 'Alternate Week'});
-                  break;
-
-              default:
-                  break;
-
-          }
-
-          var attendedAtDate = new Date(`1970-01-01 ${this.state.attendAt}`);
-          var leftAtDate = new Date(`1970-01-01 ${this.state.leftAt}`);
-          var selectedDate = new Date(this.state.joinedDate);
-          selectedDate.setMonth(selectedDate.getMonth());
+        }
 
 
-          this.state.clinicObj.doctorId = this.state.userObj.id;
-          this.state.clinicObj.joinedDate = selectedDate.toString();
-          this.state.clinicObj.attendAt = attendedAtDate.getTime();
-          this.state.clinicObj.leftAt = leftAtDate.getTime();
-          this.state.clinicObj.frequency = parseInt(this.state.clinicFrequency);
-          this.state.clinicObj.numOfClinics = this.state.numberOfClinics;
-          this.state.clinicObj.appointmentSlots = parseInt(this.state.appointmentSlots);
-          this.state.clinicObj.name = this.state.clinicTitle;
-          this.state.clinicObj.frequencyText = this.state.clinicFrequencyText;
-          this.state.clinicObj.appointmentSlotsText = this.state.appointmentSlotsText;
-console.log(this.state.clinicObj);
-          Api.instance().createClinic(this.state.clinicObj)
-              .then(res => {
-                  this.props.navigation.navigate('MyTabs')
 
-              })
-              .catch(err => {
-                  ViewUtils.showToast(err);
-              })
-              .finally(() => {
-                  this.setState({showLoader: false})
-              });
+
+
+
+        var attendedAtDate = this.formatAMPM(this.state.attendAt);
+        this.state.attendAt=attendedAtDate.getTime();
+        var leftAtDate = this.formatAMPM(this.state.leftAt);
+
+        this.state.leftAt=leftAtDate.getTime();
+
+        var selectedDate = new Date(this.state.chosenDate);
+        selectedDate.setMonth(selectedDate.getMonth());
+
+
+        this.state.clinicObj.doctorId = this.state.userObj.id;
+        this.state.clinicObj.joinedDate = selectedDate.toString();
+        this.state.clinicObj.attendAt = attendedAtDate.getTime();
+        this.state.clinicObj.leftAt = leftAtDate.getTime();
+        this.state.clinicObj.frequency = parseInt(this.state.clinicFrequency);
+        this.state.clinicObj.numOfClinics = this.state.numberOfClinics;
+        this.state.clinicObj.appointmentSlots = parseInt(this.state.appointmentSlots);
+        this.state.clinicObj.name = this.state.clinicTitle;
+        this.state.clinicObj.frequencyText = this.state.clinicFrequencyText;
+        this.state.clinicObj.appointmentSlotsText = this.state.appointmentSlotsText;
+
+        Api.instance().createClinic(this.state.clinicObj)
+            .then(res => {
+                this.props.navigation.navigate('MyTabs')
+
+            })
+            .catch(err => {
+                ViewUtils.showToast(err);
+            })
+            .finally(() => {
+                this.setState({showLoader: false})
+            });
     }
 
     render() {
@@ -221,12 +225,11 @@ console.log(this.state.clinicObj);
                             }} style={[styles.itemStyle, {alignSelf: 'center', width: '50%'}]}>
 
                                 <Label
-                                    style={[{color: '#333333'}, CommonStyles.DINProLight, CommonStyles.textSizeSmall]}>Select
-                                    To</Label>
+                                    style={[{color: '#333333'}, CommonStyles.DINProLight, CommonStyles.textSizeSmall]}>From</Label>
                                 {this.state.showStartTimePicker && (
                                     <DateTimePicker
                                         testID="dateTimePicker"
-                                        value={this.state.date}
+                                        value={this.state.attendAt}
                                         mode='time'
                                         is24Hour={true}
                                         display="clock"
@@ -240,12 +243,11 @@ console.log(this.state.clinicObj);
                             }} style={[styles.itemStyle, {alignSelf: 'center', width: '50%'}]}>
 
                                 <Label
-                                    style={[{color: '#333333'}, CommonStyles.DINProLight, CommonStyles.textSizeSmall]}>Select
-                                    End Date</Label>
+                                    style={[{color: '#333333'}, CommonStyles.DINProLight, CommonStyles.textSizeSmall]}>To</Label>
                                 {this.state.showEndTimePicker && (
                                     <DateTimePicker
                                         testID="dateTimePicker"
-                                        value={this.state.date}
+                                        value={this.state.leftAt}
                                         mode='time'
                                         is24Hour={true}
                                         display="clock"
@@ -277,7 +279,7 @@ console.log(this.state.clinicObj);
                                     style={[{color: '#333333'}, CommonStyles.DINProLight, CommonStyles.textSizeSmall]}>Number
                                     of Weeks</Label>
                                 <Input name="clinics" value={this.state.numberOfClinics}
-                                       onChange={this.handleInputChangeWeeks.bind(this)} keyboardType="number-pad"/>
+                                       onChangeText={val => this.setState({ numberOfClinics: val })} keyboardType="number-pad"/>
                             </Item>
 
 
@@ -304,7 +306,7 @@ console.log(this.state.clinicObj);
                             <Item stackedLabel style={[styles.itemStyle, {alignSelf: 'center', width: '46%'}]}>
                                 <Label
                                     style={[{color: '#333333'}, CommonStyles.DINProLight, CommonStyles.textSizeSmall]}>Title</Label>
-                                <Input onChange={this.titleChange.bind(this)}/>
+                                <Input  value={this.state.clinicTitle}  onChangeText={val => this.setState({ clinicTitle: val })}/>
                             </Item>
 
 
