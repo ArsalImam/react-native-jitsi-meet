@@ -13,23 +13,19 @@ const Loader = props => {
         ...attributes
     } = props;
 
-    return (
-
-      
-            
+    return (          
         <Modal
-
             transparent={true}
             animationType={'none'}
             visible={loading}
             onRequestClose={() => { console.log('close modal') }}>
          
             <View style={styles.modalBackground}>
-          
                 <View style={styles.activityIndicatorWrapper}>
                     <ActivityIndicator
                         animating={loading} color='#297dec' size='large'/>
-                       
+                    <StatusBar translucent backgroundColor='#000040' barStyle={'light-content'} />
+         
                 </View>
             </View>
         </Modal>
@@ -46,8 +42,6 @@ const styles = StyleSheet.create({
     },
     activityIndicatorWrapper: {
         backgroundColor: '#eeeeee',
-        //height: 100,
-        //width: 100,
         padding: 25,
         borderRadius: 5,
         display: 'flex',

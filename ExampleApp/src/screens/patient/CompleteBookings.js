@@ -17,18 +17,17 @@ export default class CompleteBookings extends Component {
         };
     }
     render() {
-
         const main = [
-            { name: 'SHAZ QURESHI', code: '#9ed75f', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
-            { name: 'SHAZ QURESHI', code: '#9ed75f', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
-            { name: 'SHAZ QURESHI', code: '#9ed75f', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
-            { name: 'SHAZ QURESHI', code: '#9ed75f', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
-            { name: 'SHAZ QURESHI', code: '#9ed75f', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
-            { name: 'SHAZ QURESHI', code: '#9ed75f', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
-            { name: 'SHAZ QURESHI', code: '#9ed75f', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
-            { name: 'SHAZ QURESHI', code: '#9ed75f', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
-            { name: 'SHAZ QURESHI', code: '#9ed75f', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
-
+            { name: 'SHAZ QURESHI', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
+            { name: 'SHAZ QURESHI', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
+            { name: 'SHAZ QURESHI', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
+            { name: 'SHAZ QURESHI', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
+            { name: 'SHAZ QURESHI', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
+            { name: 'SHAZ QURESHI', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
+            { name: 'SHAZ QURESHI', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
+            { name: 'SHAZ QURESHI', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
+            { name: 'SHAZ QURESHI', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
+            { name: 'SHAZ QURESHI', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
         ];
 
         return (
@@ -36,41 +35,45 @@ export default class CompleteBookings extends Component {
 
                 <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/img/bwback.png')}>
 
-                    <View style={styles.View3}>
+                    <View style={[CommonStyles.container,
+                    CommonStyles.padding,
+                    { paddingHorizontal: 15, marginTop: '15%' }
+                    ]}>
 
-                        <Text numberOfLines={3} style={{ color: '#fff', marginHorizontal: 15, marginBottom: 15, }}>
-                            <Text style={[CommonStyles.DINAltBold, CommonStyles.textSizeLarge, { lineHeight: 28 }]} >{`Completed\n`}</Text>
-                            <Text style={[CommonStyles.SFProLight, CommonStyles.textSizeSmall, { lineHeight: 16 }]}>It is a list of your all booking patients </Text>
+                        <Text style={{ color: '#FFFFFF', }}>
+                            <Text style={[CommonStyles.DINAltBold, CommonStyles.textSizeLarge,]} >{`Completed\n`}</Text>
+                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>It is a list of your all booking patients </Text>
                         </Text>
-                    </View>
 
-                    <View style={styles.View2}>
                         <FlatGrid
                             itemDimension={320}
                             items={main}
+                            style={[CommonStyles.container,
+                            { marginTop: '9%' },
+                            ]}
                             renderItem={({ item }) => (
 
-                                <View style={{ height: 105, justifyContent: 'center', alignItems: "center" }}>
-                                    <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/img/Fill-1.png')}>
+                                <View style={[CommonStyles.container, CommonStyles.centerText, CommonStyles.shadow, { height: 105 }]}>
+                                    <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/drawable-mdpi/Fill-1.png')}>
 
-                                        <View style={[styles.itemContainer, { flexDirection: 'row' }]}>
+                                        <View style={[CommonStyles.container, { flexDirection: 'row', paddingHorizontal: 16 }]}>
 
-                                            <View style={[styles.view1, { paddingLeft: 16, }]}>
+                                            <View style={[CommonStyles.container, { justifyContent: 'space-around' }]}>
                                                 <Text>
-                                                    <Text style={[CommonStyles.DINProLight, CommonStyles.textSizeSmall, { color: '#333333', lineHeight: 16 }]}>{`Patient Name\n`}</Text>
-                                                    <Text style={[CommonStyles.DINAltBold, CommonStyles.textSizeAverage, { color: '#333333', lineHeight: 20 }]}>{item.name}</Text>
+                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Patient Name\n`}</Text>
+                                                    <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.name}</Text>
                                                 </Text>
 
                                                 <Text style={[CommonStyles.textSizeAverage, { color: '#333333' }]}>
-                                                    <Text style={[CommonStyles.DINProLight, CommonStyles.textSizeSmall]}>{`Time: `}</Text>
-                                                    <Text style={CommonStyles.DINAltBold}>{item.time}</Text>
+                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{`Time: `}</Text>
+                                                    <Text style={CommonStyles.fontMedium}>{item.time}</Text>
                                                 </Text>
                                             </View>
-                                            <View style={[styles.view1, { paddingRight: 16 }]}>
-                                                <View style={{ flex: 1, justifyContent: 'space-around', alignItems: 'flex-end', marginBottom: 10 }}>
+                                            <View style={[CommonStyles.container, { justifyContent: 'space-around' }]}>
+                                                <View style={[CommonStyles.container, { justifyContent: 'space-around', alignItems: 'flex-end', marginBottom: 10 }]}>
                                                     <CheckBox
                                                         containerStyle={{ backgroundColor: 'rgba(52, 52, 52, 0.0)', borderColor: 'rgba(52, 52, 52, 0.0)', marginRight: -12 }}
-                                                        textStyle={{ fontSize: 12, fontWeight: '600', color: '#497C12' }}
+                                                        textStyle={[CommonStyles.textSizeSmall, { color: '#497C12', fontWeight: '600' }]}
                                                         iconRight
                                                         iconType='material'
                                                         checkedIcon='check-box'
@@ -81,8 +84,8 @@ export default class CompleteBookings extends Component {
                                                         checked={this.state.checked}
                                                     />
                                                     <Text style={{ marginBottom: 6 }}>
-                                                        <Text style={[CommonStyles.textSizeSmall, CommonStyles.DINProLight, { color: '#333333' }]}>{`Date: `}</Text>
-                                                        <Text style={[CommonStyles.DINAltBold, CommonStyles.textSizeAverage, { color: '#333333' }]}>{item.date}</Text>
+                                                        <Text style={[CommonStyles.textSizeSmall, CommonStyles.fontRegular, { color: '#333333' }]}>{`Date: `}</Text>
+                                                        <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333' }]}>{item.date}</Text>
                                                     </Text>
                                                 </View>
                                             </View>
@@ -91,38 +94,9 @@ export default class CompleteBookings extends Component {
                                 </View>
                             )}
                         />
-
                     </View>
-
                 </ImageBackground>
             </View>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    gridView: {
-        flex: 1,
-    },
-    itemContainer: {
-        flex: 1,
-        height: 101,
-    },
-    View3: {
-        flex: 2,
-        justifyContent: 'flex-end',
-    },
-    View2: {
-        marginTop: 10,
-        flex: 8,
-       marginHorizontal: 8
-    },
-    view1: {
-        height: '100%',
-        width: '50%',
-        justifyContent: 'space-evenly',
-    },
-});

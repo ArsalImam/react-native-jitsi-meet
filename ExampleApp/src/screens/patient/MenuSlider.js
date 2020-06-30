@@ -23,14 +23,14 @@ class MenuSlider extends React.Component {
             { name: 'Vital', iconName: 'activity', iconFamily: 'Feather', iconSize: '18', route: 'Vital' },
             { name: 'Medication', iconName: 'medicinebox', iconFamily: 'AntDesign', iconSize: '18', route: 'MadicationAdd' },
             { name: 'Medical Condition', iconName: 'bed', iconFamily: 'FontAwesome', iconSize: '18', route: 'MedicalCondition' },
-            { name: 'Allergies', iconName: 'ios-flower', iconFamily: 'Ionicon', iconSize: '18', route: '' },
+            { name: 'Allergies', iconName: 'ios-flower', iconFamily: 'Ionicon', iconSize: '18', route: 'Patients' },
             { name: 'Surgeries', iconName: 'box-cutter', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: '' },
-            { name: 'Dental Issue', iconName: 'tooth-outline', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: 'AddReport' },
-            { name: 'Reports', iconName: 'notebook', iconFamily: 'SimpleLineIcons', iconSize: '20', route: '' },
+            { name: 'Dental Issue', iconName: 'tooth-outline', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: '' },
+            { name: 'Reports', iconName: 'notebook', iconFamily: 'SimpleLineIcons', iconSize: '20', route: 'AddReport' },
         ];
 
         return (
-            <View style={[CommonStyles.container, CommonStyles.padding, { backgroundColor: '#ffffff'}]}>
+            <View style={[CommonStyles.container, CommonStyles.padding, { backgroundColor: '#F7FAFE'}]}>
                 <Content>
 
                     <View

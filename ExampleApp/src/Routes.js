@@ -5,8 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Login from './screens/login/Login';
 import Dashboard from './screens/patient/Dashboard';
-import Demographics from './screens/patient/Demographics';
-import BookingList from './screens/patient/BookingList';
+import Demographics from './screens/patient/Demographics'
+import Available from './screens/patient/BookingList';
 import MenuSlider from './screens/patient/MenuSlider';
 import VitalAdd from './screens/patient/VitalAdd';
 import AddReport from './screens/patient/AddReport';
@@ -16,9 +16,9 @@ import Vital from './screens/patient/Vital';
 import DrProfile from './screens/patient/DrProfile';
 import Patients from './screens/patient/Patients';
 import AppointmentRoom from './screens/AppointmentRoom';
-import ScheduledBooking from './screens/patient/ScheduledBooking';
-import CompleteBookings from './screens/patient/CompleteBookings';
-import CreateClinic from './screens/clinic/CreateClinic';
+
+import Scheduled from './screens/patient/ScheduledBooking';
+import Completed from './screens/patient/CompleteBookings';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'native-base';
@@ -38,6 +38,7 @@ export default class Routes extends React.Component {
         <Drawer.Screen name="MedicalCondition" component={MedicalCondition} />
         <Drawer.Screen name="Demographics" component={Demographics} />
         <Drawer.Screen name="AddReport" component={AddReport} />
+        <Drawer.Screen name="Patients" component={Patients} />
 
       </Drawer.Navigator>
     );
@@ -51,42 +52,50 @@ export default class Routes extends React.Component {
           tabBarIcon: ({ focused, color, size, type }) => {
             let iconName;
             let iconType;
-            let iconColor;
 
-            if (route.name === 'AVIAILABLE') {
+
+            if (route.name === 'Available') {
               iconName = focused ? 'navicon' : 'navicon';
               iconType = 'EvilIcons'
-              iconColor
-            } else if (route.name === 'COMPLETED') {
+              color ? '#297dec' : '#000';
+            } else if (route.name === 'Completed') {
               iconName = focused ? 'playlist-check' : 'playlist-check';
-              iconColor = color ? 'red' : 'green';
+              color ? '#297dec' : '#000';
               iconType = 'MaterialCommunityIcons'
             }
-            else if (route.name === 'SCHEDULED') {
+            else if (route.name === 'Scheduled') {
               iconName = focused ? 'schedule' : 'schedule';
               iconType = 'MaterialIcons'
+              color ? '#297dec' : '#000';
             }
-            return <Icon name={iconName} type={iconType} style={color= `${iconColor}`}/>;
+            return <Icon name={iconName} type={iconType} style={{ fontSize: 22, color: `${color}` }} />;
           },
         })}
 
         tabBarOptions={{
-          pressColor: '#297dec',
           activeTintColor: '#297dec',
           inactiveTintColor: '#000',
 
-          tabStyle: {borderWidth: 3,
+          tabStyle: {
+            borderTopWidth: 3,
             borderColor: '#fff',
-            borderRadius: 7,
             backgroundColor: '#F7FAFE',
           },
           labelPosition: 'beside-icon',
+          labelStyle: { fontSize: 14 },
+          style: {
+            backgroundColor: 'rgba(0, 0, 0, 0.7)', // TabBar background
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: 0,
+          }
 
         }} >
 
-        <Tab.Screen name="AVAILABLE" component={BookingList} />
-        <Tab.Screen name="COMPLETED" component={CompleteBookings} />
-        <Tab.Screen name="SCHEDULED" component={ScheduledBooking} />
+        <Tab.Screen name="Available" component={Available} />
+        <Tab.Screen name="Scheduled" component={Scheduled} />
+        <Tab.Screen name="Completed" component={Completed} />
       </Tab.Navigator>
     )
   }
@@ -113,13 +122,17 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="MyTabs"
           component={this._getAppointmentRoute}
-          options={{ headerShown: true ,
-          title: '',
-          headerStyle: { backgroundColor: 'transparent' },
-          headerTransparent: true,
-          headerTitleAlign: 'center',
-          headerTitleStyle: { color: '#fff' },
-          headerTintColor: '#fff', }}
+
+          options={{
+            headerShown: true,
+            title: '',
+            headerStyle: { backgroundColor: 'transparent' },
+            headerTransparent: true,
+            headerTitleAlign: 'center',
+            headerTitleStyle: { color: '#fff' },
+            headerTintColor: '#fff',
+          }}
+
         />
 
         <Stack.Screen
@@ -131,7 +144,15 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="Demographics"
           component={Demographics}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: true,
+            title: 'Touqeer',
+            headerStyle: { backgroundColor: 'transparent' },
+            headerTransparent: true,
+            headerTitleAlign: 'center',
+            headerTitleStyle: { color: '#fff' },
+            headerTintColor: '#fff',
+          }}
         />
 
         <Stack.Screen
@@ -148,25 +169,57 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="MadicationAdd"
           component={MadicationAdd}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: true,
+            title: '',
+            headerStyle: { backgroundColor: 'transparent' },
+            headerTransparent: true,
+            headerTitleAlign: 'center',
+            headerTitleStyle: { color: '#fff' },
+            headerTintColor: '#fff',
+          }}
         />
 
         <Stack.Screen
           name="MedicalCondition"
           component={MedicalCondition}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: true,
+            title: '',
+            headerStyle: { backgroundColor: 'transparent' },
+            headerTransparent: true,
+            headerTitleAlign: 'center',
+            headerTitleStyle: { color: '#fff' },
+            headerTintColor: '#fff',
+          }}
         />
 
         <Stack.Screen
           name="AddReport"
           component={AddReport}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: true,
+            title: '',
+            headerStyle: { backgroundColor: 'transparent' },
+            headerTransparent: true,
+            headerTitleAlign: 'center',
+            headerTitleStyle: { color: '#fff' },
+            headerTintColor: '#fff',
+          }}
         />
 
         <Stack.Screen
           name="Vital"
           component={Vital}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: true,
+            title: '',
+            headerStyle: { backgroundColor: 'transparent' },
+            headerTransparent: true,
+            headerTitleAlign: 'center',
+            headerTitleStyle: { color: '#fff' },
+            headerTintColor: '#fff',
+          }}
         />
 
         <Stack.Screen
@@ -186,7 +239,15 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="Patients"
           component={Patients}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: true,
+            title: '',
+            headerStyle: { backgroundColor: 'transparent' },
+            headerTransparent: true,
+            headerTitleAlign: 'center',
+            headerTitleStyle: { color: '#fff' },
+            headerTintColor: '#fff',
+          }}
         />
 
       </Stack.Navigator>
