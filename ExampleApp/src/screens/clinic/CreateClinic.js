@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {ImageBackground, ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {DatePicker, Icon, Input, Item, Label, Picker, Text} from 'native-base';
+
 import Api from '../../Api';
 
 import CommonStyles from '../../CommonStyles'
@@ -30,6 +31,8 @@ export default class CreateClinic extends Component {
             appointmentSlotsText: '',
             clinicTitle: '',
             clinicObj: {},
+            startTimeText:'From',
+            endTimeText:'To',
         };
         this.setDate = this.setDate.bind(this);
     }
@@ -47,17 +50,13 @@ export default class CreateClinic extends Component {
     }
 
     SelectattendAt = (event) => {
-
         let timeStamp = event.nativeEvent.timestamp;
-        event.type === 'set' ? this.setState({attendAt: new Date(timeStamp),showStartTimePicker: false}) : this.setState({attendAt: null, showStartTimePicker: false});
-
+        event.type === 'set' ? this.setState({attendAt: new Date(timeStamp),showStartTimePicker: false,startTimeText:this.getTimeFormat(this.state.attendAt)}) : this.setState({attendAt: null, showStartTimePicker: false});
     };
+
     SelectleftAt = (event) => {
         let timeStamp = event.nativeEvent.timestamp;
-        event.type === 'set' ? this.setState({
-            leftAt: new Date(timeStamp),
-            showEndTimePicker: false
-        }) : this.setState({leftAt: null, showEndTimePicker: false});
+     event.type === 'set' ? this.setState({leftAt: new Date(timeStamp),showEndTimePicker: false,endTimeText:this.getTimeFormat(this.state.leftAt)}) : this.setState({leftAt: null, showEndTimePicker: false});
     };
 
     showTimepicker = (time) => {
@@ -79,6 +78,17 @@ export default class CreateClinic extends Component {
         var strTime = hours + ':' + minutes + ' ' + ampm;
         var formattedDate=new Date("1970-01-01"+JSON.stringify(strTime));
         return formattedDate;
+    }
+
+    getTimeFormat(dateToConvert){
+          var hours = dateToConvert.getHours();
+        var minutes = dateToConvert.getMinutes();
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0'+minutes : minutes;
+        var strTime = hours + ':' + minutes + ' ' + ampm;
+        return strTime;
     }
 
     handleInputChangeSlots = (event) => {
@@ -159,7 +169,7 @@ export default class CreateClinic extends Component {
 
         Api.instance().createClinic(this.state.clinicObj)
             .then(res => {
-                this.props.navigation.navigate('MyTabs')
+                this.props.navigation.navigate('ClinicList')
 
             })
             .catch(err => {
@@ -225,16 +235,15 @@ export default class CreateClinic extends Component {
                                 this.showTimepicker('start');
                             }} style={[styles.itemStyle, {alignSelf: 'center', width: '50%'}]}>
 
-                                <Label
-                                    style={[{color: '#333333'}, CommonStyles.DINProLight, CommonStyles.textSizeSmall]}>From</Label>
+                                <Label style={[{color: '#333333'}, CommonStyles.DINProLight, CommonStyles.textSizeSmall]}>{this.state.startTimeText}</Label>
                                 {this.state.showStartTimePicker && (
                                     <DateTimePicker
-                                        testID="dateTimePicker"
+                                        testID="FromTime"
                                         value={this.state.attendAt}
                                         mode='time'
                                         is24Hour={true}
                                         display="clock"
-                                        onChange={this.SelectattendAt}
+                                       onChange={this.SelectattendAt}
                                     />
                                 )}
                             </Item>
@@ -244,10 +253,10 @@ export default class CreateClinic extends Component {
                             }} style={[styles.itemStyle, {alignSelf: 'center', width: '50%'}]}>
 
                                 <Label
-                                    style={[{color: '#333333'}, CommonStyles.DINProLight, CommonStyles.textSizeSmall]}>To</Label>
+                                    style={[{color: '#333333'}, CommonStyles.DINProLight, CommonStyles.textSizeSmall]}>{this.state.endTimeText}</Label>
                                 {this.state.showEndTimePicker && (
                                     <DateTimePicker
-                                        testID="dateTimePicker"
+                                        testID="ToTime"
                                         value={this.state.leftAt}
                                         mode='time'
                                         is24Hour={true}
