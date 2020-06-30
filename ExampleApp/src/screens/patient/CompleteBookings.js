@@ -37,10 +37,10 @@ export default class CompleteBookings extends Component {
 
                     <View style={[CommonStyles.container,
                     CommonStyles.padding,
-                    { paddingHorizontal: 15, marginTop: '15%' }
+                    {  marginTop: '15%' }
                     ]}>
 
-                        <Text style={{ color: '#FFFFFF', }}>
+                        <Text style={{ color: '#FFFFFF', paddingHorizontal: 15}}>
                             <Text style={[CommonStyles.DINAltBold, CommonStyles.textSizeLarge,]} >{`Completed\n`}</Text>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>It is a list of your all booking patients </Text>
                         </Text>
@@ -53,7 +53,7 @@ export default class CompleteBookings extends Component {
                             ]}
                             renderItem={({ item }) => (
 
-                                <View style={[CommonStyles.container, CommonStyles.centerText, CommonStyles.shadow, { height: 105 }]}>
+                                <View style={[CommonStyles.container, CommonStyles.shadow,]}>
                                     <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/drawable-mdpi/Fill-1.png')}>
 
                                         <View style={[CommonStyles.container, { flexDirection: 'row', paddingHorizontal: 16 }]}>

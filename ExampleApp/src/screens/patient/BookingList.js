@@ -4,6 +4,7 @@ import { FlatGrid } from 'react-native-super-grid';
 import { ListItem, CheckBox, Divider } from 'react-native-elements';
 import CommonStyles from '../../CommonStyles';
 import { Configs } from '../../Configs';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class BookingList extends Component {
 
@@ -18,7 +19,7 @@ export default class BookingList extends Component {
     }
     render() {
         const main = [
-            { name: 'SHAZ QURESHI', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
+            { name: 'SHAZ QURESHI', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: 'Patients' },
             { name: 'SHAZ QURESHI', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
             { name: 'SHAZ QURESHI', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
             { name: 'SHAZ QURESHI', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
@@ -37,23 +38,25 @@ export default class BookingList extends Component {
 
                     <View style={[CommonStyles.container,
                     CommonStyles.padding,
-                    { paddingHorizontal: 15, marginTop: '15%' }
+                    {marginTop: '15%' }
                     ]}>
 
-                        <Text style={{ color: '#FFFFFF', }}>
+                        <Text style={{ color: '#FFFFFF', paddingLeft: 15}}>
                             <Text style={[CommonStyles.DINAltBold, CommonStyles.textSizeLarge,]} >{`Available\n`}</Text>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>It is a list of your all booking patients </Text>
                         </Text>
 
                         <FlatGrid
-                            itemDimension={350}
+                            itemDimension={320}
                             items={main}
                             style={[CommonStyles.container,
                             { marginTop: '11%' },
                             ]}
                             renderItem={({ item }) => (
 
-                                <View style={[CommonStyles.container, CommonStyles.centerText, CommonStyles.shadow  ]}>
+                                <TouchableOpacity style={[CommonStyles.container, CommonStyles.shadow ]}
+                                onPress={() => {this.props.navigation.navigate(`${item.route}`)}}
+                                >
                                     <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/drawable-mdpi/Fill-1.png')}>
 
                                         <View style={[CommonStyles.container, { flexDirection: 'row', paddingHorizontal: 20, paddingVertical: 5 }]}>
@@ -91,7 +94,7 @@ export default class BookingList extends Component {
                                             </View>
                                         </View>
                                     </ImageBackground>
-                                </View>
+                                </TouchableOpacity>
                             )}
                         />
                     </View>
