@@ -89,7 +89,7 @@ export default class ScheduledBooking extends Component {
                               {color: '#333333'},
                             ]}>
                             {item.patient.firstName.concat(
-                              item.patient.lastName,
+                              ' ' + item.patient.lastName,
                             )}
                           </Text>
                         </Text>
