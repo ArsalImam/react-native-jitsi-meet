@@ -6,6 +6,7 @@ import CommonStyles from '../../CommonStyles';
 import Api from '../../Api';
 import {AppointmentStatus} from '../../Configs';
 import moment from 'moment';
+import {ViewUtils} from '../../Utils';
 
 export default class CompleteBookings extends Component {
   state = {

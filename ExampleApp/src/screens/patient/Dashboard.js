@@ -113,6 +113,8 @@ class Dashboard extends React.Component {
       var appointmentId = appointments.reverse()[0].id;
       this.props.navigation.navigate('AppointmentRoom', {appointmentId});
     };
+
+    _navigateToRoom(this.state.appointments);
   }
 
   render() {
@@ -322,7 +324,12 @@ class Dashboard extends React.Component {
                     marginLeft: 5,
                   },
                 ]}
-                onPress={() => this.props.navigation.navigate('DrProfile')}>
+                onPress={() => {
+                  this.props.navigation.navigate(`Patients`, {
+                    appointmentId: null,
+                    moveTo: 'PatientDetail',
+                  });
+                }}>
                 <View style={[CommonStyles.horizontalContainer]}>
                   <Icon name="bars" size={18} color="#C9D7EA" />
                   <View

@@ -6,6 +6,9 @@ import CommonStyles from '../../CommonStyles';
 import Api from '../../Api';
 import {AppointmentStatus} from '../../Configs';
 import moment from 'moment';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {ViewUtils} from '../../Utils';
+
 export default class ScheduledBooking extends Component {
   state = {
     appointments: [],
@@ -27,6 +30,7 @@ export default class ScheduledBooking extends Component {
   }
 
   render() {
+    const {navigate} = this.props.navigation;
     return (
       <View style={[CommonStyles.container]}>
         <ImageBackground
@@ -58,7 +62,19 @@ export default class ScheduledBooking extends Component {
               items={this.state.appointments}
               style={[CommonStyles.container, {marginTop: '9%'}]}
               renderItem={({item}) => (
-                <View style={[CommonStyles.container, CommonStyles.shadow]}>
+                <TouchableOpacity
+                  onPress={() => {
+                    ViewUtils.showAlert(
+                      'Are you sure, you want to open consultation room?',
+                      () => {
+                        navigate('AppointmentRoom', {
+                          appointmentId: item.id,
+                        });
+                      },
+                      () => {},
+                    );
+                  }}
+                  style={[CommonStyles.container, CommonStyles.shadow]}>
                   <ImageBackground
                     style={[
                       CommonStyles.container,
@@ -165,7 +181,7 @@ export default class ScheduledBooking extends Component {
                       </View>
                     </View>
                   </ImageBackground>
-                </View>
+                </TouchableOpacity>
               )}
             />
           </View>
