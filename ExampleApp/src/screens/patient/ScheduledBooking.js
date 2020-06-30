@@ -176,9 +176,9 @@ export default class ScheduledBooking extends Component {
   _getCheckboxColor(status) {
     switch (status) {
       case AppointmentStatus.scheduled:
-        return '#E53935';
+        return '#1976d2';
       case AppointmentStatus.available:
-        return '#9CD85B';
+        return '#E53935';
       case AppointmentStatus.completed:
         return '#9CD85B';
     }
