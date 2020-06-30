@@ -10,10 +10,34 @@ import Api from '../../Api';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 
 class Dashboard extends React.Component {
-
+  
     constructor(props) {
         super(props)
-        this.state = { initialPage: 1, activeTab: 1 }
+        this.state = { initialPage: 1, activeTab: 1, appointments:[],
+            user:{} }
+    }
+
+    componentDidMount() {
+        // debugger;
+        //getting appointment data
+        Api.instance()
+        .getMyAppointments()
+        .then(appointments => this.setState({
+            appointments
+        }))
+        .catch(err => ViewUtils.showToast(err));
+
+        //getting user data
+        Api.instance()
+        ._user()
+        .then(user => {
+            if (user == null) return
+            this.setState({
+                user
+            })
+
+        })
+        .catch(err => ViewUtils.showToast(err));
     }
 
     goToPatientsRooms() {
@@ -27,10 +51,7 @@ class Dashboard extends React.Component {
             this.props.navigation.navigate('AppointmentRoom', { appointmentId });
         };
 
-        Api.instance()
-            .getMyAppointments()
-            .then(appointments => _navigateToRoom(appointments))
-            .catch(err => ViewUtils.showToast(err))
+        
     }
 
     render() {
@@ -51,7 +72,7 @@ class Dashboard extends React.Component {
                             </View>
                             <View style={{ justifyContent: 'flex-end' }}>
                                 <Text style={[CommonStyles.fontMedium,
-                                { fontSize: 21 }]}>Hi, Akbar Raza</Text>
+                                { fontSize: 21 }]}>Hi, {this.state.user.firstName} {this.state.user.lastName}</Text>
                                 <Text style={[CommonStyles.fontMedium,
                                 CommonStyles.textSizeSmall]}>
                                     <Text>Welcome to your </Text>
@@ -101,8 +122,7 @@ class Dashboard extends React.Component {
                             </ImageBackground>
                         </TouchableOpacity>
 
-                        <View style={[CommonStyles.mt10, CommonStyles.horizontalContainer, ,
-                        {}]}>
+                        <View style={[CommonStyles.mt10, CommonStyles.horizontalContainer]}>
 
 
                             <TouchableOpacity style={[CommonStyles.container, CommonStyles.br5,

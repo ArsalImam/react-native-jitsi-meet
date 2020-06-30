@@ -240,15 +240,7 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="Patients"
           component={Patients}
-          options={{
-            headerShown: true,
-            title: '',
-            headerStyle: { backgroundColor: 'transparent' },
-            headerTransparent: true,
-            headerTitleAlign: 'center',
-            headerTitleStyle: { color: '#fff' },
-            headerTintColor: '#fff',
-          }}
+          options={{ headerShown: false }}
         />
 
       </Stack.Navigator>

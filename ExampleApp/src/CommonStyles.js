@@ -82,12 +82,12 @@ const CommonStyles = StyleSheet.create({
   shadow: {
     shadowColor: '#000',
     shadowOffset: {
-      width: 1,
-      height: 10,
+      width: 0,
+      height: 2,
     },
     shadowOpacity: 0.8,
-    shadowRadius: 6,
-    elevation: 6,
+    shadowRadius: 4,
+    elevation: 3,
   },
   buttonCenterText: {
     flexDirection: 'row',
