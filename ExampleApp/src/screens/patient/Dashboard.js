@@ -20,6 +20,7 @@ import {ViewUtils} from '../../Utils';
 import Api from '../../Api';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import moment from 'moment';
+import Loader from '../../components/Loader';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -31,6 +32,7 @@ class Dashboard extends React.Component {
       appointments: [],
       user: {},
       lastestAppointment: {time: '0:00 am', timeLeft: '0 mins'},
+      showLoader: true, 
     };
   }
   _getAllAppointments() {
@@ -66,11 +68,16 @@ class Dashboard extends React.Component {
         this.setState({
           totalConsultation: appointments.length,
           appointments,
+        
         });
       })
       .catch(err => {
         ViewUtils.showToast(err);
-      });
+        
+      })
+      .finally(() => {
+        this.setState({showLoader: false})
+    });
   }
 
   _getAllPatients() {
@@ -391,6 +398,11 @@ class Dashboard extends React.Component {
               </Text>
             </TouchableOpacity>
           </KeyboardAwareScrollView>
+
+          
+          <Loader
+                    loading={this.state.showLoader}/>
+
 
           <View
             style={[

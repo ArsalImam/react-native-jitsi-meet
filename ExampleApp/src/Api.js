@@ -49,6 +49,7 @@ export default class Api {
     }
   }
   
+  
   async getClinicList() {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
