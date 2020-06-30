@@ -1,84 +1,123 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, ImageBackground, StatusBar, ActivityIndicator, Image, TouchableOpacity } from 'react-native';
-import { FlatGrid } from 'react-native-super-grid';
-import { ListItem, CheckBox, Divider } from 'react-native-elements';
+import {CommonActions} from '@react-navigation/native';
+import React, {Component} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ImageBackground,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import {FlatGrid} from 'react-native-super-grid';
 import CommonStyles from '../../CommonStyles';
-import { Configs } from '../../Configs';
-import { Icon } from 'native-base';
+import {Icon} from 'native-base';
+import Api from '../../Api';
+import Loader from '../../components/Loader';
+import {ViewUtils} from '../../Utils';
 
 export default class Patients extends Component {
-
+  _appointmentId = '';
+  _moveTo = '';
+  state = {
+    patients: [],
+  };
   constructor(props) {
     super(props);
+  }
+  componentDidMount() {
+    this._appointmentId = this.props.route.params.appointmentId;
+    this._moveTo = this.props.route.params.moveTo;
 
-    this.state = {
-      data: [],
-      isLoading: true,
-      checked: true
-    };
+    this.setState({isLoading: true});
+    Api.instance()
+      .getMyPatients()
+      .then(patients => this.setState({patients}))
+      .catch(err => {
+        ViewUtils.showToast(err);
+      })
+      .finally(() => {
+        this.setState({isLoading: false});
+      });
   }
   render() {
-    const main = [
-      { name: 'Conan Matusov', route: '' },
-      { name: 'Frank Boehm', route: '' },
-      { name: 'Ivan Morais', route: '' },
-      { name: 'Lucas Simoes', route: '' },
-      { name: 'Mangus Kekhu', route: '' },
-      { name: 'Shen ', route: '' },
-      { name: 'Mehmet Seluri', route: '' },
-      { name: 'Conan Matusov', route: '' },
-      { name: 'Frank Boehm', route: '' },
-      { name: 'Ivan Morais', route: '' },
-      { name: 'Lucas Simoes', route: '' },
-      { name: 'Mangus Kekhu', route: '' },
-      { name: 'Shen ', route: '' },
-      { name: 'Mehmet Seluri', route: '' },
-    ];
-
     return (
       <View style={[CommonStyles.container]}>
-
-        <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/img/bwback.png')}>
-
-          <View style={[CommonStyles.container,
-          CommonStyles.padding,
-          { marginTop: '15%' }
-          ]}>
-
-            <Text style={{ color: '#FFFFFF', paddingLeft: 15 }}>
-              <Text style={[CommonStyles.DINAltBold, CommonStyles.textSizeLarge,]} >{`Patients\n`}</Text>
-              <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>It is a list of your all booking patients </Text>
+        <ImageBackground
+          style={[CommonStyles.container, CommonStyles.backgroundImage]}
+          source={require('../../assets/img/bwback.png')}>
+          <View
+            style={[
+              CommonStyles.container,
+              CommonStyles.padding,
+              {marginTop: '15%'},
+            ]}>
+            <Text style={{color: '#FFFFFF', paddingLeft: 15}}>
+              <Text
+                style={[
+                  CommonStyles.DINAltBold,
+                  CommonStyles.textSizeLarge,
+                ]}>{`Patients\n`}</Text>
+              <Text
+                style={[
+                  CommonStyles.fontRegular,
+                  CommonStyles.textSizeAverage,
+                ]}>
+                It is a list of your all booking patients{' '}
+              </Text>
             </Text>
 
             <FlatGrid
               itemDimension={320}
-              items={main}
-              style={[CommonStyles.container, { marginTop: '9%' }]}
-              //staticDimension={300}
-              //fixed
+              items={this.state.patients}
+              style={[CommonStyles.container, {marginTop: '9%'}]}
               spacing={15}
-              renderItem={({ item, index }) => (
-                <View style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5, { flexDirection: 'row', backgroundColor: '#FFF' }]}>
-                  <View style={{ width: 50, marginHorizontal: 8, marginTop: -7, marginBottom: 8 }}>
-                    <Image style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/drawable-xxxhdpi/Rectangle.png')}>
-                    </Image>
+              renderItem={({item}) => (
+                <TouchableOpacity
+                  onPress={() => {
+                    if (this._moveTo === 'createAppointment') {
+                      this._createAppointment(item.id);
+                    } else {
+                      this.props.navigation.navigate('DrProfile', {
+                        patientId: item.id,
+                      });
+                    }
+                  }}
+                  style={[
+                    CommonStyles.container,
+                    CommonStyles.shadow,
+                    CommonStyles.br5,
+                    {flexDirection: 'row', backgroundColor: '#FFF'},
+                  ]}>
+                  <View
+                    style={{
+                      width: 50,
+                      marginHorizontal: 8,
+                      marginTop: -7,
+                      marginBottom: 8,
+                    }}>
+                    <Image
+                      style={[
+                        CommonStyles.container,
+                        CommonStyles.backgroundImage,
+                      ]}
+                      source={require('../../assets/drawable-xxxhdpi/Rectangle.png')}
+                    />
                   </View>
-                  {/* */}
-
-                  <View style={[CommonStyles.container, CommonStyles.centerElement]}>
-
+                  <View
+                    style={[
+                      CommonStyles.container,
+                      CommonStyles.centerElement,
+                    ]}>
                     <Text
                       style={[
                         CommonStyles.fontMedium,
                         CommonStyles.textSizeNormal,
                         CommonStyles.padding,
-
                       ]}>
-                      {item.name}
+                      {item.firstName.concat(' ').concat(item.lastName)}
                     </Text>
-
                   </View>
-                </View>
+                </TouchableOpacity>
               )}
             />
           </View>
@@ -93,19 +132,49 @@ export default class Patients extends Component {
                 alignItems: 'center',
               },
             ]}>
-            <TouchableOpacity onPress={() => { this.props.navigation.goBack(); }}>
-              <Icon name='arrow-back' type='MaterialIcons' style={{ fontSize: 26, color: '#FFF' }} />
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.goBack();
+              }}>
+              <Icon
+                name="arrow-back"
+                type="MaterialIcons"
+                style={{fontSize: 26, color: '#FFF'}}
+              />
             </TouchableOpacity>
           </View>
-
         </ImageBackground>
+        <Loader loading={this.state.isLoading} />
       </View>
     );
   }
+
+  _createAppointment(patientId) {
+    let that = this;
+    ViewUtils.showAlert(
+      'Do you want to create appointment?',
+      () => {
+        this.setState({isLoading: true});
+        Api.instance()
+          .updateAppointment(this._appointmentId, patientId)
+          .then(() => {
+            ViewUtils.showToast('Appointment has been booked successfully');
+            that.props.navigation.dispatch(
+              CommonActions.reset({
+                index: 1,
+                routes: [{name: 'MyDrawer'}],
+              }),
+            );
+          })
+          .catch(err => {
+            ViewUtils.showToast(err);
+          })
+          .finally(() => that.setState({isLoading: false}));
+      },
+      () => {},
+    );
+  }
 }
-
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -117,7 +186,7 @@ const styles = StyleSheet.create({
   itemContainer: {
     flex: 1,
     height: 60,
-    shadowOffset: { height: 2, width: 0 },
+    shadowOffset: {height: 2, width: 0},
     elevation: 3,
     borderRadius: 3,
     backgroundColor: '#FFF',

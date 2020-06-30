@@ -1,9 +1,5 @@
 import React, {Component} from 'react';
-import {
-  Text,
-  View,
-  ImageBackground,
-} from 'react-native';
+import {Text, View, ImageBackground} from 'react-native';
 import {FlatGrid} from 'react-native-super-grid';
 import {CheckBox} from 'react-native-elements';
 import CommonStyles from '../../CommonStyles';
@@ -63,7 +59,10 @@ export default class BookingList extends Component {
                 <TouchableOpacity
                   style={[CommonStyles.container, CommonStyles.shadow]}
                   onPress={() => {
-                    this.props.navigation.navigate(`${item.route}`);
+                    this.props.navigation.navigate(`Patients`, {
+                      appointmentId: item.id,
+                      moveTo: 'createAppointment',
+                    });
                   }}>
                   <ImageBackground
                     style={[

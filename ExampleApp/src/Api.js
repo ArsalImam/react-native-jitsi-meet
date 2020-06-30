@@ -1,7 +1,7 @@
 import axios from 'axios';
 // import https from 'https';
 import AsyncStorage from '@react-native-community/async-storage';
-import {Configs, Roles} from './Configs';
+import {Configs, Roles, AppointmentStatus} from './Configs';
 
 export default class Api {
   static myInstance = null;
@@ -34,50 +34,60 @@ export default class Api {
     return response.data;
   }
 
-
-// Clinic
-// create clinic
-    async createClinic(data) {
-                try {
-            let response = await this.client.post(
-                this.getUrl('Clinics/CreateClinic'),
-                {data: data},
-                this.getHeaders()
-            );
-            return response.data;
-        } catch (error) {
-            console.log(error)
-        }
-
+  // Clinic
+  // create clinic
+  async createClinic(data) {
+    try {
+      let response = await this.client.post(
+        this.getUrl('Clinics/CreateClinic'),
+        {data: data},
+        this.getHeaders(),
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
     }
-    async getClinicList() {
-        let user = await this._user();
-        let _user = JSON.parse(JSON.stringify(user));
-            let response = await this.client.get(this.getUrl(`Clinics?filter[where][doctorId]=${_user.id}`));
-            let data = response.data;
-            if (data.error) throw data.error.message;
-            return data;
-        }
+  }
+  async getClinicList() {
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+    let response = await this.client.get(
+      this.getUrl(`Clinics?filter[where][doctorId]=${_user.id}`),
+    );
+    let data = response.data;
+    if (data.error) throw data.error.message;
+    return data;
+  }
 
-
-    _relationalParamByRole(role)
-{
+  _relationalParamByRole(role) {
     var id_param = 'patientId';
     switch (role) {
-        case Roles.patient:
-            id_param = 'patientId';
-            break;
-        case Roles.assistant:
-            id_param = 'assistantId';
-            break;
-        case Roles.doctor:
-            id_param = 'doctorId';
-            break;
+      case Roles.patient:
+        id_param = 'patientId';
+        break;
+      case Roles.assistant:
+        id_param = 'assistantId';
+        break;
+      case Roles.doctor:
+        id_param = 'doctorId';
+        break;
     }
     return id_param;
-}
+  }
 
-
+  async updateAppointment(appointmentId, patientId) {
+    let appointment = {
+      patientId,
+      status: AppointmentStatus.scheduled,
+    };
+    let response = await this.client.post(
+      this.getUrl(`Appointments/upsertWithWhere?[where][id]=${appointmentId}`),
+      appointment,
+    );
+    let data = response.data;
+    if (data.error) throw data.error.message;
+    return data;
+  }
 
   async getMyAppointments(status = '', requirePatient = false) {
     let user = await this._user();
