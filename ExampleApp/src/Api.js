@@ -56,8 +56,9 @@ export default class Api {
 // clinic list
     async getClinicList() {
 
-        let _user = JSON.parse(await this._user());
-        console.log(_user);
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+
         let response = await this.client.get(this.getUrl(`Clinics?filter[where][doctorId]=${_user.id}`));
         let data = response.data;
         if (data.error) throw data.error.message;

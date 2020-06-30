@@ -20,25 +20,14 @@ export default class ClinicList extends Component {
                     this.setState({clinicList: data});
                 }
             ).catch(err => console.log(err));
-            console.log(this.state.clinicList[0]);
+           
    
     }
 
 
     render() {
 
-            const main = [
-            { name: 'SHAZ QURESHI', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
-            { name: 'SHAZ QURESHI', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
-            { name: 'SHAZ QURESHI', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
-            { name: 'SHAZ QURESHI', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
-            { name: 'SHAZ QURESHI', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
-            { name: 'SHAZ QURESHI', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
-            { name: 'SHAZ QURESHI', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
-            { name: 'SHAZ QURESHI', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
-            { name: 'SHAZ QURESHI', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
-            { name: 'SHAZ QURESHI', date: 'May 15, 2020', time: '06:00 pm to 08:00', route: '' },
-        ];
+    
           return ( <View style={[CommonStyles.container]}>
 
                 <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/img/bwback.png')}>
@@ -55,7 +44,7 @@ export default class ClinicList extends Component {
 
                         <FlatGrid
                             itemDimension={350}
-                            items={main}
+                            items={this.state.clinicList}
                             style={[CommonStyles.container,
                             { marginTop: '11%' },
                             ]}
@@ -68,18 +57,27 @@ export default class ClinicList extends Component {
 
                                             <View style={[CommonStyles.container, { justifyContent: 'space-around' }]}>
                                                 <Text>
-                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Patient Name\n`}</Text>
+                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Clinic Name\n`}</Text>
                                                     <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.name}</Text>
                                                 </Text>
 
+                                                <Text>
+                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Slots\n`}</Text>
+                                                    <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.appointmentSlotsText}</Text>
+                                                </Text>
                                                 <Text style={[CommonStyles.textSizeAverage, { color: '#333333' }]}>
-                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{`Time: `}</Text>
-                                                    <Text style={CommonStyles.fontMedium}>{item.time}</Text>
+                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{`No.of Weeks: `}</Text>
+                                                    <Text style={CommonStyles.fontMedium}>{item.numOfClinics}</Text>
                                                 </Text>
                                             </View>
                                             <View style={[CommonStyles.container, { justifyContent: 'space-around' }]}>
                                                 <View style={[CommonStyles.container, { justifyContent: 'space-around', alignItems: 'flex-end', marginBottom: 10 }]}>
-                                                    <CheckBox
+
+                                                <Text style={[CommonStyles.textSizeAverage, { color: '#333333' }]}>
+                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{`Frequency: `}</Text>
+                                                    <Text style={CommonStyles.fontMedium}>{item.frequencyText}</Text>
+                                                </Text>
+                                                    {/* <CheckBox
                                                         containerStyle={{ backgroundColor: 'rgba(52, 52, 52, 0.0)', borderColor: 'rgba(52, 52, 52, 0.0)', marginRight: -12 }}
                                                         textStyle={[CommonStyles.textSizeSmall, { color: '#497C12', fontWeight: '600' }]}
                                                         iconRight
@@ -90,10 +88,10 @@ export default class ClinicList extends Component {
                                                         uncheckedColor='#9CD85B'
                                                         title='Accepted'
                                                         checked={this.state.checked}
-                                                    />
+                                                    /> */}
                                                     <Text style={{ marginBottom: 6 }}>
                                                         <Text style={[CommonStyles.textSizeSmall, CommonStyles.fontRegular, { color: '#333333' }]}>{`Date: `}</Text>
-                                                        <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333' }]}>{item.date}</Text>
+                                                        <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333' }]}>{item.joinedDate}</Text>
                                                     </Text>
                                                 </View>
                                             </View>
