@@ -10,13 +10,13 @@ class MenuSlider extends React.Component {
 
         const PersonalProfile = [
             { name: 'Demographics', iconName: 'clipboard-notes', iconFamily: 'Foundation', iconSize: '18', route: 'Demographics' },
-               
+
         ];
-        
+
         const clinicList = [
-            { name: 'Create Clinic', iconName: 'activity', iconFamily: 'Feather', iconSize: '18', route: 'Vital' },
+            { name: 'Create Clinic', iconName: 'activity', iconFamily: 'Feather', iconSize: '18', route: 'CreateClinic' },
             { name: 'Clinic List', iconName: 'medicinebox', iconFamily: 'AntDesign', iconSize: '18', route: 'MadicationAdd' },
-            
+
         ];
 
         const medicalProfile = [
@@ -57,7 +57,7 @@ class MenuSlider extends React.Component {
                                     CommonStyles.padding,
                                     CommonStyles.textSizeNormal,
                                     CommonStyles.centerText,
-                                
+
                                     ]}>{item.name}</Text>
                                 </View>
                             </TouchableOpacity>
@@ -83,13 +83,13 @@ class MenuSlider extends React.Component {
                                     CommonStyles.padding,
                                     CommonStyles.textSizeNormal,
                                     CommonStyles.centerText,
-                                
+
                                     ]}>{item.name}</Text>
                                 </View>
                             </TouchableOpacity>
                         )}
                     />
-                    
+
                     <View
                         style={[CommonStyles.padding,, { borderBottomWidth: 1 }]} >
                         <Label style={[CommonStyles.fontMedium]}> Medical Profile</Label>

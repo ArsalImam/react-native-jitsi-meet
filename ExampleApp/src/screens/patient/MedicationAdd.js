@@ -16,9 +16,9 @@ export default class MadicationAdd extends React.Component {
     render() {
         return (
             <View style={[CommonStyles.container]}>
-                
+
                 <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/drawable-xhdpi/bwback.png')}>
-             
+
                     <View style={styles.View1}>
                         <Text style={{marginHorizontal: '7%', marginBottom: 12,}}>
                             <Text style={[CommonStyles.DINAltBold, CommonStyles.textSizeLarge, {color: '#FFf', lineHeight: 28}]} >{`Medicine Add\n`}</Text>
@@ -77,12 +77,12 @@ export default class MadicationAdd extends React.Component {
                         </Item>
 
                     </View>
-            
+
                     <TouchableOpacity style={styles.buttonStyle}>
                         <Text style={[styles.textStyle, CommonStyles.DINProRegular]}>SAVE</Text>
                     </TouchableOpacity>
 
-                    
+
                 </ImageBackground>
             </View>
         );

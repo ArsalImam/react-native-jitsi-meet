@@ -18,6 +18,8 @@ import Patients from './screens/patient/Patients';
 import AppointmentRoom from './screens/AppointmentRoom';
 import ScheduledBooking from './screens/patient/ScheduledBooking';
 import CompleteBookings from './screens/patient/CompleteBookings';
+import CreateClinic from './screens/clinic/CreateClinic';
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'native-base';
 
@@ -31,6 +33,7 @@ export default class Routes extends React.Component {
       <Drawer.Navigator drawerContent={props => <MenuSlider {...props} />}>
         <Drawer.Screen name="Dashboard" component={Dashboard} />
         <Drawer.Screen name="Vital" component={Vital} />
+        <Drawer.Screen name="CreateClinic" component={CreateClinic} />
         <Drawer.Screen name="MadicationAdd" component={MadicationAdd} />
         <Drawer.Screen name="MedicalCondition" component={MedicalCondition} />
         <Drawer.Screen name="Demographics" component={Demographics} />
@@ -71,14 +74,14 @@ export default class Routes extends React.Component {
           pressColor: '#297dec',
           activeTintColor: '#297dec',
           inactiveTintColor: '#000',
-        
-          tabStyle: {borderWidth: 3, 
-            borderColor: '#fff', 
-            borderRadius: 7, 
+
+          tabStyle: {borderWidth: 3,
+            borderColor: '#fff',
+            borderRadius: 7,
             backgroundColor: '#F7FAFE',
           },
           labelPosition: 'beside-icon',
-      
+
         }} >
 
         <Tab.Screen name="AVAILABLE" component={BookingList} />
@@ -110,7 +113,7 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="MyTabs"
           component={this._getAppointmentRoute}
-          options={{ headerShown: true , 
+          options={{ headerShown: true ,
           title: '',
           headerStyle: { backgroundColor: 'transparent' },
           headerTransparent: true,
@@ -137,6 +140,11 @@ export default class Routes extends React.Component {
           options={{ headerShown: false }}
         />
 
+          <Stack.Screen
+              name="CreateClinic"
+              component={CreateClinic}
+              options={{ headerShown: false }}
+          />
         <Stack.Screen
           name="MadicationAdd"
           component={MadicationAdd}
