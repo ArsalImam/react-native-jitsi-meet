@@ -1,14 +1,17 @@
-import React, {Component} from 'react';
-import {Text, View, ImageBackground} from 'react-native';
-import {FlatGrid} from 'react-native-super-grid';
-import {CheckBox} from 'react-native-elements';
+import React, { Component } from 'react';
+import { Text, View, ImageBackground } from 'react-native';
+import { FlatGrid } from 'react-native-super-grid';
+import { CheckBox } from 'react-native-elements';
 import CommonStyles from '../../CommonStyles';
 import Api from '../../Api';
-import {AppointmentStatus} from '../../Configs';
+import { AppointmentStatus } from '../../Configs';
 import moment from 'moment';
+import Loader from '../../components/Loader';
+
 export default class ScheduledBooking extends Component {
   state = {
     appointments: [],
+    isLoading: true
   };
 
   constructor(props) {
@@ -19,11 +22,15 @@ export default class ScheduledBooking extends Component {
     Api.instance()
       .getMyAppointments(AppointmentStatus.scheduled, true)
       .then(appointments => {
-        this.setState({appointments});
+        this.setState({ appointments});
       })
       .catch(err => {
         ViewUtils.showToast(err);
-      });
+      })
+      .finally(() =>{
+        this.setState({ isLoading: false})
+      })
+      ;
   }
 
   render() {
@@ -36,9 +43,10 @@ export default class ScheduledBooking extends Component {
             style={[
               CommonStyles.container,
               CommonStyles.padding,
-              {marginTop: '15%'},
+              { flex: 2, }
             ]}>
-            <Text style={{color: '#FFFFFF', paddingHorizontal: 15}}>
+
+            <Text style={{ color: '#FFFFFF', paddingLeft: 12, marginTop: '15%' }}>
               <Text
                 style={[
                   CommonStyles.DINAltBold,
@@ -52,13 +60,16 @@ export default class ScheduledBooking extends Component {
                 It is a list of your all booking patients{' '}
               </Text>
             </Text>
+          </View>
+          <View style={{ flex: 8, paddingHorizontal: 2 }} >
+
 
             <FlatGrid
               itemDimension={320}
               items={this.state.appointments}
-              style={[CommonStyles.container, {marginTop: '9%'}]}
-              renderItem={({item}) => (
-                <View style={[CommonStyles.container, CommonStyles.shadow]}>
+              style={[CommonStyles.container]}
+              renderItem={({ item }) => (
+                <View style={[CommonStyles.container, CommonStyles.shadow,]}>
                   <ImageBackground
                     style={[
                       CommonStyles.container,
@@ -68,25 +79,25 @@ export default class ScheduledBooking extends Component {
                     <View
                       style={[
                         CommonStyles.container,
-                        {flexDirection: 'row', paddingHorizontal: 16},
+                        { flexDirection: 'row', paddingHorizontal: 16 },
                       ]}>
                       <View
                         style={[
                           CommonStyles.container,
-                          {justifyContent: 'space-around'},
+                          { justifyContent: 'space-around' },
                         ]}>
                         <Text>
                           <Text
                             style={[
                               CommonStyles.fontRegular,
                               CommonStyles.textSizeSmall,
-                              {color: '#333333'},
+                              { color: '#333333' },
                             ]}>{`Patient Name\n`}</Text>
                           <Text
                             style={[
                               CommonStyles.fontMedium,
                               CommonStyles.textSizeAverage,
-                              {color: '#333333'},
+                              { color: '#333333' },
                             ]}>
                             {item.patient.firstName.concat(
                               ' ' + item.patient.lastName,
@@ -97,7 +108,7 @@ export default class ScheduledBooking extends Component {
                         <Text
                           style={[
                             CommonStyles.textSizeAverage,
-                            {color: '#333333'},
+                            { color: '#333333' },
                           ]}>
                           <Text
                             style={[
@@ -112,7 +123,7 @@ export default class ScheduledBooking extends Component {
                       <View
                         style={[
                           CommonStyles.container,
-                          {justifyContent: 'space-around'},
+                          { justifyContent: 'space-around' },
                         ]}>
                         <View
                           style={[
@@ -145,18 +156,18 @@ export default class ScheduledBooking extends Component {
                             title={item.status}
                             checked={true}
                           />
-                          <Text style={{marginBottom: 6}}>
+                          <Text style={{ marginBottom: 6 }}>
                             <Text
                               style={[
                                 CommonStyles.textSizeSmall,
                                 CommonStyles.fontRegular,
-                                {color: '#333333'},
+                                { color: '#333333' },
                               ]}>{`Date: `}</Text>
                             <Text
                               style={[
                                 CommonStyles.fontMedium,
                                 CommonStyles.textSizeAverage,
-                                {color: '#333333'},
+                                { color: '#333333' },
                               ]}>
                               {moment(item.date).format('DD-MM-yyyy')}
                             </Text>
@@ -169,6 +180,9 @@ export default class ScheduledBooking extends Component {
               )}
             />
           </View>
+          
+          <Loader
+                    loading={this.state.isLoading}/>
         </ImageBackground>
       </View>
     );
