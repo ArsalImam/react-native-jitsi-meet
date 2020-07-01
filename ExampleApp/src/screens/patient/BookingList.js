@@ -7,6 +7,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import Api from '../../Api';
 import {AppointmentStatus} from '../../Configs';
 import moment from 'moment';
+import {ViewUtils} from '../../Utils';
 
 export default class BookingList extends Component {
   state = {

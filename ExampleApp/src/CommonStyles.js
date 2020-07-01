@@ -200,7 +200,13 @@ const CommonStyles = StyleSheet.create({
   loaderIndicatorStyle: {
     color: '#297dec',
 
-  }
-});
+  },
+itemStyle: {
+    justifyContent: 'space-between',
+  //  borderColor: '#000', 
+    width: '88%', 
+    alignSelf: 'center', 
+    marginTop: 10,
+  },})
 
 export default CommonStyles;

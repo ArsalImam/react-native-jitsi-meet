@@ -4,12 +4,15 @@ import CommonStyles from '../../CommonStyles';
 import { ListItem, CheckBox, Divider } from 'react-native-elements';
 import { FlatGrid } from 'react-native-super-grid';
 import { StyleSheet, Text, View, ImageBackground, StatusBar, ActivityIndicator, FlatList } from 'react-native';
+import moment from 'moment';
+import Loader from '../../components/Loader';
 
 export default class ClinicList extends Component {
 
   constructor(props) {
         super(props);
           this.state = {
+              isLoading:true,
               clinicList:[],
           }
   }
@@ -19,7 +22,10 @@ export default class ClinicList extends Component {
             .then((data) => {
                     this.setState({clinicList: data});
                 }
-            ).catch(err => console.log(err));
+            ).catch(err => console.log(err))
+              .finally(() => {
+        this.setState({isLoading: false});
+      });
            
    
     }
@@ -77,21 +83,10 @@ export default class ClinicList extends Component {
                                                     <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{`Frequency: `}</Text>
                                                     <Text style={CommonStyles.fontMedium}>{item.frequencyText}</Text>
                                                 </Text>
-                                                    {/* <CheckBox
-                                                        containerStyle={{ backgroundColor: 'rgba(52, 52, 52, 0.0)', borderColor: 'rgba(52, 52, 52, 0.0)', marginRight: -12 }}
-                                                        textStyle={[CommonStyles.textSizeSmall, { color: '#497C12', fontWeight: '600' }]}
-                                                        iconRight
-                                                        iconType='material'
-                                                        checkedIcon='check-box'
-                                                        uncheckedIcon='add'
-                                                        checkedColor='#9CD85B'
-                                                        uncheckedColor='#9CD85B'
-                                                        title='Accepted'
-                                                        checked={this.state.checked}
-                                                    /> */}
+                                                
                                                     <Text style={{ marginBottom: 6 }}>
                                                         <Text style={[CommonStyles.textSizeSmall, CommonStyles.fontRegular, { color: '#333333' }]}>{`Date: `}</Text>
-                                                        <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333' }]}>{item.joinedDate}</Text>
+                                                        <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333' }]}>{moment(item.joinedDate).format('ll')}</Text>
                                                     </Text>
                                                 </View>
                                             </View>
@@ -101,6 +96,7 @@ export default class ClinicList extends Component {
                             )}
                         />
                     </View>
+                            <Loader loading={this.state.isLoading} />
                 </ImageBackground>
             </View>);
         
