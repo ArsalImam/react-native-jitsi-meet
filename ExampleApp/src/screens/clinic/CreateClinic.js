@@ -7,11 +7,9 @@ import {
     View,
 } from 'react-native';
 import {DatePicker, Icon, Input, Item, Label, Picker, Text} from 'native-base';
-
 import Api from '../../Api';
-
 import CommonStyles from '../../CommonStyles';
-
+import Loader from '../../components/Loader';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {ViewUtils} from '../../Utils';
 
@@ -39,6 +37,7 @@ export default class CreateClinic extends Component {
             clinicObj: {},
             startTimeText: 'From',
             endTimeText: 'To',
+            isLoading:false,
         };
         this.setDate = this.setDate.bind(this);
     }
@@ -161,6 +160,12 @@ export default class CreateClinic extends Component {
         let freq = parseInt(this.state.clinicFrequency);
 
         switch (freq) {
+
+     
+            case 172799000:
+                this.state.clinicFrequencyText = 'One Off';
+                break;
+
             case 604799000:
                 this.state.clinicFrequencyText = 'Every Week';
                 break;
@@ -168,6 +173,9 @@ export default class CreateClinic extends Component {
                 this.state.clinicFrequencyText = 'Alternate Week';
                 break;
 
+      case 86399000:
+                this.state.clinicFrequencyText = 'Every Day';
+                break;
             default:
                 break;
         }
@@ -194,16 +202,20 @@ export default class CreateClinic extends Component {
         this.state.clinicObj.frequencyText = this.state.clinicFrequencyText;
         this.state.clinicObj.appointmentSlotsText = this.state.appointmentSlotsText;
 
+this.setState({isLoading:true});
         Api.instance()
             .createClinic(this.state.clinicObj)
             .then(res => {
-                this.props.navigation.navigate('ClinicList');
             })
             .catch(err => {
                 ViewUtils.showToast(err);
             })
             .finally(() => {
-                this.setState({showLoader: false});
+                 ViewUtils.showToast('Clinic Succefully Created');
+                
+                this.setState({isLoading: false});
+                this.props.navigation.navigate('ClinicList');
+
             });
     }
 
@@ -394,30 +406,7 @@ export default class CreateClinic extends Component {
 
                             </View>
 
-                            {/* <View style={[CommonStyles.container, CommonStyles.itemStyle, { flexDirection: 'row', justifyContent: 'space-between' }]}>
-
-   <Item stackedLabel  style={{width: '45%'}}>
-<Picker
-                                    mode="dropdown"
-                                    iosIcon={<Icon name="arrow-down"/>}
-                                      style={[CommonStyles.container, CommonStyles.itemStyle,]}
-                                       textStyle={[CommonStyles.fontRegular, CommonStyles.textSizeAverage, ]}
-                                    placeholder="Choose Frequency"
-                                     placeholderStyle={[CommonStyles.fontRegular, CommonStyles.textSizeAverage,]}
-                                  placeholderIconColor="#007aff"
-                                    selectedValue={this.state.clinicFrequency}
-                                    onValueChange={this.onValueChange.bind(this)}
-                                >
-                                    <Picker.Item color='gray' selected={false} label="Choose Frequency" value=""/>
-                                    <Picker.Item label="Every Week" value="604799000"/>
-                                    <Picker.Item label="Alternate Week" value="1209599000"/>
-                                </Picker>
-
-
-</Item>
-
-
- </View> */}
+                           
 
                             <Item
                                 picker
@@ -446,8 +435,12 @@ export default class CreateClinic extends Component {
                                         label="Choose Frequency"
                                         value=""
                                     />
+
+                                    
+                                    <Picker.Item label="One Off" value="172799000"/>
                                     <Picker.Item label="Every Week" value="604799000"/>
                                     <Picker.Item label="Alternate Week" value="1209599000"/>
+                                    <Picker.Item label="Every Day" value="86399000"/>
                                 </Picker>
                             </Item>
 
@@ -492,7 +485,9 @@ export default class CreateClinic extends Component {
                             CREATE
                         </Text>
                     </TouchableOpacity>
+                     <Loader loading={this.state.isLoading} />
                 </ImageBackground>
+                
             </View>
         );
     }
