@@ -6,7 +6,7 @@ class ViewUtils {
       text: JSON.stringify(text),
       position: 'top',
       buttonText: 'Okay',
-      duration: 3000,
+      duration: 4000,
     });
   }
 
