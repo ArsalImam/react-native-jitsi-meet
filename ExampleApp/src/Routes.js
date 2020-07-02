@@ -152,15 +152,7 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="Demographics"
           component={Demographics}
-          options={{
-            headerShown: true,
-            title: 'Touqeer',
-            headerStyle: { backgroundColor: 'transparent' },
-            headerTransparent: true,
-            headerTitleAlign: 'center',
-            headerTitleStyle: { color: '#fff' },
-            headerTintColor: '#fff',
-          }}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
@@ -183,57 +175,25 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="MadicationAdd"
           component={MadicationAdd}
-          options={{
-            headerShown: true,
-            title: '',
-            headerStyle: { backgroundColor: 'transparent' },
-            headerTransparent: true,
-            headerTitleAlign: 'center',
-            headerTitleStyle: { color: '#fff' },
-            headerTintColor: '#fff',
-          }}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
           name="MedicalCondition"
           component={MedicalCondition}
-          options={{
-            headerShown: true,
-            title: '',
-            headerStyle: { backgroundColor: 'transparent' },
-            headerTransparent: true,
-            headerTitleAlign: 'center',
-            headerTitleStyle: { color: '#fff' },
-            headerTintColor: '#fff',
-          }}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
           name="AddReport"
           component={AddReport}
-          options={{
-            headerShown: true,
-            title: '',
-            headerStyle: { backgroundColor: 'transparent' },
-            headerTransparent: true,
-            headerTitleAlign: 'center',
-            headerTitleStyle: { color: '#fff' },
-            headerTintColor: '#fff',
-          }}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
           name="Vital"
           component={Vital}
-          options={{
-            headerShown: true,
-            title: '',
-            headerStyle: { backgroundColor: 'transparent' },
-            headerTransparent: true,
-            headerTitleAlign: 'center',
-            headerTitleStyle: { color: '#fff' },
-            headerTintColor: '#fff',
-          }}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen

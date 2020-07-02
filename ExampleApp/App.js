@@ -23,10 +23,9 @@ class App extends React.Component {
   render() {
     return (
       <Root>
+        <StatusBar translucent backgroundColor='transparent' barStyle={'dark-content'} />
         <SafeAreaView style={CommonStyles.container}>
           <NavigationContainer>
-          <StatusBar translucent backgroundColor='transparent' barStyle={'light-content'} />
-
             <Routes />
           </NavigationContainer>
         </SafeAreaView>

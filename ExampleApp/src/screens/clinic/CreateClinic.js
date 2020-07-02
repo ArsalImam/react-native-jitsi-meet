@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {CommonActions} from '@react-navigation/native';
+import React, { Component } from 'react';
+import { CommonActions } from '@react-navigation/native';
 import {
   ImageBackground,
   ScrollView,
@@ -7,13 +7,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {DatePicker, Icon, Input, Item, Label, Picker, Text} from 'native-base';
+import { DatePicker, Icon, Input, Item, Label, Picker, Text } from 'native-base';
 import Api from '../../Api';
 import CommonStyles from '../../CommonStyles';
 import Loader from '../../components/Loader';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {ViewUtils} from '../../Utils'
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import { ViewUtils } from '../../Utils'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 export default class CreateClinic extends Component {
   constructor(props) {
     super(props);
@@ -70,13 +70,13 @@ export default class CreateClinic extends Component {
     Api.instance()
       ._user()
       .then(data => {
-        this.setState({userObj: data});
+        this.setState({ userObj: data });
       })
       .catch(err => console.log(err));
   }
 
   setDate(newDate) {
-    this.setState({chosenDate: newDate});
+    this.setState({ chosenDate: newDate });
   }
 
   SelectattendAt = event => {
@@ -115,8 +115,8 @@ export default class CreateClinic extends Component {
 
   showTimepicker = time => {
     time === 'start'
-      ? this.setState({showStartTimePicker: true})
-      : this.setState({showEndTimePicker: true});
+      ? this.setState({ showStartTimePicker: true })
+      : this.setState({ showEndTimePicker: true });
   };
 
   onValueChange(value) {
@@ -224,15 +224,15 @@ export default class CreateClinic extends Component {
     this.state.clinicObj.frequencyText = this.state.clinicFrequencyText;
     this.state.clinicObj.appointmentSlotsText = this.state.appointmentSlotsText;
 
-    this.setState({isLoading: true});
+    this.setState({ isLoading: true });
     Api.instance()
       .createClinic(this.state.clinicObj)
       .then(res => {
-         ViewUtils.showToast('Clinic has been created successfully!');
+        ViewUtils.showToast('Clinic has been created successfully!');
         this.props.navigation.dispatch(
           CommonActions.reset({
             index: 1,
-            routes: [{name: 'MyDrawer'}],
+            routes: [{ name: 'MyDrawer' }],
           }),
         );
       })
@@ -240,51 +240,45 @@ export default class CreateClinic extends Component {
         ViewUtils.showToast(err);
       })
       .finally(() => {
-        this.setState({isLoading: false});
-       
+        this.setState({ isLoading: false });
+
         // this.props.navigation.replace('ClinicList');
       });
   }
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[CommonStyles.container]}>
         <ImageBackground
           style={[CommonStyles.container, CommonStyles.backgroundImage]}
-          source={require('../../assets/drawable-xhdpi/bwback.png')}>
-          <View style={styles.View1}>
-            <Text style={{marginHorizontal: '7%', marginBottom: 15}}>
+          source={require('../../assets/img/bwback.png')}>
+          
+          <View style={{ flex: 2}}>
+            <Text style={{ paddingLeft: 16, marginTop: 60 }}>
               <Text
                 style={[
-                  CommonStyles.DINAltBold,
+                  CommonStyles.fontRegular,
                   CommonStyles.textSizeLarge,
-                  {
-                    color: '#FFf',
-                    lineHeight: 28,
-                  },
+                  CommonStyles.textColorWhite,
                 ]}>{`Create Clinic\n`}</Text>
               <Text
                 style={[
-                  CommonStyles.SFProLight,
-                  CommonStyles.textSizeSmall,
-                  {
-                    color: '#fff',
-                    lineHeight: 16,
-                  },
+                  CommonStyles.fontRegular,
+                  CommonStyles.textSizeAverage,
+                  CommonStyles.textColorWhite
                 ]}>
                 to create clinic{' '}
               </Text>
             </Text>
           </View>
 
-          <View style={styles.View2}>
-            <ScrollView
+          <View style={{ flex: 8 , backgroundColor: '#00000000'}}>
+            <KeyboardAwareScrollView
               style={[
-                styles.View2,
                 {
                   marginTop: 33,
                   alignSelf: 'center',
-                  width: '86%',
+                  width: '90%',
                   backgroundColor: '#fff',
                   borderRadius: 5,
                 },
@@ -293,7 +287,7 @@ export default class CreateClinic extends Component {
                 style={[
                   CommonStyles.container,
                   CommonStyles.itemStyle,
-                  {paddingTop: 40},
+                  { paddingTop: 25 },
                 ]}>
                 <DatePicker
                   defaultDate={new Date()}
@@ -304,163 +298,115 @@ export default class CreateClinic extends Component {
                   animationType={'fade'}
                   androidMode={'default'}
                   placeHolderText="Select date"
-                  textStyle={[CommonStyles.fontRegular, {paddingLeft: -7}]}
+                  textStyle={[CommonStyles.fontRegular, { paddingLeft: -7 }]}
                   placeHolderTextStyle={[
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeAverage,
-                    {color: '000', marginLeft: -7, paddingBottom: 15},
+                    {
+                      marginLeft: -7,
+                      paddingBottom: 15
+                    },
                   ]}
                   onDateChange={this.setDate}
                   disabled={false}
                 />
-                <Icon active name="calendar" style={{marginLeft: 20}} />
+                <Icon active name="calendar" style={{ marginLeft: 20 }} />
               </Item>
 
-              {/* <Item style={[styles.itemStyle, {alignSelf: 'center', width: '50%'}]}>
-                               
-
-                                <DatePicker
-                                    defaultDate={new Date()}
-                                    minimumDate={new Date()}
-                                    locale={"en"}
-                                    timeZoneOffsetInMinutes={undefined}
-                                    modalTransparent={false}
-                                    animationType={"fade"}
-                                    androidMode={"default"}
-                                    placeHolderText="Select date"
-                                    textStyle={{color: "gray"}}
-                                    placeHolderTextStyle={{color: "gray"}}
-                                    onDateChange={this.setDate}
-                                    disabled={false}
-                                />
-                                <Icon active name='calendar' style={{marginLeft: 20}}/>
-
-                            </Item> */}
-
-              <View
-                style={[
-                  CommonStyles.container,
-                  CommonStyles.itemStyle,
-                  {flexDirection: 'row', justifyContent: 'space-between'},
-                ]}>
-                <Item
-                  stackedLabel
-                  onPress={() => {
-                    this.showTimepicker('start');
-                  }}
-                  style={{width: '45%'}}>
-                  {/* <Label
-                    style={[
-                      CommonStyles.fontRegular,
-                      CommonStyles.textSizeAverage,
-                    ]}>
-                    {this.state.startTimeText}
-                  </Label> */}
-
-                  <Text
-                    style={[
-                      CommonStyles.fontRegular,
-                      CommonStyles.textSizeAverage,
-                      {
-                        paddingTop: 30,
-                        marginLeft: -100,
-                      },
-                    ]}>
-                    {this.state.startTimeText}
-                  </Text>
-                  {this.state.showStartTimePicker && (
-                    <DateTimePicker
-                      testID="FromTime"
-                      value={this.state.attendAt}
-                      mode="time"
-                      is24Hour={true}
-                      display="clock"
-                      onChange={this.SelectattendAt}
-                    />
-                  )}
-                </Item>
-
-                <Item
-                  stackedLabel
-                  onPress={() => {
-                    this.showTimepicker('end');
-                  }}
-                  style={{width: '45%'}}>
-                  {/* <Label
-                    style={[
-                      CommonStyles.fontRegular,
-                      CommonStyles.textSizeAverage,
-                    ]}>
-                    {this.state.endTimeText}
-                  </Label> */}
-
-                  <Text
-                    style={[
-                      CommonStyles.fontRegular,
-                      CommonStyles.textSizeAverage,
-                      {
-                        paddingTop: 30,
-                        marginLeft: -100,
-                      },
-                    ]}>
-                    {this.state.endTimeText}
-                  </Text>
-                  {this.state.showEndTimePicker && (
-                    <DateTimePicker
-                      testID="ToTime"
-                      value={this.state.leftAt}
-                      mode="time"
-                      is24Hour={true}
-                      display="clock"
-                      onChange={this.SelectleftAt}
-                    />
-                  )}
-                </Item>
-              </View>
-
-              <View
-                style={[
-                  CommonStyles.container,
-                  CommonStyles.itemStyle,
-                  {flexDirection: 'row', justifyContent: 'space-between'},
-                ]}>
-                <Item stackedLabel style={{width: '45%'}}>
-                  <Label
-                    style={[
-                      CommonStyles.fontRegular,
-                      CommonStyles.textSizeAverage,
-                    ]}>
-                    Number of Weeks
-                  </Label>
-                  <Input
-                    name="clinics"
-                    value={this.state.numberOfClinics}
-                    onChangeText={val => this.setState({numberOfClinics: val})}
-                    keyboardType="number-pad"
+              <Item
+                stackedLabel
+                onPress={() => { this.showTimepicker('start'); }}
+                style={[CommonStyles.container, CommonStyles.itemStyle]}
+              >
+                <Text
+                  style={[
+                    CommonStyles.fontRegular,
+                    CommonStyles.textSizeAverage,
+                    {
+                      paddingTop: 20,
+                      textAlign: 'left',
+                      alignSelf: 'flex-start'
+                    },
+                  ]}>
+                  {this.state.startTimeText}
+                </Text>
+                {this.state.showStartTimePicker && (
+                  <DateTimePicker
+                    testID="FromTime"
+                    value={this.state.attendAt}
+                    mode="time"
+                    is24Hour={true}
+                    display="clock"
+                    onChange={this.SelectattendAt}
                   />
-                </Item>
+                )}
+              </Item>
 
-                <Item stackedLabel style={{width: '45%'}}>
-                  <Label
-                    style={[
-                      CommonStyles.fontRegular,
-                      CommonStyles.textSizeAverage,
-                    ]}>
-                    Title
-                  </Label>
-                  <Input
-                    value={this.state.clinicTitle}
-                    onChangeText={val => this.setState({clinicTitle: val})}
+              <Item
+                stackedLabel
+                onPress={() => { this.showTimepicker('end'); }}
+                style={[CommonStyles.container, CommonStyles.itemStyle]}
+              >
+                <Text
+                  style={[
+                    CommonStyles.fontRegular,
+                    CommonStyles.textSizeAverage,
+                    {
+                      paddingTop: 20,
+                      textAlign: 'left',
+                      alignSelf: 'flex-start',
+                    },
+                  ]}>
+                  {this.state.endTimeText}
+                </Text>
+                {this.state.showEndTimePicker && (
+                  <DateTimePicker
+                    testID="ToTime"
+                    value={this.state.leftAt}
+                    mode="time"
+                    is24Hour={true}
+                    display="clock"
+                    onChange={this.SelectleftAt}
                   />
-                </Item>
-              </View>
+                )}
+              </Item>
+
+              <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle]}>
+                <Label
+                  style={[
+                    CommonStyles.fontRegular,
+                    CommonStyles.textSizeAverage,
+                  ]}>
+                  Number of Weeks
+                  </Label>
+                <Input
+                  name="clinics"
+                  value={this.state.numberOfClinics}
+                  onChangeText={val => this.setState({ numberOfClinics: val })}
+                  keyboardType="number-pad"
+                />
+              </Item>
+
+              <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle]}>
+                <Label
+                  style={[
+                    CommonStyles.fontRegular,
+                    CommonStyles.textSizeAverage,
+                  ]}>
+                  Title
+                  </Label>
+                <Input
+                  value={this.state.clinicTitle}
+                  onChangeText={val => this.setState({ clinicTitle: val })}
+                />
+              </Item>
 
               <Item
                 picker
                 style={[
                   CommonStyles.container,
                   CommonStyles.itemStyle,
-                  {paddingTop: 20},
+                  { paddingTop: 10 },
                 ]}>
                 <Picker
                   mode="dropdown"
@@ -469,13 +415,16 @@ export default class CreateClinic extends Component {
                   textStyle={[
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeAverage,
-                    {paddingLeft: -14},
+                    {
+                      textAlign: 'left',
+                      alignSelf: 'flex-start'
+                    }
                   ]}
                   placeholder="Choose Frequency"
                   placeholderStyle={[
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeAverage,
-                    {color: '#bfc6ea', marginLeft: -14},
+                    { color: '#bfc6ea', marginLeft: -14 },
                   ]}
                   placeholderIconColor="#007aff"
                   selectedValue={this.state.clinicFrequency}
@@ -497,15 +446,16 @@ export default class CreateClinic extends Component {
               <Item
                 picker
                 style={[
-                  styles.itemStyle,
-                  {alignSelf: 'center', width: '88%', marginTop: 40},
+                  CommonStyles.container,
+                  CommonStyles.itemStyle,
+                  { paddingTop: 10 },
                 ]}>
                 <Picker
                   mode="dropdown"
                   iosIcon={<Icon name="arrow-down" />}
-                  style={{width: '92%'}}
+                  style={{ width: '92%' }}
                   placeholder="Choose Frequency"
-                  placeholderStyle={{color: '#bfc6ea'}}
+                  placeholderStyle={{ color: '#bfc6ea' }}
                   placeholderIconColor="#007aff"
                   selectedValue={this.state.appointmentSlots}
                   onValueChange={this.handleInputChangeSlots.bind(this)}>
@@ -522,17 +472,44 @@ export default class CreateClinic extends Component {
                   <Picker.Item label="30 Minutes" value="1800000" />
                 </Picker>
               </Item>
-            </ScrollView>
+            </KeyboardAwareScrollView>
           </View>
-          <TouchableOpacity
-            onPress={() => {
-              this.createClinic();
-            }}
-            style={styles.buttonStyle}>
-            <Text style={[styles.textStyle, CommonStyles.DINProRegular]}>
-              CREATE
+
+          <View
+            style={[
+              CommonStyles.fitToBottom,
+              CommonStyles.horizontalContainer,
+              {
+                backgroundColor: '#F7FAFE',
+                borderTopRightRadius: 5,
+                borderTopStartRadius: 5,
+                borderTopWidth: 3,
+                borderColor: '#FFF'
+              },
+            ]}>
+            <TouchableOpacity
+              style={[
+                CommonStyles.container,
+                CommonStyles.centerText,
+                { borderRightWidth: 0.5, borderColor: '#cfd2d6' },
+              ]}
+              onPress={() => {
+                this.createClinic();
+              }}>
+              <Text
+
+                style={[
+                  CommonStyles.fontRegular,
+                  CommonStyles.textSizeNormal,
+                  CommonStyles.centerText,
+                  CommonStyles.margin,
+                  CommonStyles.padding,
+                  { opacity: 0.5 },
+                ]}>
+                CREATE
             </Text>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </View>
           <Loader loading={this.state.isLoading} />
           <View
             style={[
@@ -551,7 +528,7 @@ export default class CreateClinic extends Component {
               <Icon
                 name="arrow-back"
                 type="MaterialIcons"
-                style={{fontSize: 26, color: '#FFF'}}
+                style={{ fontSize: 26, color: '#FFF' }}
               />
             </TouchableOpacity>
           </View>
@@ -560,54 +537,3 @@ export default class CreateClinic extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  View1: {
-    flex: 2.2,
-    justifyContent: 'flex-end',
-  },
-  textStyle: {
-    fontSize: 15,
-    color: '#999999',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    padding: 8,
-  },
-  View2: {
-    flex: 8,
-  },
-
-  buttonStyle: {
-    //position: 'absolute',
-    right: 0,
-    bottom: 0,
-    left: 0,
-    width: '100%',
-    height: 67,
-    shadowColor: '#C3D9F0',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowOpacity: 0.9,
-    shadowRadius: 1.41,
-    elevation: 3,
-    backgroundColor: '#F7FAFE',
-    borderWidth: 4,
-    borderTopStartRadius: 10,
-    borderTopEndRadius: 10,
-    borderColor: '#fff',
-    borderBottomWidth: 0,
-  },
-  itemStyle: {
-    marginTop: 12,
-    height: 50,
-    borderColor: '#707070',
-    //   marginTop: 10,
-  },
-});
