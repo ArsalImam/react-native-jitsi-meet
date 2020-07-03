@@ -1,6 +1,7 @@
 package com.exemple;
 
 import com.facebook.react.ReactActivity;
+import io.invertase.firebase.messaging.ReactNativeFirebaseMessagingPackage;
 
 public class MainActivity extends ReactActivity {
 
