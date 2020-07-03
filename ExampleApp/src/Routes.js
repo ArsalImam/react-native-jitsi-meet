@@ -23,6 +23,7 @@ import Completed from './screens/patient/CompleteBookings';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'native-base';
 import CreateClinic from "./screens/clinic/CreateClinic";
+import ClinicList from "./screens/clinic/ClinicList";
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -35,6 +36,7 @@ export default class Routes extends React.Component {
         <Drawer.Screen name="Dashboard" component={Dashboard} />
         <Drawer.Screen name="Vital" component={Vital} />
         <Drawer.Screen name="CreateClinic" component={CreateClinic} />
+        <Drawer.Screen name="ClinicList" component={ClinicList} />
         <Drawer.Screen name="MadicationAdd" component={MadicationAdd} />
         <Drawer.Screen name="MedicalCondition" component={MedicalCondition} />
         <Drawer.Screen name="Demographics" component={Demographics} />
@@ -48,6 +50,8 @@ export default class Routes extends React.Component {
   _getAppointmentRoute() {
     return (
       <Tab.Navigator
+
+    
 
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size, type }) => {
@@ -74,6 +78,8 @@ export default class Routes extends React.Component {
         })}
 
         tabBarOptions={{
+
+          
           activeTintColor: '#297dec',
           inactiveTintColor: '#000',
 
@@ -93,8 +99,9 @@ export default class Routes extends React.Component {
           }
 
         }} >
+        
 
-        <Tab.Screen name="Available" component={Available} />
+        <Tab.Screen name="Available" component={Available}/>
         <Tab.Screen name="Scheduled" component={Scheduled} />
         <Tab.Screen name="Completed" component={Completed} />
       </Tab.Navigator>
@@ -145,15 +152,7 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="Demographics"
           component={Demographics}
-          options={{
-            headerShown: true,
-            title: 'Touqeer',
-            headerStyle: { backgroundColor: 'transparent' },
-            headerTransparent: true,
-            headerTitleAlign: 'center',
-            headerTitleStyle: { color: '#fff' },
-            headerTintColor: '#fff',
-          }}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
@@ -167,60 +166,34 @@ export default class Routes extends React.Component {
               component={CreateClinic}
               options={{ headerShown: false }}
           />
+          
+          <Stack.Screen
+              name="ClinicList"
+              component={ClinicList}
+              options={{ headerShown: false }}
+          />
         <Stack.Screen
           name="MadicationAdd"
           component={MadicationAdd}
-          options={{
-            headerShown: true,
-            title: '',
-            headerStyle: { backgroundColor: 'transparent' },
-            headerTransparent: true,
-            headerTitleAlign: 'center',
-            headerTitleStyle: { color: '#fff' },
-            headerTintColor: '#fff',
-          }}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
           name="MedicalCondition"
           component={MedicalCondition}
-          options={{
-            headerShown: true,
-            title: '',
-            headerStyle: { backgroundColor: 'transparent' },
-            headerTransparent: true,
-            headerTitleAlign: 'center',
-            headerTitleStyle: { color: '#fff' },
-            headerTintColor: '#fff',
-          }}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
           name="AddReport"
           component={AddReport}
-          options={{
-            headerShown: true,
-            title: '',
-            headerStyle: { backgroundColor: 'transparent' },
-            headerTransparent: true,
-            headerTitleAlign: 'center',
-            headerTitleStyle: { color: '#fff' },
-            headerTintColor: '#fff',
-          }}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
           name="Vital"
           component={Vital}
-          options={{
-            headerShown: true,
-            title: '',
-            headerStyle: { backgroundColor: 'transparent' },
-            headerTransparent: true,
-            headerTitleAlign: 'center',
-            headerTitleStyle: { color: '#fff' },
-            headerTintColor: '#fff',
-          }}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
@@ -240,15 +213,7 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="Patients"
           component={Patients}
-          options={{
-            headerShown: true,
-            title: '',
-            headerStyle: { backgroundColor: 'transparent' },
-            headerTransparent: true,
-            headerTitleAlign: 'center',
-            headerTitleStyle: { color: '#fff' },
-            headerTintColor: '#fff',
-          }}
+          options={{ headerShown: false }}
         />
 
       </Stack.Navigator>
