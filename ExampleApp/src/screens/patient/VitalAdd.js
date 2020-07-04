@@ -41,7 +41,7 @@ export default class VitalAdd extends Component {
               mode="dropdown"
               iosHeader="Select your SIM"
               iosIcon={<Icon name="arrow-down" />}
-              style={{ width: '92%', alignSelf: 'center'}}
+              style={{ width: '92%', alignSelf: 'center', marginTop: 30}}
               selectedValue={this.state.selected}
               onValueChange={this.onValueChange.bind(this)}
             >
