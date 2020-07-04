@@ -2,27 +2,21 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Label, Picker, Icon } from 'native-base';
 import { Button } from 'native-base';
+import CommonStyles from '../CommonStyles';
 
 const BloodOxygen = () => {
 
     return (
-        <View style={styles.container}>
-            <View style={styles.vitalStyle}>
-                <Item floatingLabel style={styles.itemStyle}>
-                    <Label > Blood Oxygen(%)*</Label>
+        <View style={[CommonStyles.container]}>
+            <View style={[CommonStyles.container]}>
+                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle]}>
+                    <Label style={[
+                    CommonStyles.fontRegular,
+                    CommonStyles.textSizeAverage, {color: '#333333'}
+                  ]}> Blood Oxygen(%)*</Label>
                     <Input keyboardType='number-pad' />
 
                 </Item>
-
-                <Item floatingLabel style={styles.itemStyle}>
-                    <Label > Notes*</Label>
-                    <Input multiline />
-                </Item>
-
-                <TouchableOpacity style={styles.buttonStyle}>
-                    <Text style={styles.textStyle}>Submit</Text>
-                </TouchableOpacity>
-
             </View>
         </View>
     );
