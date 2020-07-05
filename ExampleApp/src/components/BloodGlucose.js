@@ -2,100 +2,94 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, SafeAreaView, } from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Label, Picker, Icon } from 'native-base';
 import { Dropdown } from 'react-native-material-dropdown-v2';
+import CommonStyles from '../CommonStyles';
 
-const BloodGlucose = () => {
+class BloodGlucose extends React.Component {
 
-    let data = [{
-        value: 'Pre Breakfast',
-    }, {
-        value: 'Post Breakfast',
-    }, {
-        value: 'Pre Lunch',
-    }, {
-        value: 'Post Lunch',
-    }, {
-        value: 'Post Dinner',
-    }, {
-        value: 'Bed Time',
-    }, {
-        value: 'After Snakes',
-    },];
+    constructor(props) {
+        super(props);
+        this.state = {
+          selected: ""
+        };
+      }
+      onValueChange(value) {
+        this.setState({
+          selected: value
+        });
+    }
+    render() {
+        return (
+            <SafeAreaView style={[CommonStyles.container]}>
 
-    let data1 = [{
-        value: 'Pre Medicine',
-    }, {
-        value: 'Post Medicine',
-    }]
-    return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.container}>
-                <View style={styles.vitalStyle}>
-                    <Item  inlineLabel underline={true} style={styles.itemStyle}>
-                        <Label>   Blood Glucose (mg/dl)*</Label>
+                <View style={[CommonStyles.container,]}>
+                    <Item floatingLabel
+                     style={[CommonStyles.container, CommonStyles.itemStyle]}>
+                        <Label>Blood Glucose (mg/dl)*</Label>
                         <Input keyboardType='number-pad' />
                     </Item>
-                    <Dropdown style={styles.itemStyle}
-                        label='Select Meal'
-                        data={data}
-                    />
 
-                    <Dropdown style={styles.itemStyle}
-                        label='Select Vital Type'
-                        data={data1}
-                    />
-
-                    <Item inlineLabel underline= {true} style={styles.itemStyle}>
-                        <Label >   Notes*</Label>
-                        <Input multiline />
+                    <Item
+                        picker
+                        style={[
+                            CommonStyles.container,
+                            CommonStyles.itemStyle,
+                            { marginVertical: 10, paddingTop: 10 },
+                        ]}>
+                        <Picker
+                            mode="dropdown"
+                            iosIcon={<Icon name="arrow-down" />}
+                            placeholder="Choose Frequency"
+                            placeholderStyle={{ color: '#bfc6ea' }}
+                            placeholderIconColor="#007aff"
+                            selectedValue={this.state.selected}
+                            onValueChange={this.onValueChange.bind(this)}>
+                            <Picker.Item
+                                color="gray"
+                                selected={false}
+                                label="Select Meal"
+                                value=""
+                            />
+                            <Picker.Item label="Pre Breakfast" value="key0" />
+                            <Picker.Item label="Post Breakfast" value="key1" />
+                            <Picker.Item label="Pre Lunch" value="key2" />
+                            <Picker.Item label="Post Lunch" value="key3" />
+                            <Picker.Item label="Bed Time" value="key4" />
+                            <Picker.Item label="After Snakes" value="key5" />
+    
+                        </Picker>
                     </Item>
 
-                    <TouchableOpacity style={styles.buttonStyle}>
-                        <Text style={styles.textStyle}>Submit</Text>
-                    </TouchableOpacity>
+                    <Item
+                        picker
+                        style={[
+                            CommonStyles.container,
+                            CommonStyles.itemStyle,
+                            { marginVertical: 10, paddingTop: 10 },
+                        ]}>
+                        <Picker
+                            mode="dropdown"
+                            iosIcon={<Icon name="arrow-down" />}
+                            placeholder="Choose Frequency"
+                            placeholderStyle={{ color: '#bfc6ea' }}
+                            placeholderIconColor="#007aff"
+                            selectedValue={this.state.selected}
+                            onValueChange={this.onValueChange.bind(this)}>
+                            <Picker.Item
+                                color="gray"
+                                selected={false}
+                                label="Select Vital Type"
+                                value=""
+                            />
+                            <Picker.Item label="Pre Medicine" value="key0" />
+                            <Picker.Item label="Post Medicine" value="key1" />
+
+                        </Picker>
+                    </Item>
 
                 </View>
-            </View>
-        </SafeAreaView>
-    );
-}
-
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#c0d4e2',
-    },
-    itemStyle: {
-        width: '99.4%', 
-        height: 60, 
-        borderColor: 'grey', 
-        marginTop: 10,
-        backgroundColor: '#fff'
-        
-    },
-    vitalStyle: {
-        backgroundColor: 'white',
-        margin: 20,
-        alignContent: 'center',
-        justifyContent: 'center',
-        borderRadius: 5
-    },
-    textStyle: {
-        fontSize: 22,
-        color: '#fff',
-        justifyContent: 'center',
-        alignSelf: 'center',
-        padding: 8
-    },
-    buttonStyle: {
-        marginTop: 50,
-        alignSelf: 'center',
-        width: '80%',
-        height: 45,
-        backgroundColor: '#3976bb',
-        borderRadius: 7,
-        marginBottom: 50
+            </SafeAreaView>
+        );
     }
-})
+}
 
 export default BloodGlucose;

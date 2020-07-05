@@ -90,6 +90,19 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
+    //udpdating fcm
+    try {
+
+      AsyncStorage.getItem('fcmToken')
+      .then(token => {
+        return Api.instance().updateFcmToken(token)
+      })
+      .catch(er => console.warn(er));
+    } catch (error) {
+
+      //log error, to enable ease in debugging
+      console.log(error);  
+    }
     //updating appointments
     this._getAllAppointments();
 
@@ -118,6 +131,8 @@ class Dashboard extends React.Component {
         return;
       }
       var appointmentId = appointments.reverse()[0].id;
+                        Api.instance().notifyAppointment(appointmentId).then().catch();
+
       this.props.navigation.navigate('AppointmentRoom', {appointmentId});
     };
 

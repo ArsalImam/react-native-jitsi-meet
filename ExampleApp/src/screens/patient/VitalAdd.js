@@ -17,13 +17,18 @@ export default class VitalAdd extends Component {
       selected: value
     });
   }
+
+  _onSave = (data) => {
+
+  }
+  
   clickme = (params) => {
     switch (params) {
       case 'key0':
         return <BloodGlucose />;
         break
       case 'key1':
-        return <BloodPressure />;
+        return <BloodPressure onSave={this._onSave} />;
         break
       case 'key2':
         return <BloodOxygen />;
