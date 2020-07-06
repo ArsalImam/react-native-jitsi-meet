@@ -2,14 +2,18 @@ import axios from 'axios';
 // import https from 'https';
 import AsyncStorage from '@react-native-community/async-storage';
 import {Configs, Roles, AppointmentStatus} from './Configs';
+import * as AxiosLogger from 'axios-logger';
 
 export default class Api {
   static myInstance = null;
   client;
 
+
   constructor() {
     // At instance level
     this.client = axios.create({});
+    this.client.interceptors.request.use(AxiosLogger.requestLogger);
+    this.client.interceptors.response.use(AxiosLogger.responseLogger);
   }
 
   /**
@@ -31,6 +35,15 @@ export default class Api {
     let authData = response.data;
     if (authData.error) throw authData.error.message;
     await this.saveUser(authData.user);
+    
+    //update fcm
+    try {
+      await this.updateFcmToken(await AsyncStorage.getItem('fcmToken'))
+    } catch (error) {
+
+      //log error, to enable ease in debugging
+      console.log(error);  
+    }
     return response.data;
   }
 
@@ -41,6 +54,22 @@ export default class Api {
       let response = await this.client.post(
         this.getUrl('Clinics/CreateClinic'),
         {data: data},
+        this.getHeaders(),
+      );
+      return response.data;
+    } catch (error) {
+     return error
+    }
+  }
+  
+
+    async notifyAppointment(appointmentId) {
+    try {
+          let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+      let response = await this.client.post(
+        this.getUrl('notifies/NotifyAppointment'),  
+        {userId:_user.id,appointmentId},
         this.getHeaders(),
       );
       return response.data;
@@ -119,6 +148,33 @@ export default class Api {
     return data;
   }
 
+  async updateFcmToken(fcmToken: string) {
+    if (!fcmToken) {
+      throw "token not token";
+    }
+    
+    let user = await this._user();
+    if (!user) {
+      throw "user not logged in yet!";
+    }
+    
+    let _user = JSON.parse(JSON.stringify(user));
+    let response = await this.client.patch(
+      this.getUrl(
+        `Clients/${_user.id}`
+      ),
+      {
+        fcmToken
+      },
+    );
+    let data = response.data;
+    if (data.error) throw data.error.message;
+    console.warn('fcm updated', fcmToken);
+    await AsyncStorage.setItem('fcmToken', fcmToken);
+    return data;
+  }
+
+
   async getMyAppointments(status = '', requirePatient = false) {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
@@ -178,6 +234,7 @@ export default class Api {
       console.warn(e);
     }
   }
+
 
   getUrl(endpoint) {
     return `${Configs.baseUrl}${endpoint}`;

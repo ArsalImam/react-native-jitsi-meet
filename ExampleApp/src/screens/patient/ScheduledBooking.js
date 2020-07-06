@@ -76,6 +76,7 @@ export default class ScheduledBooking extends Component {
                     ViewUtils.showAlert(
                       'Are you sure, you want to open consultation room?',
                       () => {
+                        Api.instance().notifyAppointment(item.id).then().catch();
                         navigate('AppointmentRoom', {
                           appointmentId: item.id,
                         });
