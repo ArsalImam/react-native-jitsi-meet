@@ -1,40 +1,114 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TouchableOpacity, ImageBackground, ScrollView, StatusBar } from 'react-native';
-import { Container, Header, Content, DatePicker, Text, Item, Label, Input, ScrollableTab, Icon, Picker } from 'native-base';
+import { Container, Header, Content, DatePicker, Text, Item, Label, Input, ScrollableTab, Icon, Picker, Form } from 'native-base';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import CommonStyles from '../../CommonStyles'
 import BloodGlucose from '../../components/BloodGlucose';
 import BloodPressure from '../../components/BloodPressure';
 import BloodOxygen from '../../components/BloodOxygen';
-
+import Api from '../../Api';
+import Loader from '../../components/Loader';
+import { ViewUtils } from '../../Utils'
+import { color } from 'react-native-reanimated';
 
 export default class Vital extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
-            selected: ""
+            isLoading: false,
+            vitalType: '',
+            notes: '',
+            multipleValues: [],
+            userObj: {},
+            vitalObj: {
+                multipleValues: [],
+
+
+                patientId: '',
+                note: '',
+                data: [],
+            },
         };
     }
-    onValueChange(value) {
-        this.setState({
-            selected: value
-        });
-    }
-    clickme = (params) => {
+
+    _selectVitalComponenet = (params) => {
         switch (params) {
-            case 'key0':
-                return <BloodGlucose />;
+            case 'BloodGlucose':
+                return <BloodGlucose ref={com => this.glucoseComponent = com} />;
                 break
-            case 'key1':
-                return <BloodPressure />;
+            case 'BloodPressure':
+                return <BloodPressure ref={com => this.pressureComponent = com} />;
                 break
-            case 'key2':
-                return <BloodOxygen />;
+            case 'BloodOxygen':
+                return <BloodOxygen ref={com => this.oxygenComponent = com} />;
                 break
             default:
                 return <View />;
         }
     }
+
+    _saveVital = () => {
+        let data = { 
+            "notes": this.state.notes,
+        };
+        let childComponentData = null;
+        switch (this.state.vitalType) {
+            case 'BloodGlucose':
+
+            childComponentData = this.glucoseComponent._onSave();
+                Object.assign(data, {
+                    "multipleValues": [
+                      childComponentData.value,
+                      childComponentData.selectedMeal,
+                      childComponentData.selectedMedicine
+                    ],
+                    "vitalType": "BloodGlucose",
+                    "value": childComponentData.value,
+               });
+                break;
+            case 'BloodPressure':
+                childComponentData = this.pressureComponent._onSave();
+                Object.assign(data,{
+                    "multipleValues": [
+                        childComponentData.systolic,
+                        childComponentData.diSystolic,
+                        childComponentData.pulse
+                    ],
+                    "vitalType": "BloodPressure",
+                    "value": childComponentData.systolic 
+                  });
+                break
+            case 'BloodOxygen':
+                childComponentData = this.oxygenComponent._onSave();
+                Object.assign(data,{
+                    "multipleValues": [
+                      childComponentData.value
+                    ],
+                    "vitalType": "BloodOxygen",
+                    "value": childComponentData.value,
+                  });
+                break
+            default:
+               
+        }
+
+        this.setState({ isLoading: true });
+        Api.instance()
+            .createVital(data)
+            .then(response => {
+                this.props.navigation.replace('MyDrawer');
+                ViewUtils.showToast(' has been saved successfully!');
+            })
+            .catch(err => {
+                ViewUtils.showToast(err);
+            })
+            .finally(() => {
+                this.setState({ isLoading: false });
+            });
+    };
+
+
     render() {
         return (
 
@@ -49,103 +123,49 @@ export default class Vital extends Component {
                     </View>
 
                     <View style={{ flex: 8, paddingHorizontal: 18, marginTop: 33 }}>
-                        <KeyboardAwareScrollView style={[styles.View2, { backgroundColor: '#fff', borderRadius: 5, }]}>
+                        <KeyboardAwareScrollView style={[{ backgroundColor: '#fff', borderRadius: 5, }]}>
                             <Item
                                 picker
                                 style={[
                                     CommonStyles.container,
                                     CommonStyles.itemStyle,
-                                    { marginVertical: 10, paddingTop: 10 },
+                                    { paddingTop: 10 },
                                 ]}>
                                 <Picker
                                     mode="dropdown"
+                                    style={{ textAlign: 'left' }}
+                                    focusable
                                     iosIcon={<Icon name="arrow-down" />}
-                                   
-                                    placeholder="Choose Frequency"
+                                    placeholder="Select Vital Type"
                                     placeholderStyle={{ color: '#bfc6ea' }}
                                     placeholderIconColor="#007aff"
-                                    selectedValue={this.state.selected}
-                                    onValueChange={this.onValueChange.bind(this)}>
+
+                                    selectedValue={this.state.vitalType}
+                                    onValueChange={val => {this.setState({ vitalType: val})}}>
                                     <Picker.Item
                                         color="gray"
                                         selected={false}
                                         label="Select Vital Type"
                                         value=""
                                     />
-                                    <Picker.Item label="Blood Glucose" value="key0" />
-                                    <Picker.Item label="Blood Pressure" value="key1" />
-                                    <Picker.Item label="Blood Oxygen" value="key2" />
+                                    <Picker.Item label="Blood Glucose" value="BloodGlucose" />
+                                    <Picker.Item label="Blood Pressure" value="BloodPressure" />
+                                    <Picker.Item label="Blood Oxygen" value="BloodOxygen" />
                                 </Picker>
                             </Item>
-                            {this.clickme(this.state.selected)}
+                            {this._selectVitalComponenet(this.state.vitalType)}
 
-                            <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle]}>
-                                <Label style={[{ color: '#333333' }, CommonStyles.fontRegular, CommonStyles.textSizeSmall]} >Notes*</Label>
-                                <Input />
+                            <Item floatingLabel style={[CommonStyles.container, CommonStyles.itemStyle]}>
+                                <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium, { marginLeft: 7, }]}>Notes*</Label>
+                                <Input
+                                    value={this.state.notes}
+                                    onChangeText={val => this.setState({ notes: val })}
+
+                                    multiline={true} style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium, { marginLeft: 5 }]} />
                             </Item>
-
-                            {/* <View style={{ width: '88%', height: 80, flexDirection: 'row', justifyContent: 'space-between', alignSelf: 'center' }}>
-
-                                <Item stackedLabel style={[styles.itemStyle, { alignSelf: 'center', width: '46%' }]}>
-                                    <Label style={[{ color: '#333333' }, CommonStyles.DINProLight, CommonStyles.textSizeSmall]} >Weight</Label>
-                                    <Input />
-                                </Item>
-
-                                <Item stackedLabel style={[styles.itemStyle, { alignSelf: 'center', width: '46%' }]}>
-
-                                    <Label style={[{ color: '#333333' }, CommonStyles.DINProLight, CommonStyles.textSizeSmall]} >Height</Label>
-                                    <Input />
-                                </Item>
-
-                            </View>
-
-                            <View style={{ width: '88%', height: 80, flexDirection: 'row', justifyContent: 'space-between', alignSelf: 'center' }}>
-
-                                <Item stackedLabel style={[styles.itemStyle, { alignSelf: 'center', width: '46%' }]}>
-                                    <Label style={[{ color: '#333333' }, CommonStyles.DINProLight, CommonStyles.textSizeSmall]} >Temperature</Label>
-                                    <Input />
-                                </Item>
-
-                                <Item stackedLabel style={[styles.itemStyle, { alignSelf: 'center', width: '46%' }]}>
-
-                                    <Label style={[{ color: '#333333' }, CommonStyles.DINProLight, CommonStyles.textSizeSmall]} >Temperature Method</Label>
-                                    <Input />
-                                </Item>
-
-                            </View>
-
-                            <View style={{ width: '88%', height: 80, flexDirection: 'row', justifyContent: 'space-between', alignSelf: 'center' }}>
-
-                                <Item stackedLabel style={[styles.itemStyle, { alignSelf: 'center', width: '46%' }]}>
-                                    <Label style={[{ color: '#333333' }, CommonStyles.DINProLight, CommonStyles.textSizeSmall]} >Pulse</Label>
-                                    <Input />
-                                </Item>
-
-                                <Item stackedLabel style={[styles.itemStyle, { alignSelf: 'center', width: '46%' }]}>
-                                    <Label style={[{ color: '#333333' }, CommonStyles.DINProLight, CommonStyles.textSizeSmall]} >Respiration</Label>
-                                    <Input />
-                                </Item>
-
-                            </View>
-
-                            <Item stackedLabel style={[styles.itemStyle, { alignSelf: 'center', width: '88%' }]}>
-
-                                <Label style={[{ color: '#333333' }, CommonStyles.DINProLight, CommonStyles.textSizeSmall]} >Waist Circumstances</Label>
-                                <Input />
-                            </Item>
-
-
-
-                            <Item stackedLabel style={[styles.itemStyle, { alignSelf: 'center', width: '88%' }]}>
-                                <Label style={[CommonStyles.DINProRegular, CommonStyles.textSizeSmall,]} >Head Circumstances</Label>
-
-                                <Input multiline />
-                            </Item> */}
 
 
                         </KeyboardAwareScrollView>
-
-
 
                     </View>
 
@@ -162,6 +182,9 @@ export default class Vital extends Component {
                             },
                         ]}>
                         <TouchableOpacity
+                            onPress={() => {
+                                this._saveVital();
+                            }}
                             style={[
                                 CommonStyles.container,
                                 CommonStyles.centerText,
@@ -183,7 +206,7 @@ export default class Vital extends Component {
                         </TouchableOpacity>
                     </View>
 
-
+                    <Loader loading={this.state.isLoading} />
 
                     <View
                         style={[
@@ -211,53 +234,3 @@ export default class Vital extends Component {
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    View1: {
-        flex: 2.2,
-        justifyContent: 'flex-end'
-    },
-    textStyle: {
-        fontSize: 15,
-        color: '#999999',
-        justifyContent: 'center',
-        alignSelf: 'center',
-        padding: 8
-    },
-    View2: {
-        flex: 8,
-    },
-    buttonStyle: {
-        //position: 'absolute',
-        right: 0,
-        bottom: 0,
-        left: 0,
-        width: '100%',
-        height: 67,
-        shadowColor: '#C3D9F0',
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        justifyContent: 'center',
-        alignItems: 'center',
-        shadowOpacity: .9,
-        shadowRadius: 1.41,
-        elevation: 3,
-        backgroundColor: '#F7FAFE',
-        borderWidth: 4,
-        borderTopStartRadius: 10,
-        borderTopEndRadius: 10,
-        borderColor: '#fff',
-        borderBottomWidth: 0,
-    },
-    itemStyle: {
-        marginTop: 12,
-        height: 50,
-        borderColor: '#707070',
-        //   marginTop: 10,
-    },
-})

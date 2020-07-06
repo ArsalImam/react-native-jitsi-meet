@@ -8,11 +8,11 @@ import Dashboard from './screens/patient/Dashboard';
 import Demographics from './screens/patient/Demographics'
 import Available from './screens/patient/BookingList';
 import MenuSlider from './screens/patient/MenuSlider';
-import VitalAdd from './screens/patient/VitalAdd';
 import AddReport from './screens/patient/AddReport';
 import MadicationAdd from './screens/patient/MedicationAdd';
 import MedicalCondition from './screens/patient/MedicalCondition';
 import Vital from './screens/patient/Vital';
+import VitalList from './screens/patient/VitalList';
 import DrProfile from './screens/patient/DrProfile';
 import Patients from './screens/patient/Patients';
 import AppointmentRoom from './screens/AppointmentRoom';
@@ -35,6 +35,7 @@ export default class Routes extends React.Component {
       <Drawer.Navigator drawerContent={props => <MenuSlider {...props} />}>
         <Drawer.Screen name="Dashboard" component={Dashboard} />
         <Drawer.Screen name="Vital" component={Vital} />
+        <Drawer.Screen name="VitalList" component={VitalList} />
         <Drawer.Screen name="CreateClinic" component={CreateClinic} />
         <Drawer.Screen name="ClinicList" component={ClinicList} />
         <Drawer.Screen name="MadicationAdd" component={MadicationAdd} />
@@ -51,7 +52,7 @@ export default class Routes extends React.Component {
     return (
       <Tab.Navigator
 
-    
+
 
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size, type }) => {
@@ -79,7 +80,7 @@ export default class Routes extends React.Component {
 
         tabBarOptions={{
 
-          
+
           activeTintColor: '#297dec',
           inactiveTintColor: '#000',
 
@@ -99,9 +100,9 @@ export default class Routes extends React.Component {
           }
 
         }} >
-        
 
-        <Tab.Screen name="Available" component={Available}/>
+
+        <Tab.Screen name="Available" component={Available} />
         <Tab.Screen name="Scheduled" component={Scheduled} />
         <Tab.Screen name="Completed" component={Completed} />
       </Tab.Navigator>
@@ -156,22 +157,16 @@ export default class Routes extends React.Component {
         />
 
         <Stack.Screen
-          name="VitalAdd"
-          component={VitalAdd}
+          name="CreateClinic"
+          component={CreateClinic}
           options={{ headerShown: false }}
         />
 
-          <Stack.Screen
-              name="CreateClinic"
-              component={CreateClinic}
-              options={{ headerShown: false }}
-          />
-          
-          <Stack.Screen
-              name="ClinicList"
-              component={ClinicList}
-              options={{ headerShown: false }}
-          />
+        <Stack.Screen
+          name="ClinicList"
+          component={ClinicList}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="MadicationAdd"
           component={MadicationAdd}
@@ -193,6 +188,12 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="Vital"
           component={Vital}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="VitalList"
+          component={VitalList}
           options={{ headerShown: false }}
         />
 

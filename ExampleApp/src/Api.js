@@ -49,7 +49,6 @@ export default class Api {
     }
   }
   
-  
   async getClinicList() {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
@@ -60,6 +59,35 @@ export default class Api {
     if (data.error) throw data.error.message;
     return data;
   }
+
+  // Create Vitals
+  async createVital(data) {
+      let user = await this._user();
+      let _user = JSON.parse(JSON.stringify(user));
+
+      data.patientId = _user.id;
+
+      let response = await this.client.post(
+        this.getUrl('vitals'),
+        data,
+        this.getHeaders(),
+      );
+      return response.data;
+  }
+
+// Vital List
+  async getVitalList() {
+
+    
+    let response = await this.client.get(
+      this.getUrl(`Clinics/5efbdcc80a400903b4517232?filter[include]=Vitals`),
+    );
+    let data = response.data;
+    console.warn('data',data);
+    if (data.error) throw data.error.message;
+    return data;
+  }
+
 
   _relationalParamByRole(role) {
     var id_param = 'patientId';
@@ -134,6 +162,7 @@ export default class Api {
     return data;
   }
 
+  
   async saveUser(user) {
     try {
       await AsyncStorage.setItem('@user', JSON.stringify(user));
