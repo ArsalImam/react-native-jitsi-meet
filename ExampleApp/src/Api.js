@@ -107,9 +107,11 @@ export default class Api {
 // Vital List
   async getVitalList() {
 
-    
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+
     let response = await this.client.get(
-      this.getUrl(`Clinics/5efbdcc80a400903b4517232?filter[include]=Vitals`),
+      this.getUrl(`Clients/${_user.id}?filter[include]=Vitals`),
     );
     let data = response.data;
     console.warn('data',data);

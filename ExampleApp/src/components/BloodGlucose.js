@@ -73,12 +73,12 @@ class BloodGlucose extends React.Component {
                             label="Select Meal"
                             value=""
                         />
-                        <Picker.Item label="Pre Breakfast" value="key0" />
-                        <Picker.Item label="Post Breakfast" value="key1" />
-                        <Picker.Item label="Pre Lunch" value="key2" />
-                        <Picker.Item label="Post Lunch" value="key3" />
-                        <Picker.Item label="Bed Time" value="key4" />
-                        <Picker.Item label="After Snakes" value="key5" />
+                        <Picker.Item label="Pre Breakfast" value="Pre Breakfast" />
+                        <Picker.Item label="Post Breakfast" value="Post Breakfast" />
+                        <Picker.Item label="Pre Lunch" value="Pre Lunch" />
+                        <Picker.Item label="Post Lunch" value="Post Lunch" />
+                        <Picker.Item label="Bed Time" value="Bed Time" />
+                        <Picker.Item label="After Snakes" value="After Snakes" />
 
                     </Picker>
                 </Item>
@@ -105,8 +105,8 @@ class BloodGlucose extends React.Component {
                             label="Select Medicine Type"
                             value=""
                         />
-                        <Picker.Item label="Pre Medicine" value="key0" />
-                        <Picker.Item label="Post Medicine" value="key1" />
+                        <Picker.Item label="Pre Medicine" value="Pre Medicine" />
+                        <Picker.Item label="Post Medicine" value="Post Medicine" />
 
                     </Picker>
                 </Item>

@@ -23,8 +23,12 @@ export default class VitalList extends Component {
 
         Api.instance().getVitalList()
             .then((data) => {
-                this.setState({ vitalList: data });
+                console.warn('=====>', data["Vitals"])
+
+                this.setState({ vitalList: data["Vitals"] });
             }
+
+
             ).catch(err => console.log(err))
             .finally(() => {
                 this.setState({ isLoading: false });
@@ -40,7 +44,7 @@ export default class VitalList extends Component {
                 ]}
                     source={require('../../assets/img/bwback.png')}>
                     <View style={
-                        { flex: 2 }
+                        { flex: 2.1 }
                     }>
                         <Text style={{ color: '#FFFFFF', paddingLeft: 18, marginTop: 63 }}>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Vital List\n`}</Text>
@@ -69,23 +73,25 @@ export default class VitalList extends Component {
 
                                             <Text style={{ paddingVertical: 10 }} >
                                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Vital Type: \n`}</Text>
-                            <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.vitalType}</Text>
+                                                <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.vitalType}</Text>
                                             </Text>
 
                                             <Text>
                                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Notes: \n`}</Text>
-                                                <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}></Text>
+                                                <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.notes}</Text>
                                             </Text>
-                                            
+
                                         </View>
 
                                         <View style={[CommonStyles.container, { justifyContent: 'space-between', alignItems: 'flex-end', }]}>
                                             <Text style={[CommonStyles.textSizeAverage, { color: '#333333' }]}>
-                                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{`Vital Value: `}</Text>
-                                                <Text style={CommonStyles.fontMedium}></Text>
+                                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{`Values:\n `}</Text>
+                                                <Text style={CommonStyles.fontMedium}>{item.multipleValues[0]}{`\n`}</Text>
+                                                <Text style={CommonStyles.fontMedium}>{item.multipleValues[1]}{`\n`}</Text>
+                                                <Text style={CommonStyles.fontMedium}>{item.multipleValues[2]}</Text>
                                             </Text>
 
-                                            
+
                                         </View>
 
                                     </View>

@@ -98,7 +98,7 @@ export default class Vital extends Component {
             .createVital(data)
             .then(response => {
                 this.props.navigation.replace('MyDrawer');
-                ViewUtils.showToast(' has been saved successfully!');
+                ViewUtils.showToast('Vital has been saved successfully!');
             })
             .catch(err => {
                 ViewUtils.showToast(err);
