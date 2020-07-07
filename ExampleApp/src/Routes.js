@@ -11,9 +11,10 @@ import MenuSlider from './screens/patient/MenuSlider';
 import AddReport from './screens/patient/AddReport';
 import MadicationAdd from './screens/patient/MedicationAdd';
 import MedicalCondition from './screens/patient/MedicalCondition';
-import Vital from './screens/patient/Vital';
-import VitalList from './screens/patient/VitalList';
+import Vital from './screens/Vitals/Vital';
+import VitalList from './screens/Vitals/VitalList';
 import DrProfile from './screens/patient/DrProfile';
+import PatientProfile from './screens/patient/PatientProfile';
 import Patients from './screens/patient/Patients';
 import AppointmentRoom from './screens/AppointmentRoom';
 
@@ -200,6 +201,20 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="DrProfile"
           component={DrProfile}
+          options={{
+            headerShown: true,
+            title: '',
+            headerStyle: { backgroundColor: 'transparent' },
+            headerTransparent: true,
+            headerTitleAlign: 'center',
+            headerTitleStyle: { color: '#fff' },
+            headerTintColor: '#fff',
+          }}
+        />
+
+        <Stack.Screen
+          name="PatientProfile"
+          component={PatientProfile}
           options={{
             headerShown: true,
             title: '',

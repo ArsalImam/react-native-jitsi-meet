@@ -11,7 +11,7 @@ class BloodPressure extends React.Component {
         super(props);
         this.state = {
             systolic: '',
-            diSystolic: '',
+            diastolic: '',
             pulse: '',
 
         };
@@ -49,8 +49,8 @@ class BloodPressure extends React.Component {
 
 
                     <Item floatingLabel
-                        value={this.state.diSystolic}
-                        onChangeText={val => this.setState({ diSystolic: val })}
+                      
+                        onChangeText={val => this.setState({ diastolic: val })}
                         style={[CommonStyles.container, CommonStyles.itemStyle]}>
                         <Label
                             style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium,
@@ -59,8 +59,9 @@ class BloodPressure extends React.Component {
                             }]}>Diastolic (mm/Hg)*
                         </Label>
                         <Input
-                            value={this.state.pulse}
-                            onChangeText={val => this.setState({ pulse: val })}
+                          value={this.state.diastolic}
+                          
+                            onChangeText={val => this.setState({ diastolic: val })}
                             keyboardType='number-pad'
                             style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium,
                             {
@@ -78,7 +79,9 @@ class BloodPressure extends React.Component {
                             }]}>Pulse (Beats/Min)*
                         </Label>
                         <Input
+                          value={this.state.pulse}
                             keyboardType='number-pad'
+                            onChangeText={val => this.setState({ pulse: val })}
                             style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium,
                             {
                                 marginLeft: 5

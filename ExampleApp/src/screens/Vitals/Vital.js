@@ -9,7 +9,6 @@ import BloodOxygen from '../../components/BloodOxygen';
 import Api from '../../Api';
 import Loader from '../../components/Loader';
 import { ViewUtils } from '../../Utils'
-import { color } from 'react-native-reanimated';
 
 export default class Vital extends Component {
 
@@ -23,8 +22,6 @@ export default class Vital extends Component {
             userObj: {},
             vitalObj: {
                 multipleValues: [],
-
-
                 patientId: '',
                 note: '',
                 data: [],
@@ -49,48 +46,60 @@ export default class Vital extends Component {
     }
 
     _saveVital = () => {
-        let data = { 
+        let data = {
             "notes": this.state.notes,
         };
         let childComponentData = null;
+
         switch (this.state.vitalType) {
             case 'BloodGlucose':
-
-            childComponentData = this.glucoseComponent._onSave();
+                childComponentData = this.glucoseComponent._onSave();
                 Object.assign(data, {
                     "multipleValues": [
-                      childComponentData.value,
-                      childComponentData.selectedMeal,
-                      childComponentData.selectedMedicine
+
+                        "Blood Glucose: ",
+                        childComponentData.value,
+
+                        "Meal: ",
+                        childComponentData.selectedMeal,
+
+                        "Medication: ",
+                        childComponentData.selectedMedicine
                     ],
-                    "vitalType": "BloodGlucose",
+                    "vitalType": "Blood Glucose",
                     "value": childComponentData.value,
-               });
+                });
                 break;
             case 'BloodPressure':
                 childComponentData = this.pressureComponent._onSave();
-                Object.assign(data,{
+                Object.assign(data, {
                     "multipleValues": [
+                        "Systolic: ",
                         childComponentData.systolic,
-                        childComponentData.diSystolic,
+
+                        "Diastolic: ",
+                        childComponentData.diastolic,
+
+                        "Pulse: ",
                         childComponentData.pulse
                     ],
-                    "vitalType": "BloodPressure",
-                    "value": childComponentData.systolic 
-                  });
+                    "vitalType": "Blood Pressure",
+                    "value": childComponentData.systolic
+                });
                 break
             case 'BloodOxygen':
                 childComponentData = this.oxygenComponent._onSave();
-                Object.assign(data,{
+                Object.assign(data, {
                     "multipleValues": [
-                      childComponentData.value
+                        "Blood Oxygen: ",
+                        childComponentData.value
                     ],
-                    "vitalType": "BloodOxygen",
+                    "vitalType": "Blood Oxygen",
                     "value": childComponentData.value,
-                  });
+                });
                 break
             default:
-               
+
         }
 
         this.setState({ isLoading: true });
@@ -116,7 +125,7 @@ export default class Vital extends Component {
 
                 <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/img/bwback.png')}>
                     <View style={{ flex: 2.3 }}>
-                        <Text style={[CommonStyles.fontRegular, { marginTop: 65, paddingHorizontal: 18 }]}>
+                        <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
                             <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Vital Add\n`}</Text>
                             <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
                         </Text>
@@ -141,7 +150,7 @@ export default class Vital extends Component {
                                     placeholderIconColor="#007aff"
 
                                     selectedValue={this.state.vitalType}
-                                    onValueChange={val => {this.setState({ vitalType: val})}}>
+                                    onValueChange={val => { this.setState({ vitalType: val }) }}>
                                     <Picker.Item
                                         color="gray"
                                         selected={false}
@@ -210,13 +219,7 @@ export default class Vital extends Component {
 
                     <View
                         style={[
-                            {
-                                position: 'absolute',
-                                left: 16,
-                                top: 40,
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            },
+                            CommonStyles.backButtonStyle
                         ]}>
                         <TouchableOpacity
                             onPress={() => {

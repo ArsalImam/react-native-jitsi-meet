@@ -65,12 +65,13 @@ export default class BookingList extends Component {
                       moveTo: 'createAppointment',
                     });
                   }}>
-                  <ImageBackground
+                 <ImageBackground
                     style={[
                       CommonStyles.container,
                       CommonStyles.backgroundImage,
+                  
                     ]}
-                    source={require('../../assets/drawable-mdpi/Fill-1.png')}>
+                    source={require('../../assets/img/bookingbg.png')}>
                     <View
                       style={[
                         CommonStyles.container,

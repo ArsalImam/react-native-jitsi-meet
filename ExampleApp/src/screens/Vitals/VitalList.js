@@ -4,24 +4,26 @@ import CommonStyles from '../../CommonStyles';
 import { ListItem, CheckBox, Divider } from 'react-native-elements';
 import { Icon } from 'native-base';
 import { FlatGrid } from 'react-native-super-grid';
+import { CommonActions } from '@react-navigation/native';
 import { StyleSheet, Text, View, ImageBackground, StatusBar, ActivityIndicator, FlatList, TouchableOpacity } from 'react-native';
 import moment from 'moment';
 import Loader from '../../components/Loader';
 
-export default class ClinicList extends Component {
+export default class VitalList extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             isLoading: true,
-            clinicList: [],
+            vitalList: [],
         }
     }
 
     componentDidMount() {
-        Api.instance().getClinicList()
+        Api.instance().getVitalList()
             .then((data) => {
-                this.setState({ clinicList: data });
+                console.warn('=====>', data["Vitals"])
+                this.setState({ vitalList: data["Vitals"] });
             }
             ).catch(err => console.log(err))
             .finally(() => {
@@ -38,20 +40,19 @@ export default class ClinicList extends Component {
                 ]}
                     source={require('../../assets/img/bwback.png')}>
                     <View style={
-                        { flex: 2.1}
+                        { flex: 2.1 }
                     }>
-                        <Text style={{ color: '#FFFFFF', paddingLeft: 15, marginTop: 65 }}>
-                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Clinic List\n`}</Text>
-                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>It is a list of your all Clinics </Text>
+                        <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
+                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Vital List\n`}</Text>
+                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>It is a list of your all Bookings </Text>
                         </Text>
                     </View>
 
-                    <View style={{ flex: 8}}>
+                    <View style={{ flex: 8 }}>
                         <FlatGrid
                             itemDimension={350}
+                            items={this.state.vitalList}
                             spacing={15}
-
-                            items={this.state.clinicList}
                             style={[CommonStyles.container, { marginTop: 5 }
                             ]}
                             renderItem={({ item }) => (
@@ -62,41 +63,41 @@ export default class ClinicList extends Component {
                                         style={[
                                             CommonStyles.container,
                                             CommonStyles.backgroundImage,
-
-
                                         ]}
-                                        source={require('../../assets/img/whitebox3x.png')}>
+                                        source={require('../../assets/img/whitebox2x.png')}>
 
-                                        <View style={[CommonStyles.container, { flexDirection: 'row', paddingVertical: 12, paddingLeft: 12 }]}>
+                                        <View style={[CommonStyles.container, { flexDirection: 'row', padding: 12 }]}>
 
                                             <View style={[CommonStyles.container, { justifyContent: 'space-between' }]}>
+
                                                 <Text >
-                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Clinic Name\n`}</Text>
-                                                    <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.name}</Text>
+                                                    <Text style={[CommonStyles.textSizeSmall, CommonStyles.fontRegular, { color: '#333333' }]}>{`Date: `}</Text>
+                                                    <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333' }]}>{moment(item.createdAt).format('ll')}</Text>
                                                 </Text>
 
-                                                <Text style={{ paddingVertical: 10 }}>
-                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Slots\n`}</Text>
-                                                    <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.appointmentSlotsText}</Text>
-                                                </Text>
-                                                <Text style={[CommonStyles.textSizeAverage, { color: '#333333' }]}>
-                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{`No.of Weeks: `}</Text>
-                                                    <Text style={CommonStyles.fontMedium}>{item.numOfClinics}</Text>
-                                                </Text>
-                                            </View>
-
-                                            <View style={[CommonStyles.container, { justifyContent: 'space-between', alignItems: 'flex-end', paddingVertical: 12, paddingRight: 12 }]}>
-                                                <Text style={[CommonStyles.textSizeAverage, { color: '#333333' }]}>
-                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{`Frequency: `}</Text>
-                                                    <Text style={CommonStyles.fontMedium}>{item.frequencyText}</Text>
+                                                <Text style={{ paddingVertical: 10 }} >
+                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Vital Type: \n`}</Text>
+                                                    <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.vitalType}</Text>
                                                 </Text>
 
                                                 <Text>
-                                                    <Text style={[CommonStyles.textSizeSmall, CommonStyles.fontRegular, { color: '#333333' }]}>{`Date: `}</Text>
-                                                    <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333' }]}>{moment(item.joinedDate).format('ll')}</Text>
+                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Notes: \n`}</Text>
+                                                    <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.notes}</Text>
                                                 </Text>
+
                                             </View>
 
+                                            <View style={[CommonStyles.container, { justifyContent: 'space-between', alignItems: 'flex-end' }]}>
+                                                <Text style={[CommonStyles.textSizeAverage, { color: '#333333' }]}>
+                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{`Values:\n\n`}</Text>
+                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{item.multipleValues[0]}{`\n`}</Text>
+                                                    <Text style={CommonStyles.fontMedium}>{item.multipleValues[1]}{`\n`}</Text>
+                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{item.multipleValues[2]}{`\n`}</Text>
+                                                    <Text style={CommonStyles.fontMedium}>{item.multipleValues[3]}{`\n`}</Text>
+                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{item.multipleValues[4]}{`\n`}</Text>
+                                                    <Text style={CommonStyles.fontMedium}>{item.multipleValues[5]}{`\n`}</Text>
+                                                </Text>
+                                            </View>
                                         </View>
                                     </ImageBackground>
                                 </View>
@@ -104,7 +105,6 @@ export default class ClinicList extends Component {
                         />
                     </View>
                     <Loader loading={this.state.isLoading} />
-
                     <View
                         style={[
                             CommonStyles.backButtonStyle

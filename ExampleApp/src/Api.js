@@ -82,7 +82,7 @@ export default class Api {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
-      this.getUrl(`Clinics?filter[where][doctorId]=${_user.id}`),
+      this.getUrl(`Clinics?filter[where][doctorId]=${_user.id}&filter[order]=id%20DESC`),
     );
     let data = response.data;
     if (data.error) throw data.error.message;
@@ -111,7 +111,7 @@ export default class Api {
     let _user = JSON.parse(JSON.stringify(user));
 
     let response = await this.client.get(
-      this.getUrl(`Clients/${_user.id}?filter[include]=Vitals`),
+      this.getUrl(`Clients/${_user.id}?filter[include]=Vitals&filter[order]=id%20DESC`),
     );
     let data = response.data;
     console.warn('data',data);
@@ -196,7 +196,7 @@ export default class Api {
       this.getUrl(
         `Appointments?filter[where][${id_param}]=${
           _user.id
-        }${includes}${wheres}`,
+        }${includes}${wheres}&filter[order]=id%20DESC`,
       ),
     );
     let data = response.data;
@@ -212,7 +212,7 @@ export default class Api {
       this.getUrl(
         `Clients?filter[where][${id_param}]=${_user.id}&[where]][role]${
           Roles.patient
-        }`,
+        }&filter[order]=id%20DESC`,
       ),
     );
     let data = response.data;
