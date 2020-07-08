@@ -1,7 +1,7 @@
 import axios from 'axios';
 // import https from 'https';
 import AsyncStorage from '@react-native-community/async-storage';
-import {Configs, Roles, AppointmentStatus} from './Configs';
+import { Configs, Roles, AppointmentStatus } from './Configs';
 import * as AxiosLogger from 'axios-logger';
 
 export default class Api {
@@ -29,20 +29,20 @@ export default class Api {
   async login(email: string, password: string) {
     let response = await this.client.post(
       this.getUrl('Clients/login?include=user'),
-      {email, password},
+      { email, password },
       this.getHeaders(),
     );
     let authData = response.data;
     if (authData.error) throw authData.error.message;
     await this.saveUser(authData.user);
-    
+
     //update fcm
     try {
       await this.updateFcmToken(await AsyncStorage.getItem('fcmToken'))
     } catch (error) {
 
       //log error, to enable ease in debugging
-      console.log(error);  
+      console.log(error);
     }
     return response.data;
   }
@@ -53,31 +53,31 @@ export default class Api {
     try {
       let response = await this.client.post(
         this.getUrl('Clinics/CreateClinic'),
-        {data: data},
+        { data: data },
         this.getHeaders(),
       );
       return response.data;
     } catch (error) {
-     return error
+      return error
     }
   }
-  
 
-    async notifyAppointment(appointmentId) {
+
+  async notifyAppointment(appointmentId) {
     try {
-          let user = await this._user();
-    let _user = JSON.parse(JSON.stringify(user));
+      let user = await this._user();
+      let _user = JSON.parse(JSON.stringify(user));
       let response = await this.client.post(
-        this.getUrl('notifies/NotifyAppointment'),  
-        {userId:_user.id,appointmentId},
+        this.getUrl('notifies/NotifyAppointment'),
+        { userId: _user.id, appointmentId },
         this.getHeaders(),
       );
       return response.data;
     } catch (error) {
-     return error
+      return error
     }
   }
-  
+
   async getClinicList() {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
@@ -91,20 +91,22 @@ export default class Api {
 
   // Create Vitals
   async createVital(data) {
-      let user = await this._user();
-      let _user = JSON.parse(JSON.stringify(user));
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
 
-      data.patientId = _user.id;
+    data.patientId = _user.id;
 
-      let response = await this.client.post(
-        this.getUrl('vitals'),
-        data,
-        this.getHeaders(),
-      );
-      return response.data;
+    let response = await this.client.post(
+
+      this.getUrl('vitals'),
+      data,
+      this.getHeaders(),
+    );
+    console.warn("TOuqeer", response.data)
+    return response.data;
   }
 
-// Vital List
+  // Vital List
   async getVitalList() {
 
     let user = await this._user();
@@ -114,11 +116,110 @@ export default class Api {
       this.getUrl(`Clients/${_user.id}?filter[include]=Vitals&filter[order]=id%20DESC`),
     );
     let data = response.data;
-    console.warn('data',data);
+    console.warn('data', data);
     if (data.error) throw data.error.message;
     return data;
   }
 
+
+  // Create Medications
+  async createMedication(data) {
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+
+    data.doctorId = _user.id;
+
+    let response = await this.client.post(
+      this.getUrl('Setups'),
+      data,
+      this.getHeaders(),
+    );
+    return response.data;
+  }
+
+  // Medication List
+  async getMedicationList() {
+
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+    let response = await this.client.get(
+      this.getUrl(`Setups?filter[where][doctorId]=${_user.id}&filter[where][setupType]=medication&filter[order]=createdAt%20DESC`),
+    );
+    let data = response.data;
+    console.warn('data', data);
+    if (data.error) throw data.error.message;
+    return data;
+  }
+
+  // diagnosis List
+  async getDiagnosisList() {
+
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+    let response = await this.client.get(
+      this.getUrl(`Setups?filter[where][doctorId]=${_user.id}&filter[where][setupType]=diagnosis&filter[order]=createdAt%20DESC`),
+    );
+    let data = response.data;
+    console.warn('data', data);
+    if (data.error) throw data.error.message;
+    return data;
+  }
+
+  // investigation List
+  async getInvestigationList() {
+
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+    let response = await this.client.get(
+      this.getUrl(`Setups?filter[where][doctorId]=${_user.id}&filter[where][setupType]=investigation&filter[order]=createdAt%20DESC`),
+    );
+    let data = response.data;
+    console.warn('data', data);
+    if (data.error) throw data.error.message;
+    return data;
+  }
+
+  // suggestedTherapy List
+  async getTherapyList() {
+
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+    let response = await this.client.get(
+      this.getUrl(`Setups?filter[where][doctorId]=${_user.id}&filter[where][setupType]=suggestedTherapy&filter[order]=createdAt%20DESC`),
+    );
+    let data = response.data;
+    console.warn('data', data);
+    if (data.error) throw data.error.message;
+    return data;
+  }
+
+  // surgicalProcedure List
+  async getProcedureList() {
+
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+    let response = await this.client.get(
+      this.getUrl(`Setups?filter[where][doctorId]=${_user.id}&filter[where][setupType]=surgicalProcedure&filter[order]=createdAt%20DESC`),
+    );
+    let data = response.data;
+    console.warn('data', data);
+    if (data.error) throw data.error.message;
+    return data;
+  }
+
+   // Patient History List
+   async getPatientHistoryList() {
+
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+    let response = await this.client.get(
+      this.getUrl(`Setups?filter[where][doctorId]=${_user.id}&filter[where][setupType]=patientHistoryForm&filter[order]=createdAt%20DESC`),
+    );
+    let data = response.data;
+    console.warn('data', data);
+    if (data.error) throw data.error.message;
+    return data;
+  }
 
   _relationalParamByRole(role) {
     var id_param = 'patientId';
@@ -154,12 +255,12 @@ export default class Api {
     if (!fcmToken) {
       throw "token not token";
     }
-    
+
     let user = await this._user();
     if (!user) {
       throw "user not logged in yet!";
     }
-    
+
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.patch(
       this.getUrl(
@@ -195,7 +296,7 @@ export default class Api {
     let response = await this.client.get(
       this.getUrl(
         `Appointments?filter[where][${id_param}]=${
-          _user.id
+        _user.id
         }${includes}${wheres}&filter[order]=id%20DESC`,
       ),
     );
@@ -211,7 +312,7 @@ export default class Api {
     let response = await this.client.get(
       this.getUrl(
         `Clients?filter[where][${id_param}]=${_user.id}&[where]][role]${
-          Roles.patient
+        Roles.patient
         }&filter[order]=id%20DESC`,
       ),
     );
@@ -220,7 +321,7 @@ export default class Api {
     return data;
   }
 
-  
+
   async saveUser(user) {
     try {
       await AsyncStorage.setItem('@user', JSON.stringify(user));
