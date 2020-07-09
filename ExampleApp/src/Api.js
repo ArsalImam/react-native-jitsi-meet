@@ -221,6 +221,22 @@ export default class Api {
     return data;
   }
 
+  // anatomicalIllustration List
+
+  async getAnatomicalIllustrationList() {
+
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+    let response = await this.client.get(
+      this.getUrl(`Setups?filter[where][doctorId]=${_user.id}&filter[where][setupType]=anatomicalIllustration&filter[order]=createdAt%20DESC`),
+    );
+    let data = response.data;
+    console.warn('data', data);
+    if (data.error) throw data.error.message;
+    return data;
+  }
+
+
   _relationalParamByRole(role) {
     var id_param = 'patientId';
     switch (role) {
