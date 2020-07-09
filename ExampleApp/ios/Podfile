@@ -81,6 +81,8 @@ target 'Exemple' do
 
   pod 'RNFirebase', :path => '../node_modules/react-native-firebase'
 
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
   target 'ExempleTests' do
     inherit! :complete
     # Pods for testing

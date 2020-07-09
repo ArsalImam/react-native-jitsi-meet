@@ -34,6 +34,9 @@ import TherapyList from './screens/suggestedTherapy/TherapyList';
 import PatientHistoryAdd from './screens/patientHistoryForm/PatientHistoryAdd';
 import PatientHistoryList from './screens/patientHistoryForm/PatientHistoryList';
 
+import UploadIllustrations from './screens/Upload/UploadIllustrations';
+import IllustrationsList from './screens/Upload/IllustrationsList';
+
 
 import Scheduled from './screens/patient/ScheduledBooking';
 import Completed from './screens/patient/CompleteBookings';
@@ -62,6 +65,7 @@ export default class Routes extends React.Component {
         <Drawer.Screen name="ProcedureList" component={ProcedureList} />
         <Drawer.Screen name="TherapyList" component={TherapyList} />
         <Drawer.Screen name="PatientHistoryList" component={PatientHistoryList} />
+        <Drawer.Screen name="IllustrationsList" component={IllustrationsList} />
         <Drawer.Screen name="MedicalCondition" component={MedicalCondition} />
         <Drawer.Screen name="Demographics" component={Demographics} />
         <Drawer.Screen name="AddReport" component={AddReport} />
@@ -283,6 +287,17 @@ export default class Routes extends React.Component {
           options={{ headerShown: false }}
         />
 
+        <Stack.Screen
+          name="UploadIllustrations"
+          component={UploadIllustrations}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="IllustrationsList"
+          component={IllustrationsList}
+          options={{ headerShown: false }}
+        />
 
         <Stack.Screen
           name="DrProfile"
