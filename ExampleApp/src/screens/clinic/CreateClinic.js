@@ -228,6 +228,7 @@ export default class CreateClinic extends Component {
     Api.instance()
       .createClinic(this.state.clinicObj)
       .then(res => {
+          console.warn(res);
          ViewUtils.showToast('Clinic has been created successfully!');
         this.props.navigation.dispatch(
           CommonActions.reset({
