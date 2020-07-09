@@ -5,7 +5,7 @@ buildscript {
         buildToolsVersion = "28.0.3"
         minSdkVersion = 24
         compileSdkVersion = 28
-        targetSdkVersion = 28
+        targetSdkVersion = 23
     }
     repositories {
         google()
@@ -13,7 +13,7 @@ buildscript {
     }
     dependencies {
         classpath("com.android.tools.build:gradle:3.5.2")
-
+        classpath 'com.google.gms:google-services:4.3.3'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -30,7 +30,7 @@ allprojects {
         maven { // <---- Add this block
             url "https://github.com/jitsi/jitsi-maven-repository/raw/master/releases"
         }
-        
+
         maven {
             // Android JSC is installed from npm
             url("$rootDir/../node_modules/jsc-android/dist")

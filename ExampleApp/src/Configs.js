@@ -1,6 +1,8 @@
 const Configs = {
+
   // baseUrl: 'http://high.rep.digitrends.pk/api/',
   //  baseUrl: 'http://192.168.100.24:3001/api/',
+
 
   // baseUrl: 'http://192.168.8.100:3001/api/',
 

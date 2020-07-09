@@ -61,8 +61,8 @@ export default class CompleteBookings extends Component {
             </Text>
 
           </View>
-          <View style={{ flex: 8, paddingHorizontal: 2 }} >
-            <FlatGrid
+          <View style={{flex: 8, paddingHorizontal: 2, paddingBottom: 55}}>
+           <FlatGrid
               itemDimension={320}
               items={this.state.appointments}
               style={[CommonStyles.container]}
