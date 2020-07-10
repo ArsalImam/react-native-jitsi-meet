@@ -38,6 +38,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'native-base';
 import CreateClinic from "./screens/clinic/CreateClinic";
 import ClinicList from "./screens/clinic/ClinicList";
+import SideBar from "./components/drawer/SideBar";
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();

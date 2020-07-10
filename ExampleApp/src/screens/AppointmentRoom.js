@@ -62,23 +62,19 @@ export default class AppointmentRoom extends React.Component {
     
     return (
         <Container  style={StyleSheet.absoluteFillObject}>
-    
+  
       <Drawer
         ref={ref => {
           this.drawer = ref;
         }}
-        content={<SideBar navigator={this.navigator} />}
+        content={<SideBar navigator={this.navigator} changeScreenHandler={this.props.navigation} />}
         onClose={() => this.closeDrawer()}>
         <AppHeader openDrawer={this.openDrawer.bind(this)} />
         <JitsiMeetView
           onConferenceTerminated={e => this.onConferenceTerminated(e)}
           onConferenceJoined={e => this.onConferenceJoined(e)}
           onConferenceWillJoin={e => this.onConferenceWillJoin(e)}
-          style={{
-            flex: 1,
-            height: '100%',
-            width: '100%',
-          }}/>
+          style={{            flex: 1,            height: '100%',            width: '100%', }}/>
       </Drawer>
         </Container>
 

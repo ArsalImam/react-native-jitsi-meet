@@ -33,7 +33,7 @@ export default class UploadIllustrations extends Component {
 
 
     handleChoosePhoto = (mediaType) => {
-        const options = { noData: true, mediaType };
+        const options = {mediaType };
         ImagePicker.showImagePicker(options, (response) => {
             
             console.warn('Response = ', response);
@@ -47,9 +47,7 @@ export default class UploadIllustrations extends Component {
             } else {
                 const source = { uri: response.uri };
 
-                this.setState({
-                    image: source,
-                });
+                this.setState({                    image: source,                },()=>{console.warn(this.state.image);});
             }
         });
     }
