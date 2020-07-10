@@ -1,7 +1,11 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import JitsiMeet, {JitsiMeetView} from 'react-native-jitsi-meet';
 import Api from '../Api';
-
+import {Container, Drawer} from 'native-base';
+import SideBar from '../components/drawer/SideBar';
+import AppHeader from '../components/drawer/AppHeader';
+import {View, Text,StyleSheet } from 'react-native';
 export default class AppointmentRoom extends React.Component {
   constructor(props) {
     super(props);
@@ -47,19 +51,37 @@ export default class AppointmentRoom extends React.Component {
     /* Conference will join event */
     console.log(nativeEvent);
   }
+  closeDrawer = () => {
+    this.drawer._root.close();
+  };
+  openDrawer = () => {
+    this.drawer._root.open();
+  };
 
   render() {
+    
     return (
-      <JitsiMeetView
-        onConferenceTerminated={e => this.onConferenceTerminated(e)}
-        onConferenceJoined={e => this.onConferenceJoined(e)}
-        onConferenceWillJoin={e => this.onConferenceWillJoin(e)}
-        style={{
-          flex: 1,
-          height: '100%',
-          width: '100%',
+        <Container  style={StyleSheet.absoluteFillObject}>
+    
+      <Drawer
+        ref={ref => {
+          this.drawer = ref;
         }}
-      />
+        content={<SideBar navigator={this.navigator} />}
+        onClose={() => this.closeDrawer()}>
+        <AppHeader openDrawer={this.openDrawer.bind(this)} />
+        <JitsiMeetView
+          onConferenceTerminated={e => this.onConferenceTerminated(e)}
+          onConferenceJoined={e => this.onConferenceJoined(e)}
+          onConferenceWillJoin={e => this.onConferenceWillJoin(e)}
+          style={{
+            flex: 1,
+            height: '100%',
+            width: '100%',
+          }}/>
+      </Drawer>
+        </Container>
+
     );
   }
 }
