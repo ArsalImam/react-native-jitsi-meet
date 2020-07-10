@@ -15,6 +15,10 @@ export default class Vital extends Component {
             selected: ""
         };
     }
+    _createVitals(){
+
+        console.warn('asd');
+    }
     onValueChange(value) {
         this.setState({
             selected: value
@@ -60,7 +64,7 @@ export default class Vital extends Component {
                                 <Picker
                                     mode="dropdown"
                                     iosIcon={<Icon name="arrow-down" />}
-                                   
+
                                     placeholder="Choose Frequency"
                                     placeholderStyle={{ color: '#bfc6ea' }}
                                     placeholderIconColor="#007aff"
@@ -169,7 +173,7 @@ export default class Vital extends Component {
                             ]}
                         >
                             <Text
-
+onPress={()=>{this._createVitals()}}
                                 style={[
                                     CommonStyles.fontRegular,
                                     CommonStyles.textSizeNormal,
