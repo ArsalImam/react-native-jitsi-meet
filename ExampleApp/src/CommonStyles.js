@@ -85,8 +85,8 @@ const CommonStyles = StyleSheet.create({
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.8,
-    shadowRadius: 4,
+    shadowOpacity: 0.7,
+    shadowRadius: 5,
     elevation: 3,
   },
   buttonCenterText: {

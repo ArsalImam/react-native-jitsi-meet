@@ -57,7 +57,7 @@ export default class DiagnosisList extends Component {
                             ]}
                             renderItem={({ item }) => (
 
-                                <View style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5]}>
+                                <View style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5, CommonStyles.bgColor]}>
 
                                     <ImageBackground
                                         style={[

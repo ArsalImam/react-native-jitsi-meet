@@ -237,6 +237,22 @@ export default class Api {
   }
 
 
+  // https://api.evotelemedicine.live/api/MedicalRecords?filter[where][patientId]=5ef32d208b8afe3d4ebf33cd
+  // Medical Record List
+  async getMedicalRecordList() {
+
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+    let response = await this.client.get(
+      this.getUrl(`MedicalRecords?filter[where][patientId]=${_user.id}&filter[order]=createdAt%20DESC`),
+    );
+    let data = response.data;
+    console.warn('data', data);
+    if (data.error) throw data.error.message;
+    return data;
+  }
+
+
   _relationalParamByRole(role) {
     var id_param = 'patientId';
     switch (role) {

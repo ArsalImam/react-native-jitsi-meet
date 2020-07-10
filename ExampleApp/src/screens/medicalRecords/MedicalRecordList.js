@@ -11,21 +11,21 @@ import Loader from '../../components/Loader';
 import Avatar from 'react-native-elements';
 
 import FastImage from 'react-native-fast-image'
-export default class PatientHistoryList extends Component {
+export default class MedicalRecordList extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             isLoading: true,
-            anatomicalIllustrationList: [],
+            medicalRecordList: [],
         }
     }
 
     componentDidMount() {
-        Api.instance().getAnatomicalIllustrationList()
+        Api.instance().getMedicalRecordList()
             .then((data) => {
                 console.warn('=====>', data)
-                this.setState({ anatomicalIllustrationList: data });
+                this.setState({ medicalRecordList: data });
             }
             ).catch(err => console.log(err))
             .finally(() => {
@@ -51,7 +51,7 @@ export default class PatientHistoryList extends Component {
                         { flex: 2.3 }
                     }>
                         <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
-                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Anatomical Illustrations\n`}</Text>
+                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Medical Records\n`}</Text>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Bookings </Text>
                         </Text>
                     </View>
@@ -59,13 +59,13 @@ export default class PatientHistoryList extends Component {
                     <View style={{ flex: 8 }}>
                         <FlatGrid
                             itemDimension={350}
-                            items={this.state.anatomicalIllustrationList}
+                            items={this.state.medicalRecordList}
                             spacing={15}
                             style={[CommonStyles.container, { marginTop: 5 }
                             ]}
                             renderItem={({ item }) => (
 
-                                <View style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5]}>
+                                <View style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5, CommonStyles.bgColor]}>
 
                                     <ImageBackground
                                         style={[
@@ -79,8 +79,8 @@ export default class PatientHistoryList extends Component {
                                             <View style={[CommonStyles.container, { justifyContent: 'space-between' }]}>
 
                                                 <Text style={{ marginBottom: 10 }} >
-                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Anatomical Name: \n`}</Text>
-                                                    <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.name}</Text>
+                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Title: \n`}</Text>
+                                                    <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.title}</Text>
                                                 </Text>
 
                                                 <Text >
@@ -89,14 +89,17 @@ export default class PatientHistoryList extends Component {
                                                 </Text>
                                             </View>
 
-                                            <View style={[CommonStyles.container, { justifyContent: 'center' }]}>
-                                                <View style={[{ alignSelf: 'flex-end' }]}>
+                                            <View style={[CommonStyles.container, { justifyContent: 'space-between', alignSelf: 'flex-end' }]}>
+
+                                                <Text >
+                                                    <Text style={[CommonStyles.textSizeSmall, CommonStyles.fontRegular, { color: '#333333' }]}>{`Report Type:  `}</Text>
+                                                    <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333' }]}>{item.type}</Text>
+                                                </Text>
+
+                                                <View style={[{ alignSelf: 'center', marginTop: 20 }]}>
                                                     <FastImage
-                                                        style={{ width: 100, height: 100 }}
-                                                        source={{
-                                                            uri: 'https://api.evotelemedicine.live/api/Contents/images/download/Mask.png',
-                                                            priority: FastImage.priority.normal,
-                                                        }}
+                                                        style={{ width: 90, height: 120, borderRadius: 5}}
+                                                        source={{ uri: item.url }}
                                                         resizeMode={FastImage.resizeMode.contain}
                                                     />
                                                 </View>
@@ -123,7 +126,7 @@ export default class PatientHistoryList extends Component {
                         ]}>
                         <TouchableOpacity
                             onPress={() => {
-                                this.props.navigation.navigate('UploadIllustrations')
+                                this.props.navigation.navigate('UploadMedicalRecord')
                             }}
                             style={[
                                 CommonStyles.container,
@@ -141,7 +144,7 @@ export default class PatientHistoryList extends Component {
                                     CommonStyles.padding,
                                     { opacity: 0.5 },
                                 ]}>
-                                Add Anatomical Illustrations
+                                Add Medical Record
                              </Text>
                         </TouchableOpacity>
                     </View>
