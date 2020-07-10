@@ -252,9 +252,9 @@ export default class CreateClinic extends Component {
         <ImageBackground
           style={[CommonStyles.container, CommonStyles.backgroundImage]}
           source={require('../../assets/img/bwback.png')}>
-          
+            
           <View style={{ flex: 2}}>
-            <Text style={{ paddingLeft: 16, marginTop: 60 }}>
+            <Text style={{ paddingLeft: 20, marginTop: 65 }}>
               <Text
                 style={[
                   CommonStyles.fontRegular,
@@ -453,7 +453,7 @@ export default class CreateClinic extends Component {
                 <Picker
                   mode="dropdown"
                   iosIcon={<Icon name="arrow-down" />}
-                  style={{ width: '92%' }}
+
                   placeholder="Choose Frequency"
                   placeholderStyle={{ color: '#bfc6ea' }}
                   placeholderIconColor="#007aff"
@@ -515,7 +515,7 @@ export default class CreateClinic extends Component {
             style={[
               {
                 position: 'absolute',
-                left: 16,
+                left: 15,
                 top: 40,
                 justifyContent: 'center',
                 alignItems: 'center',

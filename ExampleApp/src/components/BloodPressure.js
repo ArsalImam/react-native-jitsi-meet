@@ -4,30 +4,96 @@ import { Container, Header, Content, Form, Item, Input, Label, Picker, Icon } fr
 import { Button } from 'native-base';
 import CommonStyles from '../CommonStyles';
 
-const BloodPressure = (props) => {
-//this._onSave({});
-    return (
-        <View style={[CommonStyles.container]}>
+
+class BloodPressure extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            systolic: '',
+            diastolic: '',
+            pulse: '',
+
+        };
+    }
+
+    _onSave() {
+        return this.state;
+    }
+
+    render() {
+        return (
             <View style={[CommonStyles.container]}>
-                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle]}>
-                    <Label >Systolic (mm/Hg)*</Label>
-                    <Input keyboardType='number-pad' />
-                </Item>
+                <View style={[CommonStyles.container]}>
 
-                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle]}>
-                    <Label >Diastolic (mm/Hg)*</Label>
-                    <Input keyboardType='number-pad' />
-                </Item>
 
-                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle]}>
-                    <Label >Pulse (Beats/Min)*</Label>
-                    <Input keyboardType='number-pad' />
-                </Item>
+                    <Item floatingLabel
+                        style={[CommonStyles.container, CommonStyles.itemStyle]
+                        }>
+                        <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium,
+                        {
+                            marginLeft: 7
+                        }
+                        ]}>Systolic (mm/Hg)*
+                            </Label>
+                        <Input
+                            value={this.state.systolic}
+                            onChangeText={val => this.setState({ systolic: val })}
+                            keyboardType='number-pad'
+                            style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium,
+                            {
+                                marginLeft: 5
+                            }
+                            ]} />
+                    </Item>
+
+
+                    <Item floatingLabel
+                      
+                        onChangeText={val => this.setState({ diastolic: val })}
+                        style={[CommonStyles.container, CommonStyles.itemStyle]}>
+                        <Label
+                            style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium,
+                            {
+                                marginLeft: 7
+                            }]}>Diastolic (mm/Hg)*
+                        </Label>
+                        <Input
+                          value={this.state.diastolic}
+                          
+                            onChangeText={val => this.setState({ diastolic: val })}
+                            keyboardType='number-pad'
+                            style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium,
+                            {
+                                marginLeft: 5
+                            }]} />
+                    </Item>
+
+
+                    <Item floatingLabel
+                        style={[CommonStyles.container, CommonStyles.itemStyle]}>
+                        <Label
+                            style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium,
+                            {
+                                marginLeft: 7
+                            }]}>Pulse (Beats/Min)*
+                        </Label>
+                        <Input
+                          value={this.state.pulse}
+                            keyboardType='number-pad'
+                            onChangeText={val => this.setState({ pulse: val })}
+                            style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium,
+                            {
+                                marginLeft: 5
+                            }]}
+                        />
+                    </Item>
+
+                </View>
 
             </View>
-
-        </View>
-    );
+        );
+    }
 }
 
 export default BloodPressure;

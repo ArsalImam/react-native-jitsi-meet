@@ -379,15 +379,16 @@ class Dashboard extends React.Component {
                 </Text>
               </TouchableOpacity>
             </View>
+
             <View
               style={[
                 CommonStyles.container,
-                {justifyContent: 'center', alignSelf: 'center', marginTop: 70},
+                {alignSelf: 'center' , marginTop: 70},
               ]}>
               <View style={[CommonStyles.container]}>
                 <Image
-                  style={[CommonStyles.container, CommonStyles.backgroundImage]}
-                  source={require('../../assets/img/calendar.png')}
+                  style={[CommonStyles.container, { resizeMode: 'contain'}]}
+                  source={require('../../assets/img/calander2.png')}
                 />
               </View>
             </View>
@@ -414,16 +415,13 @@ class Dashboard extends React.Component {
             </TouchableOpacity>
           </KeyboardAwareScrollView>
 
-          
-          <Loader
-                    loading={this.state.showLoader}/>
-
+          <Loader loading={this.state.showLoader}/>
 
           <View
             style={[
               {
                 position: 'absolute',
-                right: 15,
+                right: 17,
                 top: 40,
                 justifyContent: 'center',
                 alignItems: 'center',

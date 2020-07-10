@@ -254,7 +254,7 @@ export default class CreateClinic extends Component {
           source={require('../../assets/img/bwback.png')}>
           
           <View style={{ flex: 2}}>
-            <Text style={{ paddingLeft: 16, marginTop: 60 }}>
+            <Text style={{ paddingLeft: 18, marginTop: 65 }}>
               <Text
                 style={[
                   CommonStyles.fontRegular,

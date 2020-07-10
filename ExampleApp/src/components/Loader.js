@@ -24,7 +24,7 @@ const Loader = props => {
                 <View style={styles.activityIndicatorWrapper}>
                     <ActivityIndicator
                         animating={loading} color='#297dec' size='large'/>
-                    <StatusBar translucent backgroundColor='#000040' barStyle={'light-content'} />
+                    <StatusBar translucent backgroundColor='#000040' barStyle={'dark-content'} />
          
                 </View>
             </View>
