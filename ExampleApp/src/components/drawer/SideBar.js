@@ -1,47 +1,30 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Image
-} from 'react-native';
 
-
+import { Container, Header, Content, List, ListItem, Text } from 'native-base';
 import DrawerHeader from './AppHeader';
 
 
 
 
-import {
-  Content,
-  List,
-  ListItem,
-  Text,
-  Icon,
-  Left,
-  Body,
-  Right,
-  Thumbnail
-} from 'native-base';
-
-
 export default class Sidebar extends Component {
   render() {
     return (
-          <Content style={{backgroundColor:'#FFFFFF'}}>
-                <DrawerHeader/>
-         <List>
-              <ListItem icon >
-                <Left>
-                  <Icon name="paper" />
-                </Left>
-                <Body >
-                  <Text>Passbook</Text>
-                </Body>
-              </ListItem>
-           
-             
-         </List>
-
-          </Content>
+          <Container>
+        <Header />
+        <Content>
+          <List>
+            <ListItem>
+              <Text>Simon Mignolet</Text>
+            </ListItem>
+            <ListItem>
+              <Text>Nathaniel Clyne</Text>
+            </ListItem>
+            <ListItem>
+              <Text>Dejan Lovren</Text>
+            </ListItem>
+          </List>
+        </Content>
+      </Container>
     );
   }
 }
