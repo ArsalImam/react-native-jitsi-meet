@@ -60,10 +60,10 @@ export default class AppointmentRoom extends React.Component {
 
   render() {
     return (
-    
+
       <Drawer
         ref={ref => {
-          this._drawer = ref;
+          this.drawer = ref;
         }}
         content={<SideBar navigator={this._navigator} />}
         onClose={() => this.closeDrawer()}>
