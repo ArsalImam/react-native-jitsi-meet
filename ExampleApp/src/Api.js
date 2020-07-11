@@ -90,11 +90,11 @@ customProperties.push(report);
 console.log(customProperties);
       let response = await this.client.post(
         this.getUrl(`consultation-reports/updateCustomProps`),
-    {
+    {data:{
       "patientId":_user.id,
       "appointmentId":appointmentId,
       "doctorId":_user.id,
-      "customProperties":customProperties});
+      "customProperties":customProperties}});
       return response.data;
     } catch (error) {
       return error
