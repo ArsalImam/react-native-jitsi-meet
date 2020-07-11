@@ -16,6 +16,10 @@ export default class Sidebar extends Component {
          
        }
       }
+      componentDidMount() {
+console.log('========>',this.props.appointmentId)
+
+      }
   render() {
       
     return (

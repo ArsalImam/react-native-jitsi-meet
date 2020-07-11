@@ -59,7 +59,7 @@ export default class AppointmentRoom extends React.Component {
   };
 
   render() {
-    
+
     return (
         <Container  style={StyleSheet.absoluteFillObject}>
   
@@ -67,7 +67,7 @@ export default class AppointmentRoom extends React.Component {
         ref={ref => {
           this.drawer = ref;
         }}
-        content={<SideBar navigator={this.navigator} changeScreenHandler={this.props.navigation} />}
+        content={<SideBar navigator={this.navigator} appointmentId={this.props.route.params.appointmentId} changeScreenHandler={this.props.navigation} />}
         onClose={() => this.closeDrawer()}>
         <AppHeader openDrawer={this.openDrawer.bind(this)} />
         <JitsiMeetView
