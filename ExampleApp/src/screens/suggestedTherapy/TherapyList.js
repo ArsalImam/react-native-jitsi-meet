@@ -16,6 +16,8 @@ export default class TherapyList extends Component {
         this.state = {
             isLoading: true,
             therapyList: [],
+            appointmentId:this.props.route.params,
+
         }
     }
 

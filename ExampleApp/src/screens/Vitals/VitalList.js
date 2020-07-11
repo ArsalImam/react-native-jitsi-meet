@@ -36,6 +36,8 @@ export default class VitalList extends Component {
 
     render() {
         return (
+
+            
             <View style={[CommonStyles.container]}>
                 <ImageBackground style={[
                     CommonStyles.container,
