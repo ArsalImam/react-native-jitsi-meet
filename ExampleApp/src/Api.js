@@ -207,8 +207,8 @@ export default class Api {
     return data;
   }
 
-   // Patient History List
-   async getPatientHistoryList() {
+  // Patient History List
+  async getPatientHistoryList() {
 
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
@@ -236,8 +236,6 @@ export default class Api {
     return data;
   }
 
-
-  // https://api.evotelemedicine.live/api/MedicalRecords?filter[where][patientId]=5ef32d208b8afe3d4ebf33cd
   // Medical Record List
   async getMedicalRecordList() {
 
@@ -250,6 +248,21 @@ export default class Api {
     console.warn('data', data);
     if (data.error) throw data.error.message;
     return data;
+  }
+
+  // Create Prescribe Medication
+  async createPrescription(data) {
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+
+    data.doctorId = _user.id;
+
+    let response = await this.client.post(
+      this.getUrl('setups-patients'),
+      data,
+      this.getHeaders(),
+    );
+    return response.data;
   }
 
 

@@ -60,7 +60,7 @@ export default class VitalList extends Component {
                             ]}
                             renderItem={({ item }) => (
 
-                                <View style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5, CommonStyles.bgColor]}>
+                                <TouchableOpacity style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5, CommonStyles.bgColor]}>
 
                                     <ImageBackground
                                         style={[
@@ -103,7 +103,7 @@ export default class VitalList extends Component {
                                             </View>
                                         </View>
                                     </ImageBackground>
-                                </View>
+                                </TouchableOpacity>
                             )}
                         />
                     </View>

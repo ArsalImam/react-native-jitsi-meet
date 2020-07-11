@@ -32,6 +32,9 @@ import UploadIllustrations from './screens/uploadIllustration/UploadIllustration
 import IllustrationsList from './screens/uploadIllustration/IllustrationsList';
 import UploadMedicalRecord from './screens/medicalRecords/UploadMedicalRecord';
 import MedicalRecordList from './screens/medicalRecords/MedicalRecordList';
+
+import AddPrescribtion from './screens/prescribeMedication/AddPrescribtion';
+
 import Scheduled from './screens/patient/ScheduledBooking';
 import Completed from './screens/patient/CompleteBookings';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -61,6 +64,7 @@ export default class Routes extends React.Component {
         <Drawer.Screen name="PatientHistoryList" component={PatientHistoryList} />
         <Drawer.Screen name="IllustrationsList" component={IllustrationsList} />
         <Drawer.Screen name="MedicalRecordList" component={MedicalRecordList} />
+        <Drawer.Screen name="AddPrescribtion" component={AddPrescribtion} />
         <Drawer.Screen name="MedicalCondition" component={MedicalCondition} />
         <Drawer.Screen name="Demographics" component={Demographics} />
         <Drawer.Screen name="AddReport" component={AddReport} />
@@ -305,7 +309,12 @@ export default class Routes extends React.Component {
           component={MedicalRecordList}
           options={{ headerShown: false }}
         />
-        
+
+        <Stack.Screen
+          name="AddPrescribtion"
+          component={AddPrescribtion}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="DrProfile"
           component={DrProfile}
