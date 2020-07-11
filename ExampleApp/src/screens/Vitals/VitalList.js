@@ -16,10 +16,13 @@ export default class VitalList extends Component {
         this.state = {
             isLoading: true,
             vitalList: [],
+            appointmentId:this.props.route.params,
         }
     }
 
     componentDidMount() {
+
+       
         Api.instance().getVitalList()
             .then((data) => {
                 console.warn('=====>', data["Vitals"])

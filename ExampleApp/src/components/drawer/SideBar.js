@@ -17,7 +17,7 @@ export default class Sidebar extends Component {
        }
       }
       componentDidMount() {
-console.log('========>',this.props.appointmentId)
+
 
       }
   render() {
@@ -35,7 +35,7 @@ console.log('========>',this.props.appointmentId)
               <Text>History Form</Text>
             </ListItem>
 
-            <ListItem  button={true} onPress={() => {this.props.changeScreenHandler.navigate('Vital')}}>
+            <ListItem  button={true} onPress={() => {this.props.changeScreenHandler.navigate('VitalList',this.props.appointmentId)}}>
               <Text>Vital Signs</Text>
             </ListItem>
            
