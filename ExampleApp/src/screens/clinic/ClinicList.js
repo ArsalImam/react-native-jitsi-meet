@@ -38,34 +38,31 @@ export default class ClinicList extends Component {
                 ]}
                     source={require('../../assets/img/bwback.png')}>
                     <View style={
-                        { flex: 2.1}
+                        { flex: 2.1 }
                     }>
-                        <Text style={{ color: '#FFFFFF', paddingLeft: 15, marginTop: 65 }}>
+                        <Text style={{ color: '#FFFFFF', paddingLeft: 16, marginTop: 65 }}>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Clinic List\n`}</Text>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>It is a list of your all Clinics </Text>
                         </Text>
                     </View>
 
-                    <View style={{ flex: 8}}>
+                    <View style={{ flex: 8 }}>
                         <FlatGrid
                             itemDimension={350}
                             spacing={15}
-
                             items={this.state.clinicList}
                             style={[CommonStyles.container, { marginTop: 5 }
                             ]}
                             renderItem={({ item }) => (
 
-                                <View style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5]}>
+                                <View style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5, CommonStyles.bgColor]}>
 
                                     <ImageBackground
                                         style={[
                                             CommonStyles.container,
                                             CommonStyles.backgroundImage,
-
-
                                         ]}
-                                        source={require('../../assets/img/whitebox3x.png')}>
+                                        source={require('../../assets/img/bookingbg2x.png')}>
 
                                         <View style={[CommonStyles.container, { flexDirection: 'row', paddingVertical: 12, paddingLeft: 12 }]}>
 

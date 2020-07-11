@@ -20,31 +20,25 @@ import MedicationAdd from './screens/medications/MedicationAdd';
 import MedicationList from './screens/medications/MedicationList';
 import DiagnosisAdd from './screens/diagnosis/DiagnosisAdd';
 import DiagnosisList from './screens/diagnosis/DiagnosisList';
-
-
 import InvestigationAdd from './screens/investigation/InvestigationAdd';
 import InvestigationList from './screens/investigation/InvestigationList';
-
 import ProcedureAdd from './screens/surgicalProcedure/ProcedureAdd';
 import ProcedureList from './screens/surgicalProcedure/ProcedureList';
-
 import TherapyAdd from './screens/suggestedTherapy/TherapyAdd';
 import TherapyList from './screens/suggestedTherapy/TherapyList';
-
 import PatientHistoryAdd from './screens/patientHistoryForm/PatientHistoryAdd';
 import PatientHistoryList from './screens/patientHistoryForm/PatientHistoryList';
-
-import UploadIllustrations from './screens/Upload/UploadIllustrations';
-import IllustrationsList from './screens/Upload/IllustrationsList';
-
-
+import UploadIllustrations from './screens/uploadIllustration/UploadIllustrations';
+import IllustrationsList from './screens/uploadIllustration/IllustrationsList';
+import UploadMedicalRecord from './screens/medicalRecords/UploadMedicalRecord';
+import MedicalRecordList from './screens/medicalRecords/MedicalRecordList';
 import Scheduled from './screens/patient/ScheduledBooking';
 import Completed from './screens/patient/CompleteBookings';
-
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'native-base';
 import CreateClinic from "./screens/clinic/CreateClinic";
 import ClinicList from "./screens/clinic/ClinicList";
+import SideBar from "./components/drawer/SideBar";
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -66,6 +60,7 @@ export default class Routes extends React.Component {
         <Drawer.Screen name="TherapyList" component={TherapyList} />
         <Drawer.Screen name="PatientHistoryList" component={PatientHistoryList} />
         <Drawer.Screen name="IllustrationsList" component={IllustrationsList} />
+        <Drawer.Screen name="MedicalRecordList" component={MedicalRecordList} />
         <Drawer.Screen name="MedicalCondition" component={MedicalCondition} />
         <Drawer.Screen name="Demographics" component={Demographics} />
         <Drawer.Screen name="AddReport" component={AddReport} />
@@ -299,6 +294,18 @@ export default class Routes extends React.Component {
           options={{ headerShown: false }}
         />
 
+        <Stack.Screen
+          name="UploadMedicalRecord"
+          component={UploadMedicalRecord}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="MedicalRecordList"
+          component={MedicalRecordList}
+          options={{ headerShown: false }}
+        />
+        
         <Stack.Screen
           name="DrProfile"
           component={DrProfile}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TouchableOpacity, ImageBackground, ScrollView, StatusBar } from 'react-native';
-import { Container, Header, Content, DatePicker, Text, Item, Label, Input, ScrollableTab, Icon, Picker, Form , Image } from 'native-base';
+import { Container, Header, Content, DatePicker, Text, Item, Label, Input, ScrollableTab, Icon, Picker, Form, Image } from 'native-base';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import CommonStyles from '../../CommonStyles'
 import Api from '../../Api';
@@ -8,7 +8,7 @@ import Loader from '../../components/Loader';
 import { ViewUtils } from '../../Utils';
 import ImagePicker from 'react-native-image-picker'
 
-export default class UploadIllustrations extends Component {
+export default class UploadMedicalRecord extends Component {
 
     constructor(props) {
         super(props);
@@ -35,7 +35,7 @@ export default class UploadIllustrations extends Component {
     handleChoosePhoto = (mediaType) => {
         const options = { noData: true, mediaType };
         ImagePicker.showImagePicker(options, (response) => {
-            
+
             console.warn('Response = ', response);
 
             if (response.didCancel) {
@@ -78,14 +78,14 @@ export default class UploadIllustrations extends Component {
             });
     };
     render() {
-        const {image} = this.state;
+        const { image } = this.state;
         return (
- <View style={[CommonStyles.container]}>
+            <View style={[CommonStyles.container]}>
 
                 <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/img/bwback.png')}>
                     <View style={{ flex: 2.3 }}>
                         <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
-                            <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Upload Anatomical Illustrations\n`}</Text>
+                            <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Upload Medical Record\n`}</Text>
                             <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
                         </Text>
                     </View>
@@ -108,11 +108,43 @@ export default class UploadIllustrations extends Component {
 
 
                             <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 20 }]}>
-                                <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Anatomical Name*</Label>
+                                <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Title*</Label>
                                 <Input
                                     value={this.state.notes}
                                     onChangeText={val => this.setState({ name: val })}
                                     style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
+                            </Item>
+
+                            <Item
+                                picker
+                                style={[
+                                    CommonStyles.container,
+                                    CommonStyles.itemStyle,
+                                    { paddingTop: 10 },
+                                ]}>
+                                <Picker
+                                    mode="dropdown"
+                                    style={{ textAlign: 'left' }}
+                                    focusable
+                                    iosIcon={<Icon name="arrow-down" />}
+                                    placeholder="Select Vital Type"
+                                    placeholderStyle={{ color: '#bfc6ea' }}
+                                    placeholderIconColor="#007aff"
+
+                                    selectedValue={this.state.vitalType}
+                                    onValueChange={val => { this.setState({ vitalType: val }) }}>
+                                    <Picker.Item
+                                        color="gray"
+                                        selected={false}
+                                        label="Document Type"
+                                        value=""
+                                    />
+                                    <Picker.Item label="Referral Letter" value="BloodGlucose" />
+                                    <Picker.Item label="Scanned Medical Records" value="BloodPressure" />
+                                    <Picker.Item label="Results of Laboratory Test" value="BloodOxygen" />
+                                    <Picker.Item label="X-rays, MRI, CT, US, Scans " value="BloodOxygen" />
+                                    <Picker.Item label="Misc Images ECG, Skin Lesion etc" value="BloodOxygen" />
+                                </Picker>
                             </Item>
                         </KeyboardAwareScrollView>
 

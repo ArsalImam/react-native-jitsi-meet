@@ -54,12 +54,13 @@ export default class BookingList extends Component {
           <View style={{flex: 8, paddingHorizontal: 2, paddingBottom: 55}}>
             <FlatGrid
               itemDimension={320}
+              spacing={15}
               items={this.state.appointments}
               style={[CommonStyles.container]}
               renderItem={({item}) => (
                 <TouchableOpacity
-                  style={[CommonStyles.container, CommonStyles.shadow]}
-                  onPress={() => {
+                 style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5, CommonStyles.bgColor]}
+                onPress={() => {
                     this.props.navigation.navigate(`Patients`, {
                       appointmentId: item.id,
                       moveTo: 'createAppointment',
@@ -71,7 +72,7 @@ export default class BookingList extends Component {
                       CommonStyles.backgroundImage,
                   
                     ]}
-                    source={require('../../assets/img/bookingbg.png')}>
+                    source={require('../../assets/img/bookingbg2x.png')}>
                     <View
                       style={[
                         CommonStyles.container,

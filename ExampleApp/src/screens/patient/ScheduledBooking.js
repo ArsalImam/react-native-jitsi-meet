@@ -68,6 +68,7 @@ export default class ScheduledBooking extends Component {
           <View style={{flex: 8, paddingHorizontal: 2, paddingBottom: 55}}>
            <FlatGrid
               itemDimension={320}
+              spacing={15}
               items={this.state.appointments}
               style={[CommonStyles.container]}
               renderItem={({item}) => (
@@ -84,13 +85,13 @@ export default class ScheduledBooking extends Component {
                       () => {},
                     );
                   }}
-                  style={[CommonStyles.container, CommonStyles.shadow]}>
+                  style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5, CommonStyles.bgColor]}>
                   <ImageBackground
                     style={[
                       CommonStyles.container,
                       CommonStyles.backgroundImage,
                     ]}
-                    source={require('../../assets/drawable-mdpi/Fill-1.png')}>
+                    source={require('../../assets/img/bookingbg2x.png')}>
                     <View
                       style={[
                         CommonStyles.container,

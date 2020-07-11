@@ -57,14 +57,14 @@ export default class VitalList extends Component {
                             ]}
                             renderItem={({ item }) => (
 
-                                <View style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5]}>
+                                <View style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5, CommonStyles.bgColor]}>
 
                                     <ImageBackground
                                         style={[
                                             CommonStyles.container,
                                             CommonStyles.backgroundImage,
                                         ]}
-                                        source={require('../../assets/img/whitebox2x.png')}>
+                                        source={require('../../assets/img/Group-16.png')}>
 
                                         <View style={[CommonStyles.container, { flexDirection: 'row', padding: 12 }]}>
 

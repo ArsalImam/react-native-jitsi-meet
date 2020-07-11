@@ -5,32 +5,40 @@ import { ListItem, CheckBox, Divider } from 'react-native-elements';
 import { Icon } from 'native-base';
 import { FlatGrid } from 'react-native-super-grid';
 import { CommonActions } from '@react-navigation/native';
-import { StyleSheet, Text, View, ImageBackground, StatusBar, ActivityIndicator, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, StatusBar, ActivityIndicator, FlatList, TouchableOpacity, Image } from 'react-native';
 import moment from 'moment';
 import Loader from '../../components/Loader';
+import Avatar from 'react-native-elements';
 
-export default class InvestigationList extends Component {
+import FastImage from 'react-native-fast-image'
+export default class PatientHistoryList extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             isLoading: true,
-            diagnosisList: [],
+            anatomicalIllustrationList: [],
         }
     }
 
     componentDidMount() {
-        Api.instance().getInvestigationList()
+        Api.instance().getAnatomicalIllustrationList()
             .then((data) => {
-                console.warn('=====>', data["Diagnosis"])
-                this.setState({ diagnosisList: data });
+                console.warn('=====>', data)
+                this.setState({ anatomicalIllustrationList: data });
             }
             ).catch(err => console.log(err))
             .finally(() => {
                 this.setState({ isLoading: false });
             })
     }
+    getImage(image) {
 
+        if (image == null) { return '' }
+        else {
+            image
+        }
+    }
     render() {
         return (
             <View style={[CommonStyles.container]}>
@@ -43,7 +51,7 @@ export default class InvestigationList extends Component {
                         { flex: 2.3 }
                     }>
                         <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
-                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Investigation List\n`}</Text>
+                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Anatomical Illustrations\n`}</Text>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Bookings </Text>
                         </Text>
                     </View>
@@ -51,7 +59,7 @@ export default class InvestigationList extends Component {
                     <View style={{ flex: 8 }}>
                         <FlatGrid
                             itemDimension={350}
-                            items={this.state.diagnosisList}
+                            items={this.state.anatomicalIllustrationList}
                             spacing={15}
                             style={[CommonStyles.container, { marginTop: 5 }
                             ]}
@@ -66,39 +74,40 @@ export default class InvestigationList extends Component {
                                         ]}
                                         source={require('../../assets/img/bookingbg2x.png')}>
 
-                                        <View style={[CommonStyles.container, { flexDirection: 'row', padding: 12 }]}>
+                                        <View style={[CommonStyles.container, { padding: 12, flexDirection: 'row' }]}>
 
                                             <View style={[CommonStyles.container, { justifyContent: 'space-between' }]}>
 
                                                 <Text style={{ marginBottom: 10 }} >
-                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Question: \n`}</Text>
+                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Anatomical Name: \n`}</Text>
                                                     <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.name}</Text>
                                                 </Text>
-
-                                                <Text>
-                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Description: \n`}</Text>
-                                                    <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.description}</Text>
-                                                </Text>
-
-                                            </View>
-
-                                            <View style={[CommonStyles.container, { justifyContent: 'space-between', alignItems: 'flex-end' }]}>
 
                                                 <Text >
                                                     <Text style={[CommonStyles.textSizeSmall, CommonStyles.fontRegular, { color: '#333333' }]}>{`Date: `}</Text>
                                                     <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333' }]}>{moment(item.createdAt).format('ll')}</Text>
                                                 </Text>
+                                            </View>
 
+                                            <View style={[CommonStyles.container, { justifyContent: 'center' }]}>
+                                                <View style={[{ alignSelf: 'flex-end'}]}>
+                                                    <FastImage
+                                                        style={{ width: 80, height: 110, borderRadius: 5,  }}
+                                                        source={{
+                                                            uri: item.imageUrl
+                                                        }}
+                                                        resizeMode={FastImage.resizeMode.contain}
+                                                    />
+                                                </View>
                                             </View>
                                         </View>
-
-
-
                                     </ImageBackground>
                                 </View>
                             )}
                         />
                     </View>
+
+
                     <View
                         style={[
                             CommonStyles.fitToBottom,
@@ -113,7 +122,7 @@ export default class InvestigationList extends Component {
                         ]}>
                         <TouchableOpacity
                             onPress={() => {
-                                this.props.navigation.navigate('InvestigationAdd')
+                                this.props.navigation.navigate('UploadIllustrations')
                             }}
                             style={[
                                 CommonStyles.container,
@@ -122,6 +131,7 @@ export default class InvestigationList extends Component {
                             ]}
                         >
                             <Text
+
                                 style={[
                                     CommonStyles.fontRegular,
                                     CommonStyles.textSizeNormal,
@@ -130,7 +140,7 @@ export default class InvestigationList extends Component {
                                     CommonStyles.padding,
                                     { opacity: 0.5 },
                                 ]}>
-                                Add Investigation
+                                Add Anatomical Illustrations
                              </Text>
                         </TouchableOpacity>
                     </View>

@@ -5,7 +5,7 @@ import Api from '../Api';
 import {Container, Drawer} from 'native-base';
 import SideBar from '../components/drawer/SideBar';
 import AppHeader from '../components/drawer/AppHeader';
-import {View, Text} from 'react-native';
+import {View, Text,StyleSheet } from 'react-native';
 export default class AppointmentRoom extends React.Component {
   constructor(props) {
     super(props);
@@ -59,26 +59,25 @@ export default class AppointmentRoom extends React.Component {
   };
 
   render() {
+    
     return (
-
+        <Container  style={StyleSheet.absoluteFillObject}>
+  
       <Drawer
         ref={ref => {
           this.drawer = ref;
         }}
-        content={<SideBar navigator={this._navigator} />}
+        content={<SideBar navigator={this.navigator} changeScreenHandler={this.props.navigation} />}
         onClose={() => this.closeDrawer()}>
         <AppHeader openDrawer={this.openDrawer.bind(this)} />
         <JitsiMeetView
           onConferenceTerminated={e => this.onConferenceTerminated(e)}
           onConferenceJoined={e => this.onConferenceJoined(e)}
           onConferenceWillJoin={e => this.onConferenceWillJoin(e)}
-          style={{
-            flex: 1,
-            height: '100%',
-            width: '100%',
-          }}
-        />
+          style={{            flex: 1,            height: '100%',            width: '100%', }}/>
       </Drawer>
+        </Container>
+
     );
   }
 }
