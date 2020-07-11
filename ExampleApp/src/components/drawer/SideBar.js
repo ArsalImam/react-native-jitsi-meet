@@ -31,7 +31,7 @@ export default class Sidebar extends Component {
               <Text>EMR</Text>
             </ListItem>      
 
-    <ListItem  button={true}  >
+    <ListItem  button={true}  onPress={() => {this.props.changeScreenHandler.navigate('PatientHistoryList',this.props.appointmentId)}} >
               <Text>History Form</Text>
             </ListItem>
 
@@ -43,25 +43,25 @@ export default class Sidebar extends Component {
               <Text>Doctor Advice</Text>
             </ListItem> 
 
-              <ListItem  button={true} >
-              <Text>Prescribe Medication</Text>
+              <ListItem  button={true} onPress={() => {this.props.changeScreenHandler.navigate('MedicationList',this.props.appointmentId)}} >
+              <Text>Medication</Text>
             </ListItem>
 
-                      <ListItem  button={true} >
+                      <ListItem  button={true} onPress={() => {this.props.changeScreenHandler.navigate('DiagnosisList',this.props.appointmentId)}} >
               <Text>Diagnosis</Text>
             </ListItem>
            
 
-                       <ListItem  button={true} >
+                       <ListItem  button={true}  onPress={() => {this.props.changeScreenHandler.navigate('InvestigationList',this.props.appointmentId)}} >
               <Text>Investigation</Text>
             </ListItem>
 
 
-                                 <ListItem  button={true} >
+                                 <ListItem  button={true}  onPress={() => {this.props.changeScreenHandler.navigate('ProcedureList',this.props.appointmentId)}} >
               <Text>Surgical Procedure</Text>
             </ListItem>
 
-                                       <ListItem  button={true} >
+                                       <ListItem  button={true}  onPress={() => {this.props.changeScreenHandler.navigate('TherapyList',this.props.appointmentId)}}>
               <Text>Suggested Therapy</Text>
             </ListItem>
 

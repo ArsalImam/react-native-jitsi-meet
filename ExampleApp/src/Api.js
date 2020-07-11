@@ -63,6 +63,46 @@ export default class Api {
   }
 
 
+// setup-type,
+// notes,
+// date,
+// doctorId,
+// patientId,
+// answer,
+// active,
+  async addReport(item,appointmentId){
+
+      try {
+      let user = await this._user();
+      let _user = JSON.parse(JSON.stringify(user));
+
+let report = {
+  "setup-type":item.setupType,
+  "notes":item.description,
+  "date":new Date(),
+  "doctorId":_user.id,
+  "patientId":_user.id,
+  "answer":item.name,
+  "active":false
+}
+let customProperties=[];
+customProperties.push(report);
+console.log(customProperties);
+      let response = await this.client.post(
+        this.getUrl(`consultation-reports/updateCustomProps`),
+    {
+      "patientId":_user.id,
+      "appointmentId":appointmentId,
+      "doctorId":_user.id,
+      "customProperties":customProperties});
+      return response.data;
+    } catch (error) {
+      return error
+    }
+
+  }
+
+
   async notifyAppointment(appointmentId) {
     try {
       let user = await this._user();
