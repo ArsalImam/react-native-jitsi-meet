@@ -24,7 +24,7 @@ class MenuSlider extends React.Component {
             { name: 'Vital List', iconName: 'medicinebox', iconFamily: 'AntDesign', iconSize: '18', route: 'VitalList' },
 
         ];
-// PatientHistory
+
         const medicalProfile = [
             { name: 'Medication', iconName: 'medicinebox', iconFamily: 'AntDesign', iconSize: '18', route: 'MedicationList' },
             { name: 'Diagnosis', iconName: 'bed', iconFamily: 'FontAwesome', iconSize: '18', route: 'DiagnosisList' },
@@ -34,7 +34,7 @@ class MenuSlider extends React.Component {
             { name: 'Upload', iconName: 'tooth-outline', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: 'IllustrationsList' },
             { name: 'Patient History Form', iconName: 'notebook', iconFamily: 'SimpleLineIcons', iconSize: '18', route: 'PatientHistoryList' },
             { name: 'My Medical Records', iconName: 'ios-flower', iconFamily: 'Ionicon', iconSize: '18', route: 'MedicalRecordList' }, 
-            // { name: 'Medical Condition', iconName: 'bed', iconFamily: 'FontAwesome', iconSize: '18', route: 'MedicalCondition' },
+            { name: 'Medication Prescribe', iconName: 'bed', iconFamily: 'FontAwesome', iconSize: '18', route: 'AddPrescribtion' },
             // { name: 'Allergies', iconName: 'ios-flower', iconFamily: 'Ionicon', iconSize: '18', route: 'PatientProfile'},
             // { name: 'Surgeries', iconName: 'box-cutter', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: '' },
             // { name: 'Dental Issue', iconName: 'tooth-outline', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: '' },
@@ -152,7 +152,6 @@ class MenuSlider extends React.Component {
                     />
 
                 </Content>
-
 
                 <TouchableOpacity
                     onPress={() => this.props.navigation.navigate('Login')}
