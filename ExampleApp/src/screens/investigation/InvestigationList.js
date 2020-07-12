@@ -16,7 +16,7 @@ export default class InvestigationList extends Component {
         this.state = {
             isLoading: true,
             diagnosisList: [],
-                         appointmentId:this.props.route.params,
+            appointmentId: this.props.route.params,
 
         }
     }
@@ -33,249 +33,272 @@ export default class InvestigationList extends Component {
             })
     }
 
+    
+
+
+    addDiagnosis(item) {
+        item.setupType = 'investigation'
+        Api.instance().addReport(item, this.state.appointmentId)
+            .then(response => {
+                console.warn(response);
+                this.props.navigation.goBack();
+            }).catch(err => {
+
+            })
+            .finally(() => {
+
+            });
+    }
     render() {
 
-              if(this.state.appointmentId!=null){  return (
-            <View style={[CommonStyles.container]}>
-                <ImageBackground style={[
-                    CommonStyles.container,
-                    CommonStyles.backgroundImage
-                ]}
-                    source={require('../../assets/img/bwback.png')}>
-                    <View style={
-                        { flex: 2.3 }
-                    }>
-                        <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
-                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Investigation List\n`}</Text>
-                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Bookings </Text>
-                        </Text>
-                    </View>
+        if (this.state.appointmentId != null) {
+            return (
+                <View style={[CommonStyles.container]}>
+                    <ImageBackground style={[
+                        CommonStyles.container,
+                        CommonStyles.backgroundImage
+                    ]}
+                        source={require('../../assets/img/bwback.png')}>
+                        <View style={
+                            { flex: 2.3 }
+                        }>
+                            <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
+                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Investigation List\n`}</Text>
+                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Bookings </Text>
+                            </Text>
+                        </View>
 
-                    <View style={{ flex: 8 }}>
-                        <FlatGrid
-                            itemDimension={350}
-                            items={this.state.diagnosisList}
-                            spacing={15}
-                            style={[CommonStyles.container, { marginTop: 5 }
-                            ]}
-                            renderItem={({ item }) => (
+                        <View style={{ flex: 8 }}>
+                            <FlatGrid
+                                itemDimension={350}
+                                items={this.state.diagnosisList}
+                                spacing={15}
+                                style={[CommonStyles.container, { marginTop: 5 }
+                                ]}
+                                renderItem={({ item }) => (
 
-                                <View style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5, CommonStyles.bgColor]}>
+                                    <View style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5, CommonStyles.bgColor]}>
 
-                                    <ImageBackground
-                                        style={[
-                                            CommonStyles.container,
-                                            CommonStyles.backgroundImage,
-                                        ]}
-                                        source={require('../../assets/img/bookingbg2x.png')}>
+                                        <ImageBackground
+                                            style={[
+                                                CommonStyles.container,
+                                                CommonStyles.backgroundImage,
+                                            ]}
+                                            source={require('../../assets/img/bookingbg2x.png')}>
 
-                                        <TouchableOpacity style={[CommonStyles.container, { flexDirection: 'row', padding: 12 }]}>
+                                            <TouchableOpacity style={[CommonStyles.container, { flexDirection: 'row', padding: 12 }]} 
+                                            
+                                            onPress={() => { this.addDiagnosis(item) }}
+                                            >
 
-                                            <View style={[CommonStyles.container, { justifyContent: 'space-between' }]}>
+                                                <View style={[CommonStyles.container, { justifyContent: 'space-between' }]}>
 
-                                                <Text style={{ marginBottom: 10 }} >
-                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Question: \n`}</Text>
-                                                    <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.name}</Text>
-                                                </Text>
+                                                    <Text style={{ marginBottom: 10 }} >
+                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Question: \n`}</Text>
+                                                        <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.name}</Text>
+                                                    </Text>
 
-                                                <Text>
-                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Description: \n`}</Text>
-                                                    <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.description}</Text>
-                                                </Text>
+                                                    <Text>
+                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Description: \n`}</Text>
+                                                        <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.description}</Text>
+                                                    </Text>
 
-                                            </View>
+                                                </View>
 
-                                            <View style={[CommonStyles.container, { justifyContent: 'space-between', alignItems: 'flex-end' }]}>
+                                                <View style={[CommonStyles.container, { justifyContent: 'space-between', alignItems: 'flex-end' }]}>
 
-                                                <Text >
-                                                    <Text style={[CommonStyles.textSizeSmall, CommonStyles.fontRegular, { color: '#333333' }]}>{`Date: `}</Text>
-                                                    <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333' }]}>{moment(item.createdAt).format('ll')}</Text>
-                                                </Text>
+                                                    <Text >
+                                                        <Text style={[CommonStyles.textSizeSmall, CommonStyles.fontRegular, { color: '#333333' }]}>{`Date: `}</Text>
+                                                        <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333' }]}>{moment(item.createdAt).format('ll')}</Text>
+                                                    </Text>
 
-                                            </View>
-                                        </TouchableOpacity>
+                                                </View>
+                                            </TouchableOpacity>
 
 
 
-                                    </ImageBackground>
-                                </View>
-                            )}
-                        />
-                    </View>
-                    <View
-                        style={[
-                            CommonStyles.fitToBottom,
-                            CommonStyles.horizontalContainer,
-                            {
-                                backgroundColor: '#F7FAFE',
-                                borderTopRightRadius: 5,
-                                borderTopStartRadius: 5,
-                                borderTopWidth: 3,
-                                borderColor: '#FFF'
-                            },
-                        ]}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                this.props.navigation.navigate('InvestigationAdd')
-                            }}
-                            style={[
-                                CommonStyles.container,
-                                CommonStyles.centerText,
-                                { borderRightWidth: 0.5, borderColor: '#cfd2d6' },
-                            ]}
-                        >
-                            <Text
-                                style={[
-                                    CommonStyles.fontRegular,
-                                    CommonStyles.textSizeNormal,
-                                    CommonStyles.centerText,
-                                    CommonStyles.margin,
-                                    CommonStyles.padding,
-                                    { opacity: 0.5 },
-                                ]}>
-                                Add Investigation
-                             </Text>
-                        </TouchableOpacity>
-                    </View>
-                    <Loader loading={this.state.isLoading} />
-                    <View
-                        style={[
-                            CommonStyles.backButtonStyle
-                        ]}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                this.props.navigation.goBack();
-                            }}>
-                            <Icon
-                                name="arrow-back"
-                                type="MaterialIcons"
-                                style={{ color: '#FFF' }}
+                                        </ImageBackground>
+                                    </View>
+                                )}
                             />
-                        </TouchableOpacity>
-                    </View>
-                </ImageBackground>
-            </View>
-        )}else {  return (
-            <View style={[CommonStyles.container]}>
-                <ImageBackground style={[
-                    CommonStyles.container,
-                    CommonStyles.backgroundImage
-                ]}
-                    source={require('../../assets/img/bwback.png')}>
-                    <View style={
-                        { flex: 2.3 }
-                    }>
-                        <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
-                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Investigation List\n`}</Text>
-                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Bookings </Text>
-                        </Text>
-                    </View>
-
-                    <View style={{ flex: 8 }}>
-                        <FlatGrid
-                            itemDimension={350}
-                            items={this.state.diagnosisList}
-                            spacing={15}
-                            style={[CommonStyles.container, { marginTop: 5 }
-                            ]}
-                            renderItem={({ item }) => (
-
-                                <View style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5, CommonStyles.bgColor]}>
-
-                                    <ImageBackground
-                                        style={[
-                                            CommonStyles.container,
-                                            CommonStyles.backgroundImage,
-                                        ]}
-                                        source={require('../../assets/img/bookingbg2x.png')}>
-
-                                        <View style={[CommonStyles.container, { flexDirection: 'row', padding: 12 }]}>
-
-                                            <View style={[CommonStyles.container, { justifyContent: 'space-between' }]}>
-
-                                                <Text style={{ marginBottom: 10 }} >
-                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Question: \n`}</Text>
-                                                    <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.name}</Text>
-                                                </Text>
-
-                                                <Text>
-                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Description: \n`}</Text>
-                                                    <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.description}</Text>
-                                                </Text>
-
-                                            </View>
-
-                                            <View style={[CommonStyles.container, { justifyContent: 'space-between', alignItems: 'flex-end' }]}>
-
-                                                <Text >
-                                                    <Text style={[CommonStyles.textSizeSmall, CommonStyles.fontRegular, { color: '#333333' }]}>{`Date: `}</Text>
-                                                    <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333' }]}>{moment(item.createdAt).format('ll')}</Text>
-                                                </Text>
-
-                                            </View>
-                                        </View>
-
-
-
-                                    </ImageBackground>
-                                </View>
-                            )}
-                        />
-                    </View>
-                    <View
-                        style={[
-                            CommonStyles.fitToBottom,
-                            CommonStyles.horizontalContainer,
-                            {
-                                backgroundColor: '#F7FAFE',
-                                borderTopRightRadius: 5,
-                                borderTopStartRadius: 5,
-                                borderTopWidth: 3,
-                                borderColor: '#FFF'
-                            },
-                        ]}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                this.props.navigation.navigate('InvestigationAdd')
-                            }}
+                        </View>
+                        <View
                             style={[
-                                CommonStyles.container,
-                                CommonStyles.centerText,
-                                { borderRightWidth: 0.5, borderColor: '#cfd2d6' },
-                            ]}
-                        >
-                            <Text
+                                CommonStyles.fitToBottom,
+                                CommonStyles.horizontalContainer,
+                                {
+                                    backgroundColor: '#F7FAFE',
+                                    borderTopRightRadius: 5,
+                                    borderTopStartRadius: 5,
+                                    borderTopWidth: 3,
+                                    borderColor: '#FFF'
+                                },
+                            ]}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.props.navigation.navigate('InvestigationAdd')
+                                }}
                                 style={[
-                                    CommonStyles.fontRegular,
-                                    CommonStyles.textSizeNormal,
+                                    CommonStyles.container,
                                     CommonStyles.centerText,
-                                    CommonStyles.margin,
-                                    CommonStyles.padding,
-                                    { opacity: 0.5 },
-                                ]}>
-                                Add Investigation
+                                    { borderRightWidth: 0.5, borderColor: '#cfd2d6' },
+                                ]}
+                            >
+                                <Text
+                                    style={[
+                                        CommonStyles.fontRegular,
+                                        CommonStyles.textSizeNormal,
+                                        CommonStyles.centerText,
+                                        CommonStyles.margin,
+                                        CommonStyles.padding,
+                                        { opacity: 0.5 },
+                                    ]}>
+                                    Add Investigation
                              </Text>
-                        </TouchableOpacity>
-                    </View>
-                    <Loader loading={this.state.isLoading} />
-                    <View
-                        style={[
-                            CommonStyles.backButtonStyle
-                        ]}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                this.props.navigation.goBack();
-                            }}>
-                            <Icon
-                                name="arrow-back"
-                                type="MaterialIcons"
-                                style={{ color: '#FFF' }}
+                            </TouchableOpacity>
+                        </View>
+                        <Loader loading={this.state.isLoading} />
+                        <View
+                            style={[
+                                CommonStyles.backButtonStyle
+                            ]}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.props.navigation.goBack();
+                                }}>
+                                <Icon
+                                    name="arrow-back"
+                                    type="MaterialIcons"
+                                    style={{ color: '#FFF' }}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </ImageBackground>
+                </View>
+            )
+        } else {
+            return (
+                <View style={[CommonStyles.container]}>
+                    <ImageBackground style={[
+                        CommonStyles.container,
+                        CommonStyles.backgroundImage
+                    ]}
+                        source={require('../../assets/img/bwback.png')}>
+                        <View style={
+                            { flex: 2.3 }
+                        }>
+                            <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
+                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Investigation List\n`}</Text>
+                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Bookings </Text>
+                            </Text>
+                        </View>
+
+                        <View style={{ flex: 8 }}>
+                            <FlatGrid
+                                itemDimension={350}
+                                items={this.state.diagnosisList}
+                                spacing={15}
+                                style={[CommonStyles.container, { marginTop: 5 }
+                                ]}
+                                renderItem={({ item }) => (
+
+                                    <View style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5, CommonStyles.bgColor]}>
+
+                                        <ImageBackground
+                                            style={[
+                                                CommonStyles.container,
+                                                CommonStyles.backgroundImage,
+                                            ]}
+                                            source={require('../../assets/img/bookingbg2x.png')}>
+
+                                            <View style={[CommonStyles.container, { flexDirection: 'row', padding: 12 }]}>
+
+                                                <View style={[CommonStyles.container, { justifyContent: 'space-between' }]}>
+
+                                                    <Text style={{ marginBottom: 10 }} >
+                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Question: \n`}</Text>
+                                                        <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.name}</Text>
+                                                    </Text>
+
+                                                    <Text>
+                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Description: \n`}</Text>
+                                                        <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.description}</Text>
+                                                    </Text>
+
+                                                </View>
+
+                                                <View style={[CommonStyles.container, { justifyContent: 'space-between', alignItems: 'flex-end' }]}>
+
+                                                    <Text >
+                                                        <Text style={[CommonStyles.textSizeSmall, CommonStyles.fontRegular, { color: '#333333' }]}>{`Date: `}</Text>
+                                                        <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333' }]}>{moment(item.createdAt).format('ll')}</Text>
+                                                    </Text>
+
+                                                </View>
+                                            </View>
+
+
+
+                                        </ImageBackground>
+                                    </View>
+                                )}
                             />
-                        </TouchableOpacity>
-                    </View>
-                </ImageBackground>
-            </View>
-        )}
-      
+                        </View>
+                        <View
+                            style={[
+                                CommonStyles.fitToBottom,
+                                CommonStyles.horizontalContainer,
+                                {
+                                    backgroundColor: '#F7FAFE',
+                                    borderTopRightRadius: 5,
+                                    borderTopStartRadius: 5,
+                                    borderTopWidth: 3,
+                                    borderColor: '#FFF'
+                                },
+                            ]}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.props.navigation.navigate('InvestigationAdd')
+                                }}
+                                style={[
+                                    CommonStyles.container,
+                                    CommonStyles.centerText,
+                                    { borderRightWidth: 0.5, borderColor: '#cfd2d6' },
+                                ]}
+                            >
+                                <Text
+                                    style={[
+                                        CommonStyles.fontRegular,
+                                        CommonStyles.textSizeNormal,
+                                        CommonStyles.centerText,
+                                        CommonStyles.margin,
+                                        CommonStyles.padding,
+                                        { opacity: 0.5 },
+                                    ]}>
+                                    Add Investigation
+                             </Text>
+                            </TouchableOpacity>
+                        </View>
+                        <Loader loading={this.state.isLoading} />
+                        <View
+                            style={[
+                                CommonStyles.backButtonStyle
+                            ]}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.props.navigation.goBack();
+                                }}>
+                                <Icon
+                                    name="arrow-back"
+                                    type="MaterialIcons"
+                                    style={{ color: '#FFF' }}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </ImageBackground>
+                </View>
+            )
+        }
+
     }
 }

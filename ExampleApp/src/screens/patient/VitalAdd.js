@@ -8,7 +8,7 @@ import BloodPressure from '../../components/BloodPressure';
 import BloodOxygen from '../../components/BloodOxygen';
 
 
-export default class Vital extends Component {
+export default class VitalAdd extends Component {
     constructor(props) {
         super(props);
         this.state = {

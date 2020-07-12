@@ -65,7 +65,8 @@ export default class Vital extends Component {
 
                         "Medication: ",
                         childComponentData.selectedMedicine
-                    ],
+                    ], 
+                    
                     "vitalType": "Blood Glucose",
                     "value": childComponentData.value,
                 });
