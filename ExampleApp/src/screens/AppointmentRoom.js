@@ -1,5 +1,4 @@
 /* eslint-disable react-native/no-inline-styles */
-
 import React ,{ useCallback }  from 'react';
 import JitsiMeet, {JitsiMeetView} from 'react-native-jitsi-meet';
 
@@ -14,7 +13,7 @@ import { ViewUtils } from '../Utils';
 
 
 import { TouchableOpacity } from 'react-native-gesture-handler';
-b
+
 export default class AppointmentRoom extends React.Component {
   constructor(props) {
     super(props);
