@@ -1,14 +1,18 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React ,{ useCallback }  from 'react';
 import JitsiMeet, {JitsiMeetView} from 'react-native-jitsi-meet';
 import Api from '../Api';
 import {Container, Drawer} from 'native-base';
 import SideBar from '../components/drawer/SideBar';
 import AppHeader from '../components/drawer/AppHeader';
-import {View, Text,StyleSheet } from 'react-native';
+import {View, Text,StyleSheet ,Linking} from 'react-native';
+import { ViewUtils } from '../Utils';
 export default class AppointmentRoom extends React.Component {
   constructor(props) {
     super(props);
+    this.state={
+      appointmentId:this.props.route.params
+    }
   }
 
   componentWillUnmount() {
@@ -38,9 +42,34 @@ export default class AppointmentRoom extends React.Component {
   }
 
   onConferenceTerminated(nativeEvent) {
+const url=Api.instance().getUrl(`consultation-reports/getReport?appointmentId=${this.state.appointmentId}&prescription=true`);
+console.warn(url);
     /* Conference terminated event */
     console.log(nativeEvent);
+console.warn(this.state.appointmentId);
+      Api.instance().updateAppointmentStatus(this.state.appointmentId).then((response)=>{
+               console.warn(response)
+                  this.props.navigation.goBack();
+
+
+      }).catch(err=>{
+         ViewUtils.showToast(err);
+      })
   }
+
+  // handlePress = useCallback(async () => {
+  //   const url=`consultation-reports/getReport?appointmentId=${this.state.app}&prescription=true`
+  //   // Checking if the link is supported for links with custom URL scheme.
+  //   const supported = await Linking.canOpenURL(url);
+
+  //   if (supported) {
+  //     // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+  //     // by some browser in the mobile
+  //     await Linking.openURL(url);
+  //   } else {
+  //     Alert.alert(`Don't know how to open this URL: ${url}`);
+  //   }
+  // }, [url]);
 
   onConferenceJoined(nativeEvent) {
     /* Conference joined event */

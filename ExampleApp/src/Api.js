@@ -146,6 +146,8 @@ console.log(customProperties);
     return response.data;
   }
 
+
+
   // Vital List
   async getVitalList() {
 
@@ -262,7 +264,6 @@ console.log(customProperties);
   }
 
   // anatomicalIllustration List
-
   async getAnatomicalIllustrationList() {
 
     let user = await this._user();
@@ -305,6 +306,18 @@ console.log(customProperties);
     return response.data;
   }
 
+  async updateAppointmentStatus(appointmentId) {
+    let appointment = {
+        status: AppointmentStatus.completed,
+    };
+    let response = await this.client.post(
+      this.getUrl(`Appointments/upsertWithWhere?[where][id]=${appointmentId}`),
+      appointment,
+    );
+    let data = response.data;
+    if (data.error) throw data.error.message;
+    return data;
+  }
 
   _relationalParamByRole(role) {
     var id_param = 'patientId';
