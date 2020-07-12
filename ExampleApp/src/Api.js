@@ -122,7 +122,7 @@ console.log(customProperties);
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
-      this.getUrl(`Clinics?filter[where][doctorId]=${_user.id}&filter[order]=id%20DESC`),
+      this.getUrl(`Clinics?filter[where][doctorId]=${_user.id}&filter[order]=createdAt%20DESC`),
     );
     let data = response.data;
     if (data.error) throw data.error.message;
@@ -153,7 +153,7 @@ console.log(customProperties);
     let _user = JSON.parse(JSON.stringify(user));
 
     let response = await this.client.get(
-      this.getUrl(`Clients/${_user.id}?filter[include]=Vitals&filter[order]=id%20DESC`),
+      this.getUrl(`Clients/${_user.id}?filter[include]=Vitals&filter[order]=createdAt%20DESC`),
     );
     let data = response.data;
     console.warn('data', data);
