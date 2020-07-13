@@ -16,7 +16,9 @@ export default class TherapyList extends Component {
         this.state = {
             isLoading: true,
             therapyList: [],
-            appointmentId: this.props.route.params,
+            appointmentId: this.props.route.params.appointmentId,
+            patientId: this.props.route.params.patientId,
+
 
         }
     }
@@ -35,7 +37,7 @@ export default class TherapyList extends Component {
 
     addToConsultation(item) {
         item.setupType = 'suggestedTherapy'
-        Api.instance().addReport(item, this.state.appointmentId)
+        Api.instance().addReport(item, this.state.appointmentId,this.state.patientId)
             .then(response => {
                 console.warn(response);
                 this.props.navigation.goBack();

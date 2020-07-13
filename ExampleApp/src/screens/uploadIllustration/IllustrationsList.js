@@ -18,7 +18,9 @@ export default class PatientHistoryList extends Component {
         this.state = {
             isLoading: true,
             anatomicalIllustrationList: [],
-            appointmentId: this.props.route.params,
+            appointmentId: this.props.route.params.appointmentId,
+            patientId: this.props.route.params.patientId,
+
 
         }
     }
@@ -38,7 +40,7 @@ export default class PatientHistoryList extends Component {
 
     addToConsultation(item) {
         item.setupType = 'anatomicalIllustration'
-        Api.instance().addReport(item, this.state.appointmentId)
+        Api.instance().addReport(item, this.state.appointmentId,this.state.patientId)
             .then(response => {
                 console.warn(response);
                 this.props.navigation.goBack();

@@ -16,7 +16,9 @@ export default class VitalList extends Component {
         this.state = {
             isLoading: true,
             vitalList: [],
-            appointmentId: this.props.route.params,
+            appointmentId: this.props.route.params.appointmentId,
+            patientId: this.props.route.params.patientId,
+
         }
     }
 
@@ -35,7 +37,7 @@ export default class VitalList extends Component {
     }
 
     addToConsultation(item) {
-        Api.instance().addReport(item, this.state.appointmentId)
+        Api.instance().addReport(item, this.state.appointmentId,this.state.patientId)
             .then(response => {
                 console.warn(response);
                 this.props.navigation.goBack();

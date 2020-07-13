@@ -23,18 +23,19 @@ export default class AddPrescribtion extends Component {
             startDate: '',
             endDate: '',
             notes: '',
+            appointmentId: this.props.route.params.appointmentId,
         };
     }
 
-    _savePrescribeMedication = () => {s
+    _savePrescribeMedication = () => {
         let data = {
             "date": this.state.startDate,
             // "setupId": "",
             // "doctorId": "5f01d90dffd17912ce896c56",
             // "assistantId": "",
-            // "patientId": "5f01de16ffd17912ce896c57",
-            // "appointmentId": "",
-            // "answer": "",
+             "patientId": this.props.route.params.patientId,
+            "appointmentId": this.state.appointmentId,
+            "answer": "",
             "medication": this.state.medicine,
             "strength": this.state.strength,
             "dose": this.state.dose,
@@ -43,19 +44,22 @@ export default class AddPrescribtion extends Component {
             "reason": this.state.reason,
             "endDate": this.state.endDate,
             "setup-type": "medication",
-            // "active": false,
+            "active": false,
             // "id": "5f02b75d03468351d147025b",
             // "createdAt": "2020-07-06T05:32:13.265Z",
             // "updatedAt": "2020-07-06T05:32:13.265Z",
             "description": this.state.notes,
 
         }
+
+
         this.setState({ isLoading: true })
 
         Api.instance()
             .createPrescription(data)
             .then(response => {
-                this.props.navigation.replace('');
+                this.addToConsultation(data);
+                this.props.navigation.goBack()
                 ViewUtils.showToast('Medication has been saved successfully!');
                 console.warn(data)
             })
@@ -66,6 +70,21 @@ export default class AddPrescribtion extends Component {
                 this.setState({ isLoading: false });
             });
     };
+
+    addToConsultation(item) {
+
+        Api.instance().addPrescribeMedication(item, this.state.appointmentId)
+            .then(response => {
+                console.warn(response)
+                ViewUtils.showToast('Medication has been added to Prescription');
+
+            }).catch(err => {
+
+            })
+            .finally(() => {
+
+            });
+    }
     render() {
         return (
             <View style={[CommonStyles.container]}>

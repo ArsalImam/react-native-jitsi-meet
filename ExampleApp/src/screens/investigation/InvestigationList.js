@@ -16,7 +16,9 @@ export default class InvestigationList extends Component {
         this.state = {
             isLoading: true,
             diagnosisList: [],
-            appointmentId: this.props.route.params,
+            appointmentId: this.props.route.params.appointmentId,
+            patientId: this.props.route.params.patientId,
+
 
         }
     }
@@ -38,7 +40,7 @@ export default class InvestigationList extends Component {
 
     addDiagnosis(item) {
         item.setupType = 'investigation'
-        Api.instance().addReport(item, this.state.appointmentId)
+        Api.instance().addReport(item, this.state.appointmentId,this.state.patientId)
             .then(response => {
                 console.warn(response);
                 this.props.navigation.goBack();

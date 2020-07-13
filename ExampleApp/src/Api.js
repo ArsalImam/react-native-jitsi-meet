@@ -63,43 +63,73 @@ export default class Api {
   }
 
 
-// setup-type,
-// notes,
-// date,
-// doctorId,
-// patientId,
-// answer,
-// active,
-  async addReport(item,appointmentId){
+  // setup-type,
+  // notes,
+  // date,
+  // doctorId,
+  // patientId,
+  // answer,
+  // active,
+  async addReport(item, appointmentId,patientId) {
 
-      try {
+    try {
       let user = await this._user();
       let _user = JSON.parse(JSON.stringify(user));
 
-let report = {
-  "setup-type":item.setupType,
-  "notes":item.description,
-  "date":new Date(),
-  "doctorId":_user.id,
-  "patientId":_user.id,
-  "answer":item.name,
-  "active":false
-}
-let customProperties=[];
-customProperties.push(report);
-console.log(customProperties);
+      let report = {
+        "setup-type": item.setupType,
+        "notes": item.description,
+        "date": new Date(),
+        "doctorId": _user.id,
+        "patientId": patientId,
+        "answer": item.name,
+        "active": false
+      }
+      let customProperties = [];
+      customProperties.push(report);
+      console.log(customProperties);
       let response = await this.client.post(
         this.getUrl(`consultation-reports/updateCustomProps`),
-    {data:{
-      "patientId":_user.id,
-      "appointmentId":appointmentId,
-      "doctorId":_user.id,
-      "customProperties":customProperties}});
+        {
+          data: {
+            "patientId": patientId,
+            "appointmentId": appointmentId,
+            "doctorId": _user.id,
+            "customProperties": customProperties
+          }
+        });
       return response.data;
     } catch (error) {
       return error
     }
+  }
 
+  async addPrescribeMedication(item, appointmentId) {
+
+    try {
+      let user = await this._user();
+      let _user = JSON.parse(JSON.stringify(user));
+
+      item.doctorId=_user.id;
+      item.patientId=item.patientId;
+      let customProperties = [];
+      customProperties.push(item);
+      console.warn('===>prescription',customProperties);
+      let response = await this.client.post(
+        this.getUrl(`consultation-reports/updateCustomProps`),
+        {
+          data: {
+            "patientId": item.patientId,
+            "appointmentId": appointmentId,
+            "doctorId": _user.id,
+            "customProperties": customProperties
+          }
+        });
+        console.warn('res',JSON.stringify(response.data))
+      return response.data;
+    } catch (error) {
+      return error
+    }
   }
 
 
@@ -117,7 +147,19 @@ console.log(customProperties);
       return error
     }
   }
+  async getAppointmentById(appointmentId){
+    try {
+      
+      let response = await this.client.get(
+        this.getUrl(`Appointments?filter[where][id]=${appointmentId}`),
+        this.getHeaders(),
+      );
+      return response.data[0];
+    } catch (error) {
+      return error
+    }
 
+  }
   async getClinicList() {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
@@ -308,7 +350,7 @@ console.log(customProperties);
 
   async updateAppointmentStatus(appointmentId) {
     let appointment = {
-        status: AppointmentStatus.completed,
+      status: AppointmentStatus.completed,
     };
     let response = await this.client.post(
       this.getUrl(`Appointments/upsertWithWhere?[where][id]=${appointmentId}`),
