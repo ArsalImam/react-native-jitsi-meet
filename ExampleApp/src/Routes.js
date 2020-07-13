@@ -34,6 +34,7 @@ import UploadMedicalRecord from './screens/medicalRecords/UploadMedicalRecord';
 import MedicalRecordList from './screens/medicalRecords/MedicalRecordList';
 
 import AddPrescribtion from './screens/prescribeMedication/AddPrescribtion';
+import WebView from './screens/web-view/WebView';
 
 import Scheduled from './screens/patient/ScheduledBooking';
 import Completed from './screens/patient/CompleteBookings';
@@ -346,6 +347,11 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="Patients"
           component={Patients}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="WebView"
+          component={WebView}
           options={{ headerShown: false }}
         />
 
