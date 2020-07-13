@@ -99,7 +99,6 @@ console.log(customProperties);
     } catch (error) {
       return error
     }
-
   }
 
 
