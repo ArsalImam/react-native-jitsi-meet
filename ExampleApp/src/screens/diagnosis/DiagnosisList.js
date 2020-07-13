@@ -13,12 +13,22 @@ export default class DiagnosisList extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            isLoading: true,
-            diagnosisList: [],
-            appointmentId: this.props.route.params.appointmentId,
-            patientId: this.props.route.params.patientId,
+        console.log("this.props.route.params", this.props.route.params);
+        if (this.props.route.params) {
 
+            this.state = {
+                isLoading: true,
+                diagnosisList: [],
+                appointmentId: this.props.route.params.appointmentId,
+                patientId: this.props.route.params.patientId,
+            }
+        } else {
+
+            this.state = {
+                isLoading: true,
+                diagnosisList: [],
+              
+            }
         }
     }
 

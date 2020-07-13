@@ -15,10 +15,21 @@ export default class MedicalRecordList extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            isLoading: true,
-            medicalRecordList: [],
-            appointmentId: this.props.route.params,
+        if (this.props.route.params) {
+
+            this.state = {
+                isLoading: true,
+                medicalRecordList: [],
+                appointmentId: this.props.route.params.appointmentId,
+                patientId: this.props.route.params.patientId,
+            }
+        } else {
+
+            this.state = {
+                isLoading: true,
+                medicalRecordList: [],
+              
+            }
         }
     }
 

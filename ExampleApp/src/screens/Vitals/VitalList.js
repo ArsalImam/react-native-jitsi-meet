@@ -13,12 +13,21 @@ export default class VitalList extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            isLoading: true,
-            vitalList: [],
-            appointmentId: this.props.route.params.appointmentId,
-            patientId: this.props.route.params.patientId,
+        if (this.props.route.params) {
 
+            this.state = {
+                isLoading: true,
+                vitalList: [],
+                appointmentId: this.props.route.params.appointmentId,
+                patientId: this.props.route.params.patientId,
+            }
+        } else {
+
+            this.state = {
+                isLoading: true,
+                vitalList: [],
+              
+            }
         }
     }
 

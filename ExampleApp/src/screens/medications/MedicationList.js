@@ -13,13 +13,21 @@ export default class MedicationList extends Component {
 
     constructor(props) {
         super(props);
-        console.log('appointmentId', this.props.route)
-        this.state = {
-            isLoading: true,
-            medicationList: [],
-            appointmentId: this.props.route.params.appointmentId,
-            patientId: this.props.route.params.patientId,
+        if (this.props.route.params) {
 
+            this.state = {
+                isLoading: true,
+                medicationList: [],
+                appointmentId: this.props.route.params.appointmentId,
+                patientId: this.props.route.params.patientId,
+            }
+        } else {
+
+            this.state = {
+                isLoading: true,
+                medicationList: [],
+              
+            }
         }
     }
 
