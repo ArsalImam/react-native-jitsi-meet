@@ -48,7 +48,11 @@ export default class ProcedureAdd extends Component {
 
             <View style={[CommonStyles.container]}>
 
-                <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/img/bwback.png')}>
+                <ImageBackground style={[
+                    CommonStyles.container,
+                    CommonStyles.backgroundImage
+                    ]} 
+                    source={require('../../assets/img/bwback.png')}>
                     <View style={{ flex: 2.3 }}>
                         <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
                             <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Procedure Add\n`}</Text>
