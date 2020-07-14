@@ -98,9 +98,7 @@ export default class CreateClinic extends Component {
 
   SelectleftAt = event => {
     if (event.type !== 'set') {
-      this.setState({
-        showEndTimePicker: false,
-      });
+      this.setState({showEndTimePicker: false});
       return;
     }
     let timeStamp = event.nativeEvent.timestamp;
@@ -228,6 +226,7 @@ export default class CreateClinic extends Component {
     Api.instance()
       .createClinic(this.state.clinicObj)
       .then(res => {
+        console.warn(JSON.stringify(res.body));
          ViewUtils.showToast('Clinic has been created successfully!');
         this.props.navigation.dispatch(
           CommonActions.reset({

@@ -70,7 +70,7 @@ export default class ScheduledBooking extends Component {
             <FlatGrid
               itemDimension={320}
               items={this.state.appointments}
-              style={[CommonStyles.container, {marginTop: '9%'}]}
+              style={[CommonStyles.container]}
               renderItem={({item}) => (
                 <TouchableOpacity
                   onPress={() => {
