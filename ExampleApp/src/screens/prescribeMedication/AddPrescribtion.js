@@ -33,7 +33,7 @@ export default class AddPrescribtion extends Component {
             // "setupId": "",
             // "doctorId": "5f01d90dffd17912ce896c56",
             // "assistantId": "",
-             "patientId": this.props.route.params.patientId,
+            "patientId": this.props.route.params.patientId,
             "appointmentId": this.state.appointmentId,
             "answer": "",
             "medication": this.state.medicine,
@@ -103,7 +103,6 @@ export default class AddPrescribtion extends Component {
                             <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 20 }]}>
                                 <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Medicine</Label>
                                 <Input
-
                                     value={this.state.medicine}
                                     onChangeText={val => this.setState({ medicine: val })}
                                     style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
@@ -173,11 +172,13 @@ export default class AddPrescribtion extends Component {
                                     modalTransparent={false}
                                     animationType={'fade'}
                                     androidMode={'default'}
+
                                     placeHolderText="mm/dd/yyyy"
                                     textStyle={[CommonStyles.fontRegular]}
                                     placeHolderTextStyle={[
                                         CommonStyles.fontRegular,
                                         CommonStyles.textSizeAverage,
+
                                         {
 
                                             paddingBottom: 12,
@@ -228,13 +229,10 @@ export default class AddPrescribtion extends Component {
                             <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginBottom: 20 }]}>
                                 <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Notes</Label>
                                 <Input
-                                    multiline={true}
                                     value={this.state.notes}
                                     onChangeText={val => this.setState({ notes: val })}
                                     style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
                             </Item>
-
-
                         </KeyboardAwareScrollView>
 
                     </View>

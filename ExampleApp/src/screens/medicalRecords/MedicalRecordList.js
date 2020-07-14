@@ -24,7 +24,6 @@ export default class MedicalRecordList extends Component {
                 patientId: this.props.route.params.patientId,
             }
         } else {
-
             this.state = {
                 isLoading: true,
                 medicalRecordList: [],
