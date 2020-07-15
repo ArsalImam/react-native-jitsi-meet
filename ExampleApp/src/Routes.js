@@ -32,7 +32,7 @@ import UploadIllustrations from './screens/uploadIllustration/UploadIllustration
 import IllustrationsList from './screens/uploadIllustration/IllustrationsList';
 import UploadMedicalRecord from './screens/medicalRecords/UploadMedicalRecord';
 import MedicalRecordList from './screens/medicalRecords/MedicalRecordList';
-import Create from './screens/registarionForm/Create';
+import Create from './screens/registrationForm/Create';
 
 import AddPrescribtion from './screens/prescribeMedication/AddPrescribtion';
 import WebView from './screens/web-view/WebView';

@@ -104,6 +104,22 @@ export default class Api {
     }
   }
 
+
+async patientRegister(item){
+  // 718270
+  
+    let response = await this.client.get(
+      this.getUrl(`Clients?filter[where][doctorCode]=718270`),
+    );
+    let data = response.data;
+    item.doctorId=data[0].id
+console.warn('doctorFound==>',data)
+let aa=await this.savePatient(item);
+      console.warn('added',aa.data)
+      if (data.error) throw data.error.message;
+   
+}
+
   async addPrescribeMedication(item, appointmentId) {
 
     try {
@@ -468,6 +484,16 @@ export default class Api {
     } catch (e) {
       console.warn(e);
     }
+  }
+
+  async savePatient(data) {
+   console.warn('data to send==>',data)
+    let response = await this.client.post(
+      this.getUrl('Clients'),
+      data,
+      this.getHeaders(),
+    );
+    return response.data;
   }
 
   async _user() {

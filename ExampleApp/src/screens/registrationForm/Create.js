@@ -18,21 +18,79 @@ import { ViewUtils } from '../../Utils';
 import Loader from '../../components/Loader';
 
 class Create extends Component {
- 
+
 
   constructor(props) {
     super(props);
     this.state = {
-        isLoading: false,
-        firstName: '',
-        LastName: '',
-        gender: '',
-        email: '',
-        password: '',
-        confirmPasword: '',
-        drCode: '',
+      isLoading: false,
+      firstName: '',
+      LastName: '',
+      gender: '',
+      email: '',
+      password: '',
+      confirmPasword: '',
+      drCode: '',
     };
-}
+  }
+
+  _registerPatient = () => {
+    let data = {
+       "doctorCode": this.state.drCode,
+      
+      "password": this.state.password,
+      "confirmPassword": this.state.password,
+
+      "isActive": true,
+      "salutation": "",
+      "appointmentFees": 1000,
+      "fcmToken": "",
+      "mrNumber": "",
+      "TD4UNumber": "",
+      "firstName": this.state.firstName,
+      "cv": "",
+      "lastName": this.state.LastName,
+      "email": this.state.email,
+      "assistantId": "",
+      "bankAccount": "",
+      "bankTitle": "",
+      "bankName": "",
+      "secretaryEmail": "",
+      "speciality": "",
+      "timeZone": "",
+      "imageUrl": "",
+      "personalDetails": {
+        "gender": this.state.gender
+      },
+      "qualifications": [],
+      "specialities": [],
+      "expertise": {},
+      "presentEmployments": [],
+      "previousEmployments": [],
+      "username": this.state.firstName + this.state.LastName,
+      "role": "ROLE_PATIENT"
+
+    }
+
+
+    // Clients/upsertWithWhere?[where][email]=${data.email}
+    //this.setState({ isLoading: true })
+
+    Api.instance()
+      .patientRegister(data)
+      .then(response => {
+        // this.addToConsultation(data);
+        // this.props.navigation.goBack()
+        ViewUtils.showToast('Medication has been saved successfully!');
+        console.warn(data)
+      })
+      .catch(err => {
+        ViewUtils.showToast(err);
+      })
+      .finally(() => {
+        this.setState({ isLoading: false });
+      });
+  };
 
   render() {
     return (
@@ -64,23 +122,24 @@ class Create extends Component {
                 ]}>
                 Enter your  details to register for EvoTelemedicine
               </Text>
-              <Image
+
+              {/* <Image
                 style={[CommonStyles.mt30, { width: 96, height: 123 }]}
                 source={require('../../assets/img/layer_2.png')}
               />
+ */}
 
 
-
-              <View style={[CommonStyles.mt10]}>
+              <View style={{ marginTop: 60 }}>
 
                 <View style={[CommonStyles.container, CommonStyles.horizontalContainer,]}>
 
                   <Item regular style={[CommonStyles.container, CommonStyles.loginItemStyle, { marginRight: 5 }]}>
                     <Input
-                     value={this.state.firstName}
-                     onChangeText={val => this.setState({ firstName: val })}
+                      value={this.state.firstName}
+                      onChangeText={val => this.setState({ firstName: val })}
                       name="username"
-                      placeholder={'First Name'}
+                      placeholder={'First Name*'}
                       placeholderTextColor="#FFF"
                       returnKeyType="next"
                       autoCapitalize="none"
@@ -100,7 +159,7 @@ class Create extends Component {
                       value={this.state.LastName}
                       onChangeText={val => this.setState({ LastName: val })}
                       name="username"
-                      placeholder={'Last Name'}
+                      placeholder={'Last Name*'}
                       placeholderTextColor="#FFF"
                       returnKeyType="next"
                       autoCapitalize="none"
@@ -122,20 +181,20 @@ class Create extends Component {
                   style={[
                     CommonStyles.container,
                     CommonStyles.loginItemStyle,
-                  CommonStyles.mt10,
+                    CommonStyles.mt10,
 
                   ]}>
                   <Picker
-                    mode="dropdown"
-                    textStyle={{color: "#fff"}}
-                    itemTextStyle={{color: 'red'}}
-                    style={{ color: '#FFF'}}
-                    iosIcon={<Icon name="arrow-down" style={{ fontSize: 10}} />}
-                    placeholder="Gender"
+
+                    textStyle={{ color: "#fff" }}
+                    itemTextStyle={{ color: 'red' }}
+                    style={{ color: '#fff', }}
+                    itemStyle={{ backgroundColor: '#fff' }}
+                    placeholder="Gender*"
                     placeholderStyle={{ color: '#FFF' }}
                     placeholderIconColor="#fff"
                     selectedValue={this.state.gender}
-                    
+
                     onValueChange={txt => this.setState({ gender: txt })}>
                     <Picker.Item
                       color='grey'
@@ -143,10 +202,13 @@ class Create extends Component {
                       label="Gender"
                       value=""
                     />
+
                     <Picker.Item label="Male" value="Male" />
                     <Picker.Item label="Female" value="Female" />
 
                   </Picker>
+
+                  <Icon name="arrow-dropdown" style={{ color: "#fff", position: 'absolute', right: 5, }} />
                 </Item>
 
 
@@ -155,7 +217,7 @@ class Create extends Component {
                   <Input
                     value={this.state.email}
                     onChangeText={val => this.setState({ email: val })}
-                    placeholder={'Email Address'}
+                    placeholder={'Email Address*'}
                     placeholderTextColor="#FFF"
                     returnKeyType="next"
                     autoCapitalize="none"
@@ -256,7 +318,7 @@ class Create extends Component {
           <TouchableOpacity
             style={[CommonStyles.container, CommonStyles.centerText]}
             onPress={() => {
-              this.props.navigation.navigate('MyDrawer');
+              this._registerPatient();
             }}>
             <Text
               style={[
@@ -272,7 +334,7 @@ class Create extends Component {
             </Text>
           </TouchableOpacity>
         </View>
-       
+
       </View>
     );
   }
