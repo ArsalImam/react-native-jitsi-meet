@@ -168,7 +168,7 @@ class Login extends Component {
           <TouchableOpacity
             style={[CommonStyles.container, CommonStyles.centerText]}
             onPress={() => {
-              this.props.navigation.navigate('MyDrawer');
+              this.props.navigation.navigate('Create');
             }}>
             <Text
               style={[

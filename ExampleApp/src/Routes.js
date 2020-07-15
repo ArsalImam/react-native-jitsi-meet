@@ -32,6 +32,7 @@ import UploadIllustrations from './screens/uploadIllustration/UploadIllustration
 import IllustrationsList from './screens/uploadIllustration/IllustrationsList';
 import UploadMedicalRecord from './screens/medicalRecords/UploadMedicalRecord';
 import MedicalRecordList from './screens/medicalRecords/MedicalRecordList';
+import Create from './screens/registarionForm/Create';
 
 import AddPrescribtion from './screens/prescribeMedication/AddPrescribtion';
 import WebView from './screens/web-view/WebView';
@@ -349,6 +350,13 @@ export default class Routes extends React.Component {
           component={Patients}
           options={{ headerShown: false }}
         />
+
+        <Stack.Screen
+          name="Create"
+          component={Create}
+          options={{ headerShown: false }}
+        />
+
         <Stack.Screen
           name="WebView"
           component={WebView}

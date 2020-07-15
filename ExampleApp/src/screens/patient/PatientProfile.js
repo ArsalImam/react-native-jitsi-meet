@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Icon} from 'native-base'
 import { StyleSheet, Text, View, ImageBackground, StatusBar, Image, TouchableOpacity } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
 import CommonStyles from '../../CommonStyles';
@@ -62,8 +63,8 @@ export default class PatientProfile extends React.Component {
                                             <Text style={[{ fontSize: 20 }]}>FCPS, FCPS{`\n`}</Text>
                                         </Text>
 
-                                        <Text style={[CommonStyles.textColorWhite, CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Please enter your details {`\n`}to get the information about {`\n`} your health and your doctorrightawy !!!</Text>
-                                        <Text style={[CommonStyles.textColorWhite, CommonStyles.fontRegular, CommonStyles.textSizeAverage, { marginVertical: 15 }]}>Call:    0331-0000000</Text>
+                                        <Text style={[CommonStyles.textColorWhite, CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Please enter your details {`\n`}to get the information about {`\n`}your health and your doctorrightawy !!!</Text>
+                                        <Text style={[CommonStyles.textColorWhite, CommonStyles.fontRegular, CommonStyles.textSizeAverage, { marginVertical: 15 }]}>Call:    0331-0000000</Text> 
                                         <Text style={[CommonStyles.textColorWhite, CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Age:    70 Years</Text>
                                     </View>
                                 </View>
