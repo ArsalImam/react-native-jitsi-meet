@@ -85,8 +85,8 @@ const CommonStyles = StyleSheet.create({
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.8,
-    shadowRadius: 4,
+    shadowOpacity: 0.7,
+    shadowRadius: 5,
     elevation: 3,
   },
   buttonCenterText: {
@@ -173,7 +173,7 @@ const CommonStyles = StyleSheet.create({
     borderColor: '#707070',
   },
   textSizeMedium: {
-    fontSize: 18,   
+    fontSize: 18,
   },
   textSizeSmall: {
     fontSize: 12,
@@ -201,12 +201,21 @@ const CommonStyles = StyleSheet.create({
     color: '#297dec',
 
   },
-itemStyle: {
+  backButtonStyle: {
+    position: 'absolute',
+    left: 10,
+    top: 40,
+  },
+  headingTextStyle: {
+    paddingLeft: 15, 
+    marginTop: 65
+  },
+  itemStyle: {
     justifyContent: 'space-between',
-  //  borderColor: '#000', 
-    width: '88%', 
-    alignSelf: 'center', 
+    width: '88%',
+    alignSelf: 'center',
     marginTop: 10,
-  },})
+  },
+})
 
 export default CommonStyles;

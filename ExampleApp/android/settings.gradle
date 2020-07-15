@@ -1,5 +1,15 @@
 rootProject.name = 'Exemple'
+include ':react-native-image-picker'
+project(':react-native-image-picker').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-image-picker/android')
+
+
+include ':react-native-firebase'                       
+project(':react-native-firebase').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-firebase/android')
+
 include ':react-native-splash-screen'
+include ':@react-native-firebase_messaging'
+project(':@react-native-firebase_messaging').projectDir = new File(rootProject.projectDir, './../node_modules/@react-native-firebase/messaging/android')
+
 project(':react-native-splash-screen').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-splash-screen/android')
 include ':react-native-splash-screen'
 project(':react-native-splash-screen').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-splash-screen/android')

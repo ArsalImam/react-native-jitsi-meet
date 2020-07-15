@@ -1,4 +1,4 @@
-package com.exemple;
+package com.telemedicine;
 
 import com.facebook.react.ReactActivity;
 

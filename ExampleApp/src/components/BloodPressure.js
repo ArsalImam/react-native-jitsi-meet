@@ -2,77 +2,98 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Label, Picker, Icon } from 'native-base';
 import { Button } from 'native-base';
+import CommonStyles from '../CommonStyles';
 
-const BloodPressure = () => {
 
-    return (
-        <View style={styles.container}>
-            <View style={styles.vitalStyle}>
-                <Item floatingLabel style={styles.itemStyle}>
-                    <Label >  Systolic (mm/Hg)*</Label>
-                    <Input keyboardType='number-pad' />
-                </Item>
+class BloodPressure extends React.Component {
 
-                <Item floatingLabel style={styles.itemStyle}>
-                    <Label >  Diastolic (mm/Hg)*</Label>
-                    <Input keyboardType='number-pad' />
-                </Item>
+    constructor(props) {
+        super(props);
+        this.state = {
+            systolic: '',
+            diastolic: '',
+            pulse: '',
 
-                <Item floatingLabel style={styles.itemStyle}>
-                    <Label >  Pulse (Beats/Min)*</Label>
-                    <Input keyboardType='number-pad' />
-                </Item>
+        };
+    }
 
-                <Item floatingLabel style={styles.itemStyle}>
-                    <Label >  Notes*</Label>
-                    <Input multiline />
-                </Item>
+    _onSave() {
+        return this.state;
+    }
 
-                <TouchableOpacity style={styles.buttonStyle}>
-                    <Text style={styles.textStyle}>Submit</Text>
-                </TouchableOpacity>
+    render() {
+        return (
+            <View style={[CommonStyles.container]}>
+                <View style={[CommonStyles.container]}>
+
+
+                    <Item floatingLabel
+                        style={[CommonStyles.container, CommonStyles.itemStyle]
+                        }>
+                        <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium,
+                        {
+                            marginLeft: 7
+                        }
+                        ]}>Systolic (mm/Hg)*
+                            </Label>
+                        <Input
+                            value={this.state.systolic}
+                            onChangeText={val => this.setState({ systolic: val })}
+                            keyboardType='number-pad'
+                            style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium,
+                            {
+                                marginLeft: 5
+                            }
+                            ]} />
+                    </Item>
+
+
+                    <Item floatingLabel
+                      
+                        onChangeText={val => this.setState({ diastolic: val })}
+                        style={[CommonStyles.container, CommonStyles.itemStyle]}>
+                        <Label
+                            style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium,
+                            {
+                                marginLeft: 7
+                            }]}>Diastolic (mm/Hg)*
+                        </Label>
+                        <Input
+                          value={this.state.diastolic}
+                          
+                            onChangeText={val => this.setState({ diastolic: val })}
+                            keyboardType='number-pad'
+                            style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium,
+                            {
+                                marginLeft: 5
+                            }]} />
+                    </Item>
+
+
+                    <Item floatingLabel
+                        style={[CommonStyles.container, CommonStyles.itemStyle]}>
+                        <Label
+                            style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium,
+                            {
+                                marginLeft: 7
+                            }]}>Pulse (Beats/Min)*
+                        </Label>
+                        <Input
+                          value={this.state.pulse}
+                            keyboardType='number-pad'
+                            onChangeText={val => this.setState({ pulse: val })}
+                            style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium,
+                            {
+                                marginLeft: 5
+                            }]}
+                        />
+                    </Item>
+
+                </View>
 
             </View>
-
-        </View>
-    );
-}
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#c0d4e2',
-    },
-    itemStyle: {
-        width: '99%', 
-        height: 60, 
-        borderColor: 'grey', 
-        marginTop: 10,
-        backgroundColor: '#fff'
-        
-    },
-    vitalStyle: {
-        backgroundColor: 'white',
-        margin: 20,
-        alignContent: 'center',
-        justifyContent: 'center',
-        borderRadius: 5
-    },
-    textStyle: {
-        fontSize: 22,
-        color: '#fff',
-        justifyContent: 'center',
-        alignSelf: 'center',
-        padding: 8
-    },
-    buttonStyle: {
-        marginVertical: 50,
-        alignSelf: 'center',
-        width: '80%',
-        height: 45,
-        backgroundColor: '#3976bb',
-        borderRadius: 7,
+        );
     }
-})
+}
 
 export default BloodPressure;

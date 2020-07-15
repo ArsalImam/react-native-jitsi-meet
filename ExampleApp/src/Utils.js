@@ -1,12 +1,19 @@
 import {Toast} from 'native-base';
 import {Alert} from 'react-native';
 class ViewUtils {
-  static showToast(text: any) {
+  static showToast(text: any, buttonText = 'Okay', duration = 4000, buttonCallback = () => {}) {
     Toast.show({
       text: JSON.stringify(text),
       position: 'top',
-      buttonText: 'Okay',
-      duration: 4000,
+      buttonText,
+      duration,
+      onClose: (reason) => {
+        if (reason == 'user') {
+          if (buttonCallback) {
+            buttonCallback();
+          }
+        }
+      }
     });
   }
 

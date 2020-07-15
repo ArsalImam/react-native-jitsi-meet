@@ -90,6 +90,19 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
+    //udpdating fcm
+    try {
+
+      AsyncStorage.getItem('fcmToken')
+      .then(token => {
+        return Api.instance().updateFcmToken(token)
+      })
+      .catch(er => console.warn(er));
+    } catch (error) {
+
+      //log error, to enable ease in debugging
+      console.log(error);  
+    }
     //updating appointments
     this._getAllAppointments();
 
@@ -118,6 +131,8 @@ class Dashboard extends React.Component {
         return;
       }
       var appointmentId = appointments.reverse()[0].id;
+                        Api.instance().notifyAppointment(appointmentId).then().catch();
+
       this.props.navigation.navigate('AppointmentRoom', {appointmentId});
     };
 
@@ -364,15 +379,16 @@ class Dashboard extends React.Component {
                 </Text>
               </TouchableOpacity>
             </View>
+
             <View
               style={[
                 CommonStyles.container,
-                {justifyContent: 'center', alignSelf: 'center', marginTop: 70},
+                {alignSelf: 'center' , marginTop: 70},
               ]}>
               <View style={[CommonStyles.container]}>
                 <Image
-                  style={[CommonStyles.container, CommonStyles.backgroundImage]}
-                  source={require('../../assets/img/calendar.png')}
+                  style={[CommonStyles.container, { resizeMode: 'contain'}]}
+                  source={require('../../assets/img/calander2.png')}
                 />
               </View>
             </View>
@@ -399,16 +415,13 @@ class Dashboard extends React.Component {
             </TouchableOpacity>
           </KeyboardAwareScrollView>
 
-          
-          <Loader
-                    loading={this.state.showLoader}/>
-
+          <Loader loading={this.state.showLoader}/>
 
           <View
             style={[
               {
                 position: 'absolute',
-                right: 15,
+                right: 17,
                 top: 40,
                 justifyContent: 'center',
                 alignItems: 'center',

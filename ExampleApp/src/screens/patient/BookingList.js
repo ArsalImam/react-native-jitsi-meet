@@ -35,7 +35,7 @@ export default class BookingList extends Component {
           style={[CommonStyles.container, CommonStyles.backgroundImage]}
           source={require('../../assets/img/bwback.png')}>
           <View
-            style={[CommonStyles.container, CommonStyles.padding, {flex: 2}]}>
+            style={[CommonStyles.container, CommonStyles.padding,  {flex: 2}]}>
             <Text style={{color: '#FFFFFF', paddingLeft: 12, marginTop: '15%'}}>
               <Text
                 style={[
@@ -51,26 +51,28 @@ export default class BookingList extends Component {
               </Text>
             </Text>
           </View>
-          <View style={{flex: 8, paddingHorizontal: 2}}>
+          <View style={{flex: 8, paddingHorizontal: 2, paddingBottom: 55}}>
             <FlatGrid
               itemDimension={320}
+              spacing={15}
               items={this.state.appointments}
               style={[CommonStyles.container]}
               renderItem={({item}) => (
                 <TouchableOpacity
-                  style={[CommonStyles.container, CommonStyles.shadow]}
-                  onPress={() => {
+                 style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5, CommonStyles.bgColor]}
+                onPress={() => {
                     this.props.navigation.navigate(`Patients`, {
                       appointmentId: item.id,
                       moveTo: 'createAppointment',
                     });
                   }}>
-                  <ImageBackground
+                 <ImageBackground
                     style={[
                       CommonStyles.container,
                       CommonStyles.backgroundImage,
+                  
                     ]}
-                    source={require('../../assets/drawable-mdpi/Fill-1.png')}>
+                    source={require('../../assets/img/bookingbg2x.png')}>
                     <View
                       style={[
                         CommonStyles.container,
