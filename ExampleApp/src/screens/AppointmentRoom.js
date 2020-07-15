@@ -117,7 +117,7 @@ export default class AppointmentRoom extends React.Component {
                 top: 0,
                 right: 0,
                 height: 52,
-                backgroundColor: 'white',
+                backgroundColor: '#F7FAFE',
                 zIndex: 100,
               }}
             >
