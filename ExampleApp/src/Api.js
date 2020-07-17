@@ -364,6 +364,22 @@ let aa=await this.savePatient(item);
     return response.data;
   }
 
+  // Update Profile
+//  https://api.evotelemedicine.live/api/Clients/upsertWithWhere?where={%22email%22:%22drhafeez@gmail.com%22}
+async updateProfile(data) {
+  console.warn("data", data)
+  let user = await this._user();
+  let _user = JSON.parse(JSON.stringify(user));
+  let response = await this.client.post(
+    this.getUrl(`Clients/upsertWithWhere?where={"email":${_user.email}}`),
+    data,
+    this.getHeaders(),
+  );
+  return response.data;
+}
+
+
+
   async updateAppointmentStatus(appointmentId) {
     let appointment = {
       status: AppointmentStatus.completed,
@@ -481,6 +497,7 @@ let aa=await this.savePatient(item);
   async saveUser(user) {
     try {
       await AsyncStorage.setItem('@user', JSON.stringify(user));
+      console.warn("User", user)
     } catch (e) {
       console.warn(e);
     }
@@ -499,6 +516,7 @@ let aa=await this.savePatient(item);
   async _user() {
     try {
       return JSON.parse(await AsyncStorage.getItem('@user'));
+      
     } catch (e) {
       console.warn(e);
     }

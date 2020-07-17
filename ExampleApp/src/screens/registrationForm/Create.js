@@ -318,7 +318,7 @@ class Create extends Component {
           <TouchableOpacity
             style={[CommonStyles.container, CommonStyles.centerText]}
             onPress={() => {
-              this._registerPatient();
+              this.props.navigation.navigate('MyDrawer')
             }}>
             <Text
               style={[
