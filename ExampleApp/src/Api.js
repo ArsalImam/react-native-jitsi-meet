@@ -105,19 +105,19 @@ export default class Api {
   }
 
 
-async patientRegister(item){
-  // 718270
-  
+async patientRegister(item,drCode){
+  // 843358
+
     let response = await this.client.get(
-      this.getUrl(`Clients?filter[where][doctorCode]=718270`),
+      this.getUrl(`Clients?filter[where][doctorCode]=${drCode}`),
     );
     let data = response.data;
-    item.doctorId=data[0].id
-console.warn('doctorFound==>',data)
-let aa=await this.savePatient(item);
-      console.warn('added',aa.data)
+    item.doctorId=data[0].id;
+console.warn('doctorFound==>',data);
+let patientObj=await this.savePatient(item);
+      console.warn('added',patientObj.data);
       if (data.error) throw data.error.message;
-   
+
 }
 
   async addPrescribeMedication(item, appointmentId) {
@@ -165,7 +165,7 @@ let aa=await this.savePatient(item);
   }
   async getAppointmentById(appointmentId){
     try {
-      
+
       let response = await this.client.get(
         this.getUrl(`Appointments?filter[where][id]=${appointmentId}`),
         this.getHeaders(),
@@ -504,9 +504,9 @@ async updateProfile(data) {
   }
 
   async savePatient(data) {
-   console.warn('data to send==>',data)
+   console.warn('data to send==>',data);
     let response = await this.client.post(
-      this.getUrl('Clients'),
+      this.getUrl(`Clients/upsertWithWhere?[where][email]=${data.email}`),
       data,
       this.getHeaders(),
     );
@@ -516,7 +516,7 @@ async updateProfile(data) {
   async _user() {
     try {
       return JSON.parse(await AsyncStorage.getItem('@user'));
-      
+
     } catch (e) {
       console.warn(e);
     }
