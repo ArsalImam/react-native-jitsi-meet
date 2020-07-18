@@ -4,7 +4,7 @@ import { Container, Header, Content, DatePicker, Text, Item, Label, Input, Scrol
 import  CommonStyles  from '../../CommonStyles';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 
-export default class MadicationAdd extends React.Component {
+export default class Madication extends React.Component {
     constructor(props) {
         super(props);
         this.state = { chosenDate: new Date() };

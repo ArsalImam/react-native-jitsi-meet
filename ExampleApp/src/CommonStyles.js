@@ -82,12 +82,12 @@ const CommonStyles = StyleSheet.create({
   shadow: {
     shadowColor: '#000',
     shadowOffset: {
-      width: 1,
-      height: 10,
+      width: 0,
+      height: 2,
     },
-    shadowOpacity: 0.8,
-    shadowRadius: 6,
-    elevation: 6,
+    shadowOpacity: 0.7,
+    shadowRadius: 5,
+    elevation: 3,
   },
   buttonCenterText: {
     flexDirection: 'row',
@@ -173,7 +173,7 @@ const CommonStyles = StyleSheet.create({
     borderColor: '#707070',
   },
   textSizeMedium: {
-    fontSize: 18,   
+    fontSize: 18,
   },
   textSizeSmall: {
     fontSize: 12,
@@ -200,7 +200,22 @@ const CommonStyles = StyleSheet.create({
   loaderIndicatorStyle: {
     color: '#297dec',
 
-  }
-});
+  },
+  backButtonStyle: {
+    position: 'absolute',
+    left: 10,
+    top: 40,
+  },
+  headingTextStyle: {
+    paddingLeft: 15, 
+    marginTop: 65
+  },
+  itemStyle: {
+    justifyContent: 'space-between',
+    width: '88%',
+    alignSelf: 'center',
+    marginTop: 10,
+  },
+})
 
 export default CommonStyles;

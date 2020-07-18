@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -8,20 +8,44 @@ import Dashboard from './screens/patient/Dashboard';
 import Demographics from './screens/patient/Demographics'
 import Available from './screens/patient/BookingList';
 import MenuSlider from './screens/patient/MenuSlider';
-import VitalAdd from './screens/patient/VitalAdd';
 import AddReport from './screens/patient/AddReport';
-import MadicationAdd from './screens/patient/MedicationAdd';
 import MedicalCondition from './screens/patient/MedicalCondition';
-import Vital from './screens/patient/Vital';
+import Vital from './screens/Vitals/Vital';
+import VitalList from './screens/Vitals/VitalList';
 import DrProfile from './screens/patient/DrProfile';
+import PatientProfile from './screens/profile/PatientProfile';
+import EditProfile from './screens/profile/EditProfile';
+
 import Patients from './screens/patient/Patients';
 import AppointmentRoom from './screens/AppointmentRoom';
+import MedicationAdd from './screens/medications/MedicationAdd';
+import MedicationList from './screens/medications/MedicationList';
+import DiagnosisAdd from './screens/diagnosis/DiagnosisAdd';
+import DiagnosisList from './screens/diagnosis/DiagnosisList';
+import InvestigationAdd from './screens/investigation/InvestigationAdd';
+import InvestigationList from './screens/investigation/InvestigationList';
+import ProcedureAdd from './screens/surgicalProcedure/ProcedureAdd';
+import ProcedureList from './screens/surgicalProcedure/ProcedureList';
+import TherapyAdd from './screens/suggestedTherapy/TherapyAdd';
+import TherapyList from './screens/suggestedTherapy/TherapyList';
+import PatientHistoryAdd from './screens/patientHistoryForm/PatientHistoryAdd';
+import PatientHistoryList from './screens/patientHistoryForm/PatientHistoryList';
+import UploadIllustrations from './screens/uploadIllustration/UploadIllustrations';
+import IllustrationsList from './screens/uploadIllustration/IllustrationsList';
+import UploadMedicalRecord from './screens/medicalRecords/UploadMedicalRecord';
+import MedicalRecordList from './screens/medicalRecords/MedicalRecordList';
+import Create from './screens/registrationForm/Create';
+
+import AddPrescribtion from './screens/prescribeMedication/AddPrescribtion';
+import WebView from './screens/web-view/WebView';
 
 import Scheduled from './screens/patient/ScheduledBooking';
 import Completed from './screens/patient/CompleteBookings';
-
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'native-base';
+import CreateClinic from "./screens/clinic/CreateClinic";
+import ClinicList from "./screens/clinic/ClinicList";
+import SideBar from "./components/drawer/SideBar";
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -33,8 +57,18 @@ export default class Routes extends React.Component {
       <Drawer.Navigator drawerContent={props => <MenuSlider {...props} />}>
         <Drawer.Screen name="Dashboard" component={Dashboard} />
         <Drawer.Screen name="Vital" component={Vital} />
+        <Drawer.Screen name="VitalList" component={VitalList} />
         <Drawer.Screen name="CreateClinic" component={CreateClinic} />
-        <Drawer.Screen name="MadicationAdd" component={MadicationAdd} />
+        <Drawer.Screen name="ClinicList" component={ClinicList} />
+        <Drawer.Screen name="MedicationList" component={MedicationList} />
+        <Drawer.Screen name="DiagnosisList" component={DiagnosisList} />
+        <Drawer.Screen name="InvestigationList" component={InvestigationList} />
+        <Drawer.Screen name="ProcedureList" component={ProcedureList} />
+        <Drawer.Screen name="TherapyList" component={TherapyList} />
+        <Drawer.Screen name="PatientHistoryList" component={PatientHistoryList} />
+        <Drawer.Screen name="IllustrationsList" component={IllustrationsList} />
+        <Drawer.Screen name="MedicalRecordList" component={MedicalRecordList} />
+        <Drawer.Screen name="AddPrescribtion" component={AddPrescribtion} />
         <Drawer.Screen name="MedicalCondition" component={MedicalCondition} />
         <Drawer.Screen name="Demographics" component={Demographics} />
         <Drawer.Screen name="AddReport" component={AddReport} />
@@ -47,13 +81,10 @@ export default class Routes extends React.Component {
   _getAppointmentRoute() {
     return (
       <Tab.Navigator
-
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size, type }) => {
             let iconName;
             let iconType;
-
-
             if (route.name === 'Available') {
               iconName = focused ? 'navicon' : 'navicon';
               iconType = 'EvilIcons'
@@ -73,6 +104,8 @@ export default class Routes extends React.Component {
         })}
 
         tabBarOptions={{
+
+
           activeTintColor: '#297dec',
           inactiveTintColor: '#000',
 
@@ -92,6 +125,7 @@ export default class Routes extends React.Component {
           }
 
         }} >
+
 
         <Tab.Screen name="Available" component={Available} />
         <Tab.Screen name="Scheduled" component={Scheduled} />
@@ -144,84 +178,147 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="Demographics"
           component={Demographics}
-          options={{
-            headerShown: true,
-            title: 'Touqeer',
-            headerStyle: { backgroundColor: 'transparent' },
-            headerTransparent: true,
-            headerTitleAlign: 'center',
-            headerTitleStyle: { color: '#fff' },
-            headerTintColor: '#fff',
-          }}
-        />
-
-        <Stack.Screen
-          name="VitalAdd"
-          component={VitalAdd}
           options={{ headerShown: false }}
         />
 
-          <Stack.Screen
-              name="CreateClinic"
-              component={CreateClinic}
-              options={{ headerShown: false }}
-          />
         <Stack.Screen
-          name="MadicationAdd"
-          component={MadicationAdd}
-          options={{
-            headerShown: true,
-            title: '',
-            headerStyle: { backgroundColor: 'transparent' },
-            headerTransparent: true,
-            headerTitleAlign: 'center',
-            headerTitleStyle: { color: '#fff' },
-            headerTintColor: '#fff',
-          }}
+          name="CreateClinic"
+          component={CreateClinic}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="ClinicList"
+          component={ClinicList}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
           name="MedicalCondition"
           component={MedicalCondition}
-          options={{
-            headerShown: true,
-            title: '',
-            headerStyle: { backgroundColor: 'transparent' },
-            headerTransparent: true,
-            headerTitleAlign: 'center',
-            headerTitleStyle: { color: '#fff' },
-            headerTintColor: '#fff',
-          }}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
           name="AddReport"
           component={AddReport}
-          options={{
-            headerShown: true,
-            title: '',
-            headerStyle: { backgroundColor: 'transparent' },
-            headerTransparent: true,
-            headerTitleAlign: 'center',
-            headerTitleStyle: { color: '#fff' },
-            headerTintColor: '#fff',
-          }}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
           name="Vital"
           component={Vital}
-          options={{
-            headerShown: true,
-            title: '',
-            headerStyle: { backgroundColor: 'transparent' },
-            headerTransparent: true,
-            headerTitleAlign: 'center',
-            headerTitleStyle: { color: '#fff' },
-            headerTintColor: '#fff',
-          }}
+          options={{ headerShown: false }}
         />
 
+        <Stack.Screen
+          name="VitalList"
+          component={VitalList}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="MedicationAdd"
+          component={MedicationAdd}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="MedicationList"
+          component={MedicationList}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="DiagnosisAdd"
+          component={DiagnosisAdd}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="DiagnosisList"
+          component={DiagnosisList}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="InvestigationAdd"
+          component={InvestigationAdd}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="InvestigationList"
+          component={InvestigationList}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="ProcedureAdd"
+          component={ProcedureAdd}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="ProcedureList"
+          component={ProcedureList}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="TherapyAdd"
+          component={TherapyAdd}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="TherapyList"
+          component={TherapyList}
+          options={{ headerShown: false }}
+        />
+
+
+        <Stack.Screen
+          name="PatientHistoryAdd"
+          component={PatientHistoryAdd}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="PatientHistoryList"
+          component={PatientHistoryList}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="UploadIllustrations"
+          component={UploadIllustrations}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="IllustrationsList"
+          component={IllustrationsList}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="UploadMedicalRecord"
+          component={UploadMedicalRecord}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="MedicalRecordList"
+          component={MedicalRecordList}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="AddPrescribtion"
+          component={AddPrescribtion}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="DrProfile"
           component={DrProfile}
@@ -237,8 +334,8 @@ export default class Routes extends React.Component {
         />
 
         <Stack.Screen
-          name="Patients"
-          component={Patients}
+          name="PatientProfile"
+          component={PatientProfile}
           options={{
             headerShown: true,
             title: '',
@@ -247,7 +344,42 @@ export default class Routes extends React.Component {
             headerTitleAlign: 'center',
             headerTitleStyle: { color: '#fff' },
             headerTintColor: '#fff',
+
+            // headerRight: (props) => (<TouchableOpacity
+            // {...props}
+            //   onPress={() => {this.props.navigation.navigate('EditProfile')} 
+              
+                
+            // }>
+            //   <Icon name="edit" type='Feather' style={{ fontSize: 21, color: '#fff', margin: 16}} />
+            // </TouchableOpacity>)
           }}
+        />
+
+        <Stack.Screen
+          name="Patients"
+          component={Patients}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="Create"
+          component={Create}
+          options={{ headerShown: false }}
+        />
+
+
+        <Stack.Screen
+          name="EditProfile"
+          component={EditProfile}
+          options={{ headerShown: false }}
+        />
+
+
+        <Stack.Screen
+          name="WebView"
+          component={WebView}
+          options={{ headerShown: false }}
         />
 
       </Stack.Navigator>

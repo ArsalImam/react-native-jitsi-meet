@@ -15,24 +15,35 @@ class MenuSlider extends React.Component {
 
         const clinicList = [
             { name: 'Create Clinic', iconName: 'activity', iconFamily: 'Feather', iconSize: '18', route: 'CreateClinic' },
-            { name: 'Clinic List', iconName: 'medicinebox', iconFamily: 'AntDesign', iconSize: '18', route: 'MadicationAdd' },
+            { name: 'Clinic List', iconName: 'medicinebox', iconFamily: 'AntDesign', iconSize: '18', route: 'ClinicList' },
+
+        ];
+
+        const vital = [
+            { name: 'Create Vital', iconName: 'activity', iconFamily: 'Feather', iconSize: '18', route: 'Vital' },
+            { name: 'Vital List', iconName: 'medicinebox', iconFamily: 'AntDesign', iconSize: '18', route: 'VitalList' },
 
         ];
 
         const medicalProfile = [
-            { name: 'Vital', iconName: 'activity', iconFamily: 'Feather', iconSize: '18', route: 'Vital' },
-            { name: 'Medication', iconName: 'medicinebox', iconFamily: 'AntDesign', iconSize: '18', route: 'MadicationAdd' },
-            { name: 'Medical Condition', iconName: 'bed', iconFamily: 'FontAwesome', iconSize: '18', route: 'MedicalCondition' },
-            { name: 'Allergies', iconName: 'ios-flower', iconFamily: 'Ionicon', iconSize: '18', route: 'Patients' },
-            { name: 'Surgeries', iconName: 'box-cutter', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: '' },
-            { name: 'Dental Issue', iconName: 'tooth-outline', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: '' },
-            { name: 'Reports', iconName: 'notebook', iconFamily: 'SimpleLineIcons', iconSize: '20', route: 'AddReport' },
+            { name: 'Medication', iconName: 'medicinebox', iconFamily: 'AntDesign', iconSize: '18', route: 'MedicationList' },
+            { name: 'Diagnosis', iconName: 'bed', iconFamily: 'FontAwesome', iconSize: '18', route: 'DiagnosisList' },
+            { name: 'Investigation', iconName: 'ios-flower', iconFamily: 'Ionicon', iconSize: '18', route: 'InvestigationList' },
+            { name: 'Surgical Procedure', iconName: 'box-cutter', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: 'ProcedureList' },
+            { name: 'Suggested Therapy', iconName: 'tooth-outline', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: 'TherapyList' },
+            { name: 'Upload', iconName: 'tooth-outline', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: 'IllustrationsList' },
+            { name: 'Patient History Form', iconName: 'notebook', iconFamily: 'SimpleLineIcons', iconSize: '18', route: 'PatientHistoryList' },
+            { name: 'My Medical Records', iconName: 'ios-flower', iconFamily: 'Ionicon', iconSize: '18', route: 'MedicalRecordList' }, 
+            { name: 'Medication Prescribe', iconName: 'bed', iconFamily: 'FontAwesome', iconSize: '18', route: 'AddPrescribtion' },
+             { name: 'Allergies', iconName: 'ios-flower', iconFamily: 'Ionicon', iconSize: '18', route: 'PatientProfile'},
+            // { name: 'Surgeries', iconName: 'box-cutter', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: '' },
+            // { name: 'Dental Issue', iconName: 'tooth-outline', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: '' },
+            // { name: 'Reports', iconName: 'notebook', iconFamily: 'SimpleLineIcons', iconSize: '20', route: 'AddReport' },
         ];
 
         return (
-            <View style={[CommonStyles.container, CommonStyles.padding, { backgroundColor: '#F7FAFE'}]}>
+            <View style={[CommonStyles.container, CommonStyles.padding, { backgroundColor: '#F7FAFE' }]}>
                 <Content>
-
                     <View
                         style={[CommonStyles.padding, CommonStyles.mtt10]} >
                         <Label style={[CommonStyles.fontBold, CommonStyles.textSizeLarge]}>TeleMedicine</Label>
@@ -40,7 +51,7 @@ class MenuSlider extends React.Component {
 
                     <View
                         style={[CommonStyles.padding, CommonStyles.mtt10, { borderBottomWidth: 1 }]} >
-                        <Label style={[CommonStyles.fontMedium]}> Personal Profile</Label>
+                        <Label style={[CommonStyles.fontMedium]}>Personal Profile</Label>
                     </View>
 
                     <FlatGrid
@@ -51,7 +62,7 @@ class MenuSlider extends React.Component {
                             <TouchableOpacity onPress={() => this.props.navigation.navigate(`${item.route}`)}>
                                 <View style={[CommonStyles.container,
                                 { flexDirection: 'row', }]}>
-                                    <Icon style={[CommonStyles.padding, { fontSize: 22}]}
+                                    <Icon style={[CommonStyles.padding, { fontSize: 22 }]}
                                         name={item.iconName} type={item.iconFamily} ></Icon>
                                     <Text style={[CommonStyles.fontMedium,
                                     CommonStyles.padding,
@@ -77,7 +88,7 @@ class MenuSlider extends React.Component {
                             <TouchableOpacity onPress={() => this.props.navigation.navigate(`${item.route}`)}>
                                 <View style={[CommonStyles.container,
                                 { flexDirection: 'row', }]}>
-                                    <Icon style={[CommonStyles.padding, { fontSize: 22}]}
+                                    <Icon style={[CommonStyles.padding, { fontSize: 22 }]}
                                         name={item.iconName} type={item.iconFamily} ></Icon>
                                     <Text style={[CommonStyles.fontMedium,
                                     CommonStyles.padding,
@@ -91,8 +102,33 @@ class MenuSlider extends React.Component {
                     />
 
                     <View
-                        style={[CommonStyles.padding,, { borderBottomWidth: 1 }]} >
-                        <Label style={[CommonStyles.fontMedium]}> Medical Profile</Label>
+                        style={[CommonStyles.padding, { borderBottomWidth: 1 }]} >
+                        <Label style={[CommonStyles.fontMedium]}>Vitals</Label>
+                    </View>
+
+                    <FlatGrid
+                        style={[CommonStyles.container, { marginTop: 5 }]}
+                        itemDimension={400}
+                        items={vital}
+                        renderItem={({ item }) => (
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate(`${item.route}`)}>
+                                <View style={[CommonStyles.container,
+                                { flexDirection: 'row', }]}>
+                                    <Icon style={[CommonStyles.padding, { fontSize: 22 }]}
+                                        name={item.iconName} type={item.iconFamily} ></Icon>
+                                    <Text style={[CommonStyles.fontMedium,
+                                    CommonStyles.padding,
+                                    CommonStyles.textSizeNormal,
+                                    CommonStyles.centerText,
+
+                                    ]}>{item.name}</Text>
+                                </View>
+                            </TouchableOpacity>
+                        )}
+                    />
+                    <View
+                        style={[CommonStyles.padding, , { borderBottomWidth: 1 }]} >
+                        <Label style={[CommonStyles.fontMedium]}>Medical Profile</Label>
                     </View>
 
                     <FlatGrid
@@ -103,7 +139,7 @@ class MenuSlider extends React.Component {
                             <TouchableOpacity onPress={() => this.props.navigation.navigate(`${item.route}`)}>
                                 <View style={[CommonStyles.container,
                                 { flexDirection: 'row', }]}>
-                                    <Icon style={[CommonStyles.padding, { fontSize: 22}]}
+                                    <Icon style={[CommonStyles.padding, { fontSize: 22 }]}
                                         name={item.iconName} type={item.iconFamily} ></Icon>
                                     <Text style={[CommonStyles.fontMedium,
                                     CommonStyles.padding,
@@ -117,9 +153,10 @@ class MenuSlider extends React.Component {
 
                 </Content>
 
-
-                <View style={[CommonStyles.fitToBottom,
-                { flexDirection: 'row', borderWidth: 1, }]}>
+                <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('Login')}
+                    style={[CommonStyles.fitToBottom,
+                    { flexDirection: 'row', borderWidth: 1, }]}>
                     <Icon style={[CommonStyles.padding, { fontSize: 22, }]}
                         name='exit-to-app' type='MaterialCommunityIcons' ></Icon>
                     <Text style={[CommonStyles.fontMedium,
@@ -127,7 +164,7 @@ class MenuSlider extends React.Component {
                     CommonStyles.centerText,
                     CommonStyles.textSizeNormal,
                     ]}>Sign Out</Text>
-                </View>
+                </TouchableOpacity>
 
             </View>
         )

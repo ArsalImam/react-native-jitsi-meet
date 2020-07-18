@@ -24,7 +24,11 @@ export default class AddReport extends Component {
                         <View style={styles.View2}>
 
                             <TouchableOpacity style={{ marginVertical: 20 }}>
-                                <Icon name="filetext1" type="antdesign" size={100} color="#303030"/>
+                                <Icon 
+                                name="filetext1" 
+                                type="antdesign"
+                                size={100}
+                                color="#303030"/>
                                 <Icon containerStyle={{ marginTop: -40, marginRight: -65 }} name="camera" type="antdesign" size={40} color='#303030'/>
                             </TouchableOpacity>
 
@@ -35,17 +39,16 @@ export default class AddReport extends Component {
                             </Item>
 
 
-                            <Item stackedLabel style={[styles.itemStyle, { marginBottom: 70 }]} >
+                            <Item stackedLabel 
+                            style={[styles.itemStyle, { marginBottom: 70 }]} >
                                 <Label style={[{ color: '#333333' }, CommonStyles.DINProLight, CommonStyles.textSizeSmall]} >Description</Label>
                                 <Input multiline />
                             </Item>
 
                         </View>
 
-
                     </ImageBackground>
-              
-
+            
                 <TouchableOpacity style={styles.buttonStyle}>
                     <Text style={[styles.textStyle, CommonStyles.DINProRegular]}>SAVE</Text>
                 </TouchableOpacity>
