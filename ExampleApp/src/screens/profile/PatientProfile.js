@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, ImageBackground, StatusBar, Image, TouchableOpa
 import { FlatGrid } from 'react-native-super-grid';
 import CommonStyles from '../../CommonStyles';
 import moment from 'moment';
+import Loader from '../../components/Loader';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import Api from '../../Api';
 
@@ -13,6 +14,7 @@ export default class PatientProfile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            isLoading: true,
             user: {
                 personalDetails: {}
             },
@@ -20,6 +22,10 @@ export default class PatientProfile extends React.Component {
         };
     }
     componentDidMount() {
+
+        Api.instance()
+        ._user()
+
         Api.instance()
             ._user()
             .then(user => {
@@ -27,14 +33,11 @@ export default class PatientProfile extends React.Component {
                 this.setState({
                     user,
                 });
-                console.warn('TOuqeer', user)
-                console.warn('name', this.state.user.imageUrl)
-
-                console.warn('personal  detail', this.state.user.personalDetails.city)
-
             })
-            .catch(err => ViewUtils.showToast(err));
-
+            .catch(err => ViewUtils.showToast(err))
+            .finally(() => {
+                this.setState({ isLoading: false });
+            })
 
     }
 
@@ -104,7 +107,11 @@ export default class PatientProfile extends React.Component {
 
                                         <Text style={[CommonStyles.textColorWhite, CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>
                                             <Text>Age:    </Text>
-                                            <Text> {moment(this.state.user.personalDetails.dateOfBirth).fromNow().split(" ")[0]} {`Years`} </Text>
+                                            <Text>
+                                                {moment(this.state.user.personalDetails.dateOfBirth).fromNow().split(" ")[0]}
+                                                {` `}
+                                                {moment(this.state.user.personalDetails.dateOfBirth).fromNow().split(" ")[1]}
+                                            </Text>
 
                                         </Text>
                                     </View>
@@ -148,7 +155,7 @@ export default class PatientProfile extends React.Component {
                         </View>
                     </KeyboardAwareScrollView>
 
-
+                    <Loader loading={this.state.isLoading} />
                     <View
                         style={[
                             {

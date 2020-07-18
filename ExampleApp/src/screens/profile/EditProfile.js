@@ -17,7 +17,7 @@ export default class UploadIllustrations extends React.Component {
         this.state = {
             isLoading: false,
             image: null,
-            solutation: '',
+            salutation: '',
             firstName: '',
             lastName: '',
             speciality: '',
@@ -33,7 +33,7 @@ export default class UploadIllustrations extends React.Component {
                 personalDetails: {}
             },
 
-            
+
 
         };
     }
@@ -57,39 +57,51 @@ export default class UploadIllustrations extends React.Component {
             .then(user => {
                 if (user == null) return;
                 this.setState({
-                    user,
-                }); 
+
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+
+                    salutation: user.salutation,
+
+                    speciality: user.speciality,
+
+                    city: user.personalDetails.city,
+                    country: user.personalDetails.country,
+                    mobile: user.personalDetails.mobile,
+                    dateOfBirth: user.personalDetails.dateOfBirth,
+
+
+
+                });
             })
+
             .catch(err => ViewUtils.showToast(err));
-
-
     }
-
-
     _updateProfile = () => {
         let data = {
-            "salutation": this.state.solutation,
-            "doctorCode": this.state.doctorCode,
+
+            "salutation": this.state.salutation,
+
             "firstName": this.state.firstName,
             "lastName": this.state.lastName,
+            "email": this.state.user.email,
             "speciality": this.state.speciality,
-            "timeZone": "",
-            "imageUrl": this.state.image,
             "personalDetails": {
-
-                "address1": this.state.address1,
-                "address2": this.state.address2,
                 "city": this.state.city,
+                "postalCode": "",
                 "country": this.state.country,
                 "dateOfBirth": this.state.dateOfBirth,
                 "mobile": this.state.mobile,
-
             },
+            "qualifications": [],
+            "specialities": [],
+            "expertise": [],
+            "assistants": [""],
+            "credit": "",
+            "previousEmployments": [],
+            "presentEmployments": [],
+
         }
-
-
-
-        this.setState({ isLoading: true })
 
         Api.instance()
             .updateProfile(data)
@@ -103,11 +115,11 @@ export default class UploadIllustrations extends React.Component {
                 ViewUtils.showToast(err);
             })
             .finally(() => {
-                this.setState({ isLoading: false });
+                this.setState({ isLoading: true });
+                Api.instance()
+                ._user()
             });
     };
-
-
 
     render() {
 
@@ -147,7 +159,7 @@ export default class UploadIllustrations extends React.Component {
                             <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 10 }]}>
                                 <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Last Name*</Label>
                                 <Input
-                                placeholder={this.state.user.lastName}
+
                                     value={this.state.lastName}
                                     onChangeText={val => this.setState({ lastName: val })}
                                     style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
@@ -158,7 +170,7 @@ export default class UploadIllustrations extends React.Component {
                             <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 10 }]}>
                                 <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>City</Label>
                                 <Input
-                                placeholder={this.state.user.personalDetails.city}
+                                    placeholder={this.state.user.personalDetails.city}
                                     value={this.state.city}
                                     onChangeText={val => this.setState({ city: val })}
                                     style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
@@ -167,7 +179,7 @@ export default class UploadIllustrations extends React.Component {
                             <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 10 }]}>
                                 <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Country</Label>
                                 <Input
-                                placeholder={this.state.user.personalDetails.country}
+                                    placeholder={this.state.user.personalDetails.country}
                                     value={this.state.country}
                                     onChangeText={val => this.setState({ country: val })}
                                     style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
@@ -177,13 +189,13 @@ export default class UploadIllustrations extends React.Component {
                             <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 10 }]}>
                                 <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Mobile</Label>
                                 <Input
-                                placeholder={this.state.user.personalDetails.mobile}
+                                    placeholder={this.state.user.personalDetails.mobile}
                                     keyboardType={'number-pad'}
                                     value={this.state.mobile}
                                     onChangeText={val => this.setState({ mobile: val })}
                                     style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
                             </Item>
-
+                            {/* 
                             <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 10 }]}>
                                 <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Doctor Code</Label>
                                 <Input
@@ -193,7 +205,7 @@ export default class UploadIllustrations extends React.Component {
                                     onChangeText={val => this.setState({ doctorCode: val })}
                                     style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
                             </Item>
-
+ */}
 
                             <Label style={[{ marginTop: 10, alignSelf: 'center', width: '88%' }, CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>Date of Birth</Label>
 
@@ -205,15 +217,13 @@ export default class UploadIllustrations extends React.Component {
 
                                 ]}>
                                 <DatePicker
-                                    defaultDate={new Date()}
-                                    minimumDate={new Date(1970, 1, 1)}
+                                    minimumDate={new Date(1930, 1, 1)}
                                     locale={'en'}
                                     timeZoneOffsetInMinutes={undefined}
                                     modalTransparent={false}
-                                    animationType={'fade'}
+                                    animationType={'slide'}
                                     androidMode={'spinner'}
 
-                                    placeHolderText={moment(this.state.user.personalDetails.dateOfBirth).format('L')}
                                     textStyle={[CommonStyles.fontRegular]}
                                     placeHolderTextStyle={[
                                         CommonStyles.fontRegular,
@@ -225,7 +235,7 @@ export default class UploadIllustrations extends React.Component {
                                             marginLeft: -10
                                         },
                                     ]}
-                                    value={this.state.dateOfBirth}
+                                    value={moment(this.state.dateOfBirth).format('L')}
                                     onDateChange={val => this.setState({ dateOfBirth: val })}
                                     disabled={false}
 
@@ -245,15 +255,15 @@ export default class UploadIllustrations extends React.Component {
                                     mode="dropdown"
                                     textStyle={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]}
                                     iosIcon={<Icon name="arrow-down" />}
-                                    placeholder={this.state.user.salutation}
+                                 
                                     placeholderStyle={{ color: '#bfc6ea' }}
                                     placeholderIconColor="#007aff"
-                                    selectedValue={this.state.solutation}
-                                    onValueChange={txt => this.setState({ solutation: txt })}>
+                                    selectedValue={this.state.salutation}
+                                    onValueChange={txt => this.setState({ salutation: txt })}>
                                     <Picker.Item
                                         color="gray"
-                                        selected={false}
-                                        label="Select Solutation"
+                                        selected={true}
+                                        label="Select Salutation"
                                         value=""
                                     />
                                     <Picker.Item label="Mr" value="Mr" />
@@ -276,32 +286,26 @@ export default class UploadIllustrations extends React.Component {
                                     mode="dropdown"
                                     textStyle={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]}
                                     iosIcon={<Icon name="arrow-down" />}
-                                    placeholder={this.state.user.speciality}
                                     placeholderStyle={{ color: '#bfc6ea' }}
+                          
                                     placeholderIconColor="#007aff"
                                     selectedValue={this.state.speciality}
                                     onValueChange={txt => this.setState({ speciality: txt })}>
                                     <Picker.Item
                                         color="gray"
-                                        selected={false}
+                                        selected={true}
                                         label="Speciality"
                                         value=""
                                     />
                                     <Picker.Item label="General Practice" value="General Practice" />
                                     <Picker.Item label="Allergy Medicine" value="Allergy Medicine" />
-
                                     <Picker.Item label="Audiological Medicine" value="Audiological Medicine" />
                                     <Picker.Item label="Acute Medicine" value="Acute Medicine" />
-
                                     <Picker.Item label="Clinical Medicine" value="Clinical Medicine" />
                                     <Picker.Item label="Clinical Neurophysiology" value="Clinical Neurophysiology" />
 
                                 </Picker>
                             </Item>
-
-
-
-
                         </KeyboardAwareScrollView>
 
                     </View>
@@ -340,6 +344,7 @@ export default class UploadIllustrations extends React.Component {
                         </TouchableOpacity>
                     </View>
 
+                    <Loader loading={this.state.isLoading} />
 
 
                     <View

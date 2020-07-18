@@ -70,7 +70,7 @@ export default class Api {
   // patientId,
   // answer,
   // active,
-  async addReport(item, appointmentId,patientId) {
+  async addReport(item, appointmentId, patientId) {
 
     try {
       let user = await this._user();
@@ -105,20 +105,20 @@ export default class Api {
   }
 
 
-async patientRegister(item,drCode){
-  // 843358
+  async patientRegister(item, drCode) {
+    // 843358
 
     let response = await this.client.get(
       this.getUrl(`Clients?filter[where][doctorCode]=${drCode}`),
     );
     let data = response.data;
-    item.doctorId=data[0].id;
-console.warn('doctorFound==>',data);
-let patientObj=await this.savePatient(item);
-      console.warn('added',patientObj.data);
-      if (data.error) throw data.error.message;
+    item.doctorId = data[0].id;
+    console.warn('doctorFound==>', data);
+    let patientObj = await this.savePatient(item);
+    console.warn('added', patientObj.data);
+    if (data.error) throw data.error.message;
 
-}
+  }
 
   async addPrescribeMedication(item, appointmentId) {
 
@@ -126,11 +126,11 @@ let patientObj=await this.savePatient(item);
       let user = await this._user();
       let _user = JSON.parse(JSON.stringify(user));
 
-      item.doctorId=_user.id;
-      item.patientId=item.patientId;
+      item.doctorId = _user.id;
+      item.patientId = item.patientId;
       let customProperties = [];
       customProperties.push(item);
-      console.warn('===>prescription',customProperties);
+      console.warn('===>prescription', customProperties);
       let response = await this.client.post(
         this.getUrl(`consultation-reports/updateCustomProps`),
         {
@@ -141,7 +141,7 @@ let patientObj=await this.savePatient(item);
             "customProperties": customProperties
           }
         });
-        console.warn('res',JSON.stringify(response.data))
+      console.warn('res', JSON.stringify(response.data))
       return response.data;
     } catch (error) {
       return error
@@ -163,7 +163,7 @@ let patientObj=await this.savePatient(item);
       return error
     }
   }
-  async getAppointmentById(appointmentId){
+  async getAppointmentById(appointmentId) {
     try {
 
       let response = await this.client.get(
@@ -365,18 +365,20 @@ let patientObj=await this.savePatient(item);
   }
 
   // Update Profile
-//  https://api.evotelemedicine.live/api/Clients/upsertWithWhere?where={%22email%22:%22drhafeez@gmail.com%22}
-async updateProfile(data) {
-  console.warn("data", data)
-  let user = await this._user();
-  let _user = JSON.parse(JSON.stringify(user));
-  let response = await this.client.post(
-    this.getUrl(`Clients/upsertWithWhere?where={"email":${_user.email}}`),
-    data,
-    this.getHeaders(),
-  );
-  return response.data;
-}
+  async updateProfile(data,) {
+
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+   
+    let response = await this.client.post(
+      this.getUrl(`Clients/upsertWithWhere?where={%22email%22:%22${_user.email}%22}`),
+      data,
+      this.getHeaders(),
+    );
+    
+    return response.data;
+    
+  }
 
 
 
@@ -504,7 +506,7 @@ async updateProfile(data) {
   }
 
   async savePatient(data) {
-   console.warn('data to send==>',data);
+    console.warn('data to send==>', data);
     let response = await this.client.post(
       this.getUrl(`Clients/upsertWithWhere?[where][email]=${data.email}`),
       data,
