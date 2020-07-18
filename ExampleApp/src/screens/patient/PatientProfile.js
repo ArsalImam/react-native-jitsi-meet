@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
-import { Icon } from 'native-base'
+import {Icon} from 'native-base'
 import { StyleSheet, Text, View, ImageBackground, StatusBar, Image, TouchableOpacity } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
 import CommonStyles from '../../CommonStyles';
-import moment from 'moment';
-import Loader from '../../components/Loader';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
-import Api from '../../Api';
-
 
 export default class PatientProfile extends React.Component {
 
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
             isLoading: true,
             user: {
@@ -63,57 +59,29 @@ export default class PatientProfile extends React.Component {
                                 ]}>
                                     <View style={[{ flexDirection: 'row', alignContent: 'flex-start', height: 105 }]}>
                                         <View style={[{ backgroundColor: '#7DEE00', borderBottomLeftRadius: 5, borderTopLeftRadius: 5, width: 105 }]}>
-                                            <ImageBackground style={{ height: '97%', width: '100%', resizeMode: 'cover', }}
-
-
+                                            <Image style={{ height: '97%', width: '100%', resizeMode: 'cover', }}
                                                 source={require('../../assets/drawable-xxxhdpi/Mask.png')}>
 
-                                                <Image style={{ height: '97%', width: '100%', resizeMode: 'cover', }}
-                                                    source={{ uri: this.state.user.imageUrl }}>
-
-                                                </Image>
-                                            </ImageBackground>
-
+                                            </Image>
                                         </View>
                                         <View style={[CommonStyles.container, { justifyContent: 'flex-end', marginLeft: 10, marginBottom: -7 }]}>
                                             <Text>
                                                 <Text style={[CommonStyles.fontRegular, { color: '#7DEE00' }]}>Online{`\n`}</Text>
-                                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage, CommonStyles.textColorWhite]}>{this.state.user.personalDetails.city}, {this.state.user.personalDetails.country}{`\n`}</Text>
+                                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage, CommonStyles.textColorWhite]}>Islamabad, Pakistan{`\n`}</Text>
                                             </Text>
-
                                         </View>
                                     </View>
                                     <View style={[CommonStyles.container, { marginTop: 10 }]}>
                                         <Text style={[CommonStyles.fontRegular, CommonStyles.textColorWhite]} >
-                                            <Text style={[{ fontSize: 32 }]}>{this.state.user.salutation}{`. `}{this.state.user.firstName} {this.state.user.lastName}{`\n`}</Text>
-                                            <Text style={[{ fontSize: 20 }]}>{this.state.user.speciality}{`\n`}</Text>
+                                            <Text style={[{ fontSize: 32 }]}>Dr. Iqbal Memon{`\n`}</Text>
+                                            <Text style={[{ fontSize: 20 }]}>FCPS, FCPS{`\n`}</Text>
                                         </Text>
 
                                         <Text style={[CommonStyles.textColorWhite, CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>
                                             {`Doctor Code: `} {this.state.user.doctorCode} {`\n`}
                                             {`\nCall: `} {this.state.user.personalDetails.mobile} {`\n`}
                                             {`\nAge: `} {moment(this.state.user.personalDetails.dateOfBirth).fromNow().split(" ")[0]}{` `}{moment(this.state.user.personalDetails.dateOfBirth).fromNow().split(" ")[1]}
-                                            
-
-
                                         </Text>
-
-                                        {/* <Text style={[CommonStyles.textColorWhite, CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Please enter your details {`\n`}to get the information about {`\n`}your health and your doctorrightawy !!!</Text>
-                                        <Text style={[CommonStyles.textColorWhite, CommonStyles.fontRegular, CommonStyles.textSizeAverage, { marginVertical: 15 }]}>
-                                            <Text>Call:    </Text>
-                                            <Text>{this.state.user.personalDetails.mobile}</Text>
-                                        </Text>
-
-
-                                        <Text style={[CommonStyles.textColorWhite, CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>
-                                            <Text>Age:    </Text>
-                                            <Text>
-                                                {moment(this.state.user.personalDetails.dateOfBirth).fromNow().split(" ")[0]}
-                                                {` `}
-                                                {moment(this.state.user.personalDetails.dateOfBirth).fromNow().split(" ")[1]}
-                                            </Text>
-
-                                        </Text> */}
                                     </View>
                                 </View>
 

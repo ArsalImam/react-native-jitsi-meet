@@ -43,6 +43,7 @@ export default class CreateClinic extends Component {
   }
 
   componentDidMount() {
+
     this.setState({
       userObj: {},
       joinedDate: new Date(),

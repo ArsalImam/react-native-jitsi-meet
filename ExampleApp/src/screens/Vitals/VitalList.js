@@ -26,6 +26,7 @@ export default class VitalList extends Component {
             this.state = {
                 isLoading: true,
                 vitalList: [],
+              
             }
         }
     }

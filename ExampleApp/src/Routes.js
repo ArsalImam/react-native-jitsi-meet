@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -13,9 +13,7 @@ import MedicalCondition from './screens/patient/MedicalCondition';
 import Vital from './screens/Vitals/Vital';
 import VitalList from './screens/Vitals/VitalList';
 import DrProfile from './screens/patient/DrProfile';
-import PatientProfile from './screens/profile/PatientProfile';
-import EditProfile from './screens/profile/EditProfile';
-
+import PatientProfile from './screens/patient/PatientProfile';
 import Patients from './screens/patient/Patients';
 import AppointmentRoom from './screens/AppointmentRoom';
 import MedicationAdd from './screens/medications/MedicationAdd';
@@ -75,7 +73,7 @@ export default class Routes extends React.Component {
         <Drawer.Screen name="Demographics" component={Demographics} />
         <Drawer.Screen name="AddReport" component={AddReport} />
         <Drawer.Screen name="Patients" component={Patients} />
-
+        <Drawer.Screen name="Scheduled" component={Scheduled} />
       </Drawer.Navigator>
     );
   }
@@ -340,21 +338,6 @@ export default class Routes extends React.Component {
           component={PatientProfile}
           options={{
             headerShown: false,
-            // title: '',
-            // headerStyle: { backgroundColor: 'transparent' },
-            // headerTransparent: true,
-            // headerTitleAlign: 'center',
-            // headerTitleStyle: { color: '#fff' },
-            // headerTintColor: '#fff',
-
-            // headerRight: (props) => (<TouchableOpacity
-            // {...props}
-            //   onPress={() => {this.props.navigation.navigate('EditProfile')} 
-              
-                
-            // }>
-            //   <Icon name="edit" type='Feather' style={{ fontSize: 21, color: '#fff', margin: 16}} />
-            // </TouchableOpacity>)
           }}
         />
 
@@ -369,14 +352,6 @@ export default class Routes extends React.Component {
           component={Create}
           options={{ headerShown: false }}
         />
-
-
-        <Stack.Screen
-          name="EditProfile"
-          component={EditProfile}
-          options={{ headerShown: false }}
-        />
-
 
         <Stack.Screen
           name="WebView"
