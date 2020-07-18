@@ -44,6 +44,20 @@ export default class DiagnosisList extends Component {
             })
     }
 
+
+    componentWillMount() {
+        
+            Api.instance().getDiagnosisList()
+                .then((data) => {
+                    console.warn('=====>', data["Diagnosis"])
+                    this.setState({ diagnosisList: data });
+                }
+                ).catch(err => console.log(err))
+                .finally(() => {
+                    this.setState({ isLoading: false });
+                })
+        
+    }
     addDiagnosis(item) {
         item.setupType = 'diagnosis'
         Api.instance().addReport(item, this.state.appointmentId,this.state.patientId)
@@ -70,7 +84,8 @@ export default class DiagnosisList extends Component {
                         <View style={
                             { flex: 2.3 }
                         }>
-                            <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
+                            <Text 
+                            style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Diagnosis List\n`}</Text>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Bookings </Text>
                             </Text>

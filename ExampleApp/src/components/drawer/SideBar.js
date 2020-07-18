@@ -27,7 +27,7 @@ export default class Sidebar extends Component {
       <Container style={{ backgroundColor: '#F7FAFE' }}>
         <Content>
           <List>
-            <ListItem itemDivider style={{ backgroundColor: '#297dec'}}>
+            <ListItem itemDivider style={{ backgroundColor: 'grey', }}>
               <Text style={[CommonStyles.textSizeMedium, CommonStyles.textColorWhite, { textAlign: 'center', alignSelf: 'center',  }]}>EMR</Text>
             </ListItem>
 
@@ -47,7 +47,7 @@ export default class Sidebar extends Component {
             </ListItem>
 
 
-            <ListItem itemDivider  style={{ backgroundColor: '#297dec'}}>
+            <ListItem itemDivider  style={{ backgroundColor: 'grey'}}>
               <Text style={[CommonStyles.textSizeMedium, CommonStyles.textColorWhite, { textAlign: 'center', alignSelf: 'center' }]}>Doctor Advice</Text>
             </ListItem>
 

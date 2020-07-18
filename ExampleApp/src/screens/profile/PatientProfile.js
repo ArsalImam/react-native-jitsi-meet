@@ -1,16 +1,44 @@
 import React, { Component } from 'react';
+import { Icon } from 'native-base'
 import { StyleSheet, Text, View, ImageBackground, StatusBar, Image, TouchableOpacity } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
 import CommonStyles from '../../CommonStyles';
+import moment from 'moment';
+import Loader from '../../components/Loader';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import Api from '../../Api';
+
 
 export default class PatientProfile extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            checked: true,
+            isLoading: true,
+            user: {
+                personalDetails: {}
+            },
+            showLoader: true,
         };
+    }
+    componentDidMount() {
+
+        Api.instance()
+        ._user()
+
+        Api.instance()
+            ._user()
+            .then(user => {
+                if (user == null) return;
+                this.setState({
+                    user,
+                });
+            })
+            .catch(err => ViewUtils.showToast(err))
+            .finally(() => {
+                this.setState({ isLoading: false });
+            })
+
     }
 
     render() {
@@ -44,27 +72,48 @@ export default class PatientProfile extends React.Component {
                                 ]}>
                                     <View style={[{ flexDirection: 'row', alignContent: 'flex-start', height: 105 }]}>
                                         <View style={[{ backgroundColor: '#7DEE00', borderBottomLeftRadius: 5, borderTopLeftRadius: 5, width: 105 }]}>
-                                            <Image style={{ height: '97%', width: '100%', resizeMode: 'cover', }}
+                                            <ImageBackground style={{ height: '97%', width: '100%', resizeMode: 'cover', }}
+
+
                                                 source={require('../../assets/drawable-xxxhdpi/Mask.png')}>
 
-                                            </Image>
+                                                <Image style={{ height: '97%', width: '100%', resizeMode: 'cover', }}
+                                                    source={{ uri: this.state.user.imageUrl }}>
+
+                                                </Image>
+                                            </ImageBackground>
+
                                         </View>
                                         <View style={[CommonStyles.container, { justifyContent: 'flex-end', marginLeft: 10, marginBottom: -7 }]}>
                                             <Text>
                                                 <Text style={[CommonStyles.fontRegular, { color: '#7DEE00' }]}>Online{`\n`}</Text>
-                                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage, CommonStyles.textColorWhite]}>Islamabad, Pakistan{`\n`}</Text>
+                                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage, CommonStyles.textColorWhite]}>{this.state.user.personalDetails.city}, {this.state.user.personalDetails.country}{`\n`}</Text>
                                             </Text>
+
                                         </View>
                                     </View>
                                     <View style={[CommonStyles.container, { marginTop: 10 }]}>
                                         <Text style={[CommonStyles.fontRegular, CommonStyles.textColorWhite]} >
-                                            <Text style={[{ fontSize: 32 }]}>Dr. Iqbal Memon{`\n`}</Text>
-                                            <Text style={[{ fontSize: 20 }]}>FCPS, FCPS{`\n`}</Text>
+                                            <Text style={[{ fontSize: 32 }]}>{this.state.user.salutation}{`. `}{this.state.user.firstName} {this.state.user.lastName}{`\n`}</Text>
+                                            <Text style={[{ fontSize: 20 }]}>{this.state.user.speciality}{`\n`}</Text>
                                         </Text>
 
-                                        <Text style={[CommonStyles.textColorWhite, CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Please enter your details {`\n`}to get the information about {`\n`} your health and your doctorrightawy !!!</Text>
-                                        <Text style={[CommonStyles.textColorWhite, CommonStyles.fontRegular, CommonStyles.textSizeAverage, { marginVertical: 15 }]}>Call:    0331-0000000</Text>
-                                        <Text style={[CommonStyles.textColorWhite, CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Age:    70 Years</Text>
+                                        <Text style={[CommonStyles.textColorWhite, CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Please enter your details {`\n`}to get the information about {`\n`}your health and your doctorrightawy !!!</Text>
+                                        <Text style={[CommonStyles.textColorWhite, CommonStyles.fontRegular, CommonStyles.textSizeAverage, { marginVertical: 15 }]}>
+                                            <Text>Call:    </Text>
+                                            <Text>{this.state.user.personalDetails.mobile}</Text>
+                                        </Text>
+
+
+                                        <Text style={[CommonStyles.textColorWhite, CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>
+                                            <Text>Age:    </Text>
+                                            <Text>
+                                                {moment(this.state.user.personalDetails.dateOfBirth).fromNow().split(" ")[0]}
+                                                {` `}
+                                                {moment(this.state.user.personalDetails.dateOfBirth).fromNow().split(" ")[1]}
+                                            </Text>
+
+                                        </Text>
                                     </View>
                                 </View>
 
@@ -105,6 +154,25 @@ export default class PatientProfile extends React.Component {
                             />
                         </View>
                     </KeyboardAwareScrollView>
+
+                    <Loader loading={this.state.isLoading} />
+                    <View
+                        style={[
+                            {
+                                position: 'absolute',
+                                right: 17,
+                                top: 40,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            },
+                        ]}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                this.props.navigation.navigate('EditProfile')
+                            }}>
+                            <Icon name="edit" type='Feather' style={{ fontSize: 21, color: '#fff' }} />
+                        </TouchableOpacity>
+                    </View>
                 </ImageBackground>
             </View>
         );
