@@ -3,13 +3,26 @@ import { View, StyleSheet, TouchableOpacity, ImageBackground, FlatList, Text, } 
 import { Container, Content, Icon, Item, Label } from 'native-base';
 import { FlatGrid } from 'react-native-super-grid'
 import CommonStyles from '../../CommonStyles';
+import { ViewUtils } from '../../Utils';
+import Api from '../../Api';
+import Loader from '../../components/Loader';
 
 
 class MenuSlider extends React.Component {
+
+    constructor() {
+        super();
+        this.state = {
+            isLoading: false,
+        }
+    }
+
+
+
     render() {
 
         const PersonalProfile = [
-            { name: 'Demographics', iconName: 'clipboard-notes', iconFamily: 'Foundation', iconSize: '18', route: 'Demographics' },
+            { name: 'Basic', iconName: 'clipboard-notes', iconFamily: 'Foundation', iconSize: '18', route: 'PatientProfile' },
 
         ];
 
@@ -33,10 +46,10 @@ class MenuSlider extends React.Component {
             { name: 'Suggested Therapy', iconName: 'tooth-outline', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: 'TherapyList' },
             { name: 'Upload', iconName: 'tooth-outline', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: 'IllustrationsList' },
             { name: 'Patient History Form', iconName: 'notebook', iconFamily: 'SimpleLineIcons', iconSize: '18', route: 'PatientHistoryList' },
-            { name: 'My Medical Records', iconName: 'ios-flower', iconFamily: 'Ionicon', iconSize: '18', route: 'MedicalRecordList' }, 
-            { name: 'Medication Prescribe', iconName: 'bed', iconFamily: 'FontAwesome', iconSize: '18', route: 'AddPrescribtion' },
-             { name: 'Allergies', iconName: 'ios-flower', iconFamily: 'Ionicon', iconSize: '18', route: 'PatientProfile'},
-            // { name: 'Surgeries', iconName: 'box-cutter', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: '' },
+            { name: 'My Medical Records', iconName: 'ios-flower', iconFamily: 'Ionicon', iconSize: '18', route: 'MedicalRecordList' },
+            // { name: 'Medication Prescribe', iconName: 'bed', iconFamily: 'FontAwesome', iconSize: '18', route: 'AddPrescribtion' },
+            //  { name: 'Allergies', iconName: 'ios-flower', iconFamily: 'Ionicon', iconSize: '18', route: 'PatientProfile'},
+            // // { name: 'Surgeries', iconName: 'box-cutter', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: '' },
             // { name: 'Dental Issue', iconName: 'tooth-outline', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: '' },
             // { name: 'Reports', iconName: 'notebook', iconFamily: 'SimpleLineIcons', iconSize: '20', route: 'AddReport' },
         ];
@@ -154,7 +167,28 @@ class MenuSlider extends React.Component {
                 </Content>
 
                 <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('Login')}
+                    onPress={() => {
+                        ViewUtils.showAlert(
+                            'Are you sure, you want to sign out',
+                            () => {
+
+                                Api.instance()
+                                .removeUser()
+                                .then(response => {
+                                    this.props.navigation.replace('Login')
+                                    ViewUtils.showToast('Your have been sign out successfully!');          
+                                })
+                                .catch(err => {
+                                    ViewUtils.showToast(err);
+                                })
+                                .finally(() => {
+                                    this.setState({ isLoading: true });
+                                });
+
+                            },
+                            () => { },
+                        );
+                    }}
                     style={[CommonStyles.fitToBottom,
                     { flexDirection: 'row', borderWidth: 1, }]}>
                     <Icon style={[CommonStyles.padding, { fontSize: 22, }]}
@@ -165,7 +199,7 @@ class MenuSlider extends React.Component {
                     CommonStyles.textSizeNormal,
                     ]}>Sign Out</Text>
                 </TouchableOpacity>
-
+                <Loader loading={this.state.isLoading} />
             </View>
         )
     }

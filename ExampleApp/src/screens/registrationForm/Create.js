@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     Text,
     View,
@@ -11,10 +11,10 @@ import {
     ActivityIndicator,
 } from 'react-native';
 import CommonStyles from '../../CommonStyles';
-import {Item, Input, Container, Picker, Icon} from 'native-base';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import { Item, Input, Container, Picker, Icon } from 'native-base';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import Api from '../../Api';
-import {ViewUtils} from '../../Utils';
+import { ViewUtils } from '../../Utils';
 import Loader from '../../components/Loader';
 
 class Create extends Component {
@@ -82,12 +82,8 @@ class Create extends Component {
             "presentEmployments": [],
             "role": "ROLE_PATIENT"
         }
-
-
-
-
         Api.instance()
-            .patientRegister(data,this.state.drCode)
+            .patientRegister(data, this.state.drCode)
             .then(response => {
                 // this.addToConsultation(data);
                 // this.props.navigation.goBack()
@@ -100,7 +96,7 @@ class Create extends Component {
                 ViewUtils.showToast('Invalid Field');
             })
             .finally(() => {
-                this.setState({isLoading: false});
+                this.setState({ isLoading: false });
             });
     };
 
@@ -114,8 +110,11 @@ class Create extends Component {
                         <View
                             style={[
                                 CommonStyles.margin,
-                                {paddingTop: 30, paddingHorizontal: 10},
+                                { paddingTop: 30, paddingHorizontal: 10 },
+
                             ]}>
+
+                            <View style={[CommonStyles.container, CommonStyles.horizontalContainer]}></View>
                             <Text
                                 style={[
                                     CommonStyles.fontMedium,
@@ -130,27 +129,25 @@ class Create extends Component {
                                 style={[
                                     CommonStyles.textSizeNormal,
                                     CommonStyles.textColorWhite,
-                                    {marginTop: 5},
+                                    { marginTop: 5 },
                                 ]}>
                                 Enter your details to register for EvoTelemedicine
                             </Text>
+{/* 
+                            <Image
+                                style={[CommonStyles.mt30]}
+                                source={require('../../assets/img/layer_11.png')}
+                            /> */}
 
-                            {/* <Image
-                style={[CommonStyles.mt30, { width: 96, height: 123 }]}
-                source={require('../../assets/img/layer_2.png')}
-              />
- */}
-
-
-                            <View style={{marginTop: 60}}>
+                            <View style={{ marginTop: 60 }}>
 
                                 <View style={[CommonStyles.container, CommonStyles.horizontalContainer,]}>
 
                                     <Item regular
-                                          style={[CommonStyles.container, CommonStyles.loginItemStyle, {marginRight: 5}]}>
+                                        style={[CommonStyles.container, CommonStyles.loginItemStyle, { marginRight: 5 }]}>
                                         <Input
                                             value={this.state.firstName}
-                                            onChangeText={val => this.setState({firstName: val})}
+                                            onChangeText={val => this.setState({ firstName: val })}
                                             name="username"
                                             placeholder={'First Name*'}
                                             placeholderTextColor="#FFF"
@@ -168,10 +165,10 @@ class Create extends Component {
                                     </Item>
 
                                     <Item regular
-                                          style={[CommonStyles.container, CommonStyles.loginItemStyle, {marginLeft: 5}]}>
+                                        style={[CommonStyles.container, CommonStyles.loginItemStyle, { marginLeft: 5 }]}>
                                         <Input
                                             value={this.state.lastName}
-                                            onChangeText={val => this.setState({lastName: val})}
+                                            onChangeText={val => this.setState({ lastName: val })}
                                             name="username"
                                             placeholder={'Last Name*'}
                                             placeholderTextColor="#FFF"
@@ -191,25 +188,25 @@ class Create extends Component {
                                 </View>
 
                                 <Item regular
-                                      picker
-                                      style={[
-                                          CommonStyles.container,
-                                          CommonStyles.loginItemStyle,
-                                          CommonStyles.mt10,
+                                    picker
+                                    style={[
+                                        CommonStyles.container,
+                                        CommonStyles.loginItemStyle,
+                                        CommonStyles.mt10,
 
-                                      ]}>
+                                    ]}>
                                     <Picker
 
-                                        textStyle={{color: "#fff"}}
-                                        itemTextStyle={{color: 'red'}}
-                                        style={{color: '#fff',}}
-                                        itemStyle={{backgroundColor: '#fff'}}
+                                        textStyle={{ color: "#fff" }}
+                                        itemTextStyle={{ color: 'red' }}
+                                        style={{ color: '#fff', }}
+                                        itemStyle={{ backgroundColor: '#fff' }}
                                         placeholder="Gender*"
-                                        placeholderStyle={{color: '#FFF'}}
+                                        placeholderStyle={{ color: '#FFF' }}
                                         placeholderIconColor="#fff"
                                         selectedValue={this.state.gender}
 
-                                        onValueChange={txt => this.setState({gender: txt})}>
+                                        onValueChange={txt => this.setState({ gender: txt })}>
                                         <Picker.Item
                                             color='grey'
                                             selected={false}
@@ -217,20 +214,20 @@ class Create extends Component {
                                             value=""
                                         />
 
-                                        <Picker.Item label="Male" value="Male"/>
-                                        <Picker.Item label="Female" value="Female"/>
+                                        <Picker.Item label="Male" value="Male" />
+                                        <Picker.Item label="Female" value="Female" />
 
                                     </Picker>
 
                                     <Icon name="arrow-dropdown"
-                                          style={{color: "#fff", position: 'absolute', right: 5,}}/>
+                                        style={{ color: "#fff", position: 'absolute', right: 5, }} />
                                 </Item>
 
 
                                 <Item regular style={[CommonStyles.loginItemStyle, CommonStyles.mt10]}>
                                     <Input
                                         value={this.state.email}
-                                        onChangeText={val => this.setState({email: val})}
+                                        onChangeText={val => this.setState({ email: val })}
                                         placeholder={'Email Address*'}
                                         placeholderTextColor="#FFF"
                                         returnKeyType="next"
@@ -248,7 +245,7 @@ class Create extends Component {
                                 <Item regular style={[CommonStyles.loginItemStyle, CommonStyles.mt10]}>
                                     <Input
                                         value={this.state.password}
-                                        onChangeText={password => this.setState({password})}
+                                        onChangeText={password => this.setState({ password })}
                                         secureTextEntry
                                         autoCapitalize="none"
                                         returnKeyType="done"
@@ -272,7 +269,7 @@ class Create extends Component {
                                     style={[CommonStyles.loginItemStyle, CommonStyles.mt10]}>
                                     <Input
                                         value={this.state.confirmPasword}
-                                        onChangeText={val => this.setState({confirmPasword: val})}
+                                        onChangeText={val => this.setState({ confirmPasword: val })}
                                         secureTextEntry
                                         autoCapitalize="none"
                                         returnKeyType="done"
@@ -296,7 +293,7 @@ class Create extends Component {
                                     style={[CommonStyles.loginItemStyle, CommonStyles.mt10]}>
                                     <Input
                                         value={this.state.drCode}
-                                        onChangeText={drCode => this.setState({drCode})}
+                                        onChangeText={drCode => this.setState({ drCode })}
                                         secureTextEntry={false}
                                         autoCapitalize="none"
                                         returnKeyType="done"
@@ -341,7 +338,7 @@ class Create extends Component {
                                 CommonStyles.centerText,
                                 CommonStyles.margin,
                                 CommonStyles.padding,
-                                {opacity: 0.5},
+                                { opacity: 0.5 },
 
                             ]}>
                             Submit

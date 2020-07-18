@@ -457,6 +457,12 @@ export default class Api {
     let _user = JSON.parse(JSON.stringify(user));
 
     let id_param = this._relationalParamByRole(_user.role);
+    let userId = _user.id;
+
+    if (_user.role == Roles.patient && status == AppointmentStatus.available) {
+      id_param = "doctorId";
+      id_param = _user.doctorId;
+    }
     let includes = '';
     let wheres = '';
     if (requirePatient) {
@@ -470,7 +476,7 @@ export default class Api {
     let response = await this.client.get(
       this.getUrl(
         `Appointments?filter[where][${id_param}]=${
-        _user.id
+          userId
         }${includes}${wheres}&filter[order]=id%20DESC`,
       ),
     );
@@ -503,6 +509,17 @@ export default class Api {
     } catch (e) {
       console.warn(e);
     }
+  }
+
+   async removeUser(user) {
+    try {
+      await AsyncStorage.removeItem('@user', JSON.stringify(user))
+      console.warn("Logout", user)
+    } catch(e) {
+      // remove error
+    }
+  
+    console.warn('logout Done', user)
   }
 
   async savePatient(data) {

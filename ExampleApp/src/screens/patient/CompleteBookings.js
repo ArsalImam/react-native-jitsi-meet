@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { Text, View, ImageBackground } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
 import { CheckBox } from 'react-native-elements';
+import { Icon } from 'native-base';
 import CommonStyles from '../../CommonStyles';
 import Api from '../../Api';
 import { AppointmentStatus } from '../../Configs';
 import moment from 'moment';
 import Loader from '../../components/Loader';
-import {ViewUtils} from '../../Utils';
+import { ViewUtils } from '../../Utils';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class CompleteBookings extends Component {
   state = {
@@ -17,6 +19,27 @@ export default class CompleteBookings extends Component {
 
   constructor(props) {
     super(props);
+  }
+
+
+  _generateReport() {
+    const prescribtionUrl = Api.instance().getUrl(
+      `consultation-reports/getReport?appointmentId=${this.appointmentId}&prescription`
+    );
+        this.props.navigation.navigate('WebView', {
+          prescribtionUrl,
+        });
+    
+  }
+
+  _generatePrescrition() {
+    const prescribtionUrl = Api.instance().getUrl(
+      `consultation-reports/getReport?appointmentId=${this.appointmentId}&prescription=true`
+    );
+        this.props.navigation.navigate('WebView', {
+          prescribtionUrl,
+        });
+    
   }
 
   componentDidMount() {
@@ -61,15 +84,15 @@ export default class CompleteBookings extends Component {
             </Text>
 
           </View>
-          <View style={{flex: 8, paddingHorizontal: 2, paddingBottom: 55}}>
-           <FlatGrid
+          <View style={{ flex: 8, paddingHorizontal: 2, paddingBottom: 55 }}>
+            <FlatGrid
               itemDimension={320}
               spacing={15}
               items={this.state.appointments}
               style={[CommonStyles.container]}
               renderItem={({ item }) => (
-                <View 
-                style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5, CommonStyles.bgColor]}
+                <View
+                  style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5, CommonStyles.bgColor]}
                 >
                   <ImageBackground
                     style={[
@@ -85,7 +108,7 @@ export default class CompleteBookings extends Component {
                       <View
                         style={[
                           CommonStyles.container,
-                          { justifyContent: 'space-around' },
+                          { justifyContent: 'space-between', paddingVertical: 12 },
                         ]}>
                         <Text>
                           <Text
@@ -124,15 +147,15 @@ export default class CompleteBookings extends Component {
                       <View
                         style={[
                           CommonStyles.container,
-                          { justifyContent: 'space-around' },
+                          { justifyContent: 'space-between' },
                         ]}>
                         <View
                           style={[
                             CommonStyles.container,
                             {
-                              justifyContent: 'space-around',
+                              justifyContent: 'space-between',
                               alignItems: 'flex-end',
-                              marginBottom: 10,
+                              marginBottom: 8,
                             },
                           ]}>
                           <CheckBox
@@ -177,8 +200,39 @@ export default class CompleteBookings extends Component {
                       </View>
                     </View>
                   </ImageBackground>
+                  <View style={[CommonStyles.container, CommonStyles.horizontalContainer, { backgroundColor: 'grey', marginTop: 5, borderBottomEndRadius: 5, borderBottomStartRadius: 5 }]}>
+                    <TouchableOpacity
+
+                    onPress={() => {this._generateReport()}}
+                      style={[CommonStyles.container, CommonStyles.centerElement, { flexDirection: 'row' }]}
+                    >
+                      <Icon
+                        name="clipboard-notes"
+                        type='Foundation'
+                        style={{ fontSize: 20, color: '#FFF', margin: 10 }}
+                      />
+                      <Text style={[CommonStyles.textColorWhite, CommonStyles.centerText, CommonStyles.padding]}>Report</Text>
+
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                    onPress={() => {this._generatePrescrition()}}
+                      style={[CommonStyles.container, CommonStyles.centerElement, { flexDirection: 'row' }]}
+                    >
+                      <Icon
+                        name="filetext1"
+                        type='AntDesign'
+                        style={{ fontSize: 20, color: '#FFF', margin: 10 }}
+                      />
+                      <Text style={[CommonStyles.textColorWhite, CommonStyles.centerText, CommonStyles.padding]}>Prescription</Text>
+
+                    </TouchableOpacity>
+                  </View>
+
                 </View>
+
               )}
+
             />
           </View>
 

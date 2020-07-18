@@ -70,6 +70,8 @@ export default class Routes extends React.Component {
         <Drawer.Screen name="MedicalRecordList" component={MedicalRecordList} />
         <Drawer.Screen name="AddPrescribtion" component={AddPrescribtion} />
         <Drawer.Screen name="MedicalCondition" component={MedicalCondition} />
+        <Drawer.Screen name="PatientProfile" component={PatientProfile} />
+        
         <Drawer.Screen name="Demographics" component={Demographics} />
         <Drawer.Screen name="AddReport" component={AddReport} />
         <Drawer.Screen name="Patients" component={Patients} />
@@ -337,13 +339,13 @@ export default class Routes extends React.Component {
           name="PatientProfile"
           component={PatientProfile}
           options={{
-            headerShown: true,
-            title: '',
-            headerStyle: { backgroundColor: 'transparent' },
-            headerTransparent: true,
-            headerTitleAlign: 'center',
-            headerTitleStyle: { color: '#fff' },
-            headerTintColor: '#fff',
+            headerShown: false,
+            // title: '',
+            // headerStyle: { backgroundColor: 'transparent' },
+            // headerTransparent: true,
+            // headerTitleAlign: 'center',
+            // headerTitleStyle: { color: '#fff' },
+            // headerTintColor: '#fff',
 
             // headerRight: (props) => (<TouchableOpacity
             // {...props}

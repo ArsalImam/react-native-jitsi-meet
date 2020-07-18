@@ -85,7 +85,7 @@ export default class BookingList extends Component {
                       <View
                         style={[
                           CommonStyles.container,
-                          {justifyContent: 'space-around'},
+                          {justifyContent: 'space-between', paddingVertical: 12},
                         ]}>
                         <Text>
                           <Text
@@ -122,15 +122,15 @@ export default class BookingList extends Component {
                       <View
                         style={[
                           CommonStyles.container,
-                          {justifyContent: 'space-around'},
+                          {justifyContent: 'space-between'},
                         ]}>
                         <View
                           style={[
                             CommonStyles.container,
                             {
-                              justifyContent: 'space-around',
+                              justifyContent: 'space-between',
                               alignItems: 'flex-end',
-                              marginBottom: 10,
+                              marginBottom: 7,
                             },
                           ]}>
                           <CheckBox

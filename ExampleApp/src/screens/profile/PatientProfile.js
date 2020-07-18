@@ -16,7 +16,8 @@ export default class PatientProfile extends React.Component {
         this.state = {
             isLoading: true,
             user: {
-                personalDetails: {}
+                personalDetails: {},
+                qualifications: [],
             },
             showLoader: true,
         };
@@ -38,20 +39,10 @@ export default class PatientProfile extends React.Component {
             .finally(() => {
                 this.setState({ isLoading: false });
             })
-
     }
 
     render() {
-        const main = [
-            { name: 'MBBS', code: 'Cardio Specialist', fromYears: '2002 - 2008', Uni: 'UNIVERSITY OF LONDON', route: '' },
-            { name: 'MBBS', code: 'Cardio Specialist', fromYears: '2002 - 2008', Uni: 'UNIVERSITY OF LONDON', route: '' },
-            { name: 'MBBS', code: 'Cardio Specialist', fromYears: '2002 - 2008', Uni: 'UNIVERSITY OF LONDON', route: '' },
-            { name: 'MBBS', code: 'Cardio Specialist', fromYears: '2002 - 2008', Uni: 'UNIVERSITY OF LONDON', route: '' },
-            { name: 'MBBS', code: 'Cardio Specialist', fromYears: '2002 - 2008', Uni: 'UNIVERSITY OF LONDON', route: '' },
-            { name: 'MBBS', code: 'Cardio Specialist', fromYears: '2002 - 2008', Uni: 'UNIVERSITY OF LONDON', route: '' },
-            { name: 'MBBS', code: 'Cardio Specialist', fromYears: '2002 - 2008', Uni: 'UNIVERSITY OF LONDON', route: '' },
-
-        ];
+       
         return (
 
             <View style={[CommonStyles.container]}>
@@ -67,7 +58,7 @@ export default class PatientProfile extends React.Component {
                                 <View style={[CommonStyles.container,
                                 {
                                     paddingHorizontal: 16,
-                                    paddingVertical: 65
+                                    paddingVertical: 67
                                 }
                                 ]}>
                                     <View style={[{ flexDirection: 'row', alignContent: 'flex-start', height: 105 }]}>
@@ -98,7 +89,16 @@ export default class PatientProfile extends React.Component {
                                             <Text style={[{ fontSize: 20 }]}>{this.state.user.speciality}{`\n`}</Text>
                                         </Text>
 
-                                        <Text style={[CommonStyles.textColorWhite, CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Please enter your details {`\n`}to get the information about {`\n`}your health and your doctorrightawy !!!</Text>
+                                        <Text style={[CommonStyles.textColorWhite, CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>
+                                            {`Doctor Code: `} {this.state.user.doctorCode} {`\n`}
+                                            {`\nCall: `} {this.state.user.personalDetails.mobile} {`\n`}
+                                            {`\nAge: `} {moment(this.state.user.personalDetails.dateOfBirth).fromNow().split(" ")[0]}{` `}{moment(this.state.user.personalDetails.dateOfBirth).fromNow().split(" ")[1]}
+                                            
+
+
+                                        </Text>
+
+                                        {/* <Text style={[CommonStyles.textColorWhite, CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Please enter your details {`\n`}to get the information about {`\n`}your health and your doctorrightawy !!!</Text>
                                         <Text style={[CommonStyles.textColorWhite, CommonStyles.fontRegular, CommonStyles.textSizeAverage, { marginVertical: 15 }]}>
                                             <Text>Call:    </Text>
                                             <Text>{this.state.user.personalDetails.mobile}</Text>
@@ -113,7 +113,7 @@ export default class PatientProfile extends React.Component {
                                                 {moment(this.state.user.personalDetails.dateOfBirth).fromNow().split(" ")[1]}
                                             </Text>
 
-                                        </Text>
+                                        </Text> */}
                                     </View>
                                 </View>
 
@@ -133,7 +133,7 @@ export default class PatientProfile extends React.Component {
 
                             <FlatGrid
 
-                                items={main}
+                                items={this.state.user.qualifications}
                                 style={[CommonStyles.container]}
                                 //staticDimension={300}
                                 //fixed
@@ -142,12 +142,12 @@ export default class PatientProfile extends React.Component {
 
                                     <View style={[CommonStyles.container, CommonStyles.bgColor, CommonStyles.br5, { padding: 12 }]}>
                                         <Text>
-                                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge]}>{item.name}{`\n`}</Text>
-                                            <Text style={[CommonStyles.DINProMedium, CommonStyles.textSizeAverage, { color: '#999999' }]}>{item.code}{`\n`}</Text>
+                                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge]}>{item.qualification}{`\n`}</Text>
+                                           
                                         </Text>
                                         <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#999999', }]}>
-                                            <Text >{item.fromYears}{`\n`}</Text>
-                                            <Text >{item.Uni}</Text>
+                                            <Text >{item.yearQualified}{`\n`}</Text>
+                                            <Text >{item.qualifiedFrom}</Text>
                                         </Text>
                                     </View>
                                 )}
@@ -173,6 +173,22 @@ export default class PatientProfile extends React.Component {
                             <Icon name="edit" type='Feather' style={{ fontSize: 21, color: '#fff' }} />
                         </TouchableOpacity>
                     </View>
+
+                    <View
+                            style={[
+                                CommonStyles.backButtonStyle
+                            ]}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.props.navigation.goBack();
+                                }}>
+                                <Icon
+                                    name="arrow-back"
+                                    type="MaterialIcons"
+                                    style={{ color: '#FFF' }}
+                                />
+                            </TouchableOpacity>
+                        </View>
                 </ImageBackground>
             </View>
         );

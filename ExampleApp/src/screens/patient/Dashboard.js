@@ -265,7 +265,7 @@ class Dashboard extends React.Component {
                           (CommonStyles.fontRegular,
                             CommonStyles.textSizeSmall,
                             { color: '#335a07' })
-                        }>{`Next Appointment\n            `}</Text>
+                        }>{`Next Appointment\n        `}</Text>
                       <Text
                         style={
                           (CommonStyles.fontMedium,
@@ -278,7 +278,7 @@ class Dashboard extends React.Component {
                           (CommonStyles.fontRegular,
                             CommonStyles.textSizeSmall,
                             { color: '#335a07' })
-                        }>{`\nAppointment Time\n            `}</Text>
+                        }>{`\nAppointment Time\n             `}</Text>
                       <Text
                         style={
                           (CommonStyles.fontMedium,
