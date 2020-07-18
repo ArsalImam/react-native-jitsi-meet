@@ -17,7 +17,6 @@ export default class VitalAdd extends Component {
     }
     _createVitals(){
 
-        console.warn('asd');
     }
     onValueChange(value) {
         this.setState({

@@ -26,9 +26,8 @@ export default class AppointmentRoom extends React.Component {
   componentDidMount () {
     
     const {appointmentId} = this.props.route.params;
-
     this.appointmentId = appointmentId;
-
+  
     Api.instance ()._user ().then (user => {
       let _user = JSON.parse (JSON.stringify (user));
 
@@ -46,11 +45,8 @@ export default class AppointmentRoom extends React.Component {
 
       Api.instance().getAppointmentById(appointmentId)
       .then((response)=>{
-        
-        this.appointment=response;
-
-      })
-
+      this.appointment=response;
+      });
     });
   }
 
@@ -88,6 +84,7 @@ export default class AppointmentRoom extends React.Component {
   };
 
   render () {
+
     return (
       <Container
         style={[StyleSheet.absoluteFillObject, {backgroundColor: 'black'}]}

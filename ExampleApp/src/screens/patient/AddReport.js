@@ -47,8 +47,10 @@ export default class AddReport extends Component {
 
                         </View>
 
+
                     </ImageBackground>
-            
+              
+
                 <TouchableOpacity style={styles.buttonStyle}>
                     <Text style={[styles.textStyle, CommonStyles.DINProRegular]}>SAVE</Text>
                 </TouchableOpacity>

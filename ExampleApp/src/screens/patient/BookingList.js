@@ -19,6 +19,7 @@ export default class BookingList extends Component {
   }
 
   componentDidMount() {
+
     Api.instance()
       .getMyAppointments(AppointmentStatus.available, true)
       .then(appointments => {

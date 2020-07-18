@@ -7,8 +7,8 @@ import * as AxiosLogger from 'axios-logger';
 export default class Api {
   static myInstance = null;
   client;
-
-
+  _userRole;
+    
   constructor() {
     // At instance level
     this.client = axios.create({});
@@ -35,6 +35,7 @@ export default class Api {
     let authData = response.data;
     if (authData.error) throw authData.error.message;
     await this.saveUser(authData.user);
+
 
     //update fcm
     try {
@@ -70,7 +71,7 @@ export default class Api {
   // patientId,
   // answer,
   // active,
-  async addReport(item, appointmentId, patientId) {
+  async addReport(item, appointmentId,patientId) {
 
     try {
       let user = await this._user();
@@ -105,20 +106,20 @@ export default class Api {
   }
 
 
-  async patientRegister(item, drCode) {
-    // 843358
-
+async patientRegister(item){
+  // 718270
+  
     let response = await this.client.get(
-      this.getUrl(`Clients?filter[where][doctorCode]=${drCode}`),
+      this.getUrl(`Clients?filter[where][doctorCode]=718270`),
     );
     let data = response.data;
-    item.doctorId = data[0].id;
-    console.warn('doctorFound==>', data);
-    let patientObj = await this.savePatient(item);
-    console.warn('added', patientObj.data);
-    if (data.error) throw data.error.message;
-
-  }
+    item.doctorId=data[0].id
+console.warn('doctorFound==>',data)
+let aa=await this.savePatient(item);
+      console.warn('added',aa.data)
+      if (data.error) throw data.error.message;
+   
+}
 
   async addPrescribeMedication(item, appointmentId) {
 
@@ -126,11 +127,11 @@ export default class Api {
       let user = await this._user();
       let _user = JSON.parse(JSON.stringify(user));
 
-      item.doctorId = _user.id;
-      item.patientId = item.patientId;
+      item.doctorId=_user.id;
+      item.patientId=item.patientId;
       let customProperties = [];
       customProperties.push(item);
-      console.warn('===>prescription', customProperties);
+      console.warn('===>prescription',customProperties);
       let response = await this.client.post(
         this.getUrl(`consultation-reports/updateCustomProps`),
         {
@@ -141,7 +142,7 @@ export default class Api {
             "customProperties": customProperties
           }
         });
-      console.warn('res', JSON.stringify(response.data))
+        console.warn('res',JSON.stringify(response.data))
       return response.data;
     } catch (error) {
       return error
@@ -163,9 +164,9 @@ export default class Api {
       return error
     }
   }
-  async getAppointmentById(appointmentId) {
+  async getAppointmentById(appointmentId){
     try {
-
+      
       let response = await this.client.get(
         this.getUrl(`Appointments?filter[where][id]=${appointmentId}`),
         this.getHeaders(),
@@ -364,24 +365,6 @@ export default class Api {
     return response.data;
   }
 
-  // Update Profile
-  async updateProfile(data,) {
-
-    let user = await this._user();
-    let _user = JSON.parse(JSON.stringify(user));
-   
-    let response = await this.client.post(
-      this.getUrl(`Clients/upsertWithWhere?where={%22email%22:%22${_user.email}%22}`),
-      data,
-      this.getHeaders(),
-    );
-    
-    return response.data;
-    
-  }
-
-
-
   async updateAppointmentStatus(appointmentId) {
     let appointment = {
       status: AppointmentStatus.completed,
@@ -423,6 +406,16 @@ export default class Api {
     let data = response.data;
     if (data.error) throw data.error.message;
     return data;
+  }
+  
+  async getUserRole(){
+    if (!this._userRole) {
+      let user = await this._user();
+      let _user = JSON.parse(JSON.stringify(user));
+      
+      this._userRole = _user.role;
+    }
+    return this._userRole;   
   }
 
   async updateFcmToken(fcmToken: string) {
@@ -499,37 +492,25 @@ export default class Api {
   async saveUser(user) {
     try {
       await AsyncStorage.setItem('@user', JSON.stringify(user));
-      console.warn("User", user)
     } catch (e) {
       console.warn(e);
     }
   }
 
   async savePatient(data) {
-    console.warn('data to send==>', data);
+   console.warn('data to send==>',data)
     let response = await this.client.post(
-      this.getUrl(`Clients/upsertWithWhere?[where][email]=${data.email}`),
+      this.getUrl('Clients'),
       data,
       this.getHeaders(),
     );
     return response.data;
   }
 
-
-    async uploadImage(data) {
-        console.warn('image data ==>',JSON.stringify(data)) ;
-        let response = await this.client.post(
-            this.getUrl(`Contents/${Configs.containers.imageUpload}/upload`), data,{  headers: {
-                'Content-Type': 'multipart/form-data',
-              },}
-    );
-        return response.data;
-    }
-
   async _user() {
     try {
       return JSON.parse(await AsyncStorage.getItem('@user'));
-
+      
     } catch (e) {
       console.warn(e);
     }
