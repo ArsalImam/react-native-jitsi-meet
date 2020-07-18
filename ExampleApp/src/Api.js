@@ -513,6 +513,17 @@ async updateProfile(data) {
     return response.data;
   }
 
+
+    async uploadImage(data) {
+        console.warn('image data ==>',JSON.stringify(data)) ;
+        let response = await this.client.post(
+            this.getUrl(`Contents/${Configs.containers.imageUpload}/upload`), data,{  headers: {
+                'Content-Type': 'multipart/form-data',
+              },}
+    );
+        return response.data;
+    }
+
   async _user() {
     try {
       return JSON.parse(await AsyncStorage.getItem('@user'));

@@ -169,6 +169,8 @@ class Login extends Component {
             style={[CommonStyles.container, CommonStyles.centerText]}
             onPress={() => {
               this.props.navigation.navigate('Create');
+              //   this.props.navigation.navigate('UploadIllustrations')
+
             }}>
             <Text
               style={[
