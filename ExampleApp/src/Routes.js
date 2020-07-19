@@ -13,7 +13,7 @@ import MedicalCondition from './screens/patient/MedicalCondition';
 import Vital from './screens/Vitals/Vital';
 import VitalList from './screens/Vitals/VitalList';
 import DrProfile from './screens/patient/DrProfile';
-import PatientProfile from './screens/patient/PatientProfile';
+import PatientProfile from './screens/profile/PatientProfile';
 import Patients from './screens/patient/Patients';
 import AppointmentRoom from './screens/AppointmentRoom';
 import MedicationAdd from './screens/medications/MedicationAdd';
@@ -33,6 +33,7 @@ import IllustrationsList from './screens/uploadIllustration/IllustrationsList';
 import UploadMedicalRecord from './screens/medicalRecords/UploadMedicalRecord';
 import MedicalRecordList from './screens/medicalRecords/MedicalRecordList';
 import Create from './screens/registrationForm/Create';
+import EditProfile from './screens/profile/EditProfile';
 
 import AddPrescribtion from './screens/prescribeMedication/AddPrescribtion';
 import WebView from './screens/web-view/WebView';
@@ -69,7 +70,7 @@ export default class Routes extends React.Component {
         <Drawer.Screen name="AddPrescribtion" component={AddPrescribtion} />
         <Drawer.Screen name="MedicalCondition" component={MedicalCondition} />
         <Drawer.Screen name="PatientProfile" component={PatientProfile} />
-        
+
         <Drawer.Screen name="Demographics" component={Demographics} />
         <Drawer.Screen name="AddReport" component={AddReport} />
         <Drawer.Screen name="Patients" component={Patients} />
@@ -340,6 +341,15 @@ export default class Routes extends React.Component {
             headerShown: false,
           }}
         />
+
+        <Stack.Screen
+          name="EditProfile"
+          component={EditProfile}
+          options={{
+            headerShown: false,
+          }}
+        />
+
 
         <Stack.Screen
           name="Patients"

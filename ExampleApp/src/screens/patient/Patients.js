@@ -185,37 +185,3 @@ export default class Patients extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  gridView: {
-    flex: 1,
-  },
-  itemContainer: {
-    flex: 1,
-    height: 60,
-    shadowOffset: { height: 2, width: 0 },
-    elevation: 3,
-    borderRadius: 3,
-    backgroundColor: '#FFF',
-    shadowColor: '#000',
-  },
-
-  View3: {
-    flex: 1.9,
-    justifyContent: 'flex-end',
-  },
-  View2: {
-    marginTop: 30,
-    flex: 8,
-    alignSelf: 'center',
-    width: '94%',
-  },
-  view1: {
-    height: '100%',
-    width: '50%',
-    justifyContent: 'space-evenly',
-  },
-});

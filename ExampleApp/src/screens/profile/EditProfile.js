@@ -75,23 +75,16 @@ export default class UploadIllustrations extends React.Component {
             "speciality": this.state.speciality,
             "personalDetails": {
                 "city": this.state.city,
-                "postalCode": "",
                 "country": this.state.country,
                 "dateOfBirth": this.state.dateOfBirth,
                 "mobile": this.state.mobile,
-            },
-            "qualifications": [],
-            "specialities": [],
-            "expertise": [],
-            "assistants": [""],
-            "credit": "",
-            "previousEmployments": [],
-            "presentEmployments": [],
+            }
         }
-
+        this.setState({ isLoading: true });
         Api.instance()
             .updateProfile(data)
             .then(response => {
+                // this.props.navigation.goBack();
                 this.props.navigation.replace('PatientProfile')
                 ViewUtils.showToast('Profile has been updated successfully!');
                 console.warn(data)
@@ -100,7 +93,7 @@ export default class UploadIllustrations extends React.Component {
                 ViewUtils.showToast(err);
             })
             .finally(() => {
-                this.setState({ isLoading: true });
+                this.setState({ isLoading: false });
                 
             });
     };
@@ -161,7 +154,7 @@ export default class UploadIllustrations extends React.Component {
                             <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 20 }]}>
                                 <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}> First Name*</Label>
                                 <Input
-                                    placeholder={this.state.user.firstName}
+                                  
                                     value={this.state.firstName}
                                     onChangeText={val => this.setState({ firstName: val })}
                                     style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
@@ -179,7 +172,7 @@ export default class UploadIllustrations extends React.Component {
                             <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 10 }]}>
                                 <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}> City</Label>
                                 <Input
-                                    placeholder={this.state.user.personalDetails.city}
+                                   
                                     value={this.state.city}
                                     onChangeText={val => this.setState({ city: val })}
                                     style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
@@ -188,7 +181,7 @@ export default class UploadIllustrations extends React.Component {
                             <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 10 }]}>
                                 <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}> Country</Label>
                                 <Input
-                                    placeholder={this.state.user.personalDetails.country}
+                                  
                                     value={this.state.country}
                                     onChangeText={val => this.setState({ country: val })}
                                     style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
@@ -198,23 +191,13 @@ export default class UploadIllustrations extends React.Component {
                             <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 10 }]}>
                                 <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}> Mobile</Label>
                                 <Input
-                                    placeholder={this.state.user.personalDetails.mobile}
+                                   
                                     keyboardType={'number-pad'}
                                     value={this.state.mobile}
                                     onChangeText={val => this.setState({ mobile: val })}
                                     style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
                             </Item>
                             
-                            {/* <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 10 }]}>
-                                <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Doctor Code</Label>
-                                <Input
-                                    keyboardType={'number-pad'}
-                                    placeholder={this.state.user.doctorCode}
-                                    value={this.state.doctorCode}
-                                    onChangeText={val => this.setState({ doctorCode: val })}
-                                    style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
-                            </Item> */}
-
 
                             <Label style={[{ marginTop: 10, alignSelf: 'center', width: '88%' }, CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>  Date of Birth</Label>
                             <Item
@@ -250,68 +233,6 @@ export default class UploadIllustrations extends React.Component {
                                 <Icon active name="calendar" style={{ marginLeft: 20 }} />
                             </Item>
 
-                            {/* <Item
-                                picker
-                                style={[
-                                    CommonStyles.container,
-                                    CommonStyles.itemStyle,
-                                    { marginTop: 20 }
-
-                                ]}>
-                                <Picker
-                                    mode="dropdown"
-                                    textStyle={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]}
-                                    iosIcon={<Icon name="arrow-down" />}
-                                    placeholderStyle={{ color: '#bfc6ea' }}
-                                    placeholderIconColor="#007aff"
-                                    selectedValue={this.state.salutation}
-                                    onValueChange={txt => this.setState({ salutation: txt })}>
-                                    <Picker.Item
-                                        color="gray"
-                                        selected={true}
-                                        label="Select Salutation"
-                                        value=""
-                                    />
-                                    <Picker.Item label="Mr" value="Mr" />
-                                    <Picker.Item label="Dr" value="Dr" />
-                                    <Picker.Item label="Mrs" value="Mrs" />
-                                    <Picker.Item label="Miss" value="Miss" />
-
-                                </Picker>
-                            </Item>
-
-                            <Item
-
-                                style={[
-                                    CommonStyles.container,
-                                    CommonStyles.itemStyle,
-                                    { marginTop: 20 }
-
-                                ]}>
-                                <Picker
-                                    mode="dropdown"
-                                    textStyle={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]}
-                                    iosIcon={<Icon name="arrow-down" />}
-                                    placeholderStyle={{ color: '#bfc6ea' }}
-
-                                    placeholderIconColor="#007aff"
-                                    selectedValue={this.state.speciality}
-                                    onValueChange={txt => this.setState({ speciality: txt })}>
-                                    <Picker.Item
-                                        color="gray"
-                                        selected={true}
-                                        label="Speciality"
-                                        value=""
-                                    />
-                                    <Picker.Item label="General Practice" value="General Practice" />
-                                    <Picker.Item label="Allergy Medicine" value="Allergy Medicine" />
-                                    <Picker.Item label="Audiological Medicine" value="Audiological Medicine" />
-                                    <Picker.Item label="Acute Medicine" value="Acute Medicine" />
-                                    <Picker.Item label="Clinical Medicine" value="Clinical Medicine" />
-                                    <Picker.Item label="Clinical Neurophysiology" value="Clinical Neurophysiology" />
-
-                                </Picker>
-                            </Item> */}
                         </KeyboardAwareScrollView>
 
                     </View>

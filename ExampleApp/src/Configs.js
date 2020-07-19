@@ -16,6 +16,7 @@ const Configs = {
 
   containers: {
     fileUploads: 'content',
+    images:'images'
   },
 };
 

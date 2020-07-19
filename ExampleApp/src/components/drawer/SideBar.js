@@ -107,15 +107,6 @@ export default class Sidebar extends Component {
           </Left>
         </ListItem>
 
-
-        <ListItem button={true} onPress={() => { this.props.changeScreenHandler.navigate('MedicalRecordList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) }} >
-          <Left>
-            <Icon active name="briefcase-medical" type='FontAwesome5' style={[CommonStyles.textSizeMedium]} />
-            <Text style={[CommonStyles.textSizeAverage, { marginLeft: 10 }]} >My Medical Records</Text>
-          </Left>
-        </ListItem>
-
-
       </List>
       ) : (
         <List>
@@ -129,8 +120,6 @@ export default class Sidebar extends Component {
             <Text style={[CommonStyles.textSizeAverage, { marginLeft: 10 }]} >My Medical Records</Text>
           </Left>
         </ListItem>  
-       
-
       </List>
       )}
          

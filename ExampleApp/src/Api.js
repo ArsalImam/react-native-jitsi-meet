@@ -8,7 +8,7 @@ export default class Api {
   static myInstance = null;
   client;
   _userRole;
-    
+
   constructor() {
     // At instance level
     this.client = axios.create({});
@@ -71,7 +71,7 @@ export default class Api {
   // patientId,
   // answer,
   // active,
-  async addReport(item, appointmentId,patientId) {
+  async addReport(item, appointmentId, patientId) {
 
     try {
       let user = await this._user();
@@ -106,20 +106,21 @@ export default class Api {
   }
 
 
-async patientRegister(item){
-  // 718270
-  
+  async patientRegister(item, drCode) {
+
     let response = await this.client.get(
-      this.getUrl(`Clients?filter[where][doctorCode]=718270`),
+      this.getUrl(`Clients?filter[where][doctorCode]=${drCode}`),
     );
     let data = response.data;
-    item.doctorId=data[0].id
-console.warn('doctorFound==>',data)
-let aa=await this.savePatient(item);
-      console.warn('added',aa.data)
+    if (data.length > 0) {
+      let patientObj = await this.savePatient(item);
+      await this.saveUser(patientObj);
       if (data.error) throw data.error.message;
-   
-}
+    } else {
+      throw "No Doctor found with the code, you provided!"
+    }
+
+  }
 
   async addPrescribeMedication(item, appointmentId) {
 
@@ -127,11 +128,11 @@ let aa=await this.savePatient(item);
       let user = await this._user();
       let _user = JSON.parse(JSON.stringify(user));
 
-      item.doctorId=_user.id;
-      item.patientId=item.patientId;
+      item.doctorId = _user.id;
+      item.patientId = item.patientId;
       let customProperties = [];
       customProperties.push(item);
-      console.warn('===>prescription',customProperties);
+      console.warn('===>prescription', customProperties);
       let response = await this.client.post(
         this.getUrl(`consultation-reports/updateCustomProps`),
         {
@@ -142,7 +143,7 @@ let aa=await this.savePatient(item);
             "customProperties": customProperties
           }
         });
-        console.warn('res',JSON.stringify(response.data))
+      console.warn('res', JSON.stringify(response.data))
       return response.data;
     } catch (error) {
       return error
@@ -164,9 +165,9 @@ let aa=await this.savePatient(item);
       return error
     }
   }
-  async getAppointmentById(appointmentId){
+  async getAppointmentById(appointmentId) {
     try {
-      
+
       let response = await this.client.get(
         this.getUrl(`Appointments?filter[where][id]=${appointmentId}`),
         this.getHeaders(),
@@ -365,6 +366,23 @@ let aa=await this.savePatient(item);
     return response.data;
   }
 
+  // Update Profile
+  async updateProfile(data) {
+
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+
+    let response = await this.client.post(
+      this.getUrl(`Clients/upsertWithWhere?where={%22email%22:%22${_user.email}%22}`),
+      data,
+      this.getHeaders(),
+    );
+
+    // console.warn(JSON.stringify(response));
+    await this.saveUser(response.data);
+    return response.data;
+  }
+
   async updateAppointmentStatus(appointmentId) {
     let appointment = {
       status: AppointmentStatus.completed,
@@ -407,15 +425,15 @@ let aa=await this.savePatient(item);
     if (data.error) throw data.error.message;
     return data;
   }
-  
-  async getUserRole(){
+
+  async getUserRole() {
     if (!this._userRole) {
       let user = await this._user();
       let _user = JSON.parse(JSON.stringify(user));
-      
+
       this._userRole = _user.role;
     }
-    return this._userRole;   
+    return this._userRole;
   }
 
   async updateFcmToken(fcmToken: string) {
@@ -469,7 +487,7 @@ let aa=await this.savePatient(item);
     let response = await this.client.get(
       this.getUrl(
         `Appointments?filter[where][${id_param}]=${
-          userId
+        userId
         }${includes}${wheres}&filter[order]=id%20DESC`,
       ),
     );
@@ -503,31 +521,38 @@ let aa=await this.savePatient(item);
     }
   }
 
-   async removeUser(user) {
-    try {
-      await AsyncStorage.removeItem('@user', JSON.stringify(user))
-      console.warn("Logout", user)
-    } catch(e) {
-      // remove error
-    }
-  
-    console.warn('logout Done', user)
-  }
+  removeUser = async() => {
+    AsyncStorage.clear();
+    this._userRole='';
+}
 
   async savePatient(data) {
-   console.warn('data to send==>',data)
     let response = await this.client.post(
-      this.getUrl('Clients'),
+      this.getUrl(`Clients/upsertWithWhere?[where][email]=${data.email}`),
       data,
       this.getHeaders(),
     );
     return response.data;
   }
 
+  async uploadImage(data) {
+    console.warn('image data ==>', JSON.stringify(data));
+    let response = await this.client.post(
+      this.getUrl(`Contents/${Configs.containers.images}/upload`), data, {
+        
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+    }
+    );
+    return response.data;
+  }
+
+
   async _user() {
     try {
       return JSON.parse(await AsyncStorage.getItem('@user'));
-      
+
     } catch (e) {
       console.warn(e);
     }

@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
-import {Icon} from 'native-base'
+import { Icon } from 'native-base'
 import { StyleSheet, Text, View, ImageBackground, StatusBar, Image, TouchableOpacity } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
 import CommonStyles from '../../CommonStyles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import moment from 'moment';
+import { ViewUtils } from '../../Utils';
+import Api from '../../Api';
+import Loader from '../../components/Loader'
+
 
 export default class PatientProfile extends React.Component {
 
@@ -21,9 +26,6 @@ export default class PatientProfile extends React.Component {
     componentDidMount() {
 
         Api.instance()
-        ._user()
-
-        Api.instance()
             ._user()
             .then(user => {
                 if (user == null) return;
@@ -38,7 +40,7 @@ export default class PatientProfile extends React.Component {
     }
 
     render() {
-       
+
         return (
 
             <View style={[CommonStyles.container]}>
@@ -67,15 +69,17 @@ export default class PatientProfile extends React.Component {
                                         <View style={[CommonStyles.container, { justifyContent: 'flex-end', marginLeft: 10, marginBottom: -7 }]}>
                                             <Text>
                                                 <Text style={[CommonStyles.fontRegular, { color: '#7DEE00' }]}>Online{`\n`}</Text>
-                                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage, CommonStyles.textColorWhite]}>Islamabad, Pakistan{`\n`}</Text>
+                                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage, CommonStyles.textColorWhite]}>{this.state.user.personalDetails.city}{`, `}{this.state.user.personalDetails.country}{`\n`}</Text>
                                             </Text>
                                         </View>
                                     </View>
                                     <View style={[CommonStyles.container, { marginTop: 10 }]}>
+
                                         <Text style={[CommonStyles.fontRegular, CommonStyles.textColorWhite]} >
-                                            <Text style={[{ fontSize: 32 }]}>Dr. Iqbal Memon{`\n`}</Text>
-                                            <Text style={[{ fontSize: 20 }]}>FCPS, FCPS{`\n`}</Text>
+                                            <Text style={[{ fontSize: 32 }]}>{this.state.user.salutation}{`. `}{this.state.user.firstName} {this.state.user.lastName}{`\n`}</Text>
+                                            <Text style={[{ fontSize: 20 }]}>{this.state.user.speciality}{`\n`}</Text>
                                         </Text>
+
 
                                         <Text style={[CommonStyles.textColorWhite, CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>
                                             {`Doctor Code: `} {this.state.user.doctorCode} {`\n`}
@@ -111,7 +115,7 @@ export default class PatientProfile extends React.Component {
                                     <View style={[CommonStyles.container, CommonStyles.bgColor, CommonStyles.br5, { padding: 12 }]}>
                                         <Text>
                                             <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge]}>{item.qualification}{`\n`}</Text>
-                                           
+
                                         </Text>
                                         <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#999999', }]}>
                                             <Text >{item.yearQualified}{`\n`}</Text>
@@ -143,20 +147,20 @@ export default class PatientProfile extends React.Component {
                     </View>
 
                     <View
-                            style={[
-                                CommonStyles.backButtonStyle
-                            ]}>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    this.props.navigation.goBack();
-                                }}>
-                                <Icon
-                                    name="arrow-back"
-                                    type="MaterialIcons"
-                                    style={{ color: '#FFF' }}
-                                />
-                            </TouchableOpacity>
-                        </View>
+                        style={[
+                            CommonStyles.backButtonStyle
+                        ]}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                this.props.navigation.goBack();
+                            }}>
+                            <Icon
+                                name="arrow-back"
+                                type="MaterialIcons"
+                                style={{ color: '#FFF' }}
+                            />
+                        </TouchableOpacity>
+                    </View>
                 </ImageBackground>
             </View>
         );
