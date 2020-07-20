@@ -100,7 +100,7 @@ export default class ScheduledBooking extends Component {
                       <View
                         style={[
                           CommonStyles.container,
-                          { justifyContent: 'space-around' },
+                          { justifyContent: 'space-between', paddingVertical: 12 },
                         ]}>
                         <Text>
                           <Text
@@ -139,15 +139,15 @@ export default class ScheduledBooking extends Component {
                       <View
                         style={[
                           CommonStyles.container,
-                          { justifyContent: 'space-around' },
+                          { justifyContent: 'space-between' },
                         ]}>
                         <View
                           style={[
                             CommonStyles.container,
                             {
-                              justifyContent: 'space-around',
+                              justifyContent: 'space-between',
                               alignItems: 'flex-end',
-                              marginBottom: 10,
+                              marginBottom: 8,
                             },
                           ]}>
                           <CheckBox
@@ -172,7 +172,7 @@ export default class ScheduledBooking extends Component {
                             title={item.status}
                             checked={true}
                           />
-                          <Text style={{ marginBottom: 6 }}>
+                          <Text>
                             <Text
                               style={[
                                 CommonStyles.textSizeSmall,

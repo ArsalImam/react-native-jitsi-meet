@@ -3,13 +3,33 @@ import { View, StyleSheet, TouchableOpacity, ImageBackground, FlatList, Text, } 
 import { Container, Content, Icon, Item, Label } from 'native-base';
 import { FlatGrid } from 'react-native-super-grid'
 import CommonStyles from '../../CommonStyles';
+import { ViewUtils } from '../../Utils';
+import Api from '../../Api';
+import Loader from '../../components/Loader';
+import { Roles } from '../.././Configs';
 
 
 class MenuSlider extends React.Component {
+
+    constructor() {
+        super();
+        this.state = {
+            isLoading: false,
+            role: ''
+        }
+    }
+
+    componentDidMount() {
+
+        Api.instance().getUserRole().then(role => this.setState({ role }));
+    }
+
+
+
     render() {
 
         const PersonalProfile = [
-            { name: 'Demographics', iconName: 'clipboard-notes', iconFamily: 'Foundation', iconSize: '18', route: 'Demographics' },
+            { name: 'Basic', iconName: 'clipboard-notes', iconFamily: 'Foundation', iconSize: '18', route: 'PatientProfile' },
 
         ];
 
@@ -33,17 +53,24 @@ class MenuSlider extends React.Component {
             { name: 'Suggested Therapy', iconName: 'tooth-outline', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: 'TherapyList' },
             { name: 'Upload', iconName: 'tooth-outline', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: 'IllustrationsList' },
             { name: 'Patient History Form', iconName: 'notebook', iconFamily: 'SimpleLineIcons', iconSize: '18', route: 'PatientHistoryList' },
-            { name: 'My Medical Records', iconName: 'ios-flower', iconFamily: 'Ionicon', iconSize: '18', route: 'MedicalRecordList' }, 
-            { name: 'Medication Prescribe', iconName: 'bed', iconFamily: 'FontAwesome', iconSize: '18', route: 'AddPrescribtion' },
-             { name: 'Allergies', iconName: 'ios-flower', iconFamily: 'Ionicon', iconSize: '18', route: 'PatientProfile'},
-            // { name: 'Surgeries', iconName: 'box-cutter', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: '' },
+          //  { name: 'My Medical Records', iconName: 'ios-flower', iconFamily: 'Ionicon', iconSize: '18', route: 'MedicalRecordList' },
+            // { name: 'Medication Prescribe', iconName: 'bed', iconFamily: 'FontAwesome', iconSize: '18', route: 'AddPrescribtion' },
+            //  { name: 'Allergies', iconName: 'ios-flower', iconFamily: 'Ionicon', iconSize: '18', route: 'PatientProfile'},
+            // // { name: 'Surgeries', iconName: 'box-cutter', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: '' },
             // { name: 'Dental Issue', iconName: 'tooth-outline', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: '' },
             // { name: 'Reports', iconName: 'notebook', iconFamily: 'SimpleLineIcons', iconSize: '20', route: 'AddReport' },
+        ];
+        const medicalProfilePatient = [
+            // { name: 'Upload', iconName: 'tooth-outline', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: 'IllustrationsList' },
+            // { name: 'Patient History Form', iconName: 'notebook', iconFamily: 'SimpleLineIcons', iconSize: '18', route: 'PatientHistoryList' },
+            { name: 'My Medical Records', iconName: 'ios-flower', iconFamily: 'Ionicon', iconSize: '18', route: 'MedicalRecordList' },
+         
         ];
 
         return (
             <View style={[CommonStyles.container, CommonStyles.padding, { backgroundColor: '#F7FAFE' }]}>
                 <Content>
+
                     <View
                         style={[CommonStyles.padding, CommonStyles.mtt10]} >
                         <Label style={[CommonStyles.fontBold, CommonStyles.textSizeLarge]}>TeleMedicine</Label>
@@ -74,32 +101,35 @@ class MenuSlider extends React.Component {
                             </TouchableOpacity>
                         )}
                     />
+                    {this.state.role == Roles.doctor && (
+                        <View
+                            style={[CommonStyles.padding, { borderBottomWidth: 1 }]} >
+                            <Label style={[CommonStyles.fontMedium]}>Clinic</Label>
+                        </View>
 
-                    <View
-                        style={[CommonStyles.padding, { borderBottomWidth: 1 }]} >
-                        <Label style={[CommonStyles.fontMedium]}>Clinic</Label>
-                    </View>
+                    )} 
+                     {this.state.role == Roles.doctor && (
+                        <FlatGrid
+                            style={[CommonStyles.container, { marginTop: 5 }]}
+                            itemDimension={400}
+                            items={clinicList}
+                            renderItem={({ item }) => (
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate(`${item.route}`)}>
+                                    <View style={[CommonStyles.container,
+                                    { flexDirection: 'row', }]}>
+                                        <Icon style={[CommonStyles.padding, { fontSize: 22 }]}
+                                            name={item.iconName} type={item.iconFamily} ></Icon>
+                                        <Text style={[CommonStyles.fontMedium,
+                                        CommonStyles.padding,
+                                        CommonStyles.textSizeNormal,
+                                        CommonStyles.centerText,
 
-                    <FlatGrid
-                        style={[CommonStyles.container, { marginTop: 5 }]}
-                        itemDimension={400}
-                        items={clinicList}
-                        renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate(`${item.route}`)}>
-                                <View style={[CommonStyles.container,
-                                { flexDirection: 'row', }]}>
-                                    <Icon style={[CommonStyles.padding, { fontSize: 22 }]}
-                                        name={item.iconName} type={item.iconFamily} ></Icon>
-                                    <Text style={[CommonStyles.fontMedium,
-                                    CommonStyles.padding,
-                                    CommonStyles.textSizeNormal,
-                                    CommonStyles.centerText,
-
-                                    ]}>{item.name}</Text>
-                                </View>
-                            </TouchableOpacity>
-                        )}
-                    />
+                                        ]}>{item.name}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            )}
+                        />
+                     )}
 
                     <View
                         style={[CommonStyles.padding, { borderBottomWidth: 1 }]} >
@@ -126,6 +156,8 @@ class MenuSlider extends React.Component {
                             </TouchableOpacity>
                         )}
                     />
+
+
                     <View
                         style={[CommonStyles.padding, , { borderBottomWidth: 1 }]} >
                         <Label style={[CommonStyles.fontMedium]}>Medical Profile</Label>
@@ -134,7 +166,7 @@ class MenuSlider extends React.Component {
                     <FlatGrid
                         style={[CommonStyles.container, { marginTop: 5 }]}
                         itemDimension={400}
-                        items={medicalProfile}
+                        items={this.state.role==Roles.doctor ? medicalProfile : medicalProfilePatient}
                         renderItem={({ item }) => (
                             <TouchableOpacity onPress={() => this.props.navigation.navigate(`${item.route}`)}>
                                 <View style={[CommonStyles.container,
@@ -154,7 +186,28 @@ class MenuSlider extends React.Component {
                 </Content>
 
                 <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('Login')}
+                    onPress={() => {
+                        ViewUtils.showAlert(
+                            'Are you sure, you want to sign out',
+                            () => {
+                                this.setState({ isLoading: true });
+                                Api.instance()
+                                    .removeUser()
+                                    .then(response => {
+                                        this.props.navigation.replace('Login')
+                                        ViewUtils.showToast('Your have been  sign out successfully!');
+                                    })
+                                    .catch(err => {
+                                        ViewUtils.showToast(err);
+                                    })
+                                    .finally(() => {
+                                        this.setState({ isLoading: false });
+                                    });
+
+                            },
+                            () => { },
+                        );
+                    }}
                     style={[CommonStyles.fitToBottom,
                     { flexDirection: 'row', borderWidth: 1, }]}>
                     <Icon style={[CommonStyles.padding, { fontSize: 22, }]}
@@ -165,7 +218,7 @@ class MenuSlider extends React.Component {
                     CommonStyles.textSizeNormal,
                     ]}>Sign Out</Text>
                 </TouchableOpacity>
-
+                <Loader loading={this.state.isLoading} />
             </View>
         )
     }

@@ -1,5 +1,5 @@
-import {CommonActions} from '@react-navigation/native';
-import React, {Component} from 'react';
+import { CommonActions } from '@react-navigation/native';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,12 +8,12 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {FlatGrid} from 'react-native-super-grid';
+import { FlatGrid } from 'react-native-super-grid';
 import CommonStyles from '../../CommonStyles';
-import {Icon} from 'native-base';
+import { Icon } from 'native-base';
 import Api from '../../Api';
 import Loader from '../../components/Loader';
-import {ViewUtils} from '../../Utils';
+import { ViewUtils } from '../../Utils';
 
 export default class Patients extends Component {
   _appointmentId = '';
@@ -28,15 +28,15 @@ export default class Patients extends Component {
     this._appointmentId = this.props.route.params.appointmentId;
     this._moveTo = this.props.route.params.moveTo;
 
-    this.setState({isLoading: true});
+    this.setState({ isLoading: true });
     Api.instance()
       .getMyPatients()
-      .then(patients => this.setState({patients}))
+      .then(patients => this.setState({ patients }))
       .catch(err => {
         ViewUtils.showToast(err);
       })
       .finally(() => {
-        this.setState({isLoading: false});
+        this.setState({ isLoading: false });
       });
   }
   render() {
@@ -45,13 +45,14 @@ export default class Patients extends Component {
         <ImageBackground
           style={[CommonStyles.container, CommonStyles.backgroundImage]}
           source={require('../../assets/img/bwback.png')}>
+
           <View
             style={[
               CommonStyles.container,
               CommonStyles.padding,
-              {marginTop: '15%'},
+              { marginTop: '15%' },
             ]}>
-            <Text style={{color: '#FFFFFF', paddingLeft: 15}}>
+            <Text style={{ color: '#FFFFFF', paddingLeft: 15 }}>
               <Text
                 style={[
                   CommonStyles.DINAltBold,
@@ -69,9 +70,9 @@ export default class Patients extends Component {
             <FlatGrid
               itemDimension={320}
               items={this.state.patients}
-              style={[CommonStyles.container, {marginTop: '9%'}]}
+              style={[CommonStyles.container, { marginTop: '9%' }]}
               spacing={15}
-              renderItem={({item}) => (
+              renderItem={({ item }) => (
                 <TouchableOpacity
                   onPress={() => {
                     if (this._moveTo === 'createAppointment') {
@@ -86,7 +87,7 @@ export default class Patients extends Component {
                     CommonStyles.container,
                     CommonStyles.shadow,
                     CommonStyles.br5,
-                    {flexDirection: 'row', backgroundColor: '#FFF'},
+                    { flexDirection: 'row', backgroundColor: '#FFF' },
                   ]}>
                   <View
                     style={{
@@ -116,7 +117,16 @@ export default class Patients extends Component {
                       ]}>
                       {item.firstName.concat(' ').concat(item.lastName)}
                     </Text>
+                   
                   </View>
+
+                  <View style={{justifyContent: 'center', marginRight: 10}}> 
+                      <Icon
+                        name="exclamationcircleo"
+                        type='AntDesign'
+                        style={{ fontSize: 24, color: '#000' }}
+                      />
+                    </View>
                 </TouchableOpacity>
               )}
             />
@@ -139,7 +149,7 @@ export default class Patients extends Component {
               <Icon
                 name="arrow-back"
                 type="MaterialIcons"
-                style={{fontSize: 26, color: '#FFF'}}
+                style={{ fontSize: 26, color: '#FFF' }}
               />
             </TouchableOpacity>
           </View>
@@ -154,7 +164,7 @@ export default class Patients extends Component {
     ViewUtils.showAlert(
       'Do you want to create appointment?',
       () => {
-        this.setState({isLoading: true});
+        this.setState({ isLoading: true });
         Api.instance()
           .updateAppointment(this._appointmentId, patientId)
           .then(() => {
@@ -162,50 +172,16 @@ export default class Patients extends Component {
             that.props.navigation.dispatch(
               CommonActions.reset({
                 index: 1,
-                routes: [{name: 'MyDrawer'}],
+                routes: [{ name: 'MyDrawer' }],
               }),
             );
           })
           .catch(err => {
             ViewUtils.showToast(err);
           })
-          .finally(() => that.setState({isLoading: false}));
+          .finally(() => that.setState({ isLoading: false }));
       },
-      () => {},
+      () => { },
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  gridView: {
-    flex: 1,
-  },
-  itemContainer: {
-    flex: 1,
-    height: 60,
-    shadowOffset: {height: 2, width: 0},
-    elevation: 3,
-    borderRadius: 3,
-    backgroundColor: '#FFF',
-    shadowColor: '#000',
-  },
-
-  View3: {
-    flex: 1.9,
-    justifyContent: 'flex-end',
-  },
-  View2: {
-    marginTop: 30,
-    flex: 8,
-    alignSelf: 'center',
-    width: '94%',
-  },
-  view1: {
-    height: '100%',
-    width: '50%',
-    justifyContent: 'space-evenly',
-  },
-});

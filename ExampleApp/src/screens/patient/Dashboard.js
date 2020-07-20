@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   Text,
   View,
@@ -12,13 +12,13 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { Container, Header, Content, Tab, Tabs, TabHeading } from 'native-base';
+import {Container, Header, Content, Tab, Tabs, TabHeading} from 'native-base';
 import CommonStyles from '../../CommonStyles';
-import { AsyncStorage } from 'react-native';
-import { Configs } from '../../Configs';
-import { ViewUtils } from '../../Utils';
+import {AsyncStorage} from 'react-native';
+import {Configs} from '../../Configs';
+import {ViewUtils} from '../../Utils';
 import Api from '../../Api';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import moment from 'moment';
 import Loader from '../../components/Loader';
 
@@ -31,8 +31,9 @@ class Dashboard extends React.Component {
       totalPatients: 0,
       appointments: [],
       user: {},
-      lastestAppointment: { time: '0:00 am', timeLeft: '0 mins' },
-      showLoader: true,
+      lastestAppointment: {time: '0:00 am', timeLeft: '0 mins'},
+      showLoader: true, 
+      role:''
     };
   }
   _getAllAppointments() {
@@ -68,40 +69,41 @@ class Dashboard extends React.Component {
         this.setState({
           totalConsultation: appointments.length,
           appointments,
-
+        
         });
       })
       .catch(err => {
         ViewUtils.showToast(err);
-
+        
       })
       .finally(() => {
-        this.setState({ showLoader: false })
-      });
+        this.setState({showLoader: false})
+    });
   }
 
   _getAllPatients() {
     Api.instance()
       .getMyPatients()
-      .then(patients => this.setState({ totalPatients: patients.length }))
+      .then(patients => this.setState({totalPatients: patients.length}))
       .catch(err => {
         ViewUtils.showToast(err);
       });
   }
 
   componentDidMount() {
+    Api.instance().getUserRole().then(role => this.setState({role}));
     //udpdating fcm
     try {
 
       AsyncStorage.getItem('fcmToken')
-        .then(token => {
-          return Api.instance().updateFcmToken(token)
-        })
-        .catch(er => console.warn(er));
+      .then(token => {
+        return Api.instance().updateFcmToken(token)
+      })
+      .catch(er => console.warn(er));
     } catch (error) {
 
       //log error, to enable ease in debugging
-      console.log(error);
+      console.log(error);  
     }
     //updating appointments
     this._getAllAppointments();
@@ -116,10 +118,11 @@ class Dashboard extends React.Component {
         if (user == null) return;
         this.setState({
           user,
-        });
+        },()=>{global.role=this.state.user.role});
       })
       .catch(err => ViewUtils.showToast(err));
-  }
+ 
+    }
 
   goToPatientsRooms() {
     // appointments
@@ -131,36 +134,37 @@ class Dashboard extends React.Component {
         return;
       }
       var appointmentId = appointments.reverse()[0].id;
-      Api.instance().notifyAppointment(appointmentId).then().catch();
+                        Api.instance().notifyAppointment(appointmentId).then().catch();
 
-      this.props.navigation.navigate('AppointmentRoom', { appointmentId });
+      this.props.navigation.navigate('AppointmentRoom', {appointmentId});
     };
 
     _navigateToRoom(this.state.appointments);
   }
 
   render() {
+  console.warn(this.state.role);
     return (
       <View style={[CommonStyles.container]}>
         <ImageBackground
           style={[CommonStyles.container, CommonStyles.backgroundImage]}
           source={require('../../assets/img/background.png')}>
           <KeyboardAwareScrollView
-            style={[CommonStyles.container, { paddingHorizontal: 15 }]}>
+            style={[CommonStyles.container, {paddingHorizontal: 15}]}>
             <View
               style={[
                 CommonStyles.container,
                 CommonStyles.mt30,
-                { flexDirection: 'row' },
+                {flexDirection: 'row'},
               ]}>
-              <View style={{ width: 53, height: 53, marginRight: 10 }}>
+              <View style={{width: 53, height: 53, marginRight: 10}}>
                 <Image
                   style={[CommonStyles.container, CommonStyles.backgroundImage]}
                   source={require('../../assets/img/Rectangle.png')}
                 />
               </View>
-              <View style={{ justifyContent: 'flex-end' }}>
-                <Text style={[CommonStyles.fontMedium, { fontSize: 21 }]}>
+              <View style={{justifyContent: 'flex-end'}}>
+                <Text style={[CommonStyles.fontMedium, {fontSize: 21}]}>
                   Hi, {this.state.user.firstName} {this.state.user.lastName}
                 </Text>
                 <Text
@@ -170,7 +174,7 @@ class Dashboard extends React.Component {
                     style={[
                       CommonStyles.fontMedium,
                       CommonStyles.textSizeSmall,
-                      { color: '#5698FF' },
+                      {color: '#5698FF'},
                     ]}>
                     Health Dashboard{' '}
                   </Text>
@@ -192,7 +196,7 @@ class Dashboard extends React.Component {
                 CommonStyles.container,
                 CommonStyles.mt10,
                 CommonStyles.br5,
-                { backgroundColor: '#9cd85b' },
+                {backgroundColor: '#9cd85b'},
               ]}
               onPress={() => {
                 this.props.navigation.navigate('MyTabs');
@@ -204,12 +208,12 @@ class Dashboard extends React.Component {
                   style={[
                     CommonStyles.container,
                     CommonStyles.horizontalContainer,
-                    { padding: 15 },
+                    {padding: 15},
                   ]}>
                   <View
                     style={[
                       CommonStyles.container,
-                      { justifyContent: 'space-between' },
+                      {justifyContent: 'space-between'},
                     ]}>
                     <View
                       style={{
@@ -221,29 +225,29 @@ class Dashboard extends React.Component {
                         style={[
                           CommonStyles.br5,
                           CommonStyles.padding,
-                          { backgroundColor: '#7aB43B' },
+                          {backgroundColor: '#7aB43B'},
                         ]}>
                         <Text
                           style={
                             (CommonStyles.fontMedium,
-                              CommonStyles.centerText,
-                              { fontSize: 29, color: '#fff' })
+                            CommonStyles.centerText,
+                            {fontSize: 29, color: '#fff'})
                           }>
                           {this.state.upComingCount}
                         </Text>
                       </View>
                     </View>
-                    <Text style={{ marginTop: 10 }}>
+                    <Text style={{marginTop: 10}}>
                       <Text
                         style={
                           (CommonStyles.fontMedium,
-                            { fontSize: 14, color: '#335a07' })
+                          {fontSize: 14, color: '#335a07'})
                         }>{`TOTAL UPCOMING\n`}</Text>
 
                       <Text
                         style={[
                           CommonStyles.fontMedium,
-                          { fontSize: 20, color: '#333333' },
+                          {fontSize: 20, color: '#333333'},
                         ]}>
                         APPOINTMENTS
                       </Text>
@@ -259,17 +263,17 @@ class Dashboard extends React.Component {
                       },
                     ]}>
                     <Text
-                      style={{ fontSize: 14, color: '#335a07', lineHeight: 27 }}>
+                      style={{fontSize: 14, color: '#335a07', lineHeight: 27}}>
                       <Text
                         style={
                           (CommonStyles.fontRegular,
                             CommonStyles.textSizeSmall,
                             { color: '#335a07' })
-                        }>{`Next Appointment\n            `}</Text>
+                        }>{`Next Appointment\n        `}</Text>
                       <Text
                         style={
                           (CommonStyles.fontMedium,
-                            { fontSize: 17, color: '#000' })
+                          {fontSize: 17, color: '#000'})
                         }>
                         In {this.state.lastestAppointment.timeLeft}
                       </Text>
@@ -278,11 +282,11 @@ class Dashboard extends React.Component {
                           (CommonStyles.fontRegular,
                             CommonStyles.textSizeSmall,
                             { color: '#335a07' })
-                        }>{`\nAppointment Time\n            `}</Text>
+                        }>{`\nAppointment Time\n             `}</Text>
                       <Text
                         style={
                           (CommonStyles.fontMedium,
-                            { fontSize: 17, color: '#000' })
+                          {fontSize: 17, color: '#000'})
                         }>
                         {this.state.lastestAppointment.time}
                       </Text>
@@ -312,14 +316,14 @@ class Dashboard extends React.Component {
                     style={[
                       CommonStyles.centerText,
                       CommonStyles.br5,
-                      { backgroundColor: '#ebf2f9' },
+                      {backgroundColor: '#ebf2f9'},
                     ]}>
                     <Text
                       style={[
                         CommonStyles.fontMedium,
                         CommonStyles.padding,
                         CommonStyles.centerText,
-                        { fontSize: 32, color: '#297dec' },
+                        {fontSize: 32, color: '#297dec'},
                       ]}>
                       {this.state.totalConsultation}
                     </Text>
@@ -328,11 +332,13 @@ class Dashboard extends React.Component {
                 <Text
                   style={[
                     CommonStyles.fontMedium,
-                    { fontSize: 14, marginTop: 10 },
+                    {fontSize: 14, marginTop: 10},
                   ]}>
                   TOTAL CONSULTATION
                 </Text>
               </TouchableOpacity>
+
+
 
               <TouchableOpacity
                 style={[
@@ -359,12 +365,12 @@ class Dashboard extends React.Component {
                       CommonStyles.centerText,
                       CommonStyles.padding,
                       CommonStyles.br5,
-                      { backgroundColor: '#ebf2f9' },
+                      {backgroundColor: '#ebf2f9'},
                     ]}>
                     <Text
                       style={[
                         CommonStyles.fontMedium,
-                        { fontSize: 32, color: '#297dec' },
+                        {fontSize: 32, color: '#297dec'},
                       ]}>
                       {this.state.totalPatients}
                     </Text>
@@ -373,21 +379,22 @@ class Dashboard extends React.Component {
                 <Text
                   style={[
                     CommonStyles.fontMedium,
-                    { fontSize: 14, marginTop: 10 },
+                    {fontSize: 14, marginTop: 10},
                   ]}>
                   TOTAL PATIENTS
                 </Text>
               </TouchableOpacity>
+              
             </View>
 
             <View
               style={[
                 CommonStyles.container,
-                { alignSelf: 'center', marginTop: 70 },
+                {alignSelf: 'center' , marginTop: 70},
               ]}>
               <View style={[CommonStyles.container]}>
                 <Image
-                  style={[CommonStyles.container, { resizeMode: 'contain' }]}
+                  style={[CommonStyles.container, { resizeMode: 'contain'}]}
                   source={require('../../assets/img/calander2.png')}
                 />
               </View>
@@ -400,7 +407,7 @@ class Dashboard extends React.Component {
                 CommonStyles.mt10,
                 CommonStyles.centerText,
                 CommonStyles.br5,
-                { backgroundColor: '#297DEC', marginBottom: 15 },
+                {backgroundColor: '#297DEC', marginBottom: 15},
               ]}>
               <Text
                 style={[
@@ -408,14 +415,14 @@ class Dashboard extends React.Component {
                   CommonStyles.padding,
                   CommonStyles.centerText,
 
-                  { color: '#fff', fontSize: 15, margin: 5 },
+                  {color: '#fff', fontSize: 15, margin: 5},
                 ]}>
                 CONSULTATION ROOM
               </Text>
             </TouchableOpacity>
           </KeyboardAwareScrollView>
 
-          <Loader loading={this.state.showLoader} />
+          <Loader loading={this.state.showLoader}/>
 
           <View
             style={[

@@ -7,7 +7,7 @@ import * as AxiosLogger from 'axios-logger';
 export default class Api {
   static myInstance = null;
   client;
-
+  _userRole;
 
   constructor() {
     // At instance level
@@ -35,6 +35,7 @@ export default class Api {
     let authData = response.data;
     if (authData.error) throw authData.error.message;
     await this.saveUser(authData.user);
+
 
     //update fcm
     try {
@@ -106,17 +107,18 @@ export default class Api {
 
 
   async patientRegister(item, drCode) {
-    // 843358
 
     let response = await this.client.get(
       this.getUrl(`Clients?filter[where][doctorCode]=${drCode}`),
     );
     let data = response.data;
-    item.doctorId = data[0].id;
-    console.warn('doctorFound==>', data);
-    let patientObj = await this.savePatient(item);
-    console.warn('added', patientObj.data);
-    if (data.error) throw data.error.message;
+    if (data.length > 0) {
+      let patientObj = await this.savePatient(item);
+      await this.saveUser(patientObj);
+      if (data.error) throw data.error.message;
+    } else {
+      throw "No Doctor found with the code, you provided!"
+    }
 
   }
 
@@ -365,22 +367,21 @@ export default class Api {
   }
 
   // Update Profile
-  async updateProfile(data,) {
+  async updateProfile(data) {
 
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
-   
+
     let response = await this.client.post(
       this.getUrl(`Clients/upsertWithWhere?where={%22email%22:%22${_user.email}%22}`),
       data,
       this.getHeaders(),
     );
-    
+
+    // console.warn(JSON.stringify(response));
+    await this.saveUser(response.data);
     return response.data;
-    
   }
-
-
 
   async updateAppointmentStatus(appointmentId) {
     let appointment = {
@@ -425,6 +426,16 @@ export default class Api {
     return data;
   }
 
+  async getUserRole() {
+    if (!this._userRole) {
+      let user = await this._user();
+      let _user = JSON.parse(JSON.stringify(user));
+
+      this._userRole = _user.role;
+    }
+    return this._userRole;
+  }
+
   async updateFcmToken(fcmToken: string) {
     if (!fcmToken) {
       throw "token not token";
@@ -457,6 +468,12 @@ export default class Api {
     let _user = JSON.parse(JSON.stringify(user));
 
     let id_param = this._relationalParamByRole(_user.role);
+    let userId = _user.id;
+
+    if (_user.role == Roles.patient && status == AppointmentStatus.available) {
+      id_param = "doctorId";
+      id_param = _user.doctorId;
+    }
     let includes = '';
     let wheres = '';
     if (requirePatient) {
@@ -470,7 +487,7 @@ export default class Api {
     let response = await this.client.get(
       this.getUrl(
         `Appointments?filter[where][${id_param}]=${
-        _user.id
+        userId
         }${includes}${wheres}&filter[order]=id%20DESC`,
       ),
     );
@@ -499,14 +516,17 @@ export default class Api {
   async saveUser(user) {
     try {
       await AsyncStorage.setItem('@user', JSON.stringify(user));
-      console.warn("User", user)
     } catch (e) {
       console.warn(e);
     }
   }
 
+  removeUser = async() => {
+    AsyncStorage.clear();
+    this._userRole='';
+}
+
   async savePatient(data) {
-    console.warn('data to send==>', data);
     let response = await this.client.post(
       this.getUrl(`Clients/upsertWithWhere?[where][email]=${data.email}`),
       data,
@@ -515,16 +535,19 @@ export default class Api {
     return response.data;
   }
 
-
-    async uploadImage(data) {
-        console.warn('image data ==>',JSON.stringify(data)) ;
-        let response = await this.client.post(
-            this.getUrl(`Contents/${Configs.containers.imageUpload}/upload`), data,{  headers: {
-                'Content-Type': 'multipart/form-data',
-              },}
-    );
-        return response.data;
+  async uploadImage(data) {
+    console.warn('image data ==>', JSON.stringify(data));
+    let response = await this.client.post(
+      this.getUrl(`Contents/${Configs.containers.images}/upload`), data, {
+        
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
     }
+    );
+    return response.data;
+  }
+
 
   async _user() {
     try {
