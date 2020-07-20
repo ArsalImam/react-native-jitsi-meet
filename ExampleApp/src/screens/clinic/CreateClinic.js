@@ -133,7 +133,12 @@ export default class CreateClinic extends Component {
     hours = hours ? hours : 12; // the hour '0' should be '12'
     minutes = minutes < 10 ? '0' + minutes : minutes;
     var strTime = hours + ':' + minutes + ' ' + ampm;
-    var formattedDate = new Date('1970-01-01' + JSON.stringify(strTime));
+    console.warn(strTime)
+
+
+     var formattedDate = new Date('1970-01-01' + ' ' + JSON.stringify(strTime))
+
+     console.warn(">>>>", formattedDate)
     return formattedDate;
   }
 

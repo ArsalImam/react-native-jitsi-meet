@@ -60,6 +60,7 @@ class MenuSlider extends React.Component {
             // { name: 'Dental Issue', iconName: 'tooth-outline', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: '' },
             // { name: 'Reports', iconName: 'notebook', iconFamily: 'SimpleLineIcons', iconSize: '20', route: 'AddReport' },
         ];
+        
         const medicalProfilePatient = [
             // { name: 'Upload', iconName: 'tooth-outline', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: 'IllustrationsList' },
             // { name: 'Patient History Form', iconName: 'notebook', iconFamily: 'SimpleLineIcons', iconSize: '18', route: 'PatientHistoryList' },
@@ -130,32 +131,37 @@ class MenuSlider extends React.Component {
                             )}
                         />
                      )}
+                      {this.state.role == Roles.patient && (
+                           <View
+                           style={[CommonStyles.padding, CommonStyles.mtt10, { borderBottomWidth: 1 }]} >
+                           <Label style={[CommonStyles.fontMedium]}>Vital</Label>
+                       </View>
 
-                    <View
-                        style={[CommonStyles.padding, { borderBottomWidth: 1 }]} >
-                        <Label style={[CommonStyles.fontMedium]}>Vitals</Label>
-                    </View>
+                      )} 
+                       {this.state.role == Roles.patient && (
+                        <FlatGrid
+                            style={[CommonStyles.container, { marginTop: 5 }]}
+                            itemDimension={400}
+                            items={vital}
+                            renderItem={({ item }) => (
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate(`${item.route}`)}>
+                                    <View style={[CommonStyles.container,
+                                    { flexDirection: 'row', }]}>
+                                        <Icon style={[CommonStyles.padding, { fontSize: 22 }]}
+                                            name={item.iconName} type={item.iconFamily} ></Icon>
+                                        <Text style={[CommonStyles.fontMedium,
+                                        CommonStyles.padding,
+                                        CommonStyles.textSizeNormal,
+                                        CommonStyles.centerText,
 
-                    <FlatGrid
-                        style={[CommonStyles.container, { marginTop: 5 }]}
-                        itemDimension={400}
-                        items={vital}
-                        renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate(`${item.route}`)}>
-                                <View style={[CommonStyles.container,
-                                { flexDirection: 'row', }]}>
-                                    <Icon style={[CommonStyles.padding, { fontSize: 22 }]}
-                                        name={item.iconName} type={item.iconFamily} ></Icon>
-                                    <Text style={[CommonStyles.fontMedium,
-                                    CommonStyles.padding,
-                                    CommonStyles.textSizeNormal,
-                                    CommonStyles.centerText,
+                                        ]}>{item.name}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            )}
+                        />
+                     )}
 
-                                    ]}>{item.name}</Text>
-                                </View>
-                            </TouchableOpacity>
-                        )}
-                    />
+                    
 
 
                     <View

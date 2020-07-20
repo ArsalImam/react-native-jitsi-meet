@@ -44,12 +44,7 @@ export default class Sidebar extends Component {
           </Left>
         </ListItem>
 
-        <ListItem button={true} onPress={() => { this.props.changeScreenHandler.navigate('VitalList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) }} >
-          <Left>
-            <Icon active name="activity" type='Feather' style={[CommonStyles.textSizeLarge]} />
-            <Text style={[CommonStyles.textSizeAverage, { marginLeft: 10 }]}>Vital</Text>
-          </Left>
-        </ListItem>
+        
 
 
         <ListItem itemDivider  style={{ backgroundColor: 'grey'}}>
@@ -114,6 +109,12 @@ export default class Sidebar extends Component {
           <Text style={[CommonStyles.textSizeMedium, CommonStyles.textColorWhite, { textAlign: 'center', alignSelf: 'center',  }]}>MEDICAL RECORDS</Text>
         </ListItem>
 
+        <ListItem button={true} onPress={() => { this.props.changeScreenHandler.navigate('VitalList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) }} >
+          <Left>
+            <Icon active name="activity" type='Feather' style={[CommonStyles.textSizeLarge]} />
+            <Text style={[CommonStyles.textSizeAverage, { marginLeft: 10 }]}>Vital</Text>
+          </Left>
+        </ListItem>
           <ListItem button={true} onPress={() => { this.props.changeScreenHandler.navigate('MedicalRecordList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) }} >
           <Left>
             <Icon active name="briefcase-medical" type='FontAwesome5' style={[CommonStyles.textSizeMedium]} />
