@@ -58,6 +58,7 @@ export default class Api {
         this.getHeaders(),
       );
       return response.data;
+      
     } catch (error) {
       return error
     }
@@ -107,12 +108,14 @@ export default class Api {
 
 
   async patientRegister(item, drCode) {
-
+console.warn(item);
     let response = await this.client.get(
       this.getUrl(`Clients?filter[where][doctorCode]=${drCode}`),
     );
     let data = response.data;
     if (data.length > 0) {
+      console.warn(('>',data[0].id));
+      item.doctorId=data[0].id;
       let patientObj = await this.savePatient(item);
       await this.saveUser(patientObj);
       if (data.error) throw data.error.message;

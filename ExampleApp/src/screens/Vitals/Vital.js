@@ -37,7 +37,7 @@ export default class Vital extends Component {
             case 'BloodPressure':
                 return <BloodPressure ref={com => this.pressureComponent = com} />;
                 break
-            case 'BloodOxygen':
+            case 'BloodOxygen': 
                 return <BloodOxygen ref={com => this.oxygenComponent = com} />;
                 break
             default:

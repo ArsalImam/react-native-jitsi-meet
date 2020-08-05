@@ -11,28 +11,41 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import CommonStyles from '../../CommonStyles';
-import {Item, Input, Container} from 'native-base';
+import {Item, Input, Container, Icon} from 'native-base';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import Api from '../../Api';
 import {ViewUtils} from '../../Utils';
 import Loader from '../../components/Loader';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class Login extends Component {
-  state = {email: '', password: '', showLoader: false};
+  state = {email: '', password: '', showLoader: false, hidePassword: true};
 
   constructor(props) {
     super(props);
     this._submitForm = this._submitForm.bind(this);
   }
 
+  setPasswordVisibility = () => {
+    this.setState({hidePassword: !this.state.hidePassword});
+  };
+
   showLoader = () => {
     this.setState({showLoader: true});
   };
 
-  //showLoader = () => { this.setState({ showLoader: true }); };
-
   componentDidMount() {}
 
+  componentWillMount() {
+
+    Api.instance()
+    ._user()
+    .then(token => {
+      console.warn("token", token)
+      this.props.navigation.replace('MyDrawer')
+
+    })
+  }
   _submitForm = () => {
     this.showLoader();
 
@@ -56,22 +69,60 @@ class Login extends Component {
           style={[CommonStyles.container, CommonStyles.backgroundImage]}
           source={require('../../assets/img/loginbg.png')}>
           <KeyboardAwareScrollView style={CommonStyles.container}>
-            <View
-              style={[
-                CommonStyles.margin,
-                {paddingTop: 30, paddingHorizontal: 10},
-              ]}>
-              <Text
+            <View style={[CommonStyles.margin, {margin: 30}]}>
+              <View
                 style={[
-                  CommonStyles.fontMedium,
-                  {
-                    fontSize: 32,
-                    color: '#FFF',
-                  },
+                  CommonStyles.container,
+                  {marginTop: 50, marginBottom: 40, justifyContent: 'center'},
                 ]}>
-                Welcome {'\n'}to TeleMedicine
-              </Text>
-              <Text
+                <Text
+                  style={[
+                    CommonStyles.fontMedium,
+                    {
+                      fontSize: 32,
+                      color: '#FFF',
+                    },
+                  ]}>
+                  Welcome
+                </Text>
+                <View
+                  style={[
+                    CommonStyles.container,
+                    CommonStyles.horizontalContainer,
+                    {marginRight: 50, justifyContent: 'center'},
+                  ]}>
+                  <Text
+                    style={[
+                      CommonStyles.fontMedium,
+                      {
+                        fontSize: 32,
+                        color: '#FFF',
+                        marginHorizontal: 10,
+                      },
+                    ]}>
+                    to
+                  </Text>
+
+                  <View
+                    style={{
+                      width: 200,
+                      height: 70,
+                      marginTop: -20,
+                      marginHorizontal: 5,
+                    }}>
+                    <Image
+                      style={[
+                        CommonStyles.mt10,
+                        CommonStyles.container,
+                        CommonStyles.backgroundImage,
+                        {width: '100%', height: '100%'},
+                      ]}
+                      source={require('../../assets/img/etiblogo.png')}
+                    />
+                  </View>
+                </View>
+              </View>
+              {/* <Text
                 style={[
                   CommonStyles.textSizeAverage,
                   CommonStyles.textColorWhite,
@@ -82,12 +133,9 @@ class Login extends Component {
                 information about your health and consult with
                 {'\n'}
                 your doctorrightaway !!!
-              </Text>
-              <Image
-                style={[CommonStyles.mt10, {width: 96, height: 123}]}
-                source={require('../../assets/img/layer_2.png')}
-              />
-              <View style={[CommonStyles.mt10]}>
+              </Text> */}
+
+              <View style={{marginTop:120}}>
                 <Item regular style={CommonStyles.loginItemStyle}>
                   <Input
                     value={this.state.email}
@@ -111,9 +159,9 @@ class Login extends Component {
                   regular
                   style={[CommonStyles.loginItemStyle, CommonStyles.mt10]}>
                   <Input
+                    secureTextEntry={this.state.hidePassword}
                     value={this.state.password}
                     onChangeText={password => this.setState({password})}
-                    secureTextEntry
                     autoCapitalize="none"
                     returnKeyType="done"
                     selectionColor="#fff"
@@ -129,8 +177,48 @@ class Login extends Component {
                       CommonStyles.textSizeNormal,
                     ]}
                   />
+                  {/* <TouchableOpacity> */}
+                  <Icon
+                    onPress={() => this.setPasswordVisibility()}
+                    name="eye"
+                    style={{color: '#fff', position: 'absolute', right: 5}}
+                  />
+                  {/* </TouchableOpacity> */}
                 </Item>
               </View>
+              <View>
+                <Text style={[CommonStyles.fontRegular,{alignSelf:'flex-end' ,marginTop:20 ,color:'white'}]}>Forgot Password</Text>
+                <View style={{width: 60, height: 20}}>
+                  <Image
+                    style={[
+                      CommonStyles.mt10,
+                      CommonStyles.container,
+                      CommonStyles.backgroundImage,
+                      {width: '100%', height: '100%'},
+                    ]}
+                    source={require('../../assets/img/etiblogo.png')}
+                  />
+                </View>
+              </View>
+
+
+<View style={[CommonStyles.container ,{alignItems:'center' ,marginTop:60}]}>
+<Text style={[CommonStyles.fontRegular,{marginTop:10,color:"white" ,fontSize:12 }]}>Powered By Pharmevo</Text>
+<View style={{width: 107, height: 50}}>
+                  <Image
+                    style={[
+                      // CommonStyles.mt10,
+                      // CommonStyles.container,
+                      // CommonStyles.backgroundImage,
+                      {width: '100%', height: '100%'},
+                    ]}
+                    source={require('../../assets/img/logo.png')}
+                  />
+                </View>
+
+</View>
+
+
             </View>
           </KeyboardAwareScrollView>
         </ImageBackground>
