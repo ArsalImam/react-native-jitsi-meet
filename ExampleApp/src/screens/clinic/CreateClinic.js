@@ -11,6 +11,8 @@ import { DatePicker, Icon, Input, Item, Label, Picker, Text } from 'native-base'
 import Api from '../../Api';
 import CommonStyles from '../../CommonStyles';
 import Loader from '../../components/Loader';
+//import { DatePicker, TimePicker } from 'react-native-propel-kit';
+
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { ViewUtils } from '../../Utils'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
@@ -135,10 +137,9 @@ export default class CreateClinic extends Component {
     var strTime = hours + ':' + minutes + ' ' + ampm;
     console.warn(strTime)
 
+    var formattedDate = new Date("1970-01-01T05:00:00")
 
-     var formattedDate = new Date('1970-01-01' + ' ' + JSON.stringify(strTime))
-
-     console.warn(">>>>", formattedDate)
+    console.warn('dateobj', formattedDate.getTime())
     return formattedDate;
   }
 
@@ -162,6 +163,7 @@ export default class CreateClinic extends Component {
   };
 
   createClinic() {
+
     let appSlot = parseInt(this.state.appointmentSlots);
     switch (appSlot) {
       case 300000:
@@ -209,6 +211,8 @@ export default class CreateClinic extends Component {
 
     var attendedAtDate = this.formatAMPM(this.state.attendAt);
     this.state.attendAt = attendedAtDate.getTime();
+
+
     var leftAtDate = this.formatAMPM(this.state.leftAt);
 
     this.state.leftAt = leftAtDate.getTime();
@@ -257,8 +261,8 @@ export default class CreateClinic extends Component {
         <ImageBackground
           style={[CommonStyles.container, CommonStyles.backgroundImage]}
           source={require('../../assets/img/bwback.png')}>
-          
-          <View style={{ flex: 2}}>
+
+          <View style={{ flex: 2 }}>
             <Text style={{ paddingLeft: 18, marginTop: 65 }}>
               <Text
                 style={[
@@ -542,3 +546,63 @@ export default class CreateClinic extends Component {
     );
   }
 }
+
+{/* <Item regular style={Styles.item_row}>
+<Text style={Styles.label}>Start Date</Text>
+<View
+  style={[
+    Styles.input,
+    { width: '54%', alignItems: 'center' },
+  ]}>
+  <DatePicker style={{ color: 'black', marginTop: 10 }} value={this.state.startDate} onChange={date => {
+    this.setState({ startDate: date })
+  }} />
+</View>
+</Item>
+<Item regular style={Styles.item_row}>
+<Text style={Styles.label}>End Date</Text>
+<View
+  style={[
+    Styles.input,
+    { width: '54%', alignItems: 'center' },
+  ]}>
+  <DatePicker style={{ color: 'black', marginTop: 10 }} value={this.state.endDate} onChange={date => {
+    this.setState({ endDate: date })
+  }} />
+</View>
+</Item>
+<Item regular style={Styles.item_row}>
+<Text style={Styles.label}>Start Time</Text>
+<Item
+  style={[
+    Styles.input,
+    {
+      width: '54%',
+      paddingHorizontal: 47,
+      alignItems: 'center',
+      marginLeft: 1,
+    },
+  ]}>
+  <TimePicker style={{ color: 'black', height: '100%', width: '100%', textAlign: 'center', alignContent: 'center' }} value={this.state.startTime} onChange={date => {
+    this.setState({ startTime: date })
+  }} />
+</Item>
+</Item>
+<Item regular style={Styles.item_row}>
+<Text style={Styles.label}>End Time</Text>
+<Item
+  style={[
+    Styles.input,
+    {
+      width: '54%',
+      paddingHorizontal: 48,
+      alignItems: 'center',
+      marginLeft: 1,
+    },
+  ]}>
+  <TimePicker style={{ color: 'black', height: '100%', width: '100%', textAlign: 'center', alignContent: 'center' }} value={this.state.endTime} onChange={date => {
+    this.setState({ endTime: date })
+  }} />
+</Item>
+<Item />
+</Item> */}

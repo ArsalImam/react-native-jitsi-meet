@@ -70,7 +70,6 @@ export default class Routes extends React.Component {
         <Drawer.Screen name="AddPrescribtion" component={AddPrescribtion} />
         <Drawer.Screen name="MedicalCondition" component={MedicalCondition} />
         <Drawer.Screen name="PatientProfile" component={PatientProfile} />
-
         <Drawer.Screen name="Demographics" component={Demographics} />
         <Drawer.Screen name="AddReport" component={AddReport} />
         <Drawer.Screen name="Patients" component={Patients} />
@@ -106,7 +105,6 @@ export default class Routes extends React.Component {
 
         tabBarOptions={{
 
-
           activeTintColor: '#297dec',
           inactiveTintColor: '#000',
 
@@ -126,8 +124,6 @@ export default class Routes extends React.Component {
           }
 
         }} >
-
-
         <Tab.Screen name="Available" component={Available} />
         <Tab.Screen name="Scheduled" component={Scheduled} />
         <Tab.Screen name="Completed" component={Completed} />
@@ -167,7 +163,6 @@ export default class Routes extends React.Component {
             headerTitleStyle: { color: '#fff' },
             headerTintColor: '#fff',
           }}
-
         />
 
         <Stack.Screen
@@ -278,7 +273,6 @@ export default class Routes extends React.Component {
           options={{ headerShown: false }}
         />
 
-
         <Stack.Screen
           name="PatientHistoryAdd"
           component={PatientHistoryAdd}
@@ -320,6 +314,7 @@ export default class Routes extends React.Component {
           component={AddPrescribtion}
           options={{ headerShown: false }}
         />
+
         <Stack.Screen
           name="DrProfile"
           component={DrProfile}
@@ -349,8 +344,7 @@ export default class Routes extends React.Component {
             headerShown: false,
           }}
         />
-
-
+        
         <Stack.Screen
           name="Patients"
           component={Patients}
