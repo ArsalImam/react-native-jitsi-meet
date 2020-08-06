@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Text,
   View,
@@ -11,41 +11,55 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import CommonStyles from '../../CommonStyles';
-import {Item, Input, Container} from 'native-base';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import { Item, Input, Container, Icon } from 'native-base';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import Api from '../../Api';
-import {ViewUtils} from '../../Utils';
+import { ViewUtils } from '../../Utils';
 import Loader from '../../components/Loader';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class Login extends Component {
-  state = {email: '', password: '', showLoader: false};
+  state = { email: '', password: '', showLoader: false, hidePassword: true };
 
   constructor(props) {
     super(props);
     this._submitForm = this._submitForm.bind(this);
   }
 
-  showLoader = () => {
-    this.setState({showLoader: true});
+  setPasswordVisibility = () => {
+    this.setState({ hidePassword: !this.state.hidePassword });
   };
 
-  //showLoader = () => { this.setState({ showLoader: true }); };
+  showLoader = () => {
+    this.setState({ showLoader: true });
+  };
 
-  componentDidMount() {}
+  componentDidMount() { }
 
+  componentWillMount() {
+
+    Api.instance()
+      ._user()
+      .then(token => {
+        if (token == null) return;
+        console.warn("token", token)
+        this.props.navigation.navigate('MyDrawer')
+
+      })
+  }
   _submitForm = () => {
     this.showLoader();
 
     Api.instance()
       .login(this.state.email, this.state.password)
       .then(data => {
-        this.props.navigation.replace('MyDrawer', {user: data.user});
+        this.props.navigation.replace('MyDrawer', { user: data.user });
       })
       .catch(err => {
         ViewUtils.showToast(err);
       })
       .finally(() => {
-        this.setState({showLoader: false});
+        this.setState({ showLoader: false });
       });
   };
 
@@ -56,22 +70,60 @@ class Login extends Component {
           style={[CommonStyles.container, CommonStyles.backgroundImage]}
           source={require('../../assets/img/loginbg.png')}>
           <KeyboardAwareScrollView style={CommonStyles.container}>
-            <View
-              style={[
-                CommonStyles.margin,
-                {paddingTop: 30, paddingHorizontal: 10},
-              ]}>
-              <Text
+            <View style={[CommonStyles.margin, { margin: 30 }]}>
+              <View
                 style={[
-                  CommonStyles.fontMedium,
-                  {
-                    fontSize: 32,
-                    color: '#FFF',
-                  },
+                  CommonStyles.container,
+                  { marginTop: 50, marginBottom: 40, justifyContent: 'center' },
                 ]}>
-                Welcome {'\n'}to TeleMedicine
-              </Text>
-              <Text
+                <Text
+                  style={[
+                    CommonStyles.fontMedium,
+                    {
+                      fontSize: 32,
+                      color: '#FFF',
+                    },
+                  ]}>
+                  Welcome
+                </Text>
+                <View
+                  style={[
+                    CommonStyles.container,
+                    CommonStyles.horizontalContainer,
+                    {  justifyContent: 'flex-start' },
+                  ]}>
+                  <Text
+                    style={[
+                      CommonStyles.fontMedium,
+                      {
+                        fontSize: 32,
+                        color: '#FFF',
+                        marginHorizontal: 10,
+                        
+                      },
+                    ]}>to
+                  </Text>
+
+                  <View
+                    style={{
+                      width: 200,
+                      height: 70,
+                      marginTop: -20,
+                      marginHorizontal: 5,
+                    }}>
+                    <Image
+                      style={[
+                        CommonStyles.mt10,
+                        CommonStyles.container,
+                        CommonStyles.backgroundImage,
+                        { width: '100%', height: '100%' },
+                      ]}
+                      source={require('../../assets/img/etiblogo.png')}
+                    />
+                  </View>
+                </View>
+              </View>
+              {/* <Text
                 style={[
                   CommonStyles.textSizeAverage,
                   CommonStyles.textColorWhite,
@@ -82,16 +134,13 @@ class Login extends Component {
                 information about your health and consult with
                 {'\n'}
                 your doctorrightaway !!!
-              </Text>
-              <Image
-                style={[CommonStyles.mt10, {width: 96, height: 123}]}
-                source={require('../../assets/img/layer_2.png')}
-              />
-              <View style={[CommonStyles.mt10]}>
+              </Text> */}
+
+              <View style={{ marginTop: 60 }}>
                 <Item regular style={CommonStyles.loginItemStyle}>
                   <Input
                     value={this.state.email}
-                    onChangeText={username => this.setState({email: username})}
+                    onChangeText={username => this.setState({ email: username })}
                     name="username"
                     placeholder={'Email Address'}
                     placeholderTextColor="#FFF"
@@ -111,9 +160,9 @@ class Login extends Component {
                   regular
                   style={[CommonStyles.loginItemStyle, CommonStyles.mt10]}>
                   <Input
+                    secureTextEntry={this.state.hidePassword}
                     value={this.state.password}
-                    onChangeText={password => this.setState({password})}
-                    secureTextEntry
+                    onChangeText={password => this.setState({ password })}
                     autoCapitalize="none"
                     returnKeyType="done"
                     selectionColor="#fff"
@@ -129,8 +178,45 @@ class Login extends Component {
                       CommonStyles.textSizeNormal,
                     ]}
                   />
+                  {/* <TouchableOpacity> */}
+                  <Icon
+                    onPress={() => this.setPasswordVisibility()}
+                    name="eye"
+                    style={{ color: '#fff', position: 'absolute', right: 5 }}
+                  />
+                  {/* </TouchableOpacity> */}
                 </Item>
               </View>
+                <View style={{ flex: 1}}>
+                  <Image
+                    style={[
+                      CommonStyles.mt10,
+                      CommonStyles.container,
+                      CommonStyles.backgroundImage,
+                      { width: '100%', height: '100%' },
+                    ]}
+                    source={require('../../assets/img/etiblogo.png')}
+                  />
+                </View>
+             
+
+              <View style={[CommonStyles.container, { alignItems: 'center', justifyContent: 'flex-end', alignSelf: 'center', marginTop: '30%'}]}>
+                <Text style={[CommonStyles.fontRegular, { marginTop: 10, color: "white", fontSize: 12 }]}>Powered By Pharmevo</Text>
+                <View style={{ width: 107, height: 50 }}>
+                  <Image
+                    style={[
+                      // CommonStyles.mt10,
+                      // CommonStyles.container,
+                      // CommonStyles.backgroundImage,
+                      { width: '100%', height: '100%' },
+                    ]}
+                    source={require('../../assets/img/logo.png')}
+                  />
+                </View>
+
+              </View>
+
+
             </View>
           </KeyboardAwareScrollView>
         </ImageBackground>
@@ -149,7 +235,7 @@ class Login extends Component {
             style={[
               CommonStyles.container,
               CommonStyles.centerText,
-              {borderRightWidth: 0.5, borderColor: '#cfd2d6'},
+              { borderRightWidth: 0.5, borderColor: '#cfd2d6' },
             ]}
             onPress={this._submitForm}>
             <Text
@@ -159,7 +245,7 @@ class Login extends Component {
                 CommonStyles.centerText,
                 CommonStyles.margin,
                 CommonStyles.padding,
-                {opacity: 0.5},
+                { opacity: 0.5 },
               ]}>
               Login
             </Text>
@@ -177,7 +263,7 @@ class Login extends Component {
                 CommonStyles.centerText,
                 CommonStyles.margin,
                 CommonStyles.padding,
-                {opacity: 0.5},
+                { opacity: 0.5 },
               ]}>
               Create Account
             </Text>

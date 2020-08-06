@@ -51,6 +51,8 @@ export default class Api {
   // Clinic
   // create clinic
   async createClinic(data) {
+
+    console.warn('data', data)
     try {
       let response = await this.client.post(
         this.getUrl('Clinics/CreateClinic'),

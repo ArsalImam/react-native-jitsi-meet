@@ -11,8 +11,7 @@ import { DatePicker, Icon, Input, Item, Label, Picker, Text } from 'native-base'
 import Api from '../../Api';
 import CommonStyles from '../../CommonStyles';
 import Loader from '../../components/Loader';
-//import { DatePicker, TimePicker } from 'react-native-propel-kit';
-
+import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { ViewUtils } from '../../Utils'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
@@ -128,19 +127,23 @@ export default class CreateClinic extends Component {
   }
 
   formatAMPM(dateToConvert) {
-    var hours = dateToConvert.getHours();
-    var minutes = dateToConvert.getMinutes();
-    var ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-    var strTime = hours + ':' + minutes + ' ' + ampm;
-    console.warn(strTime)
 
-    var formattedDate = new Date("1970-01-01T05:00:00")
+    let startTime = moment.utc(`01-01-1970 ${moment(dateToConvert).format('HH:mm:ss')}`, "dd-MM-YYYY HH:mm:ss").unix() * 1000 - 18000000
+   // let endTime = moment.utc(`01-01-1970 ${moment(this.state.endTime).format('HH:mm:ss')}`, "dd-MM-YYYY HH:mm:ss").unix();
+  //   console.warn('adas', startTime)
+  //   var hours = dateToConvert.getHours();
+  //   var minutes = dateToConvert.getMinutes();
+  //   var ampm = hours >= 12 ? 'PM' : 'AM';
+  //   hours = hours % 12;
+  //   hours = hours ? hours : 12; // the hour '0' should be '12'
+  //   minutes = minutes < 10 ? '0' + minutes : minutes;
+  //   var strTime = hours + ':' + minutes + ' ' + ampm;
+  //   console.warn("strTime", strTime)
 
-    console.warn('dateobj', formattedDate.getTime())
-    return formattedDate;
+  // var formattedDate = new Date("1970-01-01T05:00:00")
+
+    //console.warn('dateobj', formattedDate.getTime())
+    return startTime;
   }
 
   getTimeFormat(dateToConvert) {
@@ -210,20 +213,29 @@ export default class CreateClinic extends Component {
     }
 
     var attendedAtDate = this.formatAMPM(this.state.attendAt);
-    this.state.attendAt = attendedAtDate.getTime();
+
+
+
+    console.warn('attendedAtDate', attendedAtDate)
+    this.state.attendAt = attendedAtDate
 
 
     var leftAtDate = this.formatAMPM(this.state.leftAt);
 
-    this.state.leftAt = leftAtDate.getTime();
+    this.state.leftAt = leftAtDate
 
-    var selectedDate = new Date(this.state.chosenDate);
-    selectedDate.setMonth(selectedDate.getMonth());
+    console.warn('left6Date', leftAtDate)
+
+    var selectedDate = moment.utc(this.state.chosenDate)
+   // selectedDate.setMonth(selectedDate.getMonth());
+
+   
+   //console.warn('asdasdf',selectedDate)
 
     this.state.clinicObj.doctorId = this.state.userObj.id;
-    this.state.clinicObj.joinedDate = selectedDate.toString();
-    this.state.clinicObj.attendAt = attendedAtDate.getTime();
-    this.state.clinicObj.leftAt = leftAtDate.getTime();
+    this.state.clinicObj.joinedDate = selectedDate;
+    this.state.clinicObj.attendAt = attendedAtDate
+    this.state.clinicObj.leftAt = leftAtDate
     this.state.clinicObj.frequency = parseInt(this.state.clinicFrequency);
     this.state.clinicObj.numOfClinics = this.state.numberOfClinics;
     this.state.clinicObj.appointmentSlots = parseInt(
@@ -233,9 +245,9 @@ export default class CreateClinic extends Component {
     this.state.clinicObj.frequencyText = this.state.clinicFrequencyText;
     this.state.clinicObj.appointmentSlotsText = this.state.appointmentSlotsText;
 
-    this.setState({ isLoading: true });
+   this.setState({ isLoading: true });
     Api.instance()
-      .createClinic(this.state.clinicObj)
+      .createClinic(this.state.clinicObj) 
       .then(res => {
         ViewUtils.showToast('Clinic has been created successfully!');
         this.props.navigation.dispatch(
@@ -251,7 +263,7 @@ export default class CreateClinic extends Component {
       .finally(() => {
         this.setState({ isLoading: false });
 
-        // this.props.navigation.replace('ClinicList');
+       //  this.props.navigation.replace('ClinicList');
       });
   }
 
@@ -546,63 +558,3 @@ export default class CreateClinic extends Component {
     );
   }
 }
-
-{/* <Item regular style={Styles.item_row}>
-<Text style={Styles.label}>Start Date</Text>
-<View
-  style={[
-    Styles.input,
-    { width: '54%', alignItems: 'center' },
-  ]}>
-  <DatePicker style={{ color: 'black', marginTop: 10 }} value={this.state.startDate} onChange={date => {
-    this.setState({ startDate: date })
-  }} />
-</View>
-</Item>
-<Item regular style={Styles.item_row}>
-<Text style={Styles.label}>End Date</Text>
-<View
-  style={[
-    Styles.input,
-    { width: '54%', alignItems: 'center' },
-  ]}>
-  <DatePicker style={{ color: 'black', marginTop: 10 }} value={this.state.endDate} onChange={date => {
-    this.setState({ endDate: date })
-  }} />
-</View>
-</Item>
-<Item regular style={Styles.item_row}>
-<Text style={Styles.label}>Start Time</Text>
-<Item
-  style={[
-    Styles.input,
-    {
-      width: '54%',
-      paddingHorizontal: 47,
-      alignItems: 'center',
-      marginLeft: 1,
-    },
-  ]}>
-  <TimePicker style={{ color: 'black', height: '100%', width: '100%', textAlign: 'center', alignContent: 'center' }} value={this.state.startTime} onChange={date => {
-    this.setState({ startTime: date })
-  }} />
-</Item>
-</Item>
-<Item regular style={Styles.item_row}>
-<Text style={Styles.label}>End Time</Text>
-<Item
-  style={[
-    Styles.input,
-    {
-      width: '54%',
-      paddingHorizontal: 48,
-      alignItems: 'center',
-      marginLeft: 1,
-    },
-  ]}>
-  <TimePicker style={{ color: 'black', height: '100%', width: '100%', textAlign: 'center', alignContent: 'center' }} value={this.state.endTime} onChange={date => {
-    this.setState({ endTime: date })
-  }} />
-</Item>
-<Item />
-</Item> */}
