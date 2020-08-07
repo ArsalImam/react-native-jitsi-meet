@@ -38,14 +38,14 @@ class Login extends Component {
 
   componentWillMount() {
 
-    Api.instance()
-      ._user()
-      .then(token => {
-        if (token == null) return;
-        console.warn("token", token)
-        this.props.navigation.navigate('MyDrawer')
+    // Api.instance()
+    //   ._user()
+    //   .then(token => {
+    //     if (token == null) return;
+    //     console.warn("token", token)
+    //     this.props.navigation.navigate('MyDrawer')
 
-      })
+    //   })
   }
   _submitForm = () => {
     this.showLoader();
