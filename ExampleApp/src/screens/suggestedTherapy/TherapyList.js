@@ -26,7 +26,7 @@ export default class TherapyList extends Component {
             this.state = {
                 isLoading: true,
                 therapyList: [],
-              
+
             }
         }
     }
@@ -45,7 +45,7 @@ export default class TherapyList extends Component {
 
     addToConsultation(item) {
         item.setupType = 'suggestedTherapy'
-        Api.instance().addReport(item, this.state.appointmentId,this.state.patientId)
+        Api.instance().addReport(item, this.state.appointmentId, this.state.patientId)
             .then(response => {
                 console.warn(response);
                 this.props.navigation.goBack();
@@ -62,14 +62,14 @@ export default class TherapyList extends Component {
 
         if (this.state.appointmentId != null) {
             return (
-                <View style={[CommonStyles.container]}>
+                <View style={{ height: '75%' }}>
                     <ImageBackground style={[
                         CommonStyles.container,
                         CommonStyles.backgroundImage
                     ]}
-                        source={require('../../assets/img/bwback.png')}>
+                        source={require('../../assets/img/background.png')}>
                         <View style={
-                            { flex: 2.3 }
+                            { flex: 3, backgroundColor: '#297dec' }
                         }>
                             <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Therapy List\n`}</Text>
@@ -146,7 +146,7 @@ export default class TherapyList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('TherapyAdd')
+                                    this.props.navigation.navigate('TherapyAdd', {appointmentId: this.state.appointmentId,})
                                 }}
                                 style={[
                                     CommonStyles.container,

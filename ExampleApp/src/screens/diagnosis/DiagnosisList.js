@@ -27,7 +27,7 @@ export default class DiagnosisList extends Component {
             this.state = {
                 isLoading: true,
                 diagnosisList: [],
-              
+
             }
         }
     }
@@ -46,21 +46,21 @@ export default class DiagnosisList extends Component {
 
 
     componentWillMount() {
-        
-            Api.instance().getDiagnosisList()
-                .then((data) => {
-                    console.warn('=====>', data["Diagnosis"])
-                    this.setState({ diagnosisList: data });
-                }
-                ).catch(err => console.log(err))
-                .finally(() => {
-                    this.setState({ isLoading: false });
-                })
-        
+
+        Api.instance().getDiagnosisList()
+            .then((data) => {
+                console.warn('=====>', data["Diagnosis"])
+                this.setState({ diagnosisList: data });
+            }
+            ).catch(err => console.log(err))
+            .finally(() => {
+                this.setState({ isLoading: false });
+            })
+
     }
     addDiagnosis(item) {
         item.setupType = 'diagnosis'
-        Api.instance().addReport(item, this.state.appointmentId,this.state.patientId)
+        Api.instance().addReport(item, this.state.appointmentId, this.state.patientId)
             .then(response => {
                 console.warn(response);
                 this.props.navigation.goBack();
@@ -75,17 +75,17 @@ export default class DiagnosisList extends Component {
     render() {
         if (this.state.appointmentId != null) {
             return (
-                <View style={[CommonStyles.container]}>
+                <View style={{ height: '75%' }}>
                     <ImageBackground style={[
                         CommonStyles.container,
                         CommonStyles.backgroundImage
                     ]}
-                        source={require('../../assets/img/bwback.png')}>
+                        source={require('../../assets/img/background.png')}>
                         <View style={
-                            { flex: 2.3 }
+                            { flex: 3, backgroundColor: '#297dec' }
                         }>
-                            <Text 
-                            style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
+                            <Text
+                                style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Diagnosis List\n`}</Text>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Bookings </Text>
                             </Text>
@@ -158,7 +158,7 @@ export default class DiagnosisList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('DiagnosisAdd')
+                                    this.props.navigation.navigate('DiagnosisAdd', { appointmentId: this.state.appointmentId, })
                                 }}
                                 style={[
                                     CommonStyles.container,

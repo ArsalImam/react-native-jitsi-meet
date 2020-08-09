@@ -63,14 +63,14 @@ export default class InvestigationList extends Component {
 
         if (this.state.appointmentId != null) {
             return (
-                <View style={[CommonStyles.container]}>
-                    <ImageBackground style={[
-                        CommonStyles.container,
-                        CommonStyles.backgroundImage
-                    ]}
-                        source={require('../../assets/img/bwback.png')}>
-                        <View style={
-                            { flex: 2.3 }
+                <View style={{ height: '75%'}}>
+                <ImageBackground style={[
+                    CommonStyles.container,
+                    CommonStyles.backgroundImage
+                ]}
+                    source={require('../../assets/img/background.png')}>
+                    <View style={
+                        { flex: 3, backgroundColor: '#297dec' }
                         }>
                             <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Investigation List\n`}</Text>
@@ -146,7 +146,7 @@ export default class InvestigationList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('InvestigationAdd')
+                                    this.props.navigation.navigate('InvestigationAdd', {appointmentId: this.state.appointmentId,})
                                 }}
                                 style={[
                                     CommonStyles.container,

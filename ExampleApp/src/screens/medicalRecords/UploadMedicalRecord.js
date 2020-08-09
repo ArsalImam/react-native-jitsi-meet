@@ -79,132 +79,264 @@ export default class UploadMedicalRecord extends Component {
     };
     render() {
         const { image } = this.state;
-        return (
-            <View style={[CommonStyles.container]}>
 
-                <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/img/bwback.png')}>
-                    <View style={{ flex: 2.3 }}>
-                        <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
-                            <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Upload Medical Record\n`}</Text>
-                            <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
-                        </Text>
-                    </View>
+        if (this.props.route.params.appointmentId != null) {
 
-                    <View style={{ flex: 8, paddingHorizontal: 18, marginTop: 33 }}>
-                        <KeyboardAwareScrollView style={[{ backgroundColor: '#fff', borderRadius: 5, }]}>
+            return (
+                <View style={[CommonStyles.container]}>
 
+                    <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/img/bwback.png')}>
+                        <View style={{ flex: 2.3 }}>
+                            <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
+                                <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Upload Medical Record\n`}</Text>
+                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
+                            </Text>
+                        </View>
+
+                        <View style={{ flex: 8, paddingHorizontal: 18, marginTop: 33 }}>
+                            <KeyboardAwareScrollView style={[{ backgroundColor: '#fff', borderRadius: 5, }]}>
+
+                                <TouchableOpacity
+                                    onPress={() => { this.handleChoosePhoto() }}
+                                    style={{ marginVertical: 20, alignSelf: 'center' }}>
+                                    <Icon name="filetext1" type="AntDesign" style={{ fontSize: 100 }} />
+                                    <Icon name="camera" type="AntDesign" style={{ fontSize: 40, marginTop: -40, marginLeft: 65 }} />
+                                    {image && (
+                                        <Image
+                                            source={{ uri: image.uri }}
+                                            style={{ width: 300, height: 300 }}
+                                        />
+                                    )}
+                                </TouchableOpacity>
+
+
+                                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 20 }]}>
+                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Title*</Label>
+                                    <Input
+                                        value={this.state.notes}
+                                        onChangeText={val => this.setState({ name: val })}
+                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
+                                </Item>
+
+                                <Item
+                                    picker
+                                    style={[
+                                        CommonStyles.container,
+                                        CommonStyles.itemStyle,
+                                        { paddingTop: 10 },
+                                    ]}>
+                                    <Picker
+                                        mode="dropdown"
+                                        style={{ textAlign: 'left' }}
+                                        focusable
+                                        iosIcon={<Icon name="arrow-down" />}
+                                        placeholder="Select Vital Type"
+                                        placeholderStyle={{ color: '#bfc6ea' }}
+                                        placeholderIconColor="#007aff"
+
+                                        selectedValue={this.state.vitalType}
+                                        onValueChange={val => { this.setState({ vitalType: val }) }}>
+                                        <Picker.Item
+                                            color="gray"
+                                            selected={false}
+                                            label="Document Type"
+                                            value=""
+                                        />
+                                        <Picker.Item label="Referral Letter" value="BloodGlucose" />
+                                        <Picker.Item label="Scanned Medical Records" value="BloodPressure" />
+                                        <Picker.Item label="Results of Laboratory Test" value="BloodOxygen" />
+                                        <Picker.Item label="X-rays, MRI, CT, US, Scans " value="BloodOxygen" />
+                                        <Picker.Item label="Misc Images ECG, Skin Lesion etc" value="BloodOxygen" />
+                                    </Picker>
+                                </Item>
+                            </KeyboardAwareScrollView>
+
+                        </View>
+
+                        <View
+                            style={[
+                                CommonStyles.fitToBottom,
+                                CommonStyles.horizontalContainer,
+                                {
+                                    backgroundColor: '#F7FAFE',
+                                    borderTopRightRadius: 5,
+                                    borderTopStartRadius: 5,
+                                    borderTopWidth: 3,
+                                    borderColor: '#FFF'
+                                },
+                            ]}>
                             <TouchableOpacity
-                                onPress={() => { this.handleChoosePhoto() }}
-                                style={{ marginVertical: 20, alignSelf: 'center' }}>
-                                <Icon name="filetext1" type="AntDesign" style={{ fontSize: 100 }} />
-                                <Icon name="camera" type="AntDesign" style={{ fontSize: 40, marginTop: -40, marginLeft: 65 }} />
-                                {image && (
-                                    <Image
-                                        source={{ uri: image.uri }}
-                                        style={{ width: 300, height: 300 }}
-                                    />
-                                )}
-                            </TouchableOpacity>
-
-
-                            <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 20 }]}>
-                                <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Title*</Label>
-                                <Input
-                                    value={this.state.notes}
-                                    onChangeText={val => this.setState({ name: val })}
-                                    style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
-                            </Item>
-
-                            <Item
-                                picker
+                                onPress={() => {
+                                    this._savePatientHistory();
+                                }}
                                 style={[
                                     CommonStyles.container,
-                                    CommonStyles.itemStyle,
-                                    { paddingTop: 10 },
-                                ]}>
-                                <Picker
-                                    mode="dropdown"
-                                    style={{ textAlign: 'left' }}
-                                    focusable
-                                    iosIcon={<Icon name="arrow-down" />}
-                                    placeholder="Select Vital Type"
-                                    placeholderStyle={{ color: '#bfc6ea' }}
-                                    placeholderIconColor="#007aff"
-
-                                    selectedValue={this.state.vitalType}
-                                    onValueChange={val => { this.setState({ vitalType: val }) }}>
-                                    <Picker.Item
-                                        color="gray"
-                                        selected={false}
-                                        label="Document Type"
-                                        value=""
-                                    />
-                                    <Picker.Item label="Referral Letter" value="BloodGlucose" />
-                                    <Picker.Item label="Scanned Medical Records" value="BloodPressure" />
-                                    <Picker.Item label="Results of Laboratory Test" value="BloodOxygen" />
-                                    <Picker.Item label="X-rays, MRI, CT, US, Scans " value="BloodOxygen" />
-                                    <Picker.Item label="Misc Images ECG, Skin Lesion etc" value="BloodOxygen" />
-                                </Picker>
-                            </Item>
-                        </KeyboardAwareScrollView>
-
-                    </View>
-
-                    <View
-                        style={[
-                            CommonStyles.fitToBottom,
-                            CommonStyles.horizontalContainer,
-                            {
-                                backgroundColor: '#F7FAFE',
-                                borderTopRightRadius: 5,
-                                borderTopStartRadius: 5,
-                                borderTopWidth: 3,
-                                borderColor: '#FFF'
-                            },
-                        ]}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                this._savePatientHistory();
-                            }}
-                            style={[
-                                CommonStyles.container,
-                                CommonStyles.centerText,
-                                { borderRightWidth: 0.5, borderColor: '#cfd2d6' },
-                            ]}
-                        >
-                            <Text
-                                style={[
-                                    CommonStyles.fontRegular,
-                                    CommonStyles.textSizeNormal,
                                     CommonStyles.centerText,
-                                    CommonStyles.margin,
-                                    CommonStyles.padding,
-                                    { opacity: 0.5 },
-                                ]}>
-                                SAVE
+                                    { borderRightWidth: 0.5, borderColor: '#cfd2d6' },
+                                ]}
+                            >
+                                <Text
+                                    style={[
+                                        CommonStyles.fontRegular,
+                                        CommonStyles.textSizeNormal,
+                                        CommonStyles.centerText,
+                                        CommonStyles.margin,
+                                        CommonStyles.padding,
+                                        { opacity: 0.5 },
+                                    ]}>
+                                    SAVE
+                                 </Text>
+                            </TouchableOpacity>
+                        </View>
+
+                        <Loader loading={this.state.isLoading} />
+
+                        <View
+                            style={[
+                                CommonStyles.backButtonStyle
+                            ]}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.props.navigation.goBack();
+                                }}>
+                                <Icon
+                                    name="arrow-back"
+                                    type="MaterialIcons"
+                                    style={{ fontSize: 26, color: '#FFF' }}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </ImageBackground>
+                </View>
+            );
+        } else {
+            return (
+                <View style={[CommonStyles.container]}>
+
+                    <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/img/bwback.png')}>
+                        <View style={{ flex: 2.3 }}>
+                            <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
+                                <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Upload Medical Record\n`}</Text>
+                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
+                            </Text>
+                        </View>
+
+                        <View style={{ flex: 8, paddingHorizontal: 18, marginTop: 33 }}>
+                            <KeyboardAwareScrollView style={[{ backgroundColor: '#fff', borderRadius: 5, }]}>
+
+                                <TouchableOpacity
+                                    onPress={() => { this.handleChoosePhoto() }}
+                                    style={{ marginVertical: 20, alignSelf: 'center' }}>
+                                    <Icon name="filetext1" type="AntDesign" style={{ fontSize: 100 }} />
+                                    <Icon name="camera" type="AntDesign" style={{ fontSize: 40, marginTop: -40, marginLeft: 65 }} />
+                                    {image && (
+                                        <Image
+                                            source={{ uri: image.uri }}
+                                            style={{ width: 300, height: 300 }}
+                                        />
+                                    )}
+                                </TouchableOpacity>
+
+
+                                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 20 }]}>
+                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Title*</Label>
+                                    <Input
+                                        value={this.state.notes}
+                                        onChangeText={val => this.setState({ name: val })}
+                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
+                                </Item>
+
+                                <Item
+                                    picker
+                                    style={[
+                                        CommonStyles.container,
+                                        CommonStyles.itemStyle,
+                                        { paddingTop: 10 },
+                                    ]}>
+                                    <Picker
+                                        mode="dropdown"
+                                        style={{ textAlign: 'left' }}
+                                        focusable
+                                        iosIcon={<Icon name="arrow-down" />}
+                                        placeholder="Select Vital Type"
+                                        placeholderStyle={{ color: '#bfc6ea' }}
+                                        placeholderIconColor="#007aff"
+
+                                        selectedValue={this.state.vitalType}
+                                        onValueChange={val => { this.setState({ vitalType: val }) }}>
+                                        <Picker.Item
+                                            color="gray"
+                                            selected={false}
+                                            label="Document Type"
+                                            value=""
+                                        />
+                                        <Picker.Item label="Referral Letter" value="BloodGlucose" />
+                                        <Picker.Item label="Scanned Medical Records" value="BloodPressure" />
+                                        <Picker.Item label="Results of Laboratory Test" value="BloodOxygen" />
+                                        <Picker.Item label="X-rays, MRI, CT, US, Scans " value="BloodOxygen" />
+                                        <Picker.Item label="Misc Images ECG, Skin Lesion etc" value="BloodOxygen" />
+                                    </Picker>
+                                </Item>
+                            </KeyboardAwareScrollView>
+
+                        </View>
+
+                        <View
+                            style={[
+                                CommonStyles.fitToBottom,
+                                CommonStyles.horizontalContainer,
+                                {
+                                    backgroundColor: '#F7FAFE',
+                                    borderTopRightRadius: 5,
+                                    borderTopStartRadius: 5,
+                                    borderTopWidth: 3,
+                                    borderColor: '#FFF'
+                                },
+                            ]}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this._savePatientHistory();
+                                }}
+                                style={[
+                                    CommonStyles.container,
+                                    CommonStyles.centerText,
+                                    { borderRightWidth: 0.5, borderColor: '#cfd2d6' },
+                                ]}
+                            >
+                                <Text
+                                    style={[
+                                        CommonStyles.fontRegular,
+                                        CommonStyles.textSizeNormal,
+                                        CommonStyles.centerText,
+                                        CommonStyles.margin,
+                                        CommonStyles.padding,
+                                        { opacity: 0.5 },
+                                    ]}>
+                                    SAVE
                              </Text>
-                        </TouchableOpacity>
-                    </View>
+                            </TouchableOpacity>
+                        </View>
 
-                    <Loader loading={this.state.isLoading} />
+                        <Loader loading={this.state.isLoading} />
 
-                    <View
-                        style={[
-                            CommonStyles.backButtonStyle
-                        ]}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                this.props.navigation.goBack();
-                            }}>
-                            <Icon
-                                name="arrow-back"
-                                type="MaterialIcons"
-                                style={{ fontSize: 26, color: '#FFF' }}
-                            />
-                        </TouchableOpacity>
-                    </View>
-                </ImageBackground>
-            </View>
-        );
+                        <View
+                            style={[
+                                CommonStyles.backButtonStyle
+                            ]}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.props.navigation.goBack();
+                                }}>
+                                <Icon
+                                    name="arrow-back"
+                                    type="MaterialIcons"
+                                    style={{ fontSize: 26, color: '#FFF' }}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </ImageBackground>
+                </View>
+            );
+        }
     }
 }

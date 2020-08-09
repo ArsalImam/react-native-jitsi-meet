@@ -27,7 +27,7 @@ export default class MedicalRecordList extends Component {
             this.state = {
                 isLoading: true,
                 medicalRecordList: [],
-              
+
             }
         }
     }
@@ -45,7 +45,7 @@ export default class MedicalRecordList extends Component {
     }
 
     addToConsultation(item) {
-      
+
         Api.instance().addReport(item, this.state.appointmentId)
             .then(response => {
                 console.warn(response);
@@ -71,16 +71,15 @@ export default class MedicalRecordList extends Component {
 
         if (this.state.appointmentId != null) {
             return (
-                <View style={[CommonStyles.container]}>
+                <View style={{ height: '75%' }}>
                     <ImageBackground style={[
                         CommonStyles.container,
                         CommonStyles.backgroundImage
                     ]}
-                        source={require('../../assets/img/bwback.png')}>
+                        source={require('../../assets/img/background.png')}>
                         <View style={
-                            { flex: 2.3 }
-                        }>
-                            <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
+                            { flex: 3, backgroundColor: '#297dec' }
+                        }>                           <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Medical Records\n`}</Text>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Bookings </Text>
                             </Text>
@@ -105,9 +104,9 @@ export default class MedicalRecordList extends Component {
                                             source={require('../../assets/img/bookingbg2x.png')}>
 
                                             <TouchableOpacity
-                                            
-                                            onPress={() => { this.addToConsultation(item) }}
-                                            style={[CommonStyles.container, { padding: 12, flexDirection: 'row' }]}>
+
+                                                onPress={() => { this.addToConsultation(item) }}
+                                                style={[CommonStyles.container, { padding: 12, flexDirection: 'row' }]}>
 
                                                 <View style={[CommonStyles.container, { justifyContent: 'space-between' }]}>
 
@@ -159,7 +158,7 @@ export default class MedicalRecordList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('UploadMedicalRecord')
+                                    this.props.navigation.navigate('UploadMedicalRecord', {appointmentId: this.state.appointmentId,})
                                 }}
                                 style={[
                                     CommonStyles.container,
@@ -237,7 +236,7 @@ export default class MedicalRecordList extends Component {
                                             source={require('../../assets/img/bookingbg2x.png')}>
 
                                             <View
-                                               
+
                                                 style={[CommonStyles.container, { padding: 12, flexDirection: 'row' }]}>
 
                                                 <View style={[CommonStyles.container, { justifyContent: 'space-between' }]}>

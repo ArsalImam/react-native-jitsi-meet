@@ -204,115 +204,226 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="Vital"
           component={Vital}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent'
+            }
+
+          }}
         />
 
         <Stack.Screen
           name="VitalList"
           component={VitalList}
-          options={{ headerShown: false }}
-        />
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent'
+            }
+
+          }} />
 
         <Stack.Screen
           name="MedicationAdd"
           component={MedicationAdd}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent'
+            }
+
+          }}
         />
 
         <Stack.Screen
           name="MedicationList"
           component={MedicationList}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent'
+            }
+
+          }}
         />
 
         <Stack.Screen
           name="DiagnosisAdd"
           component={DiagnosisAdd}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent'
+            }
+
+          }}
         />
 
         <Stack.Screen
           name="DiagnosisList"
           component={DiagnosisList}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent'
+            }
+
+          }}
         />
 
         <Stack.Screen
           name="InvestigationAdd"
           component={InvestigationAdd}
-          options={{ headerShown: false }}
-        />
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent'
+            }
+
+          }} />
 
         <Stack.Screen
           name="InvestigationList"
           component={InvestigationList}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent'
+            }
+
+          }}
         />
 
         <Stack.Screen
           name="ProcedureAdd"
           component={ProcedureAdd}
-          options={{ headerShown: false }}
-        />
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent'
+            }
+
+          }} />
 
         <Stack.Screen
           name="ProcedureList"
           component={ProcedureList}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent'
+            }
+
+          }}
         />
 
         <Stack.Screen
           name="TherapyAdd"
           component={TherapyAdd}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent'
+            }
+
+          }}
         />
 
         <Stack.Screen
           name="TherapyList"
           component={TherapyList}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent'
+            }
+
+          }}
         />
 
         <Stack.Screen
           name="PatientHistoryAdd"
           component={PatientHistoryAdd}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent'
+            }
+
+          }}
         />
 
         <Stack.Screen
           name="PatientHistoryList"
           component={PatientHistoryList}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent'
+            }
+
+          }}
         />
 
         <Stack.Screen
           name="UploadIllustrations"
           component={UploadIllustrations}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent'
+            }
+
+          }}
         />
 
         <Stack.Screen
           name="IllustrationsList"
           component={IllustrationsList}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent'
+            }
+
+          }}
         />
 
         <Stack.Screen
           name="UploadMedicalRecord"
           component={UploadMedicalRecord}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent'
+            }
+
+          }}
         />
 
         <Stack.Screen
           name="MedicalRecordList"
           component={MedicalRecordList}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent'
+            }
+
+          }}
         />
 
         <Stack.Screen
           name="AddPrescribtion"
           component={AddPrescribtion}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent'
+            }
+
+          }}
         />
 
         <Stack.Screen
@@ -344,7 +455,7 @@ export default class Routes extends React.Component {
             headerShown: false,
           }}
         />
-        
+
         <Stack.Screen
           name="Patients"
           component={Patients}
