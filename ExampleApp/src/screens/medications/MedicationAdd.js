@@ -30,9 +30,9 @@ export default class MedicationAdd extends Component {
             "description": this.state.description,
             "drugBrand": this.state.drugBrand,
             "drugSku": this.state.drugSku
-        
+
         }
-        
+
         this.setState({ isLoading: true })
 
         Api.instance()
@@ -49,112 +49,229 @@ export default class MedicationAdd extends Component {
             });
     };
     render() {
-        return (
 
-            <View style={[CommonStyles.container]}>
+        if (this.props.route.params.appointmentId != null) {
 
-                <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/img/bwback.png')}>
-                    <View style={{ flex: 2.3 }}>
-                        <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
-                            <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Medication Add\n`}</Text>
-                            <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
-                        </Text>
-                    </View>
+            return (
 
-                    <View style={{ flex: 8, paddingHorizontal: 18, marginTop: 33 }}>
-                        <KeyboardAwareScrollView style={[{ backgroundColor: '#fff', borderRadius: 5, }]}>
+                <View style={{ height: '75%' }}>
+                <ImageBackground style={[
+                    CommonStyles.container,
+                    CommonStyles.backgroundImage
+                ]}
+                    source={require('../../assets/img/background.png')}>
+                    <View style={
+                        { flex: 3, backgroundColor: '#297dec' }
+                    }>
+                            <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
+                                <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Medication Add\n`}</Text>
+                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
+                            </Text>
+                        </View>
 
-                            <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 20 }]}>
-                                <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Drug Name*</Label>
-                                <Input
-                                    value={this.state.notes}
-                                    onChangeText={val => this.setState({ drugName: val })}
-                                    style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
-                            </Item>
-                            <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 10 }]}>
-                                <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Drug Brand*</Label>
-                                <Input
-                                    value={this.state.notes}
-                                    onChangeText={val => this.setState({ drugBrand: val })}
-                                    style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
-                            </Item>
+                        <View style={{ flex: 8, paddingHorizontal: 18, marginTop: 33 }}>
+                            <KeyboardAwareScrollView style={[{ backgroundColor: '#fff', borderRadius: 5, }]}>
 
-                            <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 10 }]}>
-                                <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Drug SKU*</Label>
-                                <Input
-                                    value={this.state.notes}
-                                    onChangeText={val => this.setState({ drugSku: val })}
-                                    style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
-                            </Item>
+                                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 20 }]}>
+                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Drug Name*</Label>
+                                    <Input
+                                        value={this.state.notes}
+                                        onChangeText={val => this.setState({ drugName: val })}
+                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
+                                </Item>
+                                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 10 }]}>
+                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Drug Brand*</Label>
+                                    <Input
+                                        value={this.state.notes}
+                                        onChangeText={val => this.setState({ drugBrand: val })}
+                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
+                                </Item>
 
-                            <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 10 }]}>
-                                <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Description</Label>
-                                <Input
-                                    value={this.state.notes}
-                                    onChangeText={val => this.setState({ description: val })}
-                                    multiline={true}
-                                    style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
-                            </Item>
-                        </KeyboardAwareScrollView>
+                                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 10 }]}>
+                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Drug SKU*</Label>
+                                    <Input
+                                        value={this.state.notes}
+                                        onChangeText={val => this.setState({ drugSku: val })}
+                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
+                                </Item>
 
-                    </View>
+                                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 10 }]}>
+                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Description</Label>
+                                    <Input
+                                        value={this.state.notes}
+                                        onChangeText={val => this.setState({ description: val })}
+                                        multiline={true}
+                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
+                                </Item>
+                            </KeyboardAwareScrollView>
 
-                    <View
-                        style={[
-                            CommonStyles.fitToBottom,
-                            CommonStyles.horizontalContainer,
-                            {
-                                backgroundColor: '#F7FAFE',
-                                borderTopRightRadius: 5,
-                                borderTopStartRadius: 5,
-                                borderTopWidth: 3,
-                                borderColor: '#FFF'
-                            },
-                        ]}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                this._saveMedication();
-                            }}
+                        </View>
+
+                        <View
                             style={[
-                                CommonStyles.container,
-                                CommonStyles.centerText,
-                                { borderRightWidth: 0.5, borderColor: '#cfd2d6' },
-                            ]}
-                        >
-                            <Text
-
+                                CommonStyles.fitToBottom,
+                                CommonStyles.horizontalContainer,
+                                {
+                                    backgroundColor: '#F7FAFE',
+                                    borderTopRightRadius: 5,
+                                    borderTopStartRadius: 5,
+                                    borderTopWidth: 3,
+                                    borderColor: '#FFF'
+                                },
+                            ]}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this._saveMedication();
+                                }}
                                 style={[
-                                    CommonStyles.fontRegular,
-                                    CommonStyles.textSizeNormal,
+                                    CommonStyles.container,
                                     CommonStyles.centerText,
-                                    CommonStyles.margin,
-                                    CommonStyles.padding,
-                                    { opacity: 0.5 },
-                                ]}>
-                                SAVE
+                                    { borderRightWidth: 0.5, borderColor: '#cfd2d6' },
+                                ]}
+                            >
+                                <Text
+
+                                    style={[
+                                        CommonStyles.fontRegular,
+                                        CommonStyles.textSizeNormal,
+                                        CommonStyles.centerText,
+                                        CommonStyles.margin,
+                                        CommonStyles.padding,
+                                        { opacity: 0.5 },
+                                    ]}>
+                                    SAVE
+                                 </Text>
+                            </TouchableOpacity>
+                        </View>
+
+                        <Loader loading={this.state.isLoading} />
+
+                        <View
+                            style={[
+                                CommonStyles.backButtonStyle
+                            ]}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.props.navigation.goBack();
+                                }}>
+                                <Icon
+                                    name="arrow-back"
+                                    type="MaterialIcons"
+                                    style={{ fontSize: 26, color: '#FFF' }}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </ImageBackground>
+                </View>
+            );
+        } else {
+            return (
+
+                <View style={[CommonStyles.container]}>
+
+                    <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/img/bwback.png')}>
+                        <View style={{ flex: 2.3 }}>
+                            <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
+                                <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Medication Add\n`}</Text>
+                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
+                            </Text>
+                        </View>
+
+                        <View style={{ flex: 8, paddingHorizontal: 18, marginTop: 33 }}>
+                            <KeyboardAwareScrollView style={[{ backgroundColor: '#fff', borderRadius: 5, }]}>
+
+                                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 20 }]}>
+                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Drug Name*</Label>
+                                    <Input
+                                        value={this.state.notes}
+                                        onChangeText={val => this.setState({ drugName: val })}
+                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
+                                </Item>
+                                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 10 }]}>
+                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Drug Brand*</Label>
+                                    <Input
+                                        value={this.state.notes}
+                                        onChangeText={val => this.setState({ drugBrand: val })}
+                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
+                                </Item>
+
+                                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 10 }]}>
+                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Drug SKU*</Label>
+                                    <Input
+                                        value={this.state.notes}
+                                        onChangeText={val => this.setState({ drugSku: val })}
+                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
+                                </Item>
+
+                                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 10 }]}>
+                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Description</Label>
+                                    <Input
+                                        value={this.state.notes}
+                                        onChangeText={val => this.setState({ description: val })}
+                                        multiline={true}
+                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
+                                </Item>
+                            </KeyboardAwareScrollView>
+
+                        </View>
+
+                        <View
+                            style={[
+                                CommonStyles.fitToBottom,
+                                CommonStyles.horizontalContainer,
+                                {
+                                    backgroundColor: '#F7FAFE',
+                                    borderTopRightRadius: 5,
+                                    borderTopStartRadius: 5,
+                                    borderTopWidth: 3,
+                                    borderColor: '#FFF'
+                                },
+                            ]}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this._saveMedication();
+                                }}
+                                style={[
+                                    CommonStyles.container,
+                                    CommonStyles.centerText,
+                                    { borderRightWidth: 0.5, borderColor: '#cfd2d6' },
+                                ]}
+                            >
+                                <Text
+
+                                    style={[
+                                        CommonStyles.fontRegular,
+                                        CommonStyles.textSizeNormal,
+                                        CommonStyles.centerText,
+                                        CommonStyles.margin,
+                                        CommonStyles.padding,
+                                        { opacity: 0.5 },
+                                    ]}>
+                                    SAVE
                              </Text>
-                        </TouchableOpacity>
-                    </View>
+                            </TouchableOpacity>
+                        </View>
 
-                    <Loader loading={this.state.isLoading} />
+                        <Loader loading={this.state.isLoading} />
 
-                    <View
-                        style={[
-                            CommonStyles.backButtonStyle
-                        ]}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                this.props.navigation.goBack();
-                            }}>
-                            <Icon
-                                name="arrow-back"
-                                type="MaterialIcons"
-                                style={{ fontSize: 26, color: '#FFF' }}
-                            />
-                        </TouchableOpacity>
-                    </View>
-                </ImageBackground>
-            </View>
-        );
+                        <View
+                            style={[
+                                CommonStyles.backButtonStyle
+                            ]}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.props.navigation.goBack();
+                                }}>
+                                <Icon
+                                    name="arrow-back"
+                                    type="MaterialIcons"
+                                    style={{ fontSize: 26, color: '#FFF' }}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </ImageBackground>
+                </View>
+            );
+        }
     }
 }

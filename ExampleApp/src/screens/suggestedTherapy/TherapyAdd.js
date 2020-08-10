@@ -44,12 +44,19 @@ export default class TherapyAdd extends Component {
             });
     };
     render() {
+
+        if (this.props.route.params.appointmentId != null) { } else {}
         return (
 
-            <View style={[CommonStyles.container]}>
-
-                <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/img/bwback.png')}>
-                    <View style={{ flex: 2.3 }}>
+            <View style={{ height: '75%' }}>
+            <ImageBackground style={[
+                CommonStyles.container,
+                CommonStyles.backgroundImage
+            ]}
+                source={require('../../assets/img/background.png')}>
+                <View style={
+                    { flex: 3, backgroundColor: '#297dec' }
+                }>
                         <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
                             <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Therapy Add\n`}</Text>
                             <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>

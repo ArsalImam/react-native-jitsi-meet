@@ -99,7 +99,7 @@ class Login extends Component {
                       {
                         fontSize: 32,
                         color: '#FFF',
-                        marginHorizontal: 10,
+                        marginRight: 15,
                         
                       },
                     ]}>to

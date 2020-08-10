@@ -146,6 +146,7 @@ class Dashboard extends React.Component {
   console.warn(this.state.role);
     return (
       <View style={[CommonStyles.container]}>
+         <StatusBar translucent backgroundColor='transparent' barStyle={'dark-content'} />
         <ImageBackground
           style={[CommonStyles.container, CommonStyles.backgroundImage]}
           source={require('../../assets/img/background.png')}>

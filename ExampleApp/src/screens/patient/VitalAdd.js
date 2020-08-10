@@ -15,7 +15,7 @@ export default class VitalAdd extends Component {
             selected: ""
         };
     }
-    _createVitals(){
+    _createVitals() {
 
     }
     onValueChange(value) {
@@ -39,55 +39,237 @@ export default class VitalAdd extends Component {
         }
     }
     render() {
-        return (
 
-            <View style={[CommonStyles.container]}>
+        if (this.props.route.params.appointmentId != null) {
 
-                <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/img/bwback.png')}>
-                    <View style={{ flex: 2.3 }}>
-                        <Text style={[CommonStyles.fontRegular, { marginTop: 65, paddingHorizontal: 18 }]}>
-                            <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Vital Add\n`}</Text>
-                            <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
-                        </Text>
-                    </View>
+            return (
 
-                    <View style={{ flex: 8, paddingHorizontal: 18, marginTop: 33 }}>
-                        <KeyboardAwareScrollView style={[styles.View2, { backgroundColor: '#fff', borderRadius: 5, }]}>
-                            <Item
-                                picker
+                <View style={{ height: '75%' }}>
+                <ImageBackground style={[
+                    CommonStyles.container,
+                    CommonStyles.backgroundImage
+                ]}
+                    source={require('../../assets/img/background.png')}>
+                    <View style={
+                        { flex: 3, backgroundColor: '#297dec' }
+                    }>
+                            <Text style={[CommonStyles.fontRegular, { marginTop: 65, paddingHorizontal: 18 }]}>
+                                <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Vital Add\n`}</Text>
+                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
+                            </Text>
+                        </View>
+
+                        <View style={{ flex: 8, paddingHorizontal: 18, marginTop: 33 }}>
+                            <KeyboardAwareScrollView style={[styles.View2, { backgroundColor: '#fff', borderRadius: 5, }]}>
+                                <Item
+                                    picker
+                                    style={[
+                                        CommonStyles.container,
+                                        CommonStyles.itemStyle,
+                                        { marginVertical: 10, paddingTop: 10 },
+                                    ]}>
+                                    <Picker
+                                        mode="dropdown"
+                                        iosIcon={<Icon name="arrow-down" />}
+
+                                        placeholder="Choose Frequency"
+                                        placeholderStyle={{ color: '#bfc6ea' }}
+                                        placeholderIconColor="#007aff"
+                                        selectedValue={this.state.selected}
+                                        onValueChange={this.onValueChange.bind(this)}>
+                                        <Picker.Item
+                                            color="gray"
+                                            selected={false}
+                                            label="Select Vital Type"
+                                            value=""
+                                        />
+                                        <Picker.Item label="Blood Glucose" value="key0" />
+                                        <Picker.Item label="Blood Pressure" value="key1" />
+                                        <Picker.Item label="Blood Oxygen" value="key2" />
+                                    </Picker>
+                                </Item>
+                                {this.clickme(this.state.selected)}
+
+                                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle]}>
+                                    <Label style={[{ color: '#333333' }, CommonStyles.fontRegular, CommonStyles.textSizeSmall]} >Notes*</Label>
+                                    <Input />
+                                </Item>
+
+                                {/* <View style={{ width: '88%', height: 80, flexDirection: 'row', justifyContent: 'space-between', alignSelf: 'center' }}>
+    
+                                    <Item stackedLabel style={[styles.itemStyle, { alignSelf: 'center', width: '46%' }]}>
+                                        <Label style={[{ color: '#333333' }, CommonStyles.DINProLight, CommonStyles.textSizeSmall]} >Weight</Label>
+                                        <Input />
+                                    </Item>
+    
+                                    <Item stackedLabel style={[styles.itemStyle, { alignSelf: 'center', width: '46%' }]}>
+    
+                                        <Label style={[{ color: '#333333' }, CommonStyles.DINProLight, CommonStyles.textSizeSmall]} >Height</Label>
+                                        <Input />
+                                    </Item>
+    
+                                </View>
+    
+                                <View style={{ width: '88%', height: 80, flexDirection: 'row', justifyContent: 'space-between', alignSelf: 'center' }}>
+    
+                                    <Item stackedLabel style={[styles.itemStyle, { alignSelf: 'center', width: '46%' }]}>
+                                        <Label style={[{ color: '#333333' }, CommonStyles.DINProLight, CommonStyles.textSizeSmall]} >Temperature</Label>
+                                        <Input />
+                                    </Item>
+    
+                                    <Item stackedLabel style={[styles.itemStyle, { alignSelf: 'center', width: '46%' }]}>
+    
+                                        <Label style={[{ color: '#333333' }, CommonStyles.DINProLight, CommonStyles.textSizeSmall]} >Temperature Method</Label>
+                                        <Input />
+                                    </Item>
+    
+                                </View>
+    
+                                <View style={{ width: '88%', height: 80, flexDirection: 'row', justifyContent: 'space-between', alignSelf: 'center' }}>
+    
+                                    <Item stackedLabel style={[styles.itemStyle, { alignSelf: 'center', width: '46%' }]}>
+                                        <Label style={[{ color: '#333333' }, CommonStyles.DINProLight, CommonStyles.textSizeSmall]} >Pulse</Label>
+                                        <Input />
+                                    </Item>
+    
+                                    <Item stackedLabel style={[styles.itemStyle, { alignSelf: 'center', width: '46%' }]}>
+                                        <Label style={[{ color: '#333333' }, CommonStyles.DINProLight, CommonStyles.textSizeSmall]} >Respiration</Label>
+                                        <Input />
+                                    </Item>
+    
+                                </View>
+    
+                                <Item stackedLabel style={[styles.itemStyle, { alignSelf: 'center', width: '88%' }]}>
+    
+                                    <Label style={[{ color: '#333333' }, CommonStyles.DINProLight, CommonStyles.textSizeSmall]} >Waist Circumstances</Label>
+                                    <Input />
+                                </Item>
+    
+    
+    
+                                <Item stackedLabel style={[styles.itemStyle, { alignSelf: 'center', width: '88%' }]}>
+                                    <Label style={[CommonStyles.DINProRegular, CommonStyles.textSizeSmall,]} >Head Circumstances</Label>
+    
+                                    <Input multiline />
+                                </Item> */}
+
+
+                            </KeyboardAwareScrollView>
+
+
+
+                        </View>
+
+                        <View
+                            style={[
+                                CommonStyles.fitToBottom,
+                                CommonStyles.horizontalContainer,
+                                {
+                                    backgroundColor: '#F7FAFE',
+                                    borderTopRightRadius: 5,
+                                    borderTopStartRadius: 5,
+                                    borderTopWidth: 3,
+                                    borderColor: '#FFF'
+                                },
+                            ]}>
+                            <TouchableOpacity
                                 style={[
                                     CommonStyles.container,
-                                    CommonStyles.itemStyle,
-                                    { marginVertical: 10, paddingTop: 10 },
-                                ]}>
-                                <Picker
-                                    mode="dropdown"
-                                    iosIcon={<Icon name="arrow-down" />}
+                                    CommonStyles.centerText,
+                                    { borderRightWidth: 0.5, borderColor: '#cfd2d6' },
+                                ]}
+                            >
+                                <Text
+                                    onPress={() => { this._createVitals() }}
+                                    style={[
+                                        CommonStyles.fontRegular,
+                                        CommonStyles.textSizeNormal,
+                                        CommonStyles.centerText,
+                                        CommonStyles.margin,
+                                        CommonStyles.padding,
+                                        { opacity: 0.5 },
+                                    ]}>
+                                    SAVE
+                                 </Text>
+                            </TouchableOpacity>
+                        </View>
 
-                                    placeholder="Choose Frequency"
-                                    placeholderStyle={{ color: '#bfc6ea' }}
-                                    placeholderIconColor="#007aff"
-                                    selectedValue={this.state.selected}
-                                    onValueChange={this.onValueChange.bind(this)}>
-                                    <Picker.Item
-                                        color="gray"
-                                        selected={false}
-                                        label="Select Vital Type"
-                                        value=""
-                                    />
-                                    <Picker.Item label="Blood Glucose" value="key0" />
-                                    <Picker.Item label="Blood Pressure" value="key1" />
-                                    <Picker.Item label="Blood Oxygen" value="key2" />
-                                </Picker>
-                            </Item>
-                            {this.clickme(this.state.selected)}
 
-                            <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle]}>
-                                <Label style={[{ color: '#333333' }, CommonStyles.fontRegular, CommonStyles.textSizeSmall]} >Notes*</Label>
-                                <Input />
-                            </Item>
 
-                            {/* <View style={{ width: '88%', height: 80, flexDirection: 'row', justifyContent: 'space-between', alignSelf: 'center' }}>
+                        <View
+                            style={[
+                                {
+                                    position: 'absolute',
+                                    left: 16,
+                                    top: 40,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                },
+                            ]}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.props.navigation.goBack();
+                                }}>
+                                <Icon
+                                    name="arrow-back"
+                                    type="MaterialIcons"
+                                    style={{ fontSize: 26, color: '#FFF' }}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </ImageBackground>
+                </View>
+            );
+        } else {
+            return (
+
+                <View style={[CommonStyles.container]}>
+
+                    <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/img/bwback.png')}>
+                        <View style={{ flex: 2.3 }}>
+                            <Text style={[CommonStyles.fontRegular, { marginTop: 65, paddingHorizontal: 18 }]}>
+                                <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Vital Add\n`}</Text>
+                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
+                            </Text>
+                        </View>
+
+                        <View style={{ flex: 8, paddingHorizontal: 18, marginTop: 33 }}>
+                            <KeyboardAwareScrollView style={[styles.View2, { backgroundColor: '#fff', borderRadius: 5, }]}>
+                                <Item
+                                    picker
+                                    style={[
+                                        CommonStyles.container,
+                                        CommonStyles.itemStyle,
+                                        { marginVertical: 10, paddingTop: 10 },
+                                    ]}>
+                                    <Picker
+                                        mode="dropdown"
+                                        iosIcon={<Icon name="arrow-down" />}
+
+                                        placeholder="Choose Frequency"
+                                        placeholderStyle={{ color: '#bfc6ea' }}
+                                        placeholderIconColor="#007aff"
+                                        selectedValue={this.state.selected}
+                                        onValueChange={this.onValueChange.bind(this)}>
+                                        <Picker.Item
+                                            color="gray"
+                                            selected={false}
+                                            label="Select Vital Type"
+                                            value=""
+                                        />
+                                        <Picker.Item label="Blood Glucose" value="key0" />
+                                        <Picker.Item label="Blood Pressure" value="key1" />
+                                        <Picker.Item label="Blood Oxygen" value="key2" />
+                                    </Picker>
+                                </Item>
+                                {this.clickme(this.state.selected)}
+
+                                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle]}>
+                                    <Label style={[{ color: '#333333' }, CommonStyles.fontRegular, CommonStyles.textSizeSmall]} >Notes*</Label>
+                                    <Input />
+                                </Item>
+
+                                {/* <View style={{ width: '88%', height: 80, flexDirection: 'row', justifyContent: 'space-between', alignSelf: 'center' }}>
 
                                 <Item stackedLabel style={[styles.itemStyle, { alignSelf: 'center', width: '46%' }]}>
                                     <Label style={[{ color: '#333333' }, CommonStyles.DINProLight, CommonStyles.textSizeSmall]} >Weight</Label>
@@ -146,72 +328,73 @@ export default class VitalAdd extends Component {
                             </Item> */}
 
 
-                        </KeyboardAwareScrollView>
+                            </KeyboardAwareScrollView>
 
 
 
-                    </View>
+                        </View>
 
-                    <View
-                        style={[
-                            CommonStyles.fitToBottom,
-                            CommonStyles.horizontalContainer,
-                            {
-                                backgroundColor: '#F7FAFE',
-                                borderTopRightRadius: 5,
-                                borderTopStartRadius: 5,
-                                borderTopWidth: 3,
-                                borderColor: '#FFF'
-                            },
-                        ]}>
-                        <TouchableOpacity
+                        <View
                             style={[
-                                CommonStyles.container,
-                                CommonStyles.centerText,
-                                { borderRightWidth: 0.5, borderColor: '#cfd2d6' },
-                            ]}
-                        >
-                            <Text
-onPress={()=>{this._createVitals()}}
+                                CommonStyles.fitToBottom,
+                                CommonStyles.horizontalContainer,
+                                {
+                                    backgroundColor: '#F7FAFE',
+                                    borderTopRightRadius: 5,
+                                    borderTopStartRadius: 5,
+                                    borderTopWidth: 3,
+                                    borderColor: '#FFF'
+                                },
+                            ]}>
+                            <TouchableOpacity
                                 style={[
-                                    CommonStyles.fontRegular,
-                                    CommonStyles.textSizeNormal,
+                                    CommonStyles.container,
                                     CommonStyles.centerText,
-                                    CommonStyles.margin,
-                                    CommonStyles.padding,
-                                    { opacity: 0.5 },
-                                ]}>
-                                SAVE
+                                    { borderRightWidth: 0.5, borderColor: '#cfd2d6' },
+                                ]}
+                            >
+                                <Text
+                                    onPress={() => { this._createVitals() }}
+                                    style={[
+                                        CommonStyles.fontRegular,
+                                        CommonStyles.textSizeNormal,
+                                        CommonStyles.centerText,
+                                        CommonStyles.margin,
+                                        CommonStyles.padding,
+                                        { opacity: 0.5 },
+                                    ]}>
+                                    SAVE
                              </Text>
-                        </TouchableOpacity>
-                    </View>
+                            </TouchableOpacity>
+                        </View>
 
 
 
-                    <View
-                        style={[
-                            {
-                                position: 'absolute',
-                                left: 16,
-                                top: 40,
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            },
-                        ]}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                this.props.navigation.goBack();
-                            }}>
-                            <Icon
-                                name="arrow-back"
-                                type="MaterialIcons"
-                                style={{ fontSize: 26, color: '#FFF' }}
-                            />
-                        </TouchableOpacity>
-                    </View>
-                </ImageBackground>
-            </View>
-        );
+                        <View
+                            style={[
+                                {
+                                    position: 'absolute',
+                                    left: 16,
+                                    top: 40,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                },
+                            ]}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.props.navigation.goBack();
+                                }}>
+                                <Icon
+                                    name="arrow-back"
+                                    type="MaterialIcons"
+                                    style={{ fontSize: 26, color: '#FFF' }}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </ImageBackground>
+                </View>
+            );
+        }
     }
 }
 
