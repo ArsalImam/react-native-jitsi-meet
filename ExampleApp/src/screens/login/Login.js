@@ -51,7 +51,8 @@ class Login extends Component {
     this.showLoader();
 
     Api.instance()
-      .login(this.state.email, this.state.password)
+      // .login(this.state.email, this.state.password)
+      .login('admin@gmail.com', 'abc123')
       .then(data => {
         this.props.navigation.replace('MyDrawer', { user: data.user });
       })

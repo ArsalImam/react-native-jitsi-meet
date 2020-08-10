@@ -6,7 +6,7 @@ import { Container, Header, Content, List, ListItem, Text, Icon, Left } from 'na
 import DrawerHeader from './AppHeader';
 import { CommonActions } from '@react-navigation/native';
 import {Roles} from '../.././Configs';
-
+import RealtimeDatabase from '../../RealtimeDatabase';
 
 
 export default class Sidebar extends Component {
@@ -37,7 +37,7 @@ export default class Sidebar extends Component {
         </ListItem>
 
         <ListItem
-          button={true} onPress={() => { this.props.changeScreenHandler.navigate('PatientHistoryList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) }} >
+          button={true} onPress={() => { this.props.changeScreenHandler.navigate('PatientHistoryList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
           <Left>
             <Icon active name='history' type='FontAwesome' style={{ fontSize: 21}} />
             <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>History Form</Text>
