@@ -1,3 +1,282 @@
+// import React, { Component } from 'react';
+// import { CommonActions } from '@react-navigation/native';
+// import {
+//   ImageBackground,
+//   ScrollView,
+//   StyleSheet,
+//   TouchableOpacity,
+//   View,
+// } from 'react-native';
+// import { Icon, Input, Item, Label, Picker, Text } from 'native-base';
+// import Api from '../../Api';
+// import CommonStyles from '../../CommonStyles';
+// import Loader from '../../components/Loader';
+// import { DatePicker, TimePicker } from 'react-native-propel-kit';
+// import { ViewUtils } from '../../Utils'
+// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+// export default class CreateClinic extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//     startTime:new Date(),
+//     endTime:new Date(),
+//     selectDate:new Date(),
+//     weeks:'',
+//     title:'',
+//     chooseFrequency:'',
+//     appointmentSlots:'',
+//     };
+//   }
+
+//   render() {
+//     return (
+//       <View style={[CommonStyles.container]}>
+//         <ImageBackground
+//           style={[CommonStyles.container, CommonStyles.backgroundImage]}
+//           source={require('../../assets/img/bwback.png')}>
+          
+//           <View style={{ flex: 2}}>
+//             <Text style={{ paddingLeft: 18, marginTop: 65 }}>
+//               <Text
+//                 style={[
+//                   CommonStyles.fontRegular,
+//                   CommonStyles.textSizeLarge,
+//                   CommonStyles.textColorWhite,
+//                 ]}>{`Create Clinic\n`}</Text>
+//               <Text
+//                 style={[
+//                   CommonStyles.fontRegular,
+//                   CommonStyles.textSizeAverage,
+//                   CommonStyles.textColorWhite
+//                 ]}>
+//                 to create clinic{' '}
+//               </Text>
+//             </Text>
+//           </View>
+
+//           <View style={{ flex: 8 }}>
+//             <KeyboardAwareScrollView
+//               style={[
+//                 {
+//                   marginTop: 33,
+//                   alignSelf: 'center',
+//                   width: '90%',
+//                   backgroundColor: '#fff',
+//                   borderRadius: 5,
+//                 },
+//               ]}>
+//               <Item
+//                 style={[
+//                   CommonStyles.container,
+//                   CommonStyles.itemStyle,
+//                   { paddingTop: 25 },
+//                 ]}>
+//  <DatePicker style={{ color: 'black', marginTop: 10 }} value={this.state.selectDate} onChange={date => {
+//                         this.setState({ selectDate: date })
+//                       }} />
+//                 <Icon active name="calendar" style={{ marginLeft: 20 }} />
+//               </Item>
+
+//               <Item
+//                 stackedLabel
+
+//                 style={[CommonStyles.container, CommonStyles.itemStyle]}
+//               >
+//             <TimePicker style={{paddingVertical:10,paddingHorizontal:10, color: 'grey', height: '100%', width: '100%', textAlign: 'center', alignContent: 'center' }} value={this.state.startTime} onChange={date => {
+//                         this.setState({ startTime: date })
+//                       }} />
+//               </Item>
+
+//               <Item
+//                 stackedLabel
+//                 style={[CommonStyles.container, CommonStyles.itemStyle]}
+//               >
+//                 <TimePicker style={{paddingVertical:10,paddingHorizontal:10, color: 'grey', height: '100%', width: '100%', textAlign: 'center', alignContent: 'center' }} value={this.state.endTime} onChange={date => {
+//                         this.setState({ endTime: date })
+//                       }} />
+
+//               </Item>
+
+//               <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle]}>
+//                 <Label
+//                   style={[
+//                     CommonStyles.fontRegular,
+//                     CommonStyles.textSizeAverage,
+//                   ]}>
+//                   Number of Weeks
+//                   </Label>
+//                 <Input
+//                   name="clinics"
+//                   value={this.state.numberOfClinics}
+//                   onChangeText={val => this.setState({ numberOfClinics: val })}
+//                   keyboardType="number-pad"
+//                 />
+//               </Item>
+
+//               <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle]}>
+//                 <Label
+//                   style={[
+//                     CommonStyles.fontRegular,
+//                     CommonStyles.textSizeAverage,
+//                   ]}>
+//                   Title
+//                   </Label>
+//                 <Input
+//                   value={this.state.clinicTitle}
+//                   onChangeText={val => this.setState({ clinicTitle: val })}
+//                 />
+//               </Item>
+
+//               <Item
+//                 picker
+//                 style={[
+//                   CommonStyles.container,
+//                   CommonStyles.itemStyle,
+//                   { paddingTop: 10 },
+//                 ]}>
+//                 {/* <Picker
+//                   mode="dropdown"
+//                   iosIcon={<Icon name="arrow-down" />}
+//                   style={[CommonStyles.container, CommonStyles.itemStyle]}
+//                   textStyle={[
+//                     CommonStyles.fontRegular,
+//                     CommonStyles.textSizeAverage,
+//                     {
+//                       textAlign: 'left',
+//                       alignSelf: 'flex-start'
+//                     }
+//                   ]}
+//                   placeholder="Choose Frequency"
+//                   placeholderStyle={[
+//                     CommonStyles.fontRegular,
+//                     CommonStyles.textSizeAverage,
+//                     { color: '#bfc6ea', marginLeft: -14 },
+//                   ]}
+//                   placeholderIconColor="#007aff"
+//                   selectedValue={this.state.clinicFrequency}
+//                   onValueChange={this.onValueChange.bind(this)}>
+//                   <Picker.Item
+//                     color="gray"
+//                     selected={false}
+//                     label="Choose Frequency"
+//                     value=""
+//                   />
+
+//                   <Picker.Item label="One Off" value="172799000" />
+//                   <Picker.Item label="Every Week" value="604799000" />
+//                   <Picker.Item label="Alternate Week" value="1209599000" />
+//                   <Picker.Item label="Every Day" value="86399000" />
+//                 </Picker> */}
+//               </Item>
+
+//               <Item
+//                 picker
+//                 style={[
+//                   CommonStyles.container,
+//                   CommonStyles.itemStyle,
+//                   { paddingTop: 10 },
+//                 ]}>
+//                 {/* <Picker
+//                   mode="dropdown"
+//                   iosIcon={<Icon name="arrow-down" />}
+//                   style={{ width: '92%' }}
+//                   placeholder="Choose Frequency"
+//                   placeholderStyle={{ color: '#bfc6ea' }}
+//                   placeholderIconColor="#007aff"
+//                   selectedValue={this.state.appointmentSlots}
+//                   onValueChange={this.handleInputChangeSlots.bind(this)}>
+//                   <Picker.Item
+//                     color="gray"
+//                     selected={false}
+//                     label="Appointment Slots"
+//                     value=""
+//                   />
+//                   <Picker.Item label="5 Minutes" value="300000" />
+//                   <Picker.Item label="10 Minutes" value="600000" />
+//                   <Picker.Item label="15 Minutes" value="900000" />
+//                   <Picker.Item label="20 Minutes" value="1200000" />
+//                   <Picker.Item label="30 Minutes" value="1800000" />
+//                 </Picker> */}
+//               </Item>
+//             </KeyboardAwareScrollView>
+//           </View>
+
+//           <View
+//             style={[
+//               CommonStyles.fitToBottom,
+//               CommonStyles.horizontalContainer,
+//               {
+//                 backgroundColor: '#F7FAFE',
+//                 borderTopRightRadius: 5,
+//                 borderTopStartRadius: 5,
+//                 borderTopWidth: 3,
+//                 borderColor: '#FFF'
+//               },
+//             ]}>
+//             <TouchableOpacity
+//               style={[
+//                 CommonStyles.container,
+//                 CommonStyles.centerText,
+//                 { borderRightWidth: 0.5, borderColor: '#cfd2d6' },
+//               ]}
+//               onPress={() => {
+//                 this.createClinic();
+//               }}>
+//               <Text
+
+//                 style={[
+//                   CommonStyles.fontRegular,
+//                   CommonStyles.textSizeNormal,
+//                   CommonStyles.centerText,
+//                   CommonStyles.margin,
+//                   CommonStyles.padding,
+//                   { opacity: 0.5 },
+//                 ]}>
+//                 CREATE
+//             </Text>
+//             </TouchableOpacity>
+//           </View>
+//           {/* <Loader loading={this.state.isLoading} /> */}
+//           <View
+//             style={[
+//               {
+//                 position: 'absolute',
+//                 left: 16,
+//                 top: 40,
+//                 justifyContent: 'center',
+//                 alignItems: 'center',
+//               },
+//             ]}>
+//             <TouchableOpacity
+//               onPress={() => {
+//                 this.props.navigation.goBack();
+//               }}>
+//               <Icon
+//                 name="arrow-back"
+//                 type="MaterialIcons"
+//                 style={{ fontSize: 26, color: '#FFF' }}
+//               />
+//             </TouchableOpacity>
+//           </View>
+//         </ImageBackground>
+//       </View>
+//     );
+//   }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+////old/////
 import React, { Component } from 'react';
 import { CommonActions } from '@react-navigation/native';
 import {

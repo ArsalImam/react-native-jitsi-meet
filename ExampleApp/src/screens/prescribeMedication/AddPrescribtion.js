@@ -24,6 +24,11 @@ export default class AddPrescribtion extends Component {
             endDate: '',
             notes: '',
             appointmentId: this.props.route.params.appointmentId,
+            patientId: this.props.route.params.patientId,
+
+            // patientId,
+            // patientId,
+
         };
     }
 
@@ -33,7 +38,7 @@ export default class AddPrescribtion extends Component {
             // "setupId": "",
             // "doctorId": "5f01d90dffd17912ce896c56",
             // "assistantId": "",
-            "patientId": this.props.route.params.patientId,
+            "patientId": this.state.patientId,
             "appointmentId": this.state.appointmentId,
             "answer": "",
             "medication": this.state.medicine,
@@ -52,7 +57,7 @@ export default class AddPrescribtion extends Component {
 
         }
 
-
+console.warn('data',data)
         this.setState({ isLoading: true })
 
         Api.instance()
@@ -73,9 +78,10 @@ export default class AddPrescribtion extends Component {
 
     addToConsultation(item) {
 
-        Api.instance().addPrescribeMedication(item, this.state.appointmentId)
+        Api.instance().addPrescribeMedication(item, this.state.appointmentId ,this.state.patientId)
+
             .then(response => {
-                console.warn(response)
+                console.warn('response' , response)
                 ViewUtils.showToast('Medication has been added to Prescription');
 
             }).catch(err => {

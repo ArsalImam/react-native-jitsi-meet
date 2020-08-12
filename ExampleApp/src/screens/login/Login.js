@@ -37,15 +37,23 @@ class Login extends Component {
   componentDidMount() { }
 
   componentWillMount() {
-
     // Api.instance()
-    //   ._user()
-    //   .then(token => {
-    //     if (token == null) return;
-    //     console.warn("token", token)
-    //     this.props.navigation.navigate('MyDrawer')
+    // ._user()
+    // .then(token => {
+    //   console.warn("token", token)
+    //   this.props.navigation.replace('MyDrawer')
 
-    //   })
+    // })
+    AsyncStorage.getItem('@user').then(token => {
+      console.log('token', token);
+
+      if (token) {
+        console.log('token', token);
+        this.props.navigation.navigate('MyDrawer');
+      } else {
+        console.log('error', error);
+      }
+    });
   }
   _submitForm = () => {
     
@@ -120,8 +128,8 @@ class Login extends Component {
 
                   <View
                     style={{
-                      width: 200,
-                      height: 70,
+                      width: 203,
+                      height: 75,
                       marginTop: -20,
                       marginHorizontal: 5,
                     }}>
@@ -132,25 +140,13 @@ class Login extends Component {
                         CommonStyles.backgroundImage,
                         { width: '100%', height: '100%' },
                       ]}
-                      source={require('../../assets/img/etiblogo.png')}
+                      source={require('../../assets/img/etibb_logo_final_01.png')}
                     />
                   </View>
                 </View>
               </View>
-              {/* <Text
-                style={[
-                  CommonStyles.textSizeAverage,
-                  CommonStyles.textColorWhite,
-                  {marginTop: 5},
-                ]}>
-                Please enter your details to get the latest
-                {'\n'}
-                information about your health and consult with
-                {'\n'}
-                your doctorrightaway !!!
-              </Text> */}
-
-              <View style={{ marginTop: 60 }}>
+              <View style={{marginTop: 145}}>
+                <View>
                 <Item regular style={CommonStyles.loginItemStyle}>
                   <Input
                     value={this.state.email}
@@ -192,16 +188,16 @@ class Login extends Component {
                       CommonStyles.textSizeNormal,
                     ]}
                   />
-                  {/* <TouchableOpacity> */}
                   <Icon
                     onPress={() => this.setPasswordVisibility()}
                     name="eye"
                     style={{ color: '#fff', position: 'absolute', right: 5 }}
                   />
-                  {/* </TouchableOpacity> */}
                 </Item>
               </View>
-                <View style={{ flex: 1}}>
+
+              <View>
+                <View style={{width: 60, height: 20}}>
                   <Image
                     style={[
                       CommonStyles.mt10,
@@ -214,9 +210,19 @@ class Login extends Component {
                 </View>
              
 
-              <View style={[CommonStyles.container, { alignItems: 'center', justifyContent: 'flex-end', alignSelf: 'center', marginTop: '30%'}]}>
-                <Text style={[CommonStyles.fontRegular, { marginTop: 10, color: "white", fontSize: 12 }]}>Powered By Pharmevo</Text>
-                <View style={{ width: 107, height: 50 }}>
+              <View
+                style={[
+                  CommonStyles.container,
+                  {alignItems: 'center', marginTop: 60},
+                ]}>
+                <Text
+                  style={[
+                    CommonStyles.fontRegular,
+                    {marginTop: 10, color: 'white', fontSize: 12},
+                  ]}>
+                  Powered By Pharmevo
+                </Text>
+                <View style={{width: 107, height: 50}}>
                   <Image
                     style={[
                       // CommonStyles.mt10,
@@ -227,10 +233,9 @@ class Login extends Component {
                     source={require('../../assets/img/logo.png')}
                   />
                 </View>
-
               </View>
-
-
+              </View>
+            </View>
             </View>
           </KeyboardAwareScrollView>
         </ImageBackground>
