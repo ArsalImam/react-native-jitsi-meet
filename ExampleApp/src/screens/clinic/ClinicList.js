@@ -21,6 +21,8 @@ export default class ClinicList extends Component {
     componentDidMount() {
         Api.instance().getClinicList()
             .then((data) => {
+
+                console.warn('list aa rahi hai', data)
                 this.setState({ clinicList: data });
             }
             ).catch(err => console.log(err))

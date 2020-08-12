@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
+    "android": "./node_modules/.bin/react-native run-android",
     "link": "react-native link",
     "android:build:dev": "node_modules/.bin/react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/app.bundle --assets-dest android/app/src/main/res/ && cd android && ./gradlew assembleDebug",
     "ios": "react-native run-ios",
@@ -16,6 +16,7 @@
     "@react-native-community/datetimepicker": "^2.4.3",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-firebase/app": "^8.0.0",
+    "@react-native-firebase/database": "^7.4.1",
     "@react-native-firebase/messaging": "^7.2.1",
     "@react-navigation/bottom-tabs": "^5.6.1",
     "@react-navigation/drawer": "^5.8.2",

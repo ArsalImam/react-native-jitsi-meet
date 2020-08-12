@@ -7,7 +7,7 @@ const Configs = {
   //baseUrl: 'http://192.168.8.100:3001/api/',
 
  // baseUrl: 'http://192.168.100.47:3001/api/',
-  // baseUrl: 'http://18.140.239.105:3001/api/',
+  // baseUrl: 'http://51.83.237.63:3001/api/',
   
   baseUrl: 'http://18.140.243.171:3001/api/',
   // baseUrl: 'https://api.evotelemedicine.live/api/',

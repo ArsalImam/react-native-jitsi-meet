@@ -92,212 +92,222 @@ console.warn('data',data)
             });
     }
     render() {
-        return (
-            <View style={[CommonStyles.container]}>
 
-                <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/img/bwback.png')}>
-                    <View style={{ flex: 2.3 }}>
-                        <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
-                            <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Prescribe Medication\n`}</Text>
-                            <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
-                        </Text>
-                    </View>
-
-                    <View style={{ flex: 8, paddingHorizontal: 18, marginTop: 33 }}>
-                        <KeyboardAwareScrollView style={[{ backgroundColor: '#fff', borderRadius: 5, }]}>
-
-                            <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 20 }]}>
-                                <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Medicine</Label>
-                                <Input
-                                    value={this.state.medicine}
-                                    onChangeText={val => this.setState({ medicine: val })}
-                                    style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
-                            </Item>
-
-                            <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle]}>
-                                <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Strength</Label>
-                                <Input
-
-                                    value={this.state.strength}
-                                    onChangeText={val => this.setState({ strength: val })}
-                                    style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
-                            </Item>
-
-                            <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle]}>
-                                <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Dose</Label>
-                                <Input
-
-                                    value={this.state.dose}
-                                    onChangeText={val => this.setState({ dose: val })}
-                                    style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
-                            </Item>
-
-                            <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle]}>
-                                <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Frequency</Label>
-                                <Input
-
-                                    value={this.state.frequency}
-                                    onChangeText={val => this.setState({ frequency: val })}
-                                    style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
-                            </Item>
-
-                            <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle]}>
-                                <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Route</Label>
-                                <Input
-
-                                    value={this.state.route}
-                                    onChangeText={val => this.setState({ route: val })}
-                                    style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
-                            </Item>
+        if (this.state.appointmentId != null) {
+            return (
 
 
-                            <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle,]}>
-                                <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Reason</Label>
-                                <Input
+                <View style={{ height: '75%' }}>
+                    <ImageBackground style={[
+                        CommonStyles.container,
+                        CommonStyles.backgroundImage
+                    ]}
+                        source={require('../../assets/img/background.png')}>
+                        <View style={
+                            { flex: 3, backgroundColor: '#297dec' }
+                        }>
+                            <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
+                                <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Prescribe Medication\n`}</Text>
+                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
+                            </Text>
+                        </View>
 
-                                    value={this.state.reason}
-                                    onChangeText={val => this.setState({ reason: val })}
-                                    style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
-                            </Item>
+                        <View style={{ flex: 8, paddingHorizontal: 18, marginTop: 33 }}>
+                            <KeyboardAwareScrollView style={[{ backgroundColor: '#fff', borderRadius: 5, }]}>
+
+                                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 20 }]}>
+                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Medicine</Label>
+                                    <Input
+                                        value={this.state.medicine}
+                                        onChangeText={val => this.setState({ medicine: val })}
+                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
+                                </Item>
+
+                                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle]}>
+                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Strength</Label>
+                                    <Input
+
+                                        value={this.state.strength}
+                                        onChangeText={val => this.setState({ strength: val })}
+                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
+                                </Item>
+
+                                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle]}>
+                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Dose</Label>
+                                    <Input
+
+                                        value={this.state.dose}
+                                        onChangeText={val => this.setState({ dose: val })}
+                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
+                                </Item>
+
+                                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle]}>
+                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Frequency</Label>
+                                    <Input
+
+                                        value={this.state.frequency}
+                                        onChangeText={val => this.setState({ frequency: val })}
+                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
+                                </Item>
+
+                                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle]}>
+                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Route</Label>
+                                    <Input
+
+                                        value={this.state.route}
+                                        onChangeText={val => this.setState({ route: val })}
+                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
+                                </Item>
 
 
-                            <Label style={[{ marginTop: 10, alignSelf: 'center', width: '88%' }, CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>Start Date  </Label>
+                                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle,]}>
+                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Reason</Label>
+                                    <Input
+
+                                        value={this.state.reason}
+                                        onChangeText={val => this.setState({ reason: val })}
+                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
+                                </Item>
 
 
-                            <Item
-                                style={[
-                                    CommonStyles.container,
-                                    CommonStyles.itemStyle,
-
-                                ]}>
-                                <DatePicker
-                                    defaultDate={new Date()}
-                                    minimumDate={new Date()}
-                                    locale={'en'}
-                                    timeZoneOffsetInMinutes={undefined}
-                                    modalTransparent={false}
-                                    animationType={'fade'}
-                                    androidMode={'default'}
-
-                                    placeHolderText="mm/dd/yyyy"
-                                    textStyle={[CommonStyles.fontRegular]}
-                                    placeHolderTextStyle={[
-                                        CommonStyles.fontRegular,
-                                        CommonStyles.textSizeAverage,
-
-                                        {
-
-                                            paddingBottom: 12,
-                                            marginLeft: -10
-                                        },
-                                    ]}
-                                    value={this.state.startDate}
-                                    onDateChange={val => this.setState({ startDate: val })}
-                                    disabled={false}
-
-                                />
-                                <Icon active name="calendar" style={{ marginLeft: 20 }} />
-                            </Item>
+                                <Label style={[{ marginTop: 10, alignSelf: 'center', width: '88%' }, CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>Start Date  </Label>
 
 
-                            <Label style={[{ marginTop: 10, alignSelf: 'center', width: '88%' }, CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>End Date  </Label>
-                            <Item
-                                style={[
-                                    CommonStyles.container,
-                                    CommonStyles.itemStyle,
+                                <Item
+                                    style={[
+                                        CommonStyles.container,
+                                        CommonStyles.itemStyle,
 
-                                ]}>
-                                <DatePicker
-                                    defaultDate={new Date()}
-                                    minimumDate={new Date()}
-                                    locale={'en'}
-                                    timeZoneOffsetInMinutes={undefined}
-                                    modalTransparent={false}
-                                    animationType={'fade'}
-                                    androidMode={'default'}
-                                    placeHolderText="mm/dd/yyyy"
-                                    textStyle={[CommonStyles.fontRegular]}
-                                    placeHolderTextStyle={[
-                                        CommonStyles.fontRegular,
-                                        CommonStyles.textSizeAverage,
-                                        {
-                                            paddingBottom: 12,
-                                            marginLeft: -10
-                                        },
-                                    ]}
-                                    value={this.state.endDate}
-                                    onDateChange={val => this.setState({ endDate: val })}
-                                    disabled={false}
-                                />
-                                <Icon active name="calendar" style={{ marginLeft: 20 }} />
-                            </Item>
+                                    ]}>
+                                    <DatePicker
+                                        defaultDate={new Date()}
+                                        minimumDate={new Date()}
+                                        locale={'en'}
+                                        timeZoneOffsetInMinutes={undefined}
+                                        modalTransparent={false}
+                                        animationType={'fade'}
+                                        androidMode={'default'}
 
-                            <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginBottom: 20 }]}>
-                                <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Notes</Label>
-                                <Input
-                                    value={this.state.notes}
-                                    onChangeText={val => this.setState({ notes: val })}
-                                    style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
-                            </Item>
-                        </KeyboardAwareScrollView>
+                                        placeHolderText="mm/dd/yyyy"
+                                        textStyle={[CommonStyles.fontRegular]}
+                                        placeHolderTextStyle={[
+                                            CommonStyles.fontRegular,
+                                            CommonStyles.textSizeAverage,
 
-                    </View>
+                                            {
 
-                    <View
-                        style={[
-                            CommonStyles.fitToBottom,
-                            CommonStyles.horizontalContainer,
-                            {
-                                backgroundColor: '#F7FAFE',
-                                borderTopRightRadius: 5,
-                                borderTopStartRadius: 5,
-                                borderTopWidth: 3,
-                                borderColor: '#FFF'
-                            },
-                        ]}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                this._savePrescribeMedication();
-                            }}
+                                                paddingBottom: 12,
+                                                marginLeft: -10
+                                            },
+                                        ]}
+                                        value={this.state.startDate}
+                                        onDateChange={val => this.setState({ startDate: val })}
+                                        disabled={false}
+
+                                    />
+                                    <Icon active name="calendar" style={{ marginLeft: 20 }} />
+                                </Item>
+
+
+                                <Label style={[{ marginTop: 10, alignSelf: 'center', width: '88%' }, CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>End Date  </Label>
+                                <Item
+                                    style={[
+                                        CommonStyles.container,
+                                        CommonStyles.itemStyle,
+
+                                    ]}>
+                                    <DatePicker
+                                        defaultDate={new Date()}
+                                        minimumDate={new Date()}
+                                        locale={'en'}
+                                        timeZoneOffsetInMinutes={undefined}
+                                        modalTransparent={false}
+                                        animationType={'fade'}
+                                        androidMode={'default'}
+                                        placeHolderText="mm/dd/yyyy"
+                                        textStyle={[CommonStyles.fontRegular]}
+                                        placeHolderTextStyle={[
+                                            CommonStyles.fontRegular,
+                                            CommonStyles.textSizeAverage,
+                                            {
+                                                paddingBottom: 12,
+                                                marginLeft: -10
+                                            },
+                                        ]}
+                                        value={this.state.endDate}
+                                        onDateChange={val => this.setState({ endDate: val })}
+                                        disabled={false}
+                                    />
+                                    <Icon active name="calendar" style={{ marginLeft: 20 }} />
+                                </Item>
+
+                                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginBottom: 20 }]}>
+                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Notes</Label>
+                                    <Input
+                                        value={this.state.notes}
+                                        onChangeText={val => this.setState({ notes: val })}
+                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
+                                </Item>
+                            </KeyboardAwareScrollView>
+
+                        </View>
+
+                        <View
                             style={[
-                                CommonStyles.container,
-                                CommonStyles.centerText,
-                                { borderRightWidth: 0.5, borderColor: '#cfd2d6' },
-                            ]}
-                        >
-                            <Text
+                                CommonStyles.fitToBottom,
+                                CommonStyles.horizontalContainer,
+                                {
+                                    backgroundColor: '#F7FAFE',
+                                    borderTopRightRadius: 5,
+                                    borderTopStartRadius: 5,
+                                    borderTopWidth: 3,
+                                    borderColor: '#FFF'
+                                },
+                            ]}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this._savePrescribeMedication();
+                                }}
                                 style={[
-                                    CommonStyles.fontRegular,
-                                    CommonStyles.textSizeNormal,
+                                    CommonStyles.container,
                                     CommonStyles.centerText,
-                                    CommonStyles.margin,
-                                    CommonStyles.padding,
-                                    { opacity: 0.5 },
-                                ]}>
-                                SAVE
+                                    { borderRightWidth: 0.5, borderColor: '#cfd2d6' },
+                                ]}
+                            >
+                                <Text
+                                    style={[
+                                        CommonStyles.fontRegular,
+                                        CommonStyles.textSizeNormal,
+                                        CommonStyles.centerText,
+                                        CommonStyles.margin,
+                                        CommonStyles.padding,
+                                        { opacity: 0.5 },
+                                    ]}>
+                                    SAVE
                              </Text>
-                        </TouchableOpacity>
-                    </View>
+                            </TouchableOpacity>
+                        </View>
 
-                    <Loader loading={this.state.isLoading} />
+                        <Loader loading={this.state.isLoading} />
 
-                    <View
-                        style={[
-                            CommonStyles.backButtonStyle
-                        ]}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                this.props.navigation.goBack();
-                            }}>
-                            <Icon
-                                name="arrow-back"
-                                type="MaterialIcons"
-                                style={{ fontSize: 26, color: '#FFF' }}
-                            />
-                        </TouchableOpacity>
-                    </View>
-                </ImageBackground>
-            </View>
-        );
+                        <View
+                            style={[
+                                CommonStyles.backButtonStyle
+                            ]}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.props.navigation.goBack();
+                                }}>
+                                <Icon
+                                    name="arrow-back"
+                                    type="MaterialIcons"
+                                    style={{ fontSize: 26, color: '#FFF' }}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </ImageBackground>
+                </View>
+            );
+        }
     }
 }

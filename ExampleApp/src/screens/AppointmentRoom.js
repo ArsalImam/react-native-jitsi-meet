@@ -11,7 +11,7 @@ import {View, Text, StyleSheet, Linking} from 'react-native';
 import {ViewUtils} from '../Utils';
 
 import {TouchableOpacity} from 'react-native-gesture-handler';
-
+import RealtimeDatabase from '../RealtimeDatabase';
 export default class AppointmentRoom extends React.Component {
   appointmentId = '';
   appointment={};
@@ -21,6 +21,7 @@ export default class AppointmentRoom extends React.Component {
 
   componentWillUnmount () {
     JitsiMeet.endCall ();
+   
   }
 
   componentDidMount () {
@@ -34,6 +35,7 @@ export default class AppointmentRoom extends React.Component {
       console.log (`starting conference on url =====> ${appointmentId}`);
 
       const url = `https://conference.evotelemedicine.live/${appointmentId}`;
+      // const url = `https://meet.jit.si/5`;
       const {firstName, lastName, username} = _user;
       const userInfo = {
         displayName: `${firstName} ${lastName}`,

@@ -46,6 +46,7 @@ export default class CompleteBookings extends Component {
     Api.instance()
       .getMyAppointments(AppointmentStatus.completed, true)
       .then(appointments => {
+        console.warn('apointments', appointments)
         this.setState({ appointments });
       })
       .catch(err => {
@@ -55,6 +56,8 @@ export default class CompleteBookings extends Component {
         this.setState({ isLoading: false })
       })
       ;
+
+     //çç console.warn('sdfgf', this.state.appointments)
   }
   render() {
     return (
@@ -94,6 +97,7 @@ export default class CompleteBookings extends Component {
                 <View
                   style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5, CommonStyles.bgColor]}
                 >
+
                   <ImageBackground
                     style={[
                       CommonStyles.container,
@@ -123,9 +127,9 @@ export default class CompleteBookings extends Component {
                               CommonStyles.textSizeAverage,
                               { color: '#333333' },
                             ]}>
-                            {item.patient.firstName.concat(
+                            {( item.patient && item.patient.firstName) ? item.patient.firstName.concat(
                               ' ' + item.patient.lastName,
-                            )}
+                            ) : 'NA'}
                           </Text>
                         </Text>
 

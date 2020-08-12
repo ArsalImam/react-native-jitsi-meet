@@ -197,6 +197,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation project(path: ":react-native-firebase")
+  implementation project(path: ":@react-native-firebase_database")
     implementation "com.facebook.react:react-native:+"  // From node_modules
     compile(project(':react-native-firebase')) {   
         transitive = false

@@ -12,6 +12,8 @@ import Routes from './src/Routes';
 import CommonStyles from './src/CommonStyles';
 import { useNavigationState } from '@react-navigation/native';
 import FCM from "./src/FCM";
+import RealtimeDatabase from "./src/RealtimeDatabase";
+
 import { View, StyleSheet, StatusBar, SafeAreaView } from 'react-native';
 import { ViewUtils } from "./src/Utils";
 // Import the react-native-sound module
@@ -25,7 +27,7 @@ class App extends React.Component {
   whoosh:any;
   constructor(props) {
     super(props);
-
+    
     this._initSound();
     let that = this;
     FCM.instance().notifyUser = (title, message) => {
@@ -45,6 +47,10 @@ class App extends React.Component {
             that.navigationRef.navigate('AppointmentRoom', {appointmentId});
           });
       } 
+    }
+
+    RealtimeDatabase.instance().handleChangeRealtime= (data) =>{
+     console.warn ('firebase data',data);
     }
   }
 
@@ -76,6 +82,7 @@ class App extends React.Component {
     // After having done stuff (such as async tasks) hide the splash screen
     SplashScreen.hide();
     FCM.instance().appInit();
+    RealtimeDatabase.instance().appInit();
   }
 
   componentWillUnmount() {

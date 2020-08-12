@@ -73,15 +73,15 @@ export default class PatientHistoryList extends Component {
             return (
 
 
-                <View style={[CommonStyles.container]}>
-                    <ImageBackground style={[
-                        CommonStyles.container,
-                        CommonStyles.backgroundImage
-                    ]}
-                        source={require('../../assets/img/bwback.png')}>
-                        <View style={
-                            { flex: 2.3 }
-                        }>
+                <View style={{ height: '75%' }}>
+                <ImageBackground style={[
+                    CommonStyles.container,
+                    CommonStyles.backgroundImage
+                ]}
+                    source={require('../../assets/img/background.png')}>
+                    <View style={
+                        { flex: 3, backgroundColor: '#297dec' }
+                    }>
                             <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Anatomical Illustrations\n`}</Text>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Bookings </Text>
@@ -156,7 +156,7 @@ export default class PatientHistoryList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('UploadIllustrations')
+                                    this.props.navigation.navigate('UploadIllustrations', {appointmentId: this.state.appointmentId,})
                                 }}
                                 style={[
                                     CommonStyles.container,

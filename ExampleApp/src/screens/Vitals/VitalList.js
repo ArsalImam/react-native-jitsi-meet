@@ -65,15 +65,15 @@ export default class VitalList extends Component {
             return (
 
 
-                <View style={[CommonStyles.container]}>
+                <View style={{ height: '75%' }}>
                     <ImageBackground style={[
                         CommonStyles.container,
                         CommonStyles.backgroundImage
                     ]}
-                        source={require('../../assets/img/bwback.png')}>
+                        source={require('../../assets/img/background.png')}>
                         <View style={
-                            { flex: 2.1 }
-                        }>
+                            { flex: 3, backgroundColor: '#297dec' }
+                    }>
                             <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Vital List\n`}</Text>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>It is a list of your all Bookings </Text>
@@ -153,7 +153,7 @@ export default class VitalList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('Vital')
+                                    this.props.navigation.navigate('Vital', {appointmentId: this.state.appointmentId,})
                                 }}
                                 style={[
                                     CommonStyles.container,

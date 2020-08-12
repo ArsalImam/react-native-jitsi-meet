@@ -54,6 +54,7 @@ export default class Vital extends Component {
         switch (this.state.vitalType) {
             case 'BloodGlucose':
                 childComponentData = this.glucoseComponent._onSave();
+                
                 Object.assign(data, {
                     "multipleValues": [
 
