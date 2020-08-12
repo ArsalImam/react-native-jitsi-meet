@@ -244,6 +244,51 @@ export default class CreateClinic extends Component {
     this.state.clinicObj.name = this.state.clinicTitle;
     this.state.clinicObj.frequencyText = this.state.clinicFrequencyText;
     this.state.clinicObj.appointmentSlotsText = this.state.appointmentSlotsText;
+  
+
+    if(this.state.startTimeText == "From"){
+      ViewUtils.showAlert(
+        'Please select Start Time',       
+    );
+    return;
+    }
+    
+    if(this.state.endTimeText == "To"){
+          ViewUtils.showAlert(
+        'Please select End Time',       
+    );
+    return;
+    }
+
+    if(this.state.numberOfClinics == 0){
+          ViewUtils.showAlert(
+        'Please Provide Number of Clinics',       
+    );
+    return;
+    }
+
+    if(this.state.clinicTitle == ""){
+          ViewUtils.showAlert(
+        'Please Provide Title',       
+    );
+    return;
+    }
+
+    if(this.state.clinicFrequencyText == ""){
+          ViewUtils.showAlert(
+        'Please select Frequency',       
+    );
+    return;
+    }
+
+    if(this.state.appointmentSlotsText == ""){
+      ViewUtils.showAlert(
+        'Please select Appointment Slot',       
+      );
+    return;
+      }
+
+
 
    this.setState({ isLoading: true });
     Api.instance()
@@ -398,7 +443,7 @@ export default class CreateClinic extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeAverage,
                   ]}>
-                  Number of Weeks
+                  Number of Clinics
                   </Label>
                 <Input
                   name="clinics"

@@ -84,10 +84,15 @@ class Dashboard extends React.Component {
   _getAllPatients() {
     Api.instance()
       .getMyPatients()
-      .then(patients => this.setState({totalPatients: patients.length}))
+      .then(response => this._filterOnlyPatients(response))
       .catch(err => {
         ViewUtils.showToast(err);
       });
+  }
+
+  _filterOnlyPatients(response){
+    let patients = response.filter(x => x.role == "ROLE_PATIENT")
+    this.setState({totalPatients: patients.length})
   }
 
   componentDidMount() {

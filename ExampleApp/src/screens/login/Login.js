@@ -11,7 +11,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import CommonStyles from '../../CommonStyles';
-import { Item, Input, Container, Icon } from 'native-base';
+import { Item, Input, Container, Icon,Toast } from 'native-base';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import Api from '../../Api';
 import { ViewUtils } from '../../Utils';
@@ -48,20 +48,33 @@ class Login extends Component {
     //   })
   }
   _submitForm = () => {
-    this.showLoader();
+    
 
-    Api.instance()
-      // .login(this.state.email, this.state.password)
-      .login('admin@gmail.com', 'abc123')
+    if(this.state.email && this.state.password){
+      this.showLoader();
+      Api.instance()
+      .login(this.state.email, this.state.password)
+      //.login(this.state.email, this.state.password)
       .then(data => {
         this.props.navigation.replace('MyDrawer', { user: data.user });
       })
       .catch(err => {
-        ViewUtils.showToast(err);
+        //ViewUtils.showToast(err);
+        ViewUtils.showAlert(
+          'Invalid Credentials.',       
+      );
       })
       .finally(() => {
         this.setState({ showLoader: false });
       });
+    }else{
+      ViewUtils.showAlert(
+        'Please Provide Email and Password.',       
+    );
+
+    }
+
+    
   };
 
   render() {

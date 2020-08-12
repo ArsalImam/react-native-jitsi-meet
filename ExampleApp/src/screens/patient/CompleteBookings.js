@@ -144,7 +144,7 @@ export default class CompleteBookings extends Component {
                               CommonStyles.textSizeSmall,
                             ]}>{`Time: `}</Text>
                           <Text style={CommonStyles.fontMedium}>
-                            {moment(item.date).format('hh:mm')}
+                            {moment(item.date).format('hh:mm A')}
                           </Text>
                         </Text>
                       </View>

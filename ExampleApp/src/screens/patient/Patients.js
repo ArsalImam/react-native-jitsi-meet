@@ -31,7 +31,7 @@ export default class Patients extends Component {
     this.setState({ isLoading: true });
     Api.instance()
       .getMyPatients()
-      .then(patients => this.setState({ patients }))
+      .then(response => this._filterOnlyPatients(response))
       .catch(err => {
         ViewUtils.showToast(err);
       })
@@ -39,6 +39,12 @@ export default class Patients extends Component {
         this.setState({ isLoading: false });
       });
   }
+
+  _filterOnlyPatients(response){
+    let patients = response.filter(x => x.role == "ROLE_PATIENT")
+    this.setState({patients})
+  }
+
   render() {
     return (
       <View style={[CommonStyles.container]}>
