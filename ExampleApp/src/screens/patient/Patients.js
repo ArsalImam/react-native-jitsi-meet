@@ -167,8 +167,11 @@ export default class Patients extends Component {
         this.setState({ isLoading: true });
         Api.instance()
           .updateAppointment(this._appointmentId, patientId)
+          
           .then(() => {
+            console.warn('appointment Id',this._appointmentId ,'patient',patientId) 
             ViewUtils.showToast('Appointment has been booked successfully');
+            // ViewUtils.showToast('Appointment' ,this._appointmentId ,'fkahfhd',this.patientId);
             that.props.navigation.dispatch(
               CommonActions.reset({
                 index: 1,
