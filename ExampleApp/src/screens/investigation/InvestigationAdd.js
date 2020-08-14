@@ -18,6 +18,14 @@ export default class InvestigationAdd extends Component {
             data: []
 
         };
+
+        this.props.route.params = [
+            {
+                appointmentId:""
+            }
+        ];
+
+    
     }
 
     _saveInvestigation = () => {
@@ -27,24 +35,33 @@ export default class InvestigationAdd extends Component {
             "name": this.state.name,
             "description": this.state.description,
         }
-
-        this.setState({ isLoading: true })
-
-        Api.instance()
+       
+        if(this.state.name != ""){
+            this.setState({ isLoading: true })
+            Api.instance()
             .createMedication(data)
             .then(response => {
                 this.props.navigation.replace('InvestigationList');
                 ViewUtils.showToast('Investigation has been saved successfully!');
             })
             .catch(err => {
-                ViewUtils.showToast(err);
+                ViewUtils.showAlert(
+                    'Unable to Perform this Action',       
+                );
+                //ViewUtils.showToast(err);
             })
             .finally(() => {
                 this.setState({ isLoading: false });
             });
+        }else{
+            ViewUtils.showAlert(
+                'Please Provide Investigation Name',       
+            );
+        }
+       
     };
     render() {
-
+        
         if (this.props.route.params.appointmentId != null) {
 
 

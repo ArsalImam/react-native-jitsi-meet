@@ -18,6 +18,12 @@ export default class DiagnosisAdd extends Component {
             data: []
 
         };
+
+        this.props.route.params = [
+            {
+                appointmentId:""
+            }
+        ];
     }
 
     _saveDiagnosis = () => {
@@ -28,20 +34,30 @@ export default class DiagnosisAdd extends Component {
             "description": this.state.description,
         }
 
-        this.setState({ isLoading: true })
-
-        Api.instance()
+        
+        if(this.state.name != ""){
+            this.setState({ isLoading: true })
+            Api.instance()
             .createMedication(data)
             .then(response => {
                 this.props.navigation.replace('DiagnosisList');
                 ViewUtils.showToast('Diagnosis has been saved successfully!');
             })
             .catch(err => {
-                ViewUtils.showToast(err);
+                ViewUtils.showAlert(
+                    'Unable to Perform this Action',       
+                );
+               // ViewUtils.showToast(err);
             })
             .finally(() => {
                 this.setState({ isLoading: false });
             });
+        }else {
+            ViewUtils.showAlert(
+                'Please Provide Diagnosis Name',       
+            );    
+        }
+        
     };
     render() {
 

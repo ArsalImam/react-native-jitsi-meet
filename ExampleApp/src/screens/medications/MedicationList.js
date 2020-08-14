@@ -13,6 +13,8 @@ export default class MedicationList extends Component {
 
     constructor(props) {
         super(props);
+        
+        
         if (this.props.route.params) {
 
             this.state = {
@@ -32,9 +34,10 @@ export default class MedicationList extends Component {
     }
 
     componentDidMount() {
+        console.warn(" componentDidMount clalllleddd")
         Api.instance().getMedicationList()
             .then((data) => {
-                console.warn()
+                
                 this.setState({ medicationList: data });
             }
             ).catch(err => console.log(err))
@@ -42,7 +45,13 @@ export default class MedicationList extends Component {
                 this.setState({ isLoading: false });
             })
     }
+
+    componentWillUnmount() {
+        console.warn(" componentWillUnmount clalllleddd")
+    }
+
     addToConsultation(item) {
+        
         item.setupType = 'medication'
         Api.instance().addReport(item, this.state.appointmentId, this.state.patientId)
             .then(response => {

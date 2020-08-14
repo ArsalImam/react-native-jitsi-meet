@@ -20,6 +20,12 @@ export default class MedicationAdd extends Component {
             data: []
 
         };
+
+        this.props.route.params = [
+            {
+                appointmentId:""
+            }
+        ];
     }
 
     _saveMedication = () => {
@@ -33,20 +39,34 @@ export default class MedicationAdd extends Component {
 
         }
 
-        this.setState({ isLoading: true })
+        
 
-        Api.instance()
+        if(this.state.drugName != "" ){
+            this.setState({ isLoading: true })
+            Api.instance()
             .createMedication(data)
             .then(response => {
-                this.props.navigation.replace('MedicationList');
+                this.props.navigation.navigate('MedicationList');
+               
                 ViewUtils.showToast('Medication has been saved successfully!');
+                
             })
             .catch(err => {
-                ViewUtils.showToast(err);
+                ViewUtils.showAlert(
+                    'Unable to Perform this Action',       
+                );
+                //ViewUtils.showToast(err);
             })
             .finally(() => {
                 this.setState({ isLoading: false });
             });
+        }else{
+            ViewUtils.showAlert(
+                'Please Provide Medication Name',       
+            );
+        }
+
+        
     };
     render() {
 

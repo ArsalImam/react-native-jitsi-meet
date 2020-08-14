@@ -35,12 +35,15 @@ export default class InvestigationList extends Component {
         Api.instance().getInvestigationList()
             .then((data) => {
                 console.warn('=====>', data["Diagnosis"])
+                console.warn("response data == ",data)
                 this.setState({ diagnosisList: data });
             }
             ).catch(err => console.log(err))
             .finally(() => {
                 this.setState({ isLoading: false });
             })
+
+           
     }
 
     

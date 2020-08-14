@@ -13,7 +13,6 @@ export default class DiagnosisList extends Component {
 
     constructor(props) {
         super(props);
-        console.log("this.props.route.params", this.props.route.params);
         if (this.props.route.params) {
 
             this.state = {
@@ -46,7 +45,6 @@ export default class DiagnosisList extends Component {
 
 
     componentWillMount() {
-
         Api.instance().getDiagnosisList()
             .then((data) => {
                 console.warn('=====>', data["Diagnosis"])
