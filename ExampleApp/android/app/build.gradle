@@ -135,6 +135,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
+        signingConfig signingConfigs.debug
         versionName "1.0"
     }
     splits {
@@ -147,10 +148,10 @@ android {
     }
     signingConfigs {
         debug {
-            storeFile file('debug.keystore')
-            storePassword 'android'
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
+            storeFile file('./telemedicine.jks')
+            storePassword 'telemedicine.jks'
+            keyAlias 'telemedicine.jks'
+            keyPassword 'telemedicine.jks'
         }
     }
     buildTypes {

@@ -21,11 +21,11 @@ export default class MedicationAdd extends Component {
 
         };
 
-        this.props.route.params = [
-            {
-                appointmentId:""
-            }
-        ];
+        // this.props.route.params = [
+        //     {
+        //         appointmentId:""
+        //     }
+        // ];
     }
 
     _saveMedication = () => {
@@ -68,7 +68,7 @@ export default class MedicationAdd extends Component {
 
         
     };
-    render() {
+    render() {p
 
         if (this.props.route.params.appointmentId != null) {
 

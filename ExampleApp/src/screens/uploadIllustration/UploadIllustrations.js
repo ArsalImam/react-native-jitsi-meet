@@ -32,8 +32,15 @@ export default class UploadIllustrations extends React.Component {
             image: null,
             filePath: {},
         };
+
+        this.props.route.params = [
+            {
+                appointmentId:""
+            }
+        ];
     }
 
+    
     // cancelAttachment = () => {
     //     this.props.navigation.navigate('UploadIllustrations', this.props.route.params);
 

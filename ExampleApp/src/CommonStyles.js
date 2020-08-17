@@ -216,6 +216,10 @@ const CommonStyles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 10,
   },
+  imageStyle:{
+    width:30,
+    height:20,
+  }
 })
 
 export default CommonStyles;

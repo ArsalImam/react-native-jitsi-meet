@@ -5,7 +5,8 @@
   "scripts": {
     "android": "./node_modules/.bin/react-native run-android",
     "link": "react-native link",
-    "android:build:dev": "node_modules/.bin/react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/app.bundle --assets-dest android/app/src/main/res/ && cd android && ./gradlew assembleDebug",
+    "android:build:dev": "node_modules/.bin/react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/app.bundle --assets-dest android/app/src/main/res/ && cd android && gradlew assembleDebug",
+    "android:build:release": "node_modules/.bin/react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/app.bundle --assets-dest android/app/src/main/res/ && rm -rf android/app/src/main/res/drawable-* && rm -rf android/app/src/main/res/raw/* &&  cd android && gradlew assembleRelease",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",

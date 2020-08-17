@@ -153,7 +153,6 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="MyTabs"
           component={this._getAppointmentRoute}
-
           options={{
             headerShown: true,
             title: '',

@@ -130,21 +130,22 @@ class Dashboard extends React.Component {
     }
 
   goToPatientsRooms() {
+    this.props.navigation.navigate('MyTabs', {screen: "Available"});
     // appointments
-    var _navigateToRoom = appointments => {
-      if (appointments.length == 0) {
-        ViewUtils.showToast(
-          'No appointments has been scheduled for your patient',
-        );
-        return;
-      }
-      var appointmentId = appointments.reverse()[0].id;
-                        Api.instance().notifyAppointment(appointmentId).then().catch();
+    // var _navigateToRoom = appointments => {
+    //   if (appointments.length == 0) {
+    //     ViewUtils.showToast(
+    //       'No appointments has been scheduled for your patient',
+    //     );
+    //     return;
+    //   }
+    //   var appointmentId = appointments.reverse()[0].id;
+    //                     Api.instance().notifyAppointment(appointmentId).then().catch();
 
-      this.props.navigation.navigate('AppointmentRoom', {appointmentId});
-    };
+    //   this.props.navigation.navigate('AppointmentRoom', {appointmentId});
+    // };
 
-    _navigateToRoom(this.state.appointments);
+    // _navigateToRoom(this.state.appointments);
   }
 
   render() {
@@ -205,7 +206,7 @@ class Dashboard extends React.Component {
                 {backgroundColor: '#9cd85b'},
               ]}
               onPress={() => {
-                this.props.navigation.navigate('MyTabs');
+                this.props.navigation.navigate('MyTabs', {screen: "Scheduled"});
               }}>
               <ImageBackground
                 style={[CommonStyles.container, CommonStyles.backgroundImage]}
@@ -315,7 +316,7 @@ class Dashboard extends React.Component {
                     marginRight: 5,
                   },
                 ]}
-                onPress={() => this.props.navigation.navigate('MyTabs')}>
+                onPress={() => this.props.navigation.navigate('MyTabs', {screen: "Completed"})}>
                 <View style={[CommonStyles.horizontalContainer]}>
                   <Icon name="bars" size={18} color="#C9D7EA" />
                   <View
@@ -340,13 +341,59 @@ class Dashboard extends React.Component {
                     CommonStyles.fontMedium,
                     {fontSize: 14, marginTop: 10},
                   ]}>
-                  TOTAL CONSULTATION
+                  Past Appointment
                 </Text>
               </TouchableOpacity>
 
 
-
+              {this.state.role == "ROLE_PATIENT" ?
               <TouchableOpacity
+              style={[
+                CommonStyles.container,
+                CommonStyles.br5,
+                {
+                  borderColor: '#C9D7EA',
+                  borderWidth: 2,
+                  padding: 15,
+                  justifyContent: 'space-between',
+                  marginLeft: 5,
+                },
+              ]}
+              // onPress={() => {
+              //   this.props.navigation.navigate(`Patients`, {
+              //     appointmentId: null,
+              //     moveTo: 'PatientDetail',
+              //   });
+              // }}
+              >
+              {/* <View style={[CommonStyles.horizontalContainer]}>
+                <Icon name="bars" size={18} color="#C9D7EA" />
+                <View
+                  style={[
+                    CommonStyles.centerText,
+                    CommonStyles.padding,
+                    CommonStyles.br5,
+                    {backgroundColor: '#ebf2f9'},
+                  ]}>
+                  <Text
+                    style={[
+                      CommonStyles.fontMedium,
+                      {fontSize: 32, color: '#297dec'},
+                    ]}>
+                    {this.state.totalPatients}
+                  </Text>
+                </View>
+              </View> */}
+              <Text
+                style={[
+                  CommonStyles.fontMedium,
+                  {fontSize: 14, marginTop: 10},
+                ]}>
+                TOTAL PRESCRIPIONS
+              </Text>
+            </TouchableOpacity>
+            :  
+            <TouchableOpacity
                 style={[
                   CommonStyles.container,
                   CommonStyles.br5,
@@ -390,6 +437,8 @@ class Dashboard extends React.Component {
                   TOTAL PATIENTS
                 </Text>
               </TouchableOpacity>
+            }    
+              
               
             </View>
 
@@ -423,7 +472,7 @@ class Dashboard extends React.Component {
 
                   {color: '#fff', fontSize: 15, margin: 5},
                 ]}>
-                CONSULTATION ROOM
+                Book an appointment
               </Text>
             </TouchableOpacity>
           </KeyboardAwareScrollView>
@@ -451,6 +500,7 @@ class Dashboard extends React.Component {
       </View>
     );
   }
+
 }
 
 export default Dashboard;

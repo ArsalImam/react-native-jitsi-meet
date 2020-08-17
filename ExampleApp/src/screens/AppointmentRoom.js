@@ -34,7 +34,7 @@ export default class AppointmentRoom extends React.Component {
 
       console.log (`starting conference on url =====> ${appointmentId}`);
 
-      const url = `https://conference.evotelemedicine.live/${appointmentId}`;
+      const url = `https://conference.etibb.online/${appointmentId}`;
       // const url = `https://meet.jit.si/5`;
       const {firstName, lastName, username} = _user;
       const userInfo = {

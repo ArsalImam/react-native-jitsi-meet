@@ -8,6 +8,7 @@ import {
   ImageBackground,
   TextInput,
   StatusBar,
+  BackHandler, 
   ActivityIndicator,
 } from 'react-native';
 import CommonStyles from '../../CommonStyles';
@@ -49,7 +50,9 @@ class Login extends Component {
 
       if (token) {
         console.log('token', token);
-        this.props.navigation.navigate('MyDrawer');
+        this.props.navigation.replace('MyDrawer');
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+
       } else {
         console.log('error', error);
       }
@@ -292,6 +295,32 @@ class Login extends Component {
       </View>
     );
   }
+
+  handleBackButton = () => {
+    Alert.alert(
+        'Exit App',
+        'Exiting the application?', [{
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel'
+        }, {
+            text: 'OK',
+            onPress: () => BackHandler.exitApp()
+        }, ], {
+            cancelable: false
+        }
+     )
+     return true;
+   } 
+
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+  }
+  
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+  }
+
 }
 
 export default Login;

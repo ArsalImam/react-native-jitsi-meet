@@ -3,6 +3,7 @@ import { Text, View, ImageBackground } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
 import { CheckBox } from 'react-native-elements';
 import CommonStyles from '../../CommonStyles';
+import { Icon } from 'native-base';
 import Api from '../../Api';
 import { AppointmentStatus } from '../../Configs';
 import moment from 'moment';
@@ -192,6 +193,21 @@ export default class ScheduledBooking extends Component {
                       </View>
                     </View>
                   </ImageBackground>
+                  <View style={[CommonStyles.container, {justifyContent:'center', backgroundColor: '#297DEC', marginTop: 5, borderBottomEndRadius: 5, borderBottomStartRadius: 5 }]}>
+                    <TouchableOpacity
+                    onPress={() => {}}
+                    style={[CommonStyles.container, CommonStyles.centerElement, { flexDirection: 'row' }]}
+                    >
+                      
+                      <Icon
+                        name="phone"
+                        type='Fontisto'
+                        style={{ fontSize: 20, color: '#FFF', margin: 10 }}
+                      />
+                      <Text style={[CommonStyles.textColorWhite, CommonStyles.centerText, CommonStyles.padding]}>CALL</Text>
+
+                    </TouchableOpacity>
+                  </View>
                 </TouchableOpacity>
               )}
             />
