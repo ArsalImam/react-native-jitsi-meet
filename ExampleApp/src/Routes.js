@@ -45,7 +45,7 @@ import { Icon } from 'native-base';
 import CreateClinic from "./screens/clinic/CreateClinic";
 import ClinicList from "./screens/clinic/ClinicList";
 import SideBar from "./components/drawer/SideBar";
-
+import MyPresciption from "./screens/patient/MyPrescription"
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -142,6 +142,13 @@ export default class Routes extends React.Component {
             headerTitleAlign: 'center',
             headerStyle: { backgroundColor: '#c0d4e2' },
           }}
+        />
+        <Stack.Screen 
+        name="MyPresciption"
+        component={MyPresciption}
+        options={{ headerShown: false }}
+
+        
         />
 
         <Stack.Screen

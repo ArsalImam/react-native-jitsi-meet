@@ -27,13 +27,14 @@ class Dashboard extends React.Component {
     super(props);
     this.state = {
       upComingCount: 0,
+      totalPrescription: 0 ,
       totalConsultation: 0,
       totalPatients: 0,
       appointments: [],
       user: {},
       lastestAppointment: {time: '0:00 am', timeLeft: '0 mins'},
-      showLoader: true, 
-      role:''
+      showLoader: true,
+      role: '',
     };
   }
   _getAllAppointments() {
@@ -42,6 +43,8 @@ class Dashboard extends React.Component {
       .getMyAppointments()
       .then(appointments => {
         let schAppointment = appointments.filter(x => x.status == 'Scheduled');
+        let completedAppointment = appointments.filter(x => x.status == 'Completed')
+        console.warn('Completed' , completedAppointment)
         if (schAppointment.length > 0) {
           let lastAppointment = schAppointment.reverse()[0];
           let date = moment(lastAppointment.date);
@@ -64,21 +67,26 @@ class Dashboard extends React.Component {
           this.setState({
             upComingCount: schAppointment.length,
             lastestAppointment,
+            
           });
         }
         this.setState({
           totalConsultation: appointments.length,
           appointments,
-        
         });
+
+        this.setState({
+          totalPrescription: completedAppointment.length,
+          // appointments,
+
+        })
       })
       .catch(err => {
         ViewUtils.showToast(err);
-        
       })
       .finally(() => {
-        this.setState({showLoader: false})
-    });
+        this.setState({showLoader: false});
+      });
   }
 
   _getAllPatients() {
@@ -90,25 +98,25 @@ class Dashboard extends React.Component {
       });
   }
 
-  _filterOnlyPatients(response){
-    let patients = response.filter(x => x.role == "ROLE_PATIENT")
-    this.setState({totalPatients: patients.length})
+  _filterOnlyPatients(response) {
+    let patients = response.filter(x => x.role == 'ROLE_PATIENT');
+    this.setState({totalPatients: patients.length});
   }
 
   componentDidMount() {
-    Api.instance().getUserRole().then(role => this.setState({role}));
+    Api.instance()
+      .getUserRole()
+      .then(role => this.setState({role}));
     //udpdating fcm
     try {
-
       AsyncStorage.getItem('fcmToken')
-      .then(token => {
-        return Api.instance().updateFcmToken(token)
-      })
-      .catch(er => console.warn(er));
+        .then(token => {
+          return Api.instance().updateFcmToken(token);
+        })
+        .catch(er => console.warn(er));
     } catch (error) {
-
       //log error, to enable ease in debugging
-      console.log(error);  
+      console.log(error);
     }
     //updating appointments
     this._getAllAppointments();
@@ -121,16 +129,20 @@ class Dashboard extends React.Component {
       ._user()
       .then(user => {
         if (user == null) return;
-        this.setState({
-          user,
-        },()=>{global.role=this.state.user.role});
+        this.setState(
+          {
+            user,
+          },
+          () => {
+            global.role = this.state.user.role;
+          },
+        );
       })
       .catch(err => ViewUtils.showToast(err));
- 
-    }
+  }
 
   goToPatientsRooms() {
-    this.props.navigation.navigate('MyTabs', {screen: "Available"});
+    this.props.navigation.navigate('MyTabs', {screen: 'Available'});
     // appointments
     // var _navigateToRoom = appointments => {
     //   if (appointments.length == 0) {
@@ -149,10 +161,14 @@ class Dashboard extends React.Component {
   }
 
   render() {
-  console.warn(this.state.role);
+    console.warn(this.state.role);
     return (
       <View style={[CommonStyles.container]}>
-         <StatusBar translucent backgroundColor='transparent' barStyle={'dark-content'} />
+        <StatusBar
+          translucent
+          backgroundColor="transparent"
+          barStyle={'dark-content'}
+        />
         <ImageBackground
           style={[CommonStyles.container, CommonStyles.backgroundImage]}
           source={require('../../assets/img/background.png')}>
@@ -164,10 +180,16 @@ class Dashboard extends React.Component {
                 CommonStyles.mt30,
                 {flexDirection: 'row'},
               ]}>
-              <View style={{width: 53, height: 53, marginRight: 10}}>
-                <Image
+              {/* <View style={{width: 53, height: 53, marginRight: 10}}>
+              <Image
                   style={[CommonStyles.container, CommonStyles.backgroundImage]}
-                  source={require('../../assets/img/Rectangle.png')}
+                  source={require('../../assets/drawable-xxxhdpi/Rectangle.png')}
+                />
+              </View> */}
+              <View style={[{width: 53, height: 53, marginRight: 10}]}>
+                <Image
+                  style={{height: '97%', width: '100%', resizeMode: 'cover'}}
+                  source={require('../../assets/drawable-xxxhdpi/Mask.png')}
                 />
               </View>
               <View style={{justifyContent: 'flex-end'}}>
@@ -206,7 +228,7 @@ class Dashboard extends React.Component {
                 {backgroundColor: '#9cd85b'},
               ]}
               onPress={() => {
-                this.props.navigation.navigate('MyTabs', {screen: "Scheduled"});
+                this.props.navigation.navigate('MyTabs', {screen: 'Scheduled'});
               }}>
               <ImageBackground
                 style={[CommonStyles.container, CommonStyles.backgroundImage]}
@@ -274,8 +296,8 @@ class Dashboard extends React.Component {
                       <Text
                         style={
                           (CommonStyles.fontRegular,
-                            CommonStyles.textSizeSmall,
-                            { color: '#335a07' })
+                          CommonStyles.textSizeSmall,
+                          {color: '#335a07'})
                         }>{`Next Appointment\n        `}</Text>
                       <Text
                         style={
@@ -287,8 +309,8 @@ class Dashboard extends React.Component {
                       <Text
                         style={
                           (CommonStyles.fontRegular,
-                            CommonStyles.textSizeSmall,
-                            { color: '#335a07' })
+                          CommonStyles.textSizeSmall,
+                          {color: '#335a07'})
                         }>{`\nAppointment Time\n             `}</Text>
                       <Text
                         style={
@@ -316,7 +338,11 @@ class Dashboard extends React.Component {
                     marginRight: 5,
                   },
                 ]}
-                onPress={() => this.props.navigation.navigate('MyTabs', {screen: "Completed"})}>
+                onPress={() =>
+                  this.props.navigation.navigate('MyTabs', {
+                    screen: 'Completed',
+                  })
+                }>
                 <View style={[CommonStyles.horizontalContainer]}>
                   <Icon name="bars" size={18} color="#C9D7EA" />
                   <View
@@ -345,55 +371,59 @@ class Dashboard extends React.Component {
                 </Text>
               </TouchableOpacity>
 
+              {this.state.role == 'ROLE_PATIENT' ? (
+              //   <TouchableOpacity
+              //     onPress={() =>
+              //       this.props.navigation.navigate('MyPresciption')
+              //     }
+              //     style={[
+              //       CommonStyles.container,
+              //       CommonStyles.br5,
+              //       {
+              //         borderColor: '#C9D7EA',
+              //         borderWidth: 2,
+              //         padding: 15,
+              //         justifyContent: 'space-between',
+              //         marginLeft: 5,
+              //       },
+              //     ]}
+              //     // onPress={() => {
+              //     //   this.props.navigation.navigate(`Patients`, {
+              //     //     appointmentId: null,
+              //     //     moveTo: 'PatientDetail',
+              //     //   });
+              //     // }}
+              //   >
+              //     {/* <View style={[CommonStyles.horizontalContainer]}>
+              //   <Icon name="bars" size={18} color="#C9D7EA" />
+              //   <View
+              //     style={[
+              //       CommonStyles.centerText,
+              //       CommonStyles.padding,
+              //       CommonStyles.br5,
+              //       {backgroundColor: '#ebf2f9'},
+              //     ]}>
+              //     <Text
+              //       style={[
+              //         CommonStyles.fontMedium,
+              //         {fontSize: 32, color: '#297dec'},
+              //       ]}>
+              //       {this.state.totalPatients}
+              //     </Text>
+              //   </View>
+              // </View> */}
+              //     <Text
+              //       style={[
+              //         CommonStyles.fontMedium,
+              //         {fontSize: 14, marginTop: 10},
+              //       ]}>
+              //       TOTAL PRESCRIPIONS
+              //       {this.state.totalPrescription}
+              //     </Text>
+              //   </TouchableOpacity>
 
-              {this.state.role == "ROLE_PATIENT" ?
-              <TouchableOpacity
-              style={[
-                CommonStyles.container,
-                CommonStyles.br5,
-                {
-                  borderColor: '#C9D7EA',
-                  borderWidth: 2,
-                  padding: 15,
-                  justifyContent: 'space-between',
-                  marginLeft: 5,
-                },
-              ]}
-              // onPress={() => {
-              //   this.props.navigation.navigate(`Patients`, {
-              //     appointmentId: null,
-              //     moveTo: 'PatientDetail',
-              //   });
-              // }}
-              >
-              {/* <View style={[CommonStyles.horizontalContainer]}>
-                <Icon name="bars" size={18} color="#C9D7EA" />
-                <View
-                  style={[
-                    CommonStyles.centerText,
-                    CommonStyles.padding,
-                    CommonStyles.br5,
-                    {backgroundColor: '#ebf2f9'},
-                  ]}>
-                  <Text
-                    style={[
-                      CommonStyles.fontMedium,
-                      {fontSize: 32, color: '#297dec'},
-                    ]}>
-                    {this.state.totalPatients}
-                  </Text>
-                </View>
-              </View> */}
-              <Text
-                style={[
-                  CommonStyles.fontMedium,
-                  {fontSize: 14, marginTop: 10},
-                ]}>
-                TOTAL PRESCRIPIONS
-              </Text>
-            </TouchableOpacity>
-            :  
-            <TouchableOpacity
+
+                <TouchableOpacity
                 style={[
                   CommonStyles.container,
                   CommonStyles.br5,
@@ -402,30 +432,28 @@ class Dashboard extends React.Component {
                     borderWidth: 2,
                     padding: 15,
                     justifyContent: 'space-between',
-                    marginLeft: 5,
+                    marginRight: 5,
                   },
                 ]}
-                onPress={() => {
-                  this.props.navigation.navigate(`Patients`, {
-                    appointmentId: null,
-                    moveTo: 'PatientDetail',
-                  });
-                }}>
+                    onPress={() =>
+                      this.props.navigation.navigate('MyPresciption')
+                    }         >      
                 <View style={[CommonStyles.horizontalContainer]}>
                   <Icon name="bars" size={18} color="#C9D7EA" />
                   <View
                     style={[
                       CommonStyles.centerText,
-                      CommonStyles.padding,
                       CommonStyles.br5,
                       {backgroundColor: '#ebf2f9'},
                     ]}>
                     <Text
                       style={[
                         CommonStyles.fontMedium,
+                        CommonStyles.padding,
+                        CommonStyles.centerText,
                         {fontSize: 32, color: '#297dec'},
                       ]}>
-                      {this.state.totalPatients}
+                      {this.state.totalPrescription}
                     </Text>
                   </View>
                 </View>
@@ -434,22 +462,65 @@ class Dashboard extends React.Component {
                     CommonStyles.fontMedium,
                     {fontSize: 14, marginTop: 10},
                   ]}>
-                  TOTAL PATIENTS
+                  Total Prescription
                 </Text>
               </TouchableOpacity>
-            }    
-              
-              
+              ) : (
+                <TouchableOpacity
+                  style={[
+                    CommonStyles.container,
+                    CommonStyles.br5,
+                    {
+                      borderColor: '#C9D7EA',
+                      borderWidth: 2,
+                      padding: 15,
+                      justifyContent: 'space-between',
+                      marginLeft: 5,
+                    },
+                  ]}
+                  onPress={() => {
+                    this.props.navigation.navigate(`Patients`, {
+                      appointmentId: null,
+                      moveTo: 'PatientDetail',
+                    });
+                  }}>
+                  <View style={[CommonStyles.horizontalContainer]}>
+                    <Icon name="bars" size={18} color="#C9D7EA" />
+                    <View
+                      style={[
+                        CommonStyles.centerText,
+                        CommonStyles.padding,
+                        CommonStyles.br5,
+                        {backgroundColor: '#ebf2f9'},
+                      ]}>
+                      <Text
+                        style={[
+                          CommonStyles.fontMedium,
+                          {fontSize: 32, color: '#297dec'},
+                        ]}>
+                        {this.state.totalPatients}
+                      </Text>
+                    </View>
+                  </View>
+                  <Text
+                    style={[
+                      CommonStyles.fontMedium,
+                      {fontSize: 14, marginTop: 10},
+                    ]}>
+                    TOTAL PATIENTS
+                  </Text>
+                </TouchableOpacity>
+              )}
             </View>
 
             <View
               style={[
                 CommonStyles.container,
-                {alignSelf: 'center' , marginTop: 70},
+                {alignSelf: 'center', marginTop: 70},
               ]}>
               <View style={[CommonStyles.container]}>
                 <Image
-                  style={[CommonStyles.container, { resizeMode: 'contain'}]}
+                  style={[CommonStyles.container, {resizeMode: 'contain'}]}
                   source={require('../../assets/img/calander2.png')}
                 />
               </View>
@@ -477,7 +548,7 @@ class Dashboard extends React.Component {
             </TouchableOpacity>
           </KeyboardAwareScrollView>
 
-          <Loader loading={this.state.showLoader}/>
+          <Loader loading={this.state.showLoader} />
 
           <View
             style={[
@@ -500,7 +571,6 @@ class Dashboard extends React.Component {
       </View>
     );
   }
-
 }
 
 export default Dashboard;

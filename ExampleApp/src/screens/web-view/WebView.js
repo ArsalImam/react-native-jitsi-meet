@@ -9,6 +9,7 @@ export default class WebView extends React.Component {
   render () {
     const {prescribtionUrl} = this.props.route.params;
     console.log(`prescribtionUrl ==========> ${prescribtionUrl}`);
+    console.warn(`prescribtionUrl ==========> ${prescribtionUrl}`);
     return <Web source={{uri: prescribtionUrl}} />;
   }
 }
