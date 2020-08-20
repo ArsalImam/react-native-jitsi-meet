@@ -477,7 +477,7 @@ console.warn(item);
 
     if (_user.role == Roles.patient && status == AppointmentStatus.available) {
       id_param = "doctorId";
-      id_param = _user.doctorId;
+      userId = _user.doctorId;
     }
     let includes = '';
     let wheres = '';
