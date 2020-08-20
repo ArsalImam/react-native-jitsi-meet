@@ -22,9 +22,12 @@ export default class CompleteBookings extends Component {
   }
 
 
-  _generateReport() {
+  _generateReport(appointmentId) {
+    console.warn(
+      'apponme',appointmentId
+    );
     const prescribtionUrl = Api.instance().getUrl(
-      `consultation-reports/getReport?appointmentId=${this.appointmentId}&prescription`
+      `consultation-reports/getReport?appointmentId=${appointmentId}&prescription`
     );
         this.props.navigation.navigate('WebView', {
           prescribtionUrl,
@@ -32,9 +35,9 @@ export default class CompleteBookings extends Component {
     
   }
 
-  _generatePrescrition() {
+  _generatePrescrition(appointmentId) {
     const prescribtionUrl = Api.instance().getUrl(
-      `consultation-reports/getReport?appointmentId=${this.appointmentId}&prescription=true`
+      `consultation-reports/getReport?appointmentId=${appointmentId}&prescription=true`
     );
         this.props.navigation.navigate('WebView', {
           prescribtionUrl,
@@ -207,7 +210,7 @@ export default class CompleteBookings extends Component {
                   <View style={[CommonStyles.container, CommonStyles.horizontalContainer, { backgroundColor: 'grey', marginTop: 5, borderBottomEndRadius: 5, borderBottomStartRadius: 5 }]}>
                     <TouchableOpacity
 
-                    onPress={() => {this._generateReport()}}
+                    onPress={() => {this._generateReport(item.id)}}
                       style={[CommonStyles.container, CommonStyles.centerElement, { flexDirection: 'row' }]}
                     >
                       <Icon
@@ -220,7 +223,7 @@ export default class CompleteBookings extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                    onPress={() => {this._generatePrescrition()}}
+                    onPress={() => {this._generatePrescrition(item.id)}}
                       style={[CommonStyles.container, CommonStyles.centerElement, { flexDirection: 'row' }]}
                     >
                       <Icon

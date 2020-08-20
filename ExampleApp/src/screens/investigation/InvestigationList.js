@@ -63,7 +63,6 @@ export default class InvestigationList extends Component {
             });
     }
     render() {
-
         if (this.state.appointmentId != null) {
             return (
                 <View style={{ height: '75%'}}>
