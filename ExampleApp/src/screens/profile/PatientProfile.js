@@ -8,6 +8,7 @@ import moment from 'moment';
 import { ViewUtils } from '../../Utils';
 import Api from '../../Api';
 import Loader from '../../components/Loader'
+import { cos } from 'react-native-reanimated';
 
 
 export default class PatientProfile extends React.Component {
@@ -19,10 +20,22 @@ export default class PatientProfile extends React.Component {
             user: {
                 personalDetails: {},
                 qualifications: [],
+                imageUrl: '',
+
             },
             showLoader: true,
         };
     }
+
+
+    // image(){
+    //     if(this.state.user.imageUri){
+    //         console.warn('image URl' ,this.state.user.imageUri)
+    //     }else{
+    //         console.warn('else called')
+    //     }
+    // }
+
     componentDidMount() {
 
         Api.instance()
@@ -31,14 +44,33 @@ export default class PatientProfile extends React.Component {
                 if (user == null) return;
                 this.setState({
                     user,
+                    // imageUri:user.imageUrl
                 });
+                console.warn('userabc' , user)
+                // if(this.state.user.imageUrl){
+                //     console.warn('image image' , this.state.user.imageUrl)
+                //  let imageData = new FormData;
+                //  imageData.append('file' ,{
+                //      url:this.state.user.imageUrl,
+                //      name:this.state.user.imageUrl
+                    
+                //  })
+                //  console.warn(imageData)
+                
+                // }
+               
             })
             .catch(err => ViewUtils.showToast(err))
             .finally(() => {
                 this.setState({ isLoading: false });
             })
-    }
+    
+    // this.image()
+    
+        }
 
+
+ 
     render() {
 
         return (
@@ -62,7 +94,17 @@ export default class PatientProfile extends React.Component {
                                     <View style={[{ flexDirection: 'row', alignContent: 'flex-start', height: 105 }]}>
                                         <View style={[{ backgroundColor: '#7DEE00', borderBottomLeftRadius: 5, borderTopLeftRadius: 5, width: 105 }]}>
                                             <Image style={{ height: '97%', width: '100%', resizeMode: 'cover', }}
-                                                source={require('../../assets/drawable-xxxhdpi/Mask.png')}>
+                                                // source={require('../../assets/drawable-xxxhdpi/Mask.png')}
+                                                // source={this.state.user.imageUrl}
+                                               source={
+                                                // this.state.user.imageUrl
+                                                // ? { url: this.state.user.imageUrl }
+                                                // : require('../../assets/drawable-xxxhdpi/Mask.png')
+                                                require('../../assets/drawable-xxxhdpi/Mask.png')
+                                           
+                                            }
+                                             
+                                               >
 
                                             </Image>
                                         </View>
@@ -84,7 +126,8 @@ export default class PatientProfile extends React.Component {
                                         <Text style={[CommonStyles.textColorWhite, CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>
                                             {`Doctor Code: `} {this.state.user.doctorCode} {`\n`}
                                             {`\nCall: `} {this.state.user.personalDetails.mobile} {`\n`}
-                                            {`\nAge: `} {moment(this.state.user.personalDetails.dateOfBirth).fromNow().split(" ")[0]}{` `}{moment(this.state.user.personalDetails.dateOfBirth).fromNow().split(" ")[1]}
+                                            {`\nAge: `} {moment(this.state.user.personalDetails.dateOfBirth).fromNow().split(" ")[0]}{` `}{moment(this.state.user.personalDetails.dateOfBirth).fromNow().split(" ")[1]}{`\n`}
+                                      
                                         </Text>
                                     </View>
                                 </View>

@@ -11,7 +11,8 @@ import Loader from '../../components/Loader';
 import { ViewUtils } from '../../Utils';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default class CompleteBookings extends Component {
+export default class MyPresciption extends Component {
+    
   state = {
     appointments: [],
     isloading: true,
@@ -22,12 +23,9 @@ export default class CompleteBookings extends Component {
   }
 
 
-  _generateReport(appointmentId) {
-    console.warn(
-      'apponme',appointmentId
-    );
+  _generateReport() {
     const prescribtionUrl = Api.instance().getUrl(
-      `consultation-reports/getReport?appointmentId=${appointmentId}&prescription`
+      `consultation-reports/getReport?appointmentId=${this.appointmentId}&prescription`
     );
         this.props.navigation.navigate('WebView', {
           prescribtionUrl,
@@ -35,10 +33,10 @@ export default class CompleteBookings extends Component {
     
   }
 
-  _generatePrescrition(appointmentId) {
+  _generatePrescrition() {
     const prescribtionUrl = Api.instance().getUrl(
-      `consultation-reports/getReport?appointmentId=${appointmentId}&prescription=true`
-    );
+      `consultation-reports/getReport?appointmentId=${this.appointmentId}&prescription=true`
+      );
         this.props.navigation.navigate('WebView', {
           prescribtionUrl,
         });
@@ -50,6 +48,8 @@ export default class CompleteBookings extends Component {
       .getMyAppointments(AppointmentStatus.completed, true)
       .then(appointments => {
         console.warn('apointments', appointments)
+        console.warn('apointmentsAbcd', appointments)
+
         this.setState({ appointments });
       })
       .catch(err => {
@@ -79,7 +79,7 @@ export default class CompleteBookings extends Component {
                 style={[
                   CommonStyles.DINAltBold,
                   CommonStyles.textSizeLarge,
-                ]}>{`Completed\n`}</Text>
+                ]}>{`My Prescription\n`}</Text>
               <Text
                 style={[
                   CommonStyles.fontRegular,
@@ -210,7 +210,7 @@ export default class CompleteBookings extends Component {
                   <View style={[CommonStyles.container, CommonStyles.horizontalContainer, { backgroundColor: 'grey', marginTop: 5, borderBottomEndRadius: 5, borderBottomStartRadius: 5 }]}>
                     <TouchableOpacity
 
-                    onPress={() => {this._generateReport(item.id)}}
+                    onPress={() => {this._generateReport()}}
                       style={[CommonStyles.container, CommonStyles.centerElement, { flexDirection: 'row' }]}
                     >
                       <Icon
@@ -218,12 +218,12 @@ export default class CompleteBookings extends Component {
                         type='Foundation'
                         style={{ fontSize: 20, color: '#FFF', margin: 10 }}
                       />
-                      <Text style={[CommonStyles.textColorWhite, CommonStyles.centerText, CommonStyles.padding]}>Report</Text>
+                      <Text style={[CommonStyles.textColorWhite, CommonStyles.centerText, CommonStyles.padding]}>Medical Report</Text>
 
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                    onPress={() => {this._generatePrescrition(item.id)}}
+                    onPress={() => {this._generatePrescrition()}}
                       style={[CommonStyles.container, CommonStyles.centerElement, { flexDirection: 'row' }]}
                     >
                       <Icon
@@ -245,6 +245,24 @@ export default class CompleteBookings extends Component {
 
           <Loader
             loading={this.state.isLoading} />
+             <View
+                            style={[
+                                CommonStyles.backButtonStyle
+                            ]}>
+                            <TouchableOpacity
+                            // style={{
+                            //     marginTop:-10
+                            // }}
+                                onPress={() => {
+                                    this.props.navigation.goBack();
+                                }}>
+                                <Icon
+                                    name="arrow-back"
+                                    type="MaterialIcons"
+                                    style={{ color: '#FFF' }}
+                                />
+                            </TouchableOpacity>
+                        </View>
         </ImageBackground>
       </View>
     );
