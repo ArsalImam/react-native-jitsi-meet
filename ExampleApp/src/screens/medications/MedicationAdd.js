@@ -10,23 +10,30 @@ import { ViewUtils } from '../../Utils'
 
 export default class MedicationAdd extends Component {
 
+
     constructor(props) {
         super(props);
-        this.state = {
-            isLoading: false,
-            drugName: '',
-            drugBrand: '',
-            drugSku: '',
-            description: '',
-            data: []
-
-        };
-
-        this.props.route.params = [
-            {
-                appointmentId:""
+        if (this.props.route.params) {
+            this.state = {
+                isLoading: false,
+                drugName: '',
+                drugBrand: '',
+                drugSku: '',
+                description: '',
+                data: [],
+                appointmentId: this.props.route.params.appointmentId,
+                patientId: this.props.route.params.patientId,
             }
-        ];
+        } else {
+            this.state = {
+                isLoading: false,
+                drugName: '',
+                drugBrand: '',
+                drugSku: '',
+                description: '',
+                data: []
+            }
+        }
     }
 
     componentDidMount() {
@@ -43,8 +50,6 @@ export default class MedicationAdd extends Component {
             "drugSku": this.state.drugSku
 
         }
-
-        
 
         if(this.state.drugName != "" ){
             this.setState({ isLoading: true })
@@ -75,7 +80,7 @@ export default class MedicationAdd extends Component {
     };
     render() {
 
-        if (this.props.route.params.appointmentId != null) {
+        if (this.state.appointmentId != null) {
 
             return (
 

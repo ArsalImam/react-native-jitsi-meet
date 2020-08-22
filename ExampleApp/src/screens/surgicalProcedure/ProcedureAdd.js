@@ -9,15 +9,28 @@ import { ViewUtils } from '../../Utils'
 
 export default class ProcedureAdd extends Component {
 
+
     constructor(props) {
         super(props);
-        this.state = {
-            isLoading: false,
-            name: '',
-            description: '',
-            data: []
+        if (this.props.route.params) {
 
-        };
+            this.state = {
+                isLoading: false,
+                name: '',
+                description: '',
+                data: [],
+                appointmentId: this.props.route.params.appointmentId,
+                patientId: this.props.route.params.patientId,
+            }
+        } else {
+
+            this.state = {
+                isLoading: false,
+                name: '',
+                description: '',
+                data: [],
+            }
+        }
     }
 
     _saveProcedure = () => {
@@ -46,7 +59,7 @@ export default class ProcedureAdd extends Component {
     render() { 
 
 
-        if (this.props.route.params.appointmentId != null) {
+        if (this.state.appointmentId != null) {
 
             return (
 

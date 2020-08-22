@@ -11,21 +11,24 @@ export default class InvestigationAdd extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            isLoading: false,
-            name: '',
-            description: '',
-            data: []
-
-        };
-
-        this.props.route.params = [
-            {
-                appointmentId:""
+        if (this.props.route.params) {
+            this.state = {
+                isLoading: false,
+                name: '',
+                description: '',
+                data: [],
+                appointmentId: this.props.route.params.appointmentId,
+                patientId: this.props.route.params.patientId,
             }
-        ];
-
-    
+        } else {
+            this.state = {
+                isLoading: false,
+                name: '',
+                description: '',
+                data: [],
+              
+            }
+        }
     }
 
     _saveInvestigation = () => {
@@ -57,16 +60,11 @@ export default class InvestigationAdd extends Component {
             ViewUtils.showAlert(
                 'Please Provide Investigation Name',       
             );
-        }
-       
+        }  
     };
-    render() {
-        
-        if (this.props.route.params.appointmentId != null) {
-
-
+    render() {     
+        if (this.state.appointmentId != null) {
             return (
-
                 <View style={{ height: '75%' }}>
                 <ImageBackground style={[
                     CommonStyles.container,
@@ -128,7 +126,6 @@ export default class InvestigationAdd extends Component {
                                 ]}
                             >
                                 <Text
-
                                     style={[
                                         CommonStyles.fontRegular,
                                         CommonStyles.textSizeNormal,
@@ -221,7 +218,6 @@ export default class InvestigationAdd extends Component {
                                 ]}
                             >
                                 <Text
-
                                     style={[
                                         CommonStyles.fontRegular,
                                         CommonStyles.textSizeNormal,

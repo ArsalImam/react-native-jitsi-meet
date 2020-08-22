@@ -11,13 +11,26 @@ export default class PatientHistoryAdd extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            isLoading: false,
-            name: '',
-            description: '',
-            data: []
+        if (this.props.route.params) {
 
-        };
+            this.state = {
+                isLoading: false,
+                name: '',
+                description: '',
+                data: [],
+                appointmentId: this.props.route.params.appointmentId,
+                patientId: this.props.route.params.patientId,
+            }
+        } else {
+
+            this.state = {
+                isLoading: false,
+                name: '',
+                description: '',
+                data: [],
+
+            }
+        }
     }
 
     _savePatientHistory = () => {
@@ -45,19 +58,19 @@ export default class PatientHistoryAdd extends Component {
     };
     render() {
 
-        if (this.props.route.params.appointmentId != null) {
+        if (this.state.appointmentId != null) {
 
             return (
 
                 <View style={{ height: '75%' }}>
-                <ImageBackground style={[
-                    CommonStyles.container,
-                    CommonStyles.backgroundImage
-                ]}
-                    source={require('../../assets/img/background.png')}>
-                    <View style={
-                        { flex: 3, backgroundColor: '#297dec' }
-                    }>
+                    <ImageBackground style={[
+                        CommonStyles.container,
+                        CommonStyles.backgroundImage
+                    ]}
+                        source={require('../../assets/img/background.png')}>
+                        <View style={
+                            { flex: 3, backgroundColor: '#297dec' }
+                        }>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
                                 <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Patient History Form\n`}</Text>
                                 <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>

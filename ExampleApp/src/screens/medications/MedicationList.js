@@ -8,7 +8,7 @@ import { CommonActions } from '@react-navigation/native';
 import { StyleSheet, Text, View, ImageBackground, StatusBar, ActivityIndicator, FlatList, TouchableOpacity } from 'react-native';
 import moment from 'moment';
 import Loader from '../../components/Loader';
-import { NavigationEvents } from '@react-navigation/native'
+import { NavigationEvents } from '@react-navigation/native';
 
 export default class MedicationList extends Component {
 
@@ -25,14 +25,14 @@ export default class MedicationList extends Component {
             this.state = {
                 isLoading: true,
                 medicationList: [],
+                
             }
         }
     }
 
 
     _getMedicationList() {
-
-        //console.warn(" componentDidMount clalllleddd")
+        this.setState({ isLoading: true });
         Api.instance().getMedicationList()
             .then((data) => {
 
@@ -48,15 +48,7 @@ export default class MedicationList extends Component {
         this._getMedicationList();
     }
 
-    
-    
-
-    componentWillUnmount() {
-        console.warn(" componentWillUnmount clalllleddd")
-    }
-
     addToConsultation(item) {
-
         item.setupType = 'medication'
         Api.instance().addReport(item, this.state.appointmentId, this.state.patientId)
             .then(response => {
@@ -75,8 +67,6 @@ export default class MedicationList extends Component {
 
         if (this.state.appointmentId != null) {
             return (
-
-
                 <View style={{ height: '75%' }}>
                    
                     <ImageBackground style={[
@@ -164,7 +154,7 @@ export default class MedicationList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('MedicationAdd', { appointmentId: this.state.appointmentId, })
+                                    this.props.navigation.navigate('MedicationAdd', { appointmentId: this.props.route.params.appointmentId })
                                 }}
                                 style={[
                                     CommonStyles.container,
@@ -272,9 +262,6 @@ export default class MedicationList extends Component {
 
                                                 </View>
                                             </View>
-
-
-
                                         </ImageBackground>
                                     </View>
                                 )}

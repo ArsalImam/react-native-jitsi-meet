@@ -46,9 +46,6 @@ export default class InvestigationList extends Component {
            
     }
 
-    
-
-
     addDiagnosis(item) {
         item.setupType = 'investigation'
         Api.instance().addReport(item, this.state.appointmentId,this.state.patientId)

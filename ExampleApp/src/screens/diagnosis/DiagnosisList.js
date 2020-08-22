@@ -156,7 +156,7 @@ export default class DiagnosisList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('DiagnosisAdd', { appointmentId: this.state.appointmentId, })
+                                    this.props.navigation.navigate('DiagnosisAdd', { appointmentId: this.props.route.params.appointmentId})
                                 }}
                                 style={[
                                     CommonStyles.container,
