@@ -7,10 +7,9 @@ import {Container, Drawer, Button, Icon} from 'native-base';
 import SideBar from '../components/drawer/SideBar';
 import AppHeader from '../components/drawer/AppHeader';
 
-import {View, Text, StyleSheet, Linking} from 'react-native';
+import {View, Text, StyleSheet, Linking, TouchableOpacity} from 'react-native';
 import {ViewUtils} from '../Utils';
 
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import RealtimeDatabase from '../RealtimeDatabase';
 export default class AppointmentRoom extends React.Component {
   appointmentId = '';
@@ -25,7 +24,6 @@ export default class AppointmentRoom extends React.Component {
   }
 
   componentDidMount () {
-    
     const {appointmentId} = this.props.route.params;
     this.appointmentId = appointmentId;
   
@@ -100,6 +98,7 @@ export default class AppointmentRoom extends React.Component {
           content={
             <SideBar
               navigator={this.navigator}
+              closeDrawer={this.closeDrawer.bind(this)}
               appointmentId={this.props.route.params.appointmentId}
               changeScreenHandler={this.props.navigation}
               appointment={this.appointment}

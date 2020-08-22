@@ -8,15 +8,13 @@ import { CommonActions } from '@react-navigation/native';
 import { StyleSheet, Text, View, ImageBackground, StatusBar, ActivityIndicator, FlatList, TouchableOpacity } from 'react-native';
 import moment from 'moment';
 import Loader from '../../components/Loader';
+import { NavigationEvents } from '@react-navigation/native'
 
 export default class MedicationList extends Component {
 
     constructor(props) {
         super(props);
-        
-        
         if (this.props.route.params) {
-
             this.state = {
                 isLoading: true,
                 medicationList: [],
@@ -24,20 +22,20 @@ export default class MedicationList extends Component {
                 patientId: this.props.route.params.patientId,
             }
         } else {
-
             this.state = {
                 isLoading: true,
                 medicationList: [],
-              
             }
         }
     }
 
-    componentDidMount() {
-        console.warn(" componentDidMount clalllleddd")
+
+    _getMedicationList() {
+
+        //console.warn(" componentDidMount clalllleddd")
         Api.instance().getMedicationList()
             .then((data) => {
-                
+
                 this.setState({ medicationList: data });
             }
             ).catch(err => console.log(err))
@@ -46,12 +44,19 @@ export default class MedicationList extends Component {
             })
     }
 
+    componentDidMount() {
+        this._getMedicationList();
+    }
+
+    
+    
+
     componentWillUnmount() {
         console.warn(" componentWillUnmount clalllleddd")
     }
 
     addToConsultation(item) {
-        
+
         item.setupType = 'medication'
         Api.instance().addReport(item, this.state.appointmentId, this.state.patientId)
             .then(response => {
@@ -66,9 +71,14 @@ export default class MedicationList extends Component {
     }
     render() {
 
+
+
         if (this.state.appointmentId != null) {
             return (
-                <View style={{ height: '75%'}}>
+
+
+                <View style={{ height: '75%' }}>
+                   
                     <ImageBackground style={[
                         CommonStyles.container,
                         CommonStyles.backgroundImage
@@ -154,7 +164,7 @@ export default class MedicationList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('MedicationAdd', {appointmentId: this.state.appointmentId,})
+                                    this.props.navigation.navigate('MedicationAdd', { appointmentId: this.state.appointmentId, })
                                 }}
                                 style={[
                                     CommonStyles.container,
@@ -197,6 +207,8 @@ export default class MedicationList extends Component {
         } else {
             return (
                 <View style={[CommonStyles.container]}>
+
+                   
                     <ImageBackground style={[
                         CommonStyles.container,
                         CommonStyles.backgroundImage
@@ -205,6 +217,8 @@ export default class MedicationList extends Component {
                         <View style={
                             { flex: 2.3 }
                         }>
+
+                            
                             <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Medication List\n`}</Text>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Bookings </Text>

@@ -79,7 +79,8 @@ export default class MedicalRecordList extends Component {
                         source={require('../../assets/img/background.png')}>
                         <View style={
                             { flex: 3, backgroundColor: '#297dec' }
-                        }>                           <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
+                        }>                           
+                        <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Medical Records\n`}</Text>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Bookings </Text>
                             </Text>
@@ -289,7 +290,7 @@ export default class MedicalRecordList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('UploadMedicalRecord')
+                                    this.props.navigation.navigate('UploadMedicalRecord', {appointmentId: '',})
                                 }}
                                 style={[
                                     CommonStyles.container,

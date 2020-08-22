@@ -10,7 +10,7 @@ const Configs = {
   // baseUrl: 'http://51.83.237.63:3001/api/',
   
   baseUrl: 'http://18.140.243.171:3001/api/',
-  // baseUrl: 'https://api.evotelemedicine.live/api/',
+  // baseUrl: 'https://api.etibb.online.live/api/',
 
 //      baseUrl: 'http://192.168.100.106:3001/api/',
   //

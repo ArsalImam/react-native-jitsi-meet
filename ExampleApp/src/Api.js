@@ -196,6 +196,8 @@ console.warn(item);
 
   // Create Vitals
   async createVital(data) {
+
+    console.warn('touqeer data', data)
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
 
@@ -206,8 +208,10 @@ console.warn(item);
       this.getUrl('vitals'),
       data,
       this.getHeaders(),
+
+      console.warn('asdaff', data)
     );
-    console.warn("TOuqeer", response.data)
+    console.warn("Vital Create data", response.data)
     return response.data;
   }
 

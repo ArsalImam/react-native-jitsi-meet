@@ -7,6 +7,7 @@ import Api from '../../Api';
 import Loader from '../../components/Loader';
 import { ViewUtils } from '../../Utils'
 
+
 export default class MedicationAdd extends Component {
 
     constructor(props) {
@@ -21,11 +22,15 @@ export default class MedicationAdd extends Component {
 
         };
 
-        // this.props.route.params = [
-        //     {
-        //         appointmentId:""
-        //     }
-        // ];
+        this.props.route.params = [
+            {
+                appointmentId:""
+            }
+        ];
+    }
+
+    componentDidMount() {
+        console.warn('route')
     }
 
     _saveMedication = () => {
@@ -46,7 +51,7 @@ export default class MedicationAdd extends Component {
             Api.instance()
             .createMedication(data)
             .then(response => {
-                this.props.navigation.navigate('MedicationList');
+                this.props.navigation.replace('MedicationList');
                
                 ViewUtils.showToast('Medication has been saved successfully!');
                 
@@ -68,7 +73,7 @@ export default class MedicationAdd extends Component {
 
         
     };
-    render() {p
+    render() {
 
         if (this.props.route.params.appointmentId != null) {
 
