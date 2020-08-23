@@ -8,6 +8,7 @@ import { CommonActions } from '@react-navigation/native';
 import { StyleSheet, Text, View, ImageBackground, StatusBar, ActivityIndicator, FlatList, TouchableOpacity } from 'react-native';
 import moment from 'moment';
 import Loader from '../../components/Loader';
+import BloodGlucose from '../../components/BloodGlucose';
 
 export default class VitalList extends Component {
 
@@ -16,7 +17,7 @@ export default class VitalList extends Component {
         if (this.props.route.params) {
 
             this.state = {
-                isLoading: true,
+                isLoading: false,
                 vitalList: [],
                 appointmentId: this.props.route.params.appointmentId,
                 patientId: this.props.route.params.patientId,
@@ -24,15 +25,14 @@ export default class VitalList extends Component {
         } else {
 
             this.state = {
-                isLoading: true,
+                isLoading: false,
                 vitalList: [],
-              
             }
         }
     }
 
     componentDidMount() {
-
+        this.setState({ isLoading: true })
 
         Api.instance().getVitalList()
             .then((data) => {
@@ -46,7 +46,7 @@ export default class VitalList extends Component {
     }
 
     addToConsultation(item) {
-        Api.instance().addReport(item, this.state.appointmentId,this.state.patientId)
+        Api.instance().addReport(item, this.state.appointmentId, this.state.patientId)
             .then(response => {
                 console.warn(response);
                 this.props.navigation.goBack();
@@ -63,8 +63,6 @@ export default class VitalList extends Component {
 
         if (this.state.appointmentId != null) {
             return (
-
-
                 <View style={{ height: '75%' }}>
                     <ImageBackground style={[
                         CommonStyles.container,
@@ -73,7 +71,7 @@ export default class VitalList extends Component {
                         source={require('../../assets/img/background.png')}>
                         <View style={
                             { flex: 3, backgroundColor: '#297dec' }
-                    }>
+                        }>
                             <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Vital List\n`}</Text>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>It is a list of your all Bookings </Text>
@@ -111,7 +109,22 @@ export default class VitalList extends Component {
 
                                                     <Text style={{ paddingVertical: 10 }} >
                                                         <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Vital Type: \n`}</Text>
-                                                        <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.vitalType}</Text>
+                                                        {item.vitalType === "BloodGlucose" && (
+                                                            <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>Blood Glucose</Text>
+
+                                                        )}
+
+                                                        {item.vitalType === "BloodPressure" && (
+                                                            <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>Blood Pressure</Text>
+
+                                                        )}
+
+                                                        {item.vitalType === "BloodOxygen" && (
+                                                            <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>Blood Oxygen</Text>
+
+                                                        )}
+
+
                                                     </Text>
 
                                                     <Text>
@@ -121,16 +134,49 @@ export default class VitalList extends Component {
 
                                                 </View>
 
-                                                <View style={[CommonStyles.container, { justifyContent: 'space-between', alignItems: 'flex-end' }]}>
-                                                    <Text style={[CommonStyles.textSizeAverage, { color: '#333333' }]}>
-                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{`Values:\n\n`}</Text>
-                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{item.multipleValues[0]}{`\n`}</Text>
-                                                        <Text style={CommonStyles.fontMedium}>{item.multipleValues[1]}{`\n`}</Text>
-                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{item.multipleValues[2]}{`\n`}</Text>
-                                                        <Text style={CommonStyles.fontMedium}>{item.multipleValues[3]}{`\n`}</Text>
-                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{item.multipleValues[4]}{`\n`}</Text>
-                                                        <Text style={CommonStyles.fontMedium}>{item.multipleValues[5]}{`\n`}</Text>
-                                                    </Text>
+                                                <View style={[CommonStyles.container, { justifyContent: 'space-between', alignItems: 'flex-start' }]}>
+
+                                                    {item.vitalType === "BloodGlucose" && (
+                                                        <Text style={[{ color: '#333333' }]}>
+                                                            <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>Blood Glucose (mg/dL){`\n`}</Text>
+
+                                                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{item.multipleValues[0]}{`\n`}</Text>
+                                                            <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>Meal{`\n`}</Text>
+
+                                                            <Text style={CommonStyles.fontRegular, CommonStyles.textSizeSmall}>{item.multipleValues[1]}{`\n`}</Text>
+                                                            <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>Medication{`\n`}</Text>
+
+                                                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{item.multipleValues[2]}{`\n`}</Text>
+                                                        </Text>
+                                                    )}
+
+                                                    {item.vitalType === "BloodPressure" && (
+                                                        <Text style={[{ color: '#333333' }]}>
+                                                            <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>Systolic (mmHg){`\n`}</Text>
+
+                                                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{item.multipleValues[0]}{`\n`}</Text>
+                                                            <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>Diastolic (mmHg){`\n`}</Text>
+
+                                                            <Text style={CommonStyles.fontRegular, CommonStyles.textSizeSmall}>{item.multipleValues[1]}{`\n`}</Text>
+                                                            <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>Pulse (Beats/Min){`\n`}</Text>
+
+                                                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{item.multipleValues[2]}{`\n`}</Text>
+                                                        </Text>
+                                                    )}
+
+                                                    {item.vitalType === "BloodOxygen" && (
+                                                        <Text style={[{ color: '#333333' }]}>
+                                                            <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>Oxygen Saturation{`\n`}</Text>
+
+                                                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{item.multipleValues[0]}{'%'}</Text>
+
+
+                                                        </Text>
+                                                    )}
+
+
+
+
                                                 </View>
                                             </View>
                                         </ImageBackground>
@@ -153,7 +199,7 @@ export default class VitalList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('Vital', {appointmentId: this.state.appointmentId,})
+                                    this.props.navigation.navigate('Vital', { appointmentId: this.state.appointmentId, })
                                 }}
                                 style={[
                                     CommonStyles.container,
@@ -243,7 +289,22 @@ export default class VitalList extends Component {
 
                                                     <Text style={{ paddingVertical: 10 }} >
                                                         <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Vital Type: \n`}</Text>
-                                                        <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.vitalType}</Text>
+
+                                                        {item.vitalType === "BloodGlucose" && (
+                                                            <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>Blood Glucose</Text>
+
+                                                        )}
+
+                                                        {item.vitalType === "BloodPressure" && (
+                                                            <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>Blood Pressure</Text>
+
+                                                        )}
+
+                                                        {item.vitalType === "BloodOxygen" && (
+                                                            <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>Blood Oxygen</Text>
+
+                                                        )}
+
                                                     </Text>
 
                                                     <Text>
@@ -253,16 +314,49 @@ export default class VitalList extends Component {
 
                                                 </View>
 
-                                                <View style={[CommonStyles.container, { justifyContent: 'space-between', alignItems: 'flex-end' }]}>
-                                                    <Text style={[CommonStyles.textSizeAverage, { color: '#333333' }]}>
-                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{`Values:\n\n`}</Text>
-                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{item.multipleValues[0]}{`\n`}</Text>
-                                                        <Text style={CommonStyles.fontMedium}>{item.multipleValues[1]}{`\n`}</Text>
-                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{item.multipleValues[2]}{`\n`}</Text>
-                                                        <Text style={CommonStyles.fontMedium}>{item.multipleValues[3]}{`\n`}</Text>
-                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{item.multipleValues[4]}{`\n`}</Text>
-                                                        <Text style={CommonStyles.fontMedium}>{item.multipleValues[5]}{`\n`}</Text>
-                                                    </Text>
+                                                <View style={[CommonStyles.container, { justifyContent: 'space-between', alignItems: 'flex-start' }]}>
+
+                                                    {item.vitalType === "BloodGlucose" && (
+                                                        <Text style={[{ color: '#333333' }]}>
+                                                            <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>Blood Glucose (mg/dL){`\n`}</Text>
+
+                                                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{item.multipleValues[0]}{`\n`}</Text>
+                                                            <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>Meal{`\n`}</Text>
+
+                                                            <Text style={CommonStyles.fontRegular, CommonStyles.textSizeSmall}>{item.multipleValues[1]}{`\n`}</Text>
+                                                            <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>Medication{`\n`}</Text>
+
+                                                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{item.multipleValues[2]}{`\n`}</Text>
+                                                        </Text>
+                                                    )}
+
+                                                    {item.vitalType === "BloodPressure" && (
+                                                        <Text style={[{ color: '#333333' }]}>
+                                                            <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>Systolic (mmHg){`\n`}</Text>
+
+                                                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{item.multipleValues[0]}{`\n`}</Text>
+                                                            <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>Diastolic (mmHg){`\n`}</Text>
+
+                                                            <Text style={CommonStyles.fontRegular, CommonStyles.textSizeSmall}>{item.multipleValues[1]}{`\n`}</Text>
+                                                            <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>Pulse (Beats/Min){`\n`}</Text>
+
+                                                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{item.multipleValues[2]}{`\n`}</Text>
+                                                        </Text>
+                                                    )}
+
+                                                    {item.vitalType === "BloodOxygen" && (
+                                                        <Text style={[{ color: '#333333' }]}>
+                                                            <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>Oxygen Saturation{`\n`}</Text>
+
+                                                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{item.multipleValues[0]}{'%'}</Text>
+
+
+                                                        </Text>
+                                                    )}
+
+
+
+
                                                 </View>
                                             </View>
                                         </ImageBackground>

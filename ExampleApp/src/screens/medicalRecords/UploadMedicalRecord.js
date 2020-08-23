@@ -10,14 +10,26 @@ import ImagePicker from 'react-native-image-picker'
 
 export default class UploadMedicalRecord extends Component {
 
+
     constructor(props) {
         super(props);
-        this.state = {
-            isLoading: false,
-            name: '',
-            data: [],
-            image: null,
-        };
+        if (this.props.route.params) {
+            this.state = {
+                isLoading: false,
+                name: '',
+                data: [],
+                image: null,
+                appointmentId: this.props.route.params.appointmentId,
+                patientId: this.props.route.params.patientId,
+            }
+        } else {
+            this.state = {
+                isLoading: false,
+                name: '',
+                data: [],
+                image: null,
+            }
+        }
     }
 
     cancelAttachment = () => {
@@ -83,10 +95,15 @@ export default class UploadMedicalRecord extends Component {
         if (this.props.route.params.appointmentId != null) {
 
             return (
-                <View style={[CommonStyles.container]}>
-
-                    <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/img/bwback.png')}>
-                        <View style={{ flex: 2.3 }}>
+                <View style={{ height: '75%' }}>
+                <ImageBackground style={[
+                    CommonStyles.container,
+                    CommonStyles.backgroundImage
+                ]}
+                    source={require('../../assets/img/background.png')}>
+                    <View style={
+                        { flex: 3, backgroundColor: '#297dec' }
+                    }>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
                                 <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Upload Medical Record\n`}</Text>
                                 <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>

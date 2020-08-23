@@ -7,6 +7,7 @@ import Api from '../../Api';
 import Loader from '../../components/Loader';
 import { ViewUtils } from '../../Utils'
 
+
 export default class MedicationAdd extends Component {
 
     constructor(props) {
@@ -28,6 +29,10 @@ export default class MedicationAdd extends Component {
         ];
     }
 
+    componentDidMount() {
+        console.warn('route')
+    }
+
     _saveMedication = () => {
 
         let data = {
@@ -46,7 +51,7 @@ export default class MedicationAdd extends Component {
             Api.instance()
             .createMedication(data)
             .then(response => {
-                this.props.navigation.navigate('MedicationList');
+                this.props.navigation.replace('MedicationList');
                
                 ViewUtils.showToast('Medication has been saved successfully!');
                 
