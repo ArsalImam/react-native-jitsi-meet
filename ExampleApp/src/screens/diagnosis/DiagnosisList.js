@@ -31,31 +31,38 @@ export default class DiagnosisList extends Component {
         }
     }
 
+    _getDiagnosisList(){
+        this.setState({ isLoading: true });
+        Api.instance().getDiagnosisList()
+        .then((data) => {
+            console.warn('=====>', data["Diagnosis"])
+            this.setState({ diagnosisList: data });
+        }
+        ).catch(err => console.log(err))
+        .finally(() => {
+            this.setState({ isLoading: false });
+        })
+    }
+
     componentDidMount() {
-        Api.instance().getDiagnosisList()
-            .then((data) => {
-                console.warn('=====>', data["Diagnosis"])
-                this.setState({ diagnosisList: data });
-            }
-            ).catch(err => console.log(err))
-            .finally(() => {
-                this.setState({ isLoading: false });
-            })
+        this._getDiagnosisList();
     }
 
 
-    componentWillMount() {
-        Api.instance().getDiagnosisList()
-            .then((data) => {
-                console.warn('=====>', data["Diagnosis"])
-                this.setState({ diagnosisList: data });
-            }
-            ).catch(err => console.log(err))
-            .finally(() => {
-                this.setState({ isLoading: false });
-            })
+    // componentWillMount() {
+    //     Api.instance().getDiagnosisList()
+    //         .then((data) => {
+    //             console.warn('=====>', data["Diagnosis"])
+    //             this.setState({ diagnosisList: data });
+    //         }
+    //         ).catch(err => console.log(err))
+    //         .finally(() => {
+    //             this.setState({ isLoading: false });
+    //         })
 
-    }
+    // }
+
+    
     addDiagnosis(item) {
         item.setupType = 'diagnosis'
         Api.instance().addReport(item, this.state.appointmentId, this.state.patientId)
@@ -156,7 +163,7 @@ export default class DiagnosisList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('DiagnosisAdd', { appointmentId: this.props.route.params.appointmentId})
+                                    this.props.navigation.navigate('DiagnosisAdd', { appointmentId: this.props.route.params.appointmentId, onDiagnosisAdd: () => this._getDiagnosisList()})
                                 }}
                                 style={[
                                     CommonStyles.container,
@@ -282,7 +289,7 @@ export default class DiagnosisList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('DiagnosisAdd')
+                                    this.props.navigation.navigate('DiagnosisAdd',{onDiagnosisAdd: () => this._getDiagnosisList()})
                                 }}
                                 style={[
                                     CommonStyles.container,

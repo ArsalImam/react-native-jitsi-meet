@@ -43,20 +43,31 @@ export default class TherapyAdd extends Component {
             "description": this.state.description,
         }
 
-        this.setState({ isLoading: true })
-
-        Api.instance()
-            .createMedication(data)
-            .then(response => {
-                this.props.navigation.replace('TherapyList');
-                ViewUtils.showToast('Therapy has been saved successfully!');
-            })
-            .catch(err => {
-                ViewUtils.showToast(err);
-            })
-            .finally(() => {
-                this.setState({ isLoading: false });
-            });
+        if(this.state.name != ""){
+            this.setState({ isLoading: true })
+            Api.instance()
+                .createMedication(data)
+                .then(response => {
+                    this.props.route.params.onTherapyAdd();
+                    this.props.navigation.goBack();
+                    //this.props.navigation.replace('TherapyList');
+                    ViewUtils.showToast('Therapy has been saved successfully!');
+                })
+                .catch(err => {
+                    //ViewUtils.showToast(err);
+                    ViewUtils.showAlert(
+                        'Unable to Perform this Action',       
+                    );
+                })
+                .finally(() => {
+                    this.setState({ isLoading: false });
+                });
+        }else{
+            ViewUtils.showAlert(
+                'Please Provide Therapy Name',       
+            );
+        }
+        
     };
     render() {
 

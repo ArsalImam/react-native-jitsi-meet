@@ -154,7 +154,7 @@ export default class MedicationList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('MedicationAdd', { appointmentId: this.props.route.params.appointmentId })
+                                    this.props.navigation.navigate('MedicationAdd', { appointmentId: this.props.route.params.appointmentId, onAddMedication: () => this._getMedicationList()})
                                 }}
                                 style={[
                                     CommonStyles.container,
@@ -283,7 +283,7 @@ export default class MedicationList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('MedicationAdd')
+                                    this.props.navigation.navigate('MedicationAdd',{onAddMedication: () => this._getMedicationList()})
                                 }}
                                 style={[
                                     CommonStyles.container,

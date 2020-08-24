@@ -47,7 +47,9 @@ export default class DiagnosisAdd extends Component {
             Api.instance()
             .createMedication(data)
             .then(response => {
-                this.props.navigation.replace('DiagnosisList');
+               // this.props.navigation.replace('DiagnosisList');
+                this.props.route.params.onDiagnosisAdd();
+                this.props.navigation.goBack();
                 ViewUtils.showToast('Diagnosis has been saved successfully!');
             })
             .catch(err => {

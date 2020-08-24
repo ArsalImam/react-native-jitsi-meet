@@ -44,7 +44,9 @@ export default class InvestigationAdd extends Component {
             Api.instance()
             .createMedication(data)
             .then(response => {
-                this.props.navigation.replace('InvestigationList');
+                this.props.route.params.onInvestigationAdd();
+                this.props.navigation.goBack();
+                //this.props.navigation.replace('InvestigationList');
                 ViewUtils.showToast('Investigation has been saved successfully!');
             })
             .catch(err => {

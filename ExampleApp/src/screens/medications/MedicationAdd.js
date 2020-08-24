@@ -56,8 +56,9 @@ export default class MedicationAdd extends Component {
             Api.instance()
             .createMedication(data)
             .then(response => {
-                this.props.navigation.replace('MedicationList');
-               
+                //this.props.navigation.replace('MedicationList');
+                this.props.route.params.onAddMedication();
+                this.props.navigation.goBack();
                 ViewUtils.showToast('Medication has been saved successfully!');
                 
             })

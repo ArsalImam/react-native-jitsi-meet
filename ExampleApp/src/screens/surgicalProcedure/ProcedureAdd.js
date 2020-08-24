@@ -41,20 +41,30 @@ export default class ProcedureAdd extends Component {
             "description": this.state.description,
         }
 
+        if(this.state.name != "" ){
         this.setState({ isLoading: true })
-
         Api.instance()
             .createMedication(data)
             .then(response => {
-                this.props.navigation.replace('ProcedureList');
+                this.props.route.params.onProcedureAdd();
+                this.props.navigation.goBack();
+               // this.props.navigation.replace('ProcedureList');
                 ViewUtils.showToast('Procedure has been saved successfully!');
             })
             .catch(err => {
-                ViewUtils.showToast(err);
+                ViewUtils.showAlert(
+                    'Unable to Perform this Action',       
+                );
+                //ViewUtils.showToast(err);
             })
             .finally(() => {
                 this.setState({ isLoading: false });
             });
+        }else{
+            ViewUtils.showAlert(
+                'Please Provide Procedure Name',       
+            );
+        }
     };
     render() { 
 

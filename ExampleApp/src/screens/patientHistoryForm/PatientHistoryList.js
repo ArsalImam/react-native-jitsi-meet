@@ -31,7 +31,8 @@ export default class PatientHistoryList extends Component {
         }
     }
 
-    componentDidMount() {
+    _getPatientHistoryList(){
+        this.setState({ isLoading: true });
         Api.instance().getPatientHistoryList()
             .then((data) => {
                 this.setState({ patientHistoryList: data });
@@ -40,6 +41,10 @@ export default class PatientHistoryList extends Component {
             .finally(() => {
                 this.setState({ isLoading: false });
             })
+    }
+
+    componentDidMount() {
+        this._getPatientHistoryList()
     }
 
     addToConsultation(item) {
@@ -135,7 +140,7 @@ export default class PatientHistoryList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('PatientHistoryAdd', {appointmentId: this.state.appointmentId,})
+                                    this.props.navigation.navigate('PatientHistoryAdd', {appointmentId: this.state.appointmentId,onPatientHistoryAdd: () => this._getPatientHistoryList()})
                                 }}
                                 style={[
                                     CommonStyles.container,
@@ -251,7 +256,7 @@ export default class PatientHistoryList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('PatientHistoryAdd')
+                                    this.props.navigation.navigate('PatientHistoryAdd',{onPatientHistoryAdd: () => this._getPatientHistoryList()})
                                 }}
                                 style={[
                                     CommonStyles.container,

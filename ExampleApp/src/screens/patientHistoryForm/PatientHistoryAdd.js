@@ -41,20 +41,32 @@ export default class PatientHistoryAdd extends Component {
             "description": this.state.description,
         }
 
-        this.setState({ isLoading: true })
-
-        Api.instance()
+        
+        if(this.state.name != ""){
+            this.setState({ isLoading: true })
+            Api.instance()
             .createMedication(data)
             .then(response => {
-                this.props.navigation.replace('PatientHistoryList');
+                this.props.route.params.onPatientHistoryAdd();
+                this.props.navigation.goBack();
+               // this.props.navigation.replace('PatientHistoryList');
                 ViewUtils.showToast('Question has been saved successfully!');
             })
             .catch(err => {
-                ViewUtils.showToast(err);
+                //ViewUtils.showToast(err);
+                ViewUtils.showAlert(
+                    'Unable to Perform this Action',       
+                );
             })
             .finally(() => {
                 this.setState({ isLoading: false });
             });
+        }else{
+            ViewUtils.showAlert(
+                'Please Write a Question',       
+            );
+        }
+        
     };
     render() {
 

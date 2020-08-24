@@ -31,7 +31,8 @@ export default class InvestigationList extends Component {
         }
     }
 
-    componentDidMount() {
+    _getInvestigationList(){
+        this.setState({ isLoading: true });
         Api.instance().getInvestigationList()
             .then((data) => {
                 console.warn('=====>', data["Diagnosis"])
@@ -42,8 +43,10 @@ export default class InvestigationList extends Component {
             .finally(() => {
                 this.setState({ isLoading: false });
             })
+    }
 
-           
+    componentDidMount() {
+        this._getInvestigationList();      
     }
 
     addDiagnosis(item) {
@@ -145,7 +148,7 @@ export default class InvestigationList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('InvestigationAdd', {appointmentId: this.state.appointmentId,})
+                                    this.props.navigation.navigate('InvestigationAdd', {appointmentId: this.state.appointmentId,onInvestigationAdd: () => this._getInvestigationList()})
                                 }}
                                 style={[
                                     CommonStyles.container,
@@ -267,7 +270,7 @@ export default class InvestigationList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('InvestigationAdd')
+                                    this.props.navigation.navigate('InvestigationAdd',{onInvestigationAdd: () => this._getInvestigationList()})
                                 }}
                                 style={[
                                     CommonStyles.container,

@@ -31,16 +31,21 @@ export default class ProcedureList extends Component {
         }
     }
 
-    componentDidMount() {
+    _getProcedureList(){
+        this.setState({ isLoading: true });
         Api.instance().getProcedureList()
-            .then((data) => {
-                console.warn('=====>', data)
-                this.setState({ procedureList: data });
-            }
-            ).catch(err => console.log(err))
-            .finally(() => {
-                this.setState({ isLoading: false });
-            })
+        .then((data) => {
+            console.warn('=====>', data)
+            this.setState({ procedureList: data });
+        }
+        ).catch(err => console.log(err))
+        .finally(() => {
+            this.setState({ isLoading: false });
+        })
+    }
+
+    componentDidMount() {
+        this._getProcedureList();
     }
 
     addToConsultation(item) {
@@ -146,7 +151,7 @@ export default class ProcedureList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('ProcedureAdd', {appointmentId: this.state.appointmentId,})
+                                    this.props.navigation.navigate('ProcedureAdd', {appointmentId: this.state.appointmentId,onProcedureAdd: () => this._getProcedureList()})
                                 }}
                                 style={[
                                     CommonStyles.container,
@@ -271,7 +276,7 @@ export default class ProcedureList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('ProcedureAdd')
+                                    this.props.navigation.navigate('ProcedureAdd',{onProcedureAdd: () => this._getProcedureList()})
                                 }}
                                 style={[
                                     CommonStyles.container,
