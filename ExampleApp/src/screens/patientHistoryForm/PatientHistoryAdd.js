@@ -136,7 +136,7 @@ export default class PatientHistoryAdd extends Component {
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
-                            <TouchableOpacity
+                            {/* <TouchableOpacity
                                 onPress={() => {
                                     this.props.navigation.goBack();
                                 }}>
@@ -145,7 +145,7 @@ export default class PatientHistoryAdd extends Component {
                                     type="MaterialIcons"
                                     style={{ fontSize: 26, color: '#FFF' }}
                                 />
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </View>
                     </ImageBackground>
                 </View>
@@ -222,7 +222,7 @@ export default class PatientHistoryAdd extends Component {
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
-                            <TouchableOpacity
+                            {/* <TouchableOpacity
                                 onPress={() => {
                                     this.props.navigation.goBack();
                                 }}>
@@ -231,7 +231,7 @@ export default class PatientHistoryAdd extends Component {
                                     type="MaterialIcons"
                                     style={{ fontSize: 26, color: '#FFF' }}
                                 />
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </View>
                     </ImageBackground>
                 </View>

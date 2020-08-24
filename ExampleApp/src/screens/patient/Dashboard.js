@@ -35,6 +35,8 @@ class Dashboard extends React.Component {
       lastestAppointment: {time: '0:00 am', timeLeft: '0 mins'},
       showLoader: true,
       role: '',
+      imageUrl: '',
+
     };
   }
   _getAllAppointments() {
@@ -133,10 +135,25 @@ class Dashboard extends React.Component {
           {
             user,
           },
+
+
+          
           () => {
             global.role = this.state.user.role;
           },
         );
+
+        if (this.state.user.imageUrl) {
+          console.warn('image image', this.state.user.imageUrl)
+          let imageData = new FormData;
+          imageData.append('file', {
+              url: this.state.user.imageUrl,
+              name: this.state.user.imageUrl
+
+          })
+          console.warn(imageData)
+
+      }
       })
       .catch(err => ViewUtils.showToast(err));
   }
@@ -188,8 +205,11 @@ class Dashboard extends React.Component {
               </View> */}
               <View style={[{width: 53, height: 53, marginRight: 10}]}>
                 <Image
-                  style={{height: '97%', width: '100%', resizeMode: 'cover'}}
-                  source={require('../../assets/drawable-xxxhdpi/Mask.png')}
+                  style={{height: '97%', width: '100%', resizeMode: 'contain'}}
+                  // source={require('../../assets/drawable-xxxhdpi/Mask.png')}
+                 source={{
+                                                    uri: this.state.user.imageUrl
+                                                }}
                 />
               </View>
               <View style={{justifyContent: 'flex-end'}}>

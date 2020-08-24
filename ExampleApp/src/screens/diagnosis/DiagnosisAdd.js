@@ -147,7 +147,7 @@ export default class DiagnosisAdd extends Component {
 
                         <Loader loading={this.state.isLoading} />
 
-                        <View
+                        {/* <View
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
@@ -161,7 +161,7 @@ export default class DiagnosisAdd extends Component {
                                     style={{ fontSize: 26, color: '#FFF' }}
                                 />
                             </TouchableOpacity>
-                        </View>
+                        </View> */}
                     </ImageBackground>
                 </View>
             );
@@ -240,7 +240,7 @@ export default class DiagnosisAdd extends Component {
 
                         <Loader loading={this.state.isLoading} />
 
-                        <View
+                        {/* <View
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
@@ -254,7 +254,7 @@ export default class DiagnosisAdd extends Component {
                                     style={{ fontSize: 26, color: '#FFF' }}
                                 />
                             </TouchableOpacity>
-                        </View>
+                        </View> */}
                     </ImageBackground>
                 </View>
             );
