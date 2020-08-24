@@ -73,10 +73,19 @@ export default class ProcedureList extends Component {
                         CommonStyles.backgroundImage
                     ]}
                         source={require('../../assets/img/background.png')}>
-                        <View style={
-                            { flex: 3, backgroundColor: '#297dec' }
-                        }>
-                            <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
+                        <View style={{ flex: 3  ,justifyContent:'flex-start' ,paddingTop:50}}>
+            
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.goBack();
+              }}>
+              <Icon
+                name="arrow-back"
+                type="MaterialIcons"
+                style={{ fontSize: 26, color: '#FFF' ,marginLeft:10 }}
+              />
+            </TouchableOpacity>
+                            <Text style={{ color: '#FFFFFF', paddingLeft: 17}}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Procedure List\n`}</Text>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Bookings </Text>
                             </Text>
@@ -174,7 +183,7 @@ export default class ProcedureList extends Component {
                             </TouchableOpacity>
                         </View>
                         <Loader loading={this.state.isLoading} />
-                        <View
+                        {/* <View
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
@@ -188,7 +197,7 @@ export default class ProcedureList extends Component {
                                     style={{ color: '#FFF' }}
                                 />
                             </TouchableOpacity>
-                        </View>
+                        </View> */}
                     </ImageBackground>
                 </View>
             )
@@ -299,7 +308,7 @@ export default class ProcedureList extends Component {
                             </TouchableOpacity>
                         </View>
                         <Loader loading={this.state.isLoading} />
-                        <View
+                        {/* <View
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
@@ -313,7 +322,7 @@ export default class ProcedureList extends Component {
                                     style={{ color: '#FFF' }}
                                 />
                             </TouchableOpacity>
-                        </View>
+                        </View> */}
                     </ImageBackground>
                 </View>
             )

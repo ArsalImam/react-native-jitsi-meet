@@ -236,7 +236,7 @@ export default class UploadIllustrations extends React.Component {
                         </View>
 
 
-                        <View
+                        {/* <View
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
@@ -250,7 +250,7 @@ export default class UploadIllustrations extends React.Component {
                                     style={{ fontSize: 26, color: '#FFF' }}
                                 />
                             </TouchableOpacity>
-                        </View>
+                        </View> */}
                     </ImageBackground>
                 </View>
             )
@@ -349,7 +349,7 @@ export default class UploadIllustrations extends React.Component {
                         </View>
 
 
-                        <View
+                        {/* <View
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
@@ -363,7 +363,7 @@ export default class UploadIllustrations extends React.Component {
                                     style={{ fontSize: 26, color: '#FFF' }}
                                 />
                             </TouchableOpacity>
-                        </View>
+                        </View> */}
                     </ImageBackground>
                 </View>
 

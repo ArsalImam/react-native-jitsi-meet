@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ImageBackground } from 'react-native';
+import { Text, View, ImageBackground, TouchableOpacity} from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
 import { CheckBox } from 'react-native-elements';
 import { Icon } from 'native-base';
@@ -9,7 +9,6 @@ import { AppointmentStatus } from '../../Configs';
 import moment from 'moment';
 import Loader from '../../components/Loader';
 import { ViewUtils } from '../../Utils';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class MyPresciption extends Component {
     
@@ -90,7 +89,7 @@ export default class MyPresciption extends Component {
             </Text>
 
           </View>
-          <View style={{ flex: 8, paddingHorizontal: 2, paddingBottom: 55 }}>
+          <View style={{ flex: 8, paddingHorizontal: 2, paddingBottom: 5 }}>
             <FlatGrid
               itemDimension={320}
               spacing={15}
