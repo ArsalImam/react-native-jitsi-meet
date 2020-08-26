@@ -92,7 +92,7 @@ export default class UploadMedicalRecord extends Component {
     render() {
         const { image } = this.state;
 
-        if (this.props.route.params.appointmentId != null) {
+        if (this.state.appointmentId != null) {
 
             return (
                 <View style={{ height: '75%' }}>
@@ -101,9 +101,10 @@ export default class UploadMedicalRecord extends Component {
                     CommonStyles.backgroundImage
                 ]}
                     source={require('../../assets/img/background.png')}>
-                    <View style={
-                        { flex: 3, backgroundColor: '#297dec' }
-                    }>
+                    <View style={{ 
+                        flex: 3, 
+                        backgroundColor: '#297dec' 
+                    }}>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
                                 <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Upload Medical Record\n`}</Text>
                                 <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
@@ -130,7 +131,7 @@ export default class UploadMedicalRecord extends Component {
                                 <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 20 }]}>
                                     <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Title*</Label>
                                     <Input
-                                        value={this.state.notes}
+                                        value={this.state.name}
                                         onChangeText={val => this.setState({ name: val })}
                                         style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
                                 </Item>

@@ -31,7 +31,7 @@ export default class VitalList extends Component {
         }
     }
 
-    componentDidMount() {
+    _getVitalList(){
         this.setState({ isLoading: true })
 
         Api.instance().getVitalList()
@@ -43,6 +43,10 @@ export default class VitalList extends Component {
             .finally(() => {
                 this.setState({ isLoading: false });
             })
+    }
+
+    componentDidMount() {
+        this._getVitalList();
     }
 
     addToConsultation(item) {
@@ -199,7 +203,7 @@ export default class VitalList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('Vital', { appointmentId: this.state.appointmentId, })
+                                    this.props.navigation.navigate('Vital', { appointmentId: this.state.appointmentId, onVitalAdd: () => this._getVitalList()})
                                 }}
                                 style={[
                                     CommonStyles.container,
@@ -379,7 +383,7 @@ export default class VitalList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('Vital')
+                                    this.props.navigation.navigate('Vital',{onVitalAdd: () => this._getVitalList()})
                                 }}
                                 style={[
                                     CommonStyles.container,

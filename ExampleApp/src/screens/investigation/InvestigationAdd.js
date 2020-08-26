@@ -11,21 +11,24 @@ export default class InvestigationAdd extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            isLoading: false,
-            name: '',
-            description: '',
-            data: []
-
-        };
-
-        this.props.route.params = [
-            {
-                appointmentId:""
+        if (this.props.route.params) {
+            this.state = {
+                isLoading: false,
+                name: '',
+                description: '',
+                data: [],
+                appointmentId: this.props.route.params.appointmentId,
+                patientId: this.props.route.params.patientId,
             }
-        ];
-
-    
+        } else {
+            this.state = {
+                isLoading: false,
+                name: '',
+                description: '',
+                data: [],
+              
+            }
+        }
     }
 
     _saveInvestigation = () => {
@@ -41,7 +44,9 @@ export default class InvestigationAdd extends Component {
             Api.instance()
             .createMedication(data)
             .then(response => {
-                this.props.navigation.replace('InvestigationList');
+                this.props.route.params.onInvestigationAdd();
+                this.props.navigation.goBack();
+                //this.props.navigation.replace('InvestigationList');
                 ViewUtils.showToast('Investigation has been saved successfully!');
             })
             .catch(err => {
@@ -57,16 +62,11 @@ export default class InvestigationAdd extends Component {
             ViewUtils.showAlert(
                 'Please Provide Investigation Name',       
             );
-        }
-       
+        }  
     };
-    render() {
-        
-        if (this.props.route.params.appointmentId != null) {
-
-
+    render() {     
+        if (this.state.appointmentId != null) {
             return (
-
                 <View style={{ height: '75%' }}>
                 <ImageBackground style={[
                     CommonStyles.container,
@@ -128,7 +128,6 @@ export default class InvestigationAdd extends Component {
                                 ]}
                             >
                                 <Text
-
                                     style={[
                                         CommonStyles.fontRegular,
                                         CommonStyles.textSizeNormal,
@@ -144,7 +143,7 @@ export default class InvestigationAdd extends Component {
 
                         <Loader loading={this.state.isLoading} />
 
-                        <View
+                        {/* <View
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
@@ -158,7 +157,7 @@ export default class InvestigationAdd extends Component {
                                     style={{ fontSize: 26, color: '#FFF' }}
                                 />
                             </TouchableOpacity>
-                        </View>
+                        </View> */}
                     </ImageBackground>
                 </View>
             );
@@ -221,7 +220,6 @@ export default class InvestigationAdd extends Component {
                                 ]}
                             >
                                 <Text
-
                                     style={[
                                         CommonStyles.fontRegular,
                                         CommonStyles.textSizeNormal,
@@ -237,7 +235,7 @@ export default class InvestigationAdd extends Component {
 
                         <Loader loading={this.state.isLoading} />
 
-                        <View
+                        {/* <View
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
@@ -251,7 +249,7 @@ export default class InvestigationAdd extends Component {
                                     style={{ fontSize: 26, color: '#FFF' }}
                                 />
                             </TouchableOpacity>
-                        </View>
+                        </View> */}
                     </ImageBackground>
                 </View>
             );

@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import { StyleSheet, View, TouchableOpacity, ImageBackground, ScrollView, StatusBar } from 'react-native';
 import { Container, Header, Content, DatePicker, Text, Item, Label, Input, ScrollableTab, Icon, Picker, Form } from 'native-base';
@@ -11,19 +12,25 @@ export default class DiagnosisAdd extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            isLoading: false,
-            name: '',
-            description: '',
-            data: []
+        if (this.props.route.params) {
 
-        };
-
-        this.props.route.params = [
-            {
-                appointmentId:""
+            this.state = {
+                isLoading: false,
+                name: '',
+                description: '',
+                data: [],
+                appointmentId: this.props.route.params.appointmentId,
+                patientId: this.props.route.params.patientId,
             }
-        ];
+        } else {
+
+            this.state = {
+                isLoading: false,
+                name: '',
+                description: '',
+                data: []
+            }
+        }
     }
 
     _saveDiagnosis = () => {
@@ -40,7 +47,9 @@ export default class DiagnosisAdd extends Component {
             Api.instance()
             .createMedication(data)
             .then(response => {
-                this.props.navigation.replace('DiagnosisList');
+               // this.props.navigation.replace('DiagnosisList');
+                this.props.route.params.onDiagnosisAdd();
+                this.props.navigation.goBack();
                 ViewUtils.showToast('Diagnosis has been saved successfully!');
             })
             .catch(err => {
@@ -60,9 +69,7 @@ export default class DiagnosisAdd extends Component {
         
     };
     render() {
-
-        if (this.props.route.params.appointmentId != null) {
-
+        if (this.state.appointmentId != null) {
             return (
 
                 <View style={{ height: '75%' }}>
@@ -142,7 +149,7 @@ export default class DiagnosisAdd extends Component {
 
                         <Loader loading={this.state.isLoading} />
 
-                        <View
+                        {/* <View
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
@@ -156,7 +163,7 @@ export default class DiagnosisAdd extends Component {
                                     style={{ fontSize: 26, color: '#FFF' }}
                                 />
                             </TouchableOpacity>
-                        </View>
+                        </View> */}
                     </ImageBackground>
                 </View>
             );
@@ -235,7 +242,7 @@ export default class DiagnosisAdd extends Component {
 
                         <Loader loading={this.state.isLoading} />
 
-                        <View
+                        {/* <View
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
@@ -249,7 +256,7 @@ export default class DiagnosisAdd extends Component {
                                     style={{ fontSize: 26, color: '#FFF' }}
                                 />
                             </TouchableOpacity>
-                        </View>
+                        </View> */}
                     </ImageBackground>
                 </View>
             );

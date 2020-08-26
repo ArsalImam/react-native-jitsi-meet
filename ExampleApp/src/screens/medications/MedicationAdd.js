@@ -10,23 +10,30 @@ import { ViewUtils } from '../../Utils'
 
 export default class MedicationAdd extends Component {
 
+
     constructor(props) {
         super(props);
-        this.state = {
-            isLoading: false,
-            drugName: '',
-            drugBrand: '',
-            drugSku: '',
-            description: '',
-            data: []
-
-        };
-
-        this.props.route.params = [
-            {
-                appointmentId:""
+        if (this.props.route.params) {
+            this.state = {
+                isLoading: false,
+                drugName: '',
+                drugBrand: '',
+                drugSku: '',
+                description: '',
+                data: [],
+                appointmentId: this.props.route.params.appointmentId,
+                patientId: this.props.route.params.patientId,
             }
-        ];
+        } else {
+            this.state = {
+                isLoading: false,
+                drugName: '',
+                drugBrand: '',
+                drugSku: '',
+                description: '',
+                data: []
+            }
+        }
     }
 
     componentDidMount() {
@@ -44,15 +51,14 @@ export default class MedicationAdd extends Component {
 
         }
 
-        
-
         if(this.state.drugName != "" ){
             this.setState({ isLoading: true })
             Api.instance()
             .createMedication(data)
             .then(response => {
-                this.props.navigation.replace('MedicationList');
-               
+                //this.props.navigation.replace('MedicationList');
+                this.props.route.params.onAddMedication();
+                this.props.navigation.goBack();
                 ViewUtils.showToast('Medication has been saved successfully!');
                 
             })
@@ -75,7 +81,7 @@ export default class MedicationAdd extends Component {
     };
     render() {
 
-        if (this.props.route.params.appointmentId != null) {
+        if (this.state.appointmentId != null) {
 
             return (
 
@@ -171,7 +177,7 @@ export default class MedicationAdd extends Component {
 
                         <Loader loading={this.state.isLoading} />
 
-                        <View
+                        {/* <View
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
@@ -185,7 +191,7 @@ export default class MedicationAdd extends Component {
                                     style={{ fontSize: 26, color: '#FFF' }}
                                 />
                             </TouchableOpacity>
-                        </View>
+                        </View> */}
                     </ImageBackground>
                 </View>
             );
@@ -279,7 +285,7 @@ export default class MedicationAdd extends Component {
 
                         <Loader loading={this.state.isLoading} />
 
-                        <View
+                        {/* <View
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
@@ -293,7 +299,7 @@ export default class MedicationAdd extends Component {
                                     style={{ fontSize: 26, color: '#FFF' }}
                                 />
                             </TouchableOpacity>
-                        </View>
+                        </View> */}
                     </ImageBackground>
                 </View>
             );

@@ -31,16 +31,21 @@ export default class ProcedureList extends Component {
         }
     }
 
-    componentDidMount() {
+    _getProcedureList(){
+        this.setState({ isLoading: true });
         Api.instance().getProcedureList()
-            .then((data) => {
-                console.warn('=====>', data)
-                this.setState({ procedureList: data });
-            }
-            ).catch(err => console.log(err))
-            .finally(() => {
-                this.setState({ isLoading: false });
-            })
+        .then((data) => {
+            console.warn('=====>', data)
+            this.setState({ procedureList: data });
+        }
+        ).catch(err => console.log(err))
+        .finally(() => {
+            this.setState({ isLoading: false });
+        })
+    }
+
+    componentDidMount() {
+        this._getProcedureList();
     }
 
     addToConsultation(item) {
@@ -68,10 +73,19 @@ export default class ProcedureList extends Component {
                         CommonStyles.backgroundImage
                     ]}
                         source={require('../../assets/img/background.png')}>
-                        <View style={
-                            { flex: 3, backgroundColor: '#297dec' }
-                        }>
-                            <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
+                        <View style={{ flex: 3  ,justifyContent:'flex-start' ,paddingTop:50}}>
+            
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.goBack();
+              }}>
+              <Icon
+                name="arrow-back"
+                type="MaterialIcons"
+                style={{ fontSize: 26, color: '#FFF' ,marginLeft:10 }}
+              />
+            </TouchableOpacity>
+                            <Text style={{ color: '#FFFFFF', paddingLeft: 17}}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Procedure List\n`}</Text>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Bookings </Text>
                             </Text>
@@ -146,7 +160,7 @@ export default class ProcedureList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('ProcedureAdd', {appointmentId: this.state.appointmentId,})
+                                    this.props.navigation.navigate('ProcedureAdd', {appointmentId: this.state.appointmentId,onProcedureAdd: () => this._getProcedureList()})
                                 }}
                                 style={[
                                     CommonStyles.container,
@@ -271,7 +285,7 @@ export default class ProcedureList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('ProcedureAdd')
+                                    this.props.navigation.navigate('ProcedureAdd',{onProcedureAdd: () => this._getProcedureList()})
                                 }}
                                 style={[
                                     CommonStyles.container,

@@ -207,9 +207,9 @@ class Dashboard extends React.Component {
                 <Image
                   style={{height: '97%', width: '100%', resizeMode: 'contain'}}
                   // source={require('../../assets/drawable-xxxhdpi/Mask.png')}
-                  source={{
-                    uri: this.state.user.imageUrl
-                }}
+                 source={{
+                                                    uri: this.state.user.imageUrl
+                                                }}
                 />
               </View>
               <View style={{justifyContent: 'flex-end'}}>

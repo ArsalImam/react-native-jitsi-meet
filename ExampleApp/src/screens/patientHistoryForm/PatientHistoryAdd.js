@@ -11,13 +11,26 @@ export default class PatientHistoryAdd extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            isLoading: false,
-            name: '',
-            description: '',
-            data: []
+        if (this.props.route.params) {
 
-        };
+            this.state = {
+                isLoading: false,
+                name: '',
+                description: '',
+                data: [],
+                appointmentId: this.props.route.params.appointmentId,
+                patientId: this.props.route.params.patientId,
+            }
+        } else {
+
+            this.state = {
+                isLoading: false,
+                name: '',
+                description: '',
+                data: [],
+
+            }
+        }
     }
 
     _savePatientHistory = () => {
@@ -28,36 +41,48 @@ export default class PatientHistoryAdd extends Component {
             "description": this.state.description,
         }
 
-        this.setState({ isLoading: true })
-
-        Api.instance()
+        
+        if(this.state.name != ""){
+            this.setState({ isLoading: true })
+            Api.instance()
             .createMedication(data)
             .then(response => {
-                this.props.navigation.replace('PatientHistoryList');
+                this.props.route.params.onPatientHistoryAdd();
+                this.props.navigation.goBack();
+               // this.props.navigation.replace('PatientHistoryList');
                 ViewUtils.showToast('Question has been saved successfully!');
             })
             .catch(err => {
-                ViewUtils.showToast(err);
+                //ViewUtils.showToast(err);
+                ViewUtils.showAlert(
+                    'Unable to Perform this Action',       
+                );
             })
             .finally(() => {
                 this.setState({ isLoading: false });
             });
+        }else{
+            ViewUtils.showAlert(
+                'Please Write a Question',       
+            );
+        }
+        
     };
     render() {
 
-        if (this.props.route.params.appointmentId != null) {
+        if (this.state.appointmentId != null) {
 
             return (
 
                 <View style={{ height: '75%' }}>
-                <ImageBackground style={[
-                    CommonStyles.container,
-                    CommonStyles.backgroundImage
-                ]}
-                    source={require('../../assets/img/background.png')}>
-                    <View style={
-                        { flex: 3, backgroundColor: '#297dec' }
-                    }>
+                    <ImageBackground style={[
+                        CommonStyles.container,
+                        CommonStyles.backgroundImage
+                    ]}
+                        source={require('../../assets/img/background.png')}>
+                        <View style={
+                            { flex: 3, backgroundColor: '#297dec' }
+                        }>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
                                 <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Patient History Form\n`}</Text>
                                 <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
@@ -123,7 +148,7 @@ export default class PatientHistoryAdd extends Component {
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
-                            <TouchableOpacity
+                            {/* <TouchableOpacity
                                 onPress={() => {
                                     this.props.navigation.goBack();
                                 }}>
@@ -132,7 +157,7 @@ export default class PatientHistoryAdd extends Component {
                                     type="MaterialIcons"
                                     style={{ fontSize: 26, color: '#FFF' }}
                                 />
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </View>
                     </ImageBackground>
                 </View>
@@ -209,7 +234,7 @@ export default class PatientHistoryAdd extends Component {
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
-                            <TouchableOpacity
+                            {/* <TouchableOpacity
                                 onPress={() => {
                                     this.props.navigation.goBack();
                                 }}>
@@ -218,7 +243,7 @@ export default class PatientHistoryAdd extends Component {
                                     type="MaterialIcons"
                                     style={{ fontSize: 26, color: '#FFF' }}
                                 />
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </View>
                     </ImageBackground>
                 </View>

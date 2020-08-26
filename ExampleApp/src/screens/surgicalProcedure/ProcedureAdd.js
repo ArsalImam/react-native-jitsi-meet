@@ -9,15 +9,28 @@ import { ViewUtils } from '../../Utils'
 
 export default class ProcedureAdd extends Component {
 
+
     constructor(props) {
         super(props);
-        this.state = {
-            isLoading: false,
-            name: '',
-            description: '',
-            data: []
+        if (this.props.route.params) {
 
-        };
+            this.state = {
+                isLoading: false,
+                name: '',
+                description: '',
+                data: [],
+                appointmentId: this.props.route.params.appointmentId,
+                patientId: this.props.route.params.patientId,
+            }
+        } else {
+
+            this.state = {
+                isLoading: false,
+                name: '',
+                description: '',
+                data: [],
+            }
+        }
     }
 
     _saveProcedure = () => {
@@ -28,25 +41,35 @@ export default class ProcedureAdd extends Component {
             "description": this.state.description,
         }
 
+        if(this.state.name != "" ){
         this.setState({ isLoading: true })
-
         Api.instance()
             .createMedication(data)
             .then(response => {
-                this.props.navigation.replace('ProcedureList');
+                this.props.route.params.onProcedureAdd();
+                this.props.navigation.goBack();
+               // this.props.navigation.replace('ProcedureList');
                 ViewUtils.showToast('Procedure has been saved successfully!');
             })
             .catch(err => {
-                ViewUtils.showToast(err);
+                ViewUtils.showAlert(
+                    'Unable to Perform this Action',       
+                );
+                //ViewUtils.showToast(err);
             })
             .finally(() => {
                 this.setState({ isLoading: false });
             });
+        }else{
+            ViewUtils.showAlert(
+                'Please Provide Procedure Name',       
+            );
+        }
     };
     render() { 
 
 
-        if (this.props.route.params.appointmentId != null) {
+        if (this.state.appointmentId != null) {
 
             return (
 
@@ -127,7 +150,7 @@ export default class ProcedureAdd extends Component {
 
                         <Loader loading={this.state.isLoading} />
 
-                        <View
+                        {/* <View
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
@@ -141,7 +164,7 @@ export default class ProcedureAdd extends Component {
                                     style={{ fontSize: 26, color: '#FFF' }}
                                 />
                             </TouchableOpacity>
-                        </View>
+                        </View> */}
                     </ImageBackground>
                 </View>
             )
@@ -226,7 +249,7 @@ export default class ProcedureAdd extends Component {
 
                         <Loader loading={this.state.isLoading} />
 
-                        <View
+                        {/* <View
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
@@ -240,7 +263,7 @@ export default class ProcedureAdd extends Component {
                                     style={{ fontSize: 26, color: '#FFF' }}
                                 />
                             </TouchableOpacity>
-                        </View>
+                        </View> */}
                     </ImageBackground>
                 </View>
             );

@@ -24,21 +24,28 @@ import ImagePicker from 'react-native-image-picker'
 
 export default class UploadIllustrations extends React.Component {
 
+    constructor(props) {
+        super(props);
+        if (this.props.route.params) {
 
-    constructor() {
-        super();
-        this.state = {
-            isLoading: false,
+            this.state = {
+                isLoading: false,
+                image: null,
+                filePath: {},
+                appointmentId: this.props.route.params.appointmentId,
+                patientId: this.props.route.params.patientId,
+            }
+        } else {
+
+            this.state = {
+                isLoading: false,
             image: null,
             filePath: {},
-        };
 
-        this.props.route.params = [
-            {
-                appointmentId:""
             }
-        ];
+        }
     }
+
 
     
     // cancelAttachment = () => {
@@ -131,7 +138,7 @@ export default class UploadIllustrations extends React.Component {
 
         const { image } = this.state;
 
-        if (this.props.route.params.appointmentId != null) {
+        if (this.state.appointmentId != null) {
             return (
                 <View style={{ height: '75%' }}>
                 <ImageBackground style={[
@@ -229,7 +236,7 @@ export default class UploadIllustrations extends React.Component {
                         </View>
 
 
-                        <View
+                        {/* <View
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
@@ -243,7 +250,7 @@ export default class UploadIllustrations extends React.Component {
                                     style={{ fontSize: 26, color: '#FFF' }}
                                 />
                             </TouchableOpacity>
-                        </View>
+                        </View> */}
                     </ImageBackground>
                 </View>
             )
@@ -342,7 +349,7 @@ export default class UploadIllustrations extends React.Component {
                         </View>
 
 
-                        <View
+                        {/* <View
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
@@ -356,7 +363,7 @@ export default class UploadIllustrations extends React.Component {
                                     style={{ fontSize: 26, color: '#FFF' }}
                                 />
                             </TouchableOpacity>
-                        </View>
+                        </View> */}
                     </ImageBackground>
                 </View>
 

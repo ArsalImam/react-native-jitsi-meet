@@ -598,8 +598,19 @@ export default class CreateClinic extends Component {
           style={[CommonStyles.container, CommonStyles.backgroundImage]}
           source={require('../../assets/img/bwback.png')}>
 
-          <View style={{ flex: 2 }}>
-            <Text style={{ paddingLeft: 18, marginTop: 65 }}>
+          <View style={{ flex: 2  ,justifyContent:'flex-start' ,paddingTop:50}}>
+            
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.goBack();
+              }}>
+              <Icon
+                name="arrow-back"
+                type="MaterialIcons"
+                style={{ fontSize: 26, color: '#FFF' ,marginLeft:10 }}
+              />
+            </TouchableOpacity>
+            <Text style={{ paddingLeft: 18}}>
               <Text
                 style={[
                   CommonStyles.fontRegular,
@@ -856,7 +867,7 @@ export default class CreateClinic extends Component {
             </TouchableOpacity>
           </View>
           <Loader loading={this.state.isLoading} />
-          <View
+          {/* <View
             style={[
               {
                 position: 'absolute',
@@ -876,7 +887,7 @@ export default class CreateClinic extends Component {
                 style={{ fontSize: 26, color: '#FFF' }}
               />
             </TouchableOpacity>
-          </View>
+          </View> */}
         </ImageBackground>
       </View>
     );

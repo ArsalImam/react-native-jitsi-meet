@@ -31,16 +31,21 @@ export default class TherapyList extends Component {
         }
     }
 
-    componentDidMount() {
+    _getTherapyList(){
+        this.setState({ isLoading: true });
         Api.instance().getTherapyList()
-            .then((data) => {
-                console.warn('=====>', data)
-                this.setState({ therapyList: data });
-            }
-            ).catch(err => console.log(err))
-            .finally(() => {
-                this.setState({ isLoading: false });
-            })
+        .then((data) => {
+            console.warn('=====>', data)
+            this.setState({ therapyList: data });
+        }
+        ).catch(err => console.log(err))
+        .finally(() => {
+            this.setState({ isLoading: false });
+        })
+    }
+
+    componentDidMount() {
+        this._getTherapyList();
     }
 
     addToConsultation(item) {
@@ -146,7 +151,7 @@ export default class TherapyList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('TherapyAdd', {appointmentId: this.state.appointmentId,})
+                                    this.props.navigation.navigate('TherapyAdd', {appointmentId: this.state.appointmentId,onTherapyAdd: () => this._getTherapyList()})
                                 }}
                                 style={[
                                     CommonStyles.container,
@@ -271,7 +276,7 @@ export default class TherapyList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('TherapyAdd')
+                                    this.props.navigation.navigate('TherapyAdd',{onTherapyAdd: () => this._getTherapyList()})
                                 }}
                                 style={[
                                     CommonStyles.container,

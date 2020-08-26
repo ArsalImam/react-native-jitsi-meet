@@ -99,20 +99,32 @@ export default class Vital extends Component {
             default:
 
         }
-
-        this.setState({ isLoading: true });
-        Api.instance()
-            .createVital(data)
-            .then(response => {
-                this.props.navigation.replace('VitalList');
-                ViewUtils.showToast('Vital has been saved successfully!');
-            })
-            .catch(err => {
-                ViewUtils.showToast(err);
-            })
-            .finally(() => {
-                this.setState({ isLoading: false });
-            });
+        
+        if(this.state.vitalType != ""){
+            this.setState({ isLoading: true });
+            Api.instance()
+                .createVital(data)
+                .then(response => {
+                    //this.props.navigation.replace('VitalList');
+                    this.props.route.params.onVitalAdd();
+                    this.props.navigation.goBack();
+                    ViewUtils.showToast('Vital has been saved successfully!');
+                })
+                .catch(err => {
+                    //ViewUtils.showToast(err);
+                    ViewUtils.showAlert(
+                        'Unable to Perform this Action',       
+                    );
+                })
+                .finally(() => {
+                    this.setState({ isLoading: false });
+                });
+        }else{
+            ViewUtils.showAlert(
+                'Please Provide Vital Type',       
+            );
+        }
+        
     };
 
 
