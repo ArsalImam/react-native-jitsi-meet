@@ -23,12 +23,14 @@ export default class MyPresciption extends Component {
 
 
   _generateReport() {
+    
     const prescribtionUrl = Api.instance().getUrl(
       `consultation-reports/getReport?appointmentId=${this.appointmentId}&prescription`
     );
         this.props.navigation.navigate('WebView', {
           prescribtionUrl,
         });
+       
     
   }
 
@@ -45,10 +47,7 @@ export default class MyPresciption extends Component {
   componentDidMount() {
     Api.instance()
       .getMyAppointments(AppointmentStatus.completed, true)
-      .then(appointments => {
-        console.warn('apointments', appointments)
-        console.warn('apointmentsAbcd', appointments)
-
+      .then(appointments => { 
         this.setState({ appointments });
       })
       .catch(err => {
@@ -56,12 +55,76 @@ export default class MyPresciption extends Component {
       })
       .finally(() => {
         this.setState({ isLoading: false })
-      })
-      ;
+      });
+      
+    //  console.warn('data', this.state.appointments)
 
-     //çç console.warn('sdfgf', this.state.appointments)
+
+     // const filterAppointments = this.state.appointments.filter(x => {moment(this.state.appointments.date).subtract(7, 'days').calendar()})
+   //   console.warn('filterAppointments', filterAppointments) 
+     // console.warn('filterAppointments', moment(this.state.appointments.date).subtract(7, 'days').unix()*1000 - moment(this.state.appointments.date).unix()*1000)
   }
+
+
+
+  // handlePieChartData(dayToSet, moment) {
+  //   var days = 0;
+  //   var date = new Date();
+  //   var last = new Date(date.getTime() - days * 24 * 60 * 60 * 1000);
+
+  //   if (dayToSet) {
+  //     days = dayToSet;
+  //     last =
+  //       moment == "upcoming"
+  //         ? new Date(date.getTime() + days * 24 * 60 * 60 * 1000)
+  //         : new Date(date.getTime() - days * 24 * 60 * 60 * 1000);
+  //   }
+  //   var day = last.getDate();
+  //   var month = last.getMonth() + 1;
+  //   var year = last.getFullYear();
+  //   var previousDay = last.getDate() - 1;
+  //   var nextDay = last.getDate() + 1;
+  //   var today = new Date().toISOString().slice(0, 10);
+  //   var previousDate = year + "-" + month + "-" + previousDay;
+  //   var nextDate = year + "-" + month + "-" + nextDay;
+  //   var daysAgo = year + "-" + month + "-" + day;
+
+  //   if (!dayToSet) {
+  //     this.api.pieChardData(previousDate, nextDate).then((response) => {
+  //       const filtered = response.filter((a) => a.status === "Completed")
+  //         .length;
+  //       this.chartData.todayAppointment = filtered;
+  //     });
+  //   } else if (moment == "upcoming") {
+  //     this.api.pieChardData(today, daysAgo).then((response) => {
+  //       const filtered = response.filter((a) => a.status === "Scheduled");
+  //       this.chartData.upcomingAppointment = filtered.length;
+
+  //       if (this.isFirstLoaded) {
+  //         this.isFirstLoaded = false;
+  //         if (this.chartData.upcomingAppointment == 0) {
+  //           this.upcomingAppointmentText = "No Upcoming Appointment Found...";
+  //         } else {
+  //           this.upcomingAppointmentText = `Your next appointment is in: <span style="color: rgb(245, 78, 78);">${require("moment")(
+  //             response[0].createdAt
+  //           ).fromNow(true)}</span>.`;
+  //         }
+  //       }
+  //     });
+  //   } else {
+  //     this.api.pieChardData(daysAgo, today).then((response) => {
+  //       const filtered = response.filter((a) => a.status === "Completed")
+  //         .length;
+  //       this.chartData.pastAppointment = filtered;
+  //     });
+  //   }
+  // }
+
+
+  
   render() {
+
+   
     return (
       <View style={[CommonStyles.container]}>
         <ImageBackground
@@ -208,6 +271,7 @@ export default class MyPresciption extends Component {
                   </ImageBackground>
                   <View style={[CommonStyles.container, CommonStyles.horizontalContainer, { backgroundColor: 'grey', marginTop: 5, borderBottomEndRadius: 5, borderBottomStartRadius: 5 }]}>
                     <TouchableOpacity
+                    
 
                     onPress={() => {this._generateReport()}}
                       style={[CommonStyles.container, CommonStyles.centerElement, { flexDirection: 'row' }]}

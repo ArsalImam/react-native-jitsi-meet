@@ -15,7 +15,7 @@ export default class ScheduledBooking extends Component {
   state = {
     appointments: [],
     isLoading: true,
-    selected: "key0"
+    selected: "key2"
 
   };
 
