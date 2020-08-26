@@ -224,7 +224,7 @@ export default class MedicationList extends Component {
                 onPress={() => {
                   this.props.navigation.navigate('MedicationAdd', {
                     appointmentId: this.props.route.params.appointmentId,
-                    onAddMedication: () => this._getMedicationList()
+                    onAddMedication: () => this._getMedicationList(),
                   });
                 }}
                 style={[
@@ -246,7 +246,7 @@ export default class MedicationList extends Component {
               </TouchableOpacity>
             </View>
             <Loader loading={this.state.isLoading} />
-            {/* <View
+            <View
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
@@ -260,7 +260,7 @@ export default class MedicationList extends Component {
                                     style={{ color: '#FFF' }}
                                 />
                             </TouchableOpacity>
-                        </View> */}
+                        </View>
           </ImageBackground>
         </View>
       );
@@ -270,19 +270,19 @@ export default class MedicationList extends Component {
           <ImageBackground
             style={[CommonStyles.container, CommonStyles.backgroundImage]}
             source={require('../../assets/img/bwback.png')}>
- <View style={{ flex: 2  ,justifyContent:'flex-start' ,paddingTop:50}}>
-            
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.goBack();
-              }}>
-              <Icon
-                name="arrow-back"
-                type="MaterialIcons"
-                style={{ fontSize: 26, color: '#FFF' ,marginLeft:10 }}
-              />
-            </TouchableOpacity>
-                          <Text style={{color: '#FFFFFF', paddingLeft: 17}}>
+            <View
+              style={{flex: 2, justifyContent: 'flex-start', paddingTop: 50}}>
+              <TouchableOpacity
+                onPress={() => {
+                  this.props.navigation.goBack();
+                }}>
+                <Icon
+                  name="arrow-back"
+                  type="MaterialIcons"
+                  style={{fontSize: 26, color: '#FFF', marginLeft: 10}}
+                />
+              </TouchableOpacity>
+              <Text style={{color: '#FFFFFF', paddingLeft: 17}}>
                 <Text
                   style={[
                     CommonStyles.fontRegular,
@@ -425,7 +425,9 @@ export default class MedicationList extends Component {
               ]}>
               <TouchableOpacity
                 onPress={() => {
-                  this.props.navigation.navigate('MedicationAdd',{onAddMedication: () => this._getMedicationList()});
+                  this.props.navigation.navigate('MedicationAdd', {
+                    onAddMedication: () => this._getMedicationList(),
+                  });
                 }}
                 style={[
                   CommonStyles.container,

@@ -13,8 +13,6 @@ export default class WebView extends React.Component {
     console.warn(`prescribtionUrl ==========> ${prescribtionUrl}`);
   return <Web source={{uri: prescribtionUrl}} />
     
-    
-    
-    
+   
   }
 }
