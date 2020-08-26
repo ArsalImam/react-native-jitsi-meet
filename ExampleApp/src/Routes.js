@@ -695,7 +695,7 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="WebView"
           component={WebView}
-          options={{headerShown: false}}
+          options={{headerShown: true}}
         />
       </Stack.Navigator>
     );
