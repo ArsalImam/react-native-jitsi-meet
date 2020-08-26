@@ -204,7 +204,7 @@ const CommonStyles = StyleSheet.create({
   backButtonStyle: {
     position: 'absolute',
     left: 10,
-    top: 40,
+    top: 20,
   },
   headingTextStyle: {
     paddingLeft: 15, 
