@@ -80,8 +80,10 @@ export default class PatientProfile extends React.Component {
                                 }
                                 ]}>
                                     <View style={[{ flexDirection: 'row', alignContent: 'flex-start', height: 105 }]}>
-                                        <View style={[{ backgroundColor: '#7DEE00', borderBottomLeftRadius: 5, borderTopLeftRadius: 5, width: 105 }]}>
-                                            <Image style={{ height: '97%', width: '100%', resizeMode: 'contain', }}
+                                        <View style={[{
+                                            //  backgroundColor: '#7DEE00', 
+                                            borderBottomLeftRadius: 5, borderTopLeftRadius: 5, width: 105 }]}>
+                                            <Image style={{ height: '97%', width: '100%', resizeMode: 'contain' }}
                                                 source={{
                                                     uri: this.state.user.imageUrl
                                                 }}
@@ -171,7 +173,7 @@ export default class PatientProfile extends React.Component {
                         </TouchableOpacity>
                     </View>
 
-                    {/* <View
+                    <View
                         style={[
                             CommonStyles.backButtonStyle
                         ]}>
@@ -185,7 +187,7 @@ export default class PatientProfile extends React.Component {
                                 style={{ color: '#FFF' }}
                             />
                         </TouchableOpacity>
-                    </View> */}
+                    </View>
                 </ImageBackground>
             </View>
         );

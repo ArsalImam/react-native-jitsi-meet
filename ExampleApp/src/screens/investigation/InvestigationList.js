@@ -179,7 +179,7 @@ export default class InvestigationList extends Component {
                             </TouchableOpacity>
                         </View>
                         <Loader loading={this.state.isLoading} />
-                        {/* <View
+                        <View
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
@@ -193,7 +193,7 @@ export default class InvestigationList extends Component {
                                     style={{ color: '#FFF' }}
                                 />
                             </TouchableOpacity>
-                        </View> */}
+                        </View>
                     </ImageBackground>
                 </View>
             )
@@ -301,7 +301,7 @@ export default class InvestigationList extends Component {
                             </TouchableOpacity>
                         </View>
                         <Loader loading={this.state.isLoading} />
-                        {/* <View
+                        <View
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
@@ -315,7 +315,7 @@ export default class InvestigationList extends Component {
                                     style={{ color: '#FFF' }}
                                 />
                             </TouchableOpacity>
-                        </View> */}
+                        </View>
                     </ImageBackground>
                 </View>
             )

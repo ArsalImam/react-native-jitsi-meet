@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, ImageBackground } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
 import { CheckBox } from 'react-native-elements';
-import { Icon } from 'native-base';
+import { Icon ,Item ,Picker} from 'native-base';
 import CommonStyles from '../../CommonStyles';
 import Api from '../../Api';
 import { AppointmentStatus } from '../../Configs';
@@ -13,8 +13,10 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class CompleteBookings extends Component {
   state = {
-    appointments: [],
+    appointments:[],
     isloading: true,
+    selected: "key0",
+now: new Date()
   };
 
   constructor(props) {
@@ -49,19 +51,31 @@ export default class CompleteBookings extends Component {
     Api.instance()
       .getMyAppointments(AppointmentStatus.completed, true)
       .then(appointments => {
-        console.warn('apointments', appointments)
+        console.warn( '====================apointments completed=========================',appointments[0].date)
+  // let date= appointments.filter(x => x.date != 0)
+  // console.warn("========dateeee=======" , date ,"========dateeee=======" )
+        // console.warn('appointments clinic id' ,appointments.status ,'appointments clinic id')
         this.setState({ appointments });
+      
+      
       })
+
       .catch(err => {
-        ViewUtils.showToast(err);
+        ViewUtils.showToast(err);  
       })
       .finally(() => {
         this.setState({ isLoading: false })
       })
       ;
+ }
 
-     //çç console.warn('sdfgf', this.state.appointments)
+  
+  onValueChange(value) {
+    this.setState({
+      selected: value
+    });
   }
+
   render() {
     return (
       <View style={[CommonStyles.container]}>
@@ -85,11 +99,39 @@ export default class CompleteBookings extends Component {
                   CommonStyles.fontRegular,
                   CommonStyles.textSizeAverage,
                 ]}>
-                It is a list of your all booking patients{' '}
+                It is a list of your all booking patients
+                
               </Text>
             </Text>
 
           </View>
+          <Item
+            picker
+            style={[
+              CommonStyles.container,
+              CommonStyles.itemStyle,
+              { marginVertical: 10, paddingTop: 10 },
+            ]}>
+            <Picker
+              mode="dropdown"
+              iosIcon={<Icon name="arrow-down" />}
+
+              placeholder="Choose Frequency"
+              placeholderStyle={{ color: '#bfc6ea' }}
+              placeholderIconColor="#007aff"
+              selectedValue={this.state.selected}
+              onValueChange={this.onValueChange.bind(this)}>
+              {/* <Picker.Item
+                                            color="gray"
+                                            selected={false}
+                                            label="Select Vital Type"
+                                            value=""
+                                        /> */}
+              <Picker.Item  label="Past 7 days" value="key0" />
+              <Picker.Item label="Past 15 days" value="key1" />
+              <Picker.Item label="Past Appointments" value="key2" />
+            </Picker>
+          </Item>
           <View style={{ flex: 8, paddingHorizontal: 2, paddingBottom: 55 }}>
             <FlatGrid
               itemDimension={320}
@@ -148,6 +190,7 @@ export default class CompleteBookings extends Component {
                             ]}>{`Time: `}</Text>
                           <Text style={CommonStyles.fontMedium}>
                             {moment(item.date).format('hh:mm A')}
+
                           </Text>
                         </Text>
                       </View>

@@ -183,7 +183,7 @@ export default class ProcedureList extends Component {
                             </TouchableOpacity>
                         </View>
                         <Loader loading={this.state.isLoading} />
-                        {/* <View
+                        <View
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
@@ -197,7 +197,7 @@ export default class ProcedureList extends Component {
                                     style={{ color: '#FFF' }}
                                 />
                             </TouchableOpacity>
-                        </View> */}
+                        </View>
                     </ImageBackground>
                 </View>
             )
@@ -308,7 +308,7 @@ export default class ProcedureList extends Component {
                             </TouchableOpacity>
                         </View>
                         <Loader loading={this.state.isLoading} />
-                        {/* <View
+                        <View
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
@@ -322,7 +322,7 @@ export default class ProcedureList extends Component {
                                     style={{ color: '#FFF' }}
                                 />
                             </TouchableOpacity>
-                        </View> */}
+                        </View>
                     </ImageBackground>
                 </View>
             )
