@@ -504,6 +504,54 @@ export default class Api {
     if (data.error) throw data.error.message;
     return data;
   }
+
+//
+async getMyAppointmentsComing15Days(status = '', requirePatient = false, todaysDate = '', lastDate = '') {
+  let user = await this._user();
+  let _user = JSON.parse(JSON.stringify(user));
+
+  let id_param = this._relationalParamByRole(_user.role);
+  let userId = _user.id;
+
+  if (_user.role == Roles.patient && status == AppointmentStatus.available) {
+    id_param = "doctorId";
+    userId = _user.doctorId;
+  }
+  let includes = '';
+  let wheres = '';
+  if (requirePatient) {
+    includes = `&filter[include]=patient`;
+  }
+
+  if (status != '') {
+    wheres = `&filter[where][status]=${status}`;
+  }
+
+  if (todaysDate != '') {
+    todaysDate = `&filter[where][and][0][date][gt]=${todaysDate}`
+  }
+
+  if (lastDate != '') {
+    lastDate = `&filter[where][and][1][date][lt]=${lastDate}`
+  }
+
+  let response = await this.client.get(
+    this.getUrl(
+      `Appointments?filter[where][${id_param}]=${
+      userId
+      }${includes}${wheres}&filter[order]=id%20DESC${todaysDate}${lastDate}`
+
+
+      //   &filter[where][and][0][date][lt]=${moment().format('YYYY-MM-DD')}&filter[where][and][1][date][gt]=${moment().subtract(7, 'days').format('YYYY-MM-DD')}`,
+    ),
+  );
+  let data = response.data;
+  if (data.error) throw data.error.message;
+  return data;
+}
+//
+
+
   async getMyAppointmentsPast15Days(status = '', requirePatient = false, todaysDate = '', lastDate = '') {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));

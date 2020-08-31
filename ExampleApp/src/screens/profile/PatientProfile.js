@@ -21,6 +21,7 @@ export default class PatientProfile extends React.Component {
                 personalDetails: {},
                 qualifications: [],
                 imageUrl: '',
+                
 
             },
             showLoader: true,
@@ -48,6 +49,16 @@ export default class PatientProfile extends React.Component {
                     })
                     console.warn(imageData)
 
+                }
+                else{
+                    let imageData = new FormData;
+                    imageData.append('file', {
+                        url: '../../assets/img/calendar.png',
+                        // name: this.state.user.imageUrl
+
+                    })
+                    console.warn(imageData)
+            //    <Image source={require('../../assets/img/calendar.png')}/>
                 }
 
             })
@@ -83,14 +94,19 @@ export default class PatientProfile extends React.Component {
                                         <View style={[{
                                             //  backgroundColor: '#7DEE00', 
                                             borderBottomLeftRadius: 5, borderTopLeftRadius: 5, width: 105 }]}>
+                                          
                                             <Image style={{ height: '97%', width: '100%', resizeMode: 'contain' }}
                                                 source={{
+                                                    
                                                     uri: this.state.user.imageUrl
+
                                                 }}
 
                                             >
 
                                             </Image>
+                                            {/* <Image source={require('../../assets/img/calendar.png')}/> */}
+
                                         </View>
                                         <View style={[CommonStyles.container, { justifyContent: 'flex-end', marginLeft: 10, marginBottom: -7 }]}>
                                             <Text>
