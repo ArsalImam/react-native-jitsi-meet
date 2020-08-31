@@ -86,6 +86,7 @@ export default class Patients extends Component {
                     } else {
                       this.props.navigation.navigate('DrProfile', {
                         patientId: item.id,
+                        patient: item,
                       });
                     }
                   }}
