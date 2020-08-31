@@ -199,13 +199,10 @@ export default class BookingList extends Component {
                         type='Fontisto'
                         style={{ fontSize: 20, color: '#FFF', margin: 10 }}
                       />
-                      <Text style={[CommonStyles.textColorWhite, CommonStyles.centerText, CommonStyles.padding]}>SCHEDULE</Text>
+                      <Text style={[CommonStyles.textColorWhite, CommonStyles.centerText, CommonStyles.padding]}>BOOK NOW</Text>
 
                     </TouchableOpacity>
                   </View>
-
-
-
                 </TouchableOpacity>
               )}
             />

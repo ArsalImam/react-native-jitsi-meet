@@ -14,9 +14,9 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 export default class CompleteBookings extends Component {
   state = {
     appointments:[],
-    isloading: true,
-    selected: "key0",
-now: new Date()
+    isloading: false,
+    statusCode: "last7Days",
+    now: new Date()
   };
 
   constructor(props) {
@@ -48,33 +48,97 @@ now: new Date()
   }
 
   componentDidMount() {
-    Api.instance()
-      .getMyAppointments(AppointmentStatus.completed, true)
-      .then(appointments => {
-        console.warn( '====================apointments completed=========================',appointments[0].date)
-  // let date= appointments.filter(x => x.date != 0)
-  // console.warn("========dateeee=======" , date ,"========dateeee=======" )
-        // console.warn('appointments clinic id' ,appointments.status ,'appointments clinic id')
-        this.setState({ appointments });
-      
-      
-      })
 
-      .catch(err => {
-        ViewUtils.showToast(err);  
-      })
-      .finally(() => {
-        this.setState({ isLoading: false })
-      })
-      ;
+    this.tabsChange(this.state.statusCode);
+    
  }
 
-  
-  onValueChange(value) {
-    this.setState({
-      selected: value
-    });
-  }
+
+ tabsChange = statusCode => {
+ this.eventData(statusCode);
+  this.setState({ statusCode });
+};
+
+eventData(param) {
+    switch (param) {
+      case 'allAppointments':
+        this.allAppointments();
+        break;
+      case 'last15Days':
+       this.last15Days()
+        break;
+      case 'last7Days':
+        this.last7Days()
+        break;
+    }
+    
+
+}
+
+ last15Days() {
+
+  Api.instance()
+  .getMyAppointmentsPast15Days(AppointmentStatus.completed, true, moment().format('YYYY-MM-DD'), moment().subtract(15, 'days').format('YYYY-MM-DD'))
+  .then(appointments => {
+    this.setState({ appointments }); 
+  })
+  .catch(err => {
+    ViewUtils.showToast(err);  
+  })
+  .finally(() => {
+    this.setState({ isLoading: false })
+  });
+ }
+
+ allAppointments() {
+   this.setState({ isLoading: true})
+  Api.instance()
+  .getMyAppointments(AppointmentStatus.completed, true)
+  .then(appointments => {
+    this.setState({ appointments }); 
+  })
+  .catch(err => {
+    ViewUtils.showToast(err);  
+  })
+  .finally(() => {
+    this.setState({ isLoading: false })
+  });
+ }
+
+ last15Days() {
+  this.setState({ isLoading: true})
+  Api.instance()
+  .getMyAppointmentsPast15Days(AppointmentStatus.completed, true, moment().format('YYYY-MM-DD'), moment().subtract(15, 'days').format('YYYY-MM-DD'))
+  .then(appointments => {
+    this.setState({ appointments }); 
+  })
+  .catch(err => {
+    ViewUtils.showToast(err);  
+  })
+  .finally(() => {
+    this.setState({ isLoading: false })
+  });
+ }
+
+ last7Days() {
+  this.setState({ isLoading: true})
+  Api.instance()
+  .getMyAppointmentsPast15Days(AppointmentStatus.completed, true, moment().format('YYYY-MM-DD'), moment().subtract(7, 'days').format('YYYY-MM-DD'))
+  .then(appointments => {
+    this.setState({ appointments }); 
+  })
+  .catch(err => {
+    ViewUtils.showToast(err);  
+  })
+  .finally(() => {
+    this.setState({ isLoading: false })
+  });
+ }
+
+  onValueChange() {
+ 
+}
+
 
   render() {
     return (
@@ -119,17 +183,17 @@ now: new Date()
               placeholder="Choose Frequency"
               placeholderStyle={{ color: '#bfc6ea' }}
               placeholderIconColor="#007aff"
-              selectedValue={this.state.selected}
-              onValueChange={this.onValueChange.bind(this)}>
+              selectedValue={this.state.statusCode}
+              onValueChange={this.tabsChange.bind(this)}>
               {/* <Picker.Item
                                             color="gray"
                                             selected={false}
                                             label="Select Vital Type"
                                             value=""
                                         /> */}
-              <Picker.Item  label="Past 7 days" value="key0" />
-              <Picker.Item label="Past 15 days" value="key1" />
-              <Picker.Item label="Past Appointments" value="key2" />
+              <Picker.Item  label="Past 7 days" value="last7Days"/>
+              <Picker.Item label="Past 15 days" value="last15Days" />
+              <Picker.Item label="Past Appointments" value="allAppointments" />
             </Picker>
           </Item>
           <View style={{ flex: 8, paddingHorizontal: 2, paddingBottom: 55 }}>

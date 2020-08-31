@@ -15,7 +15,8 @@ export default class ScheduledBooking extends Component {
   state = {
     appointments: [],
     isLoading: true,
-    selected: "key0"
+    selected: "UpcomingAppointments",
+    now: new Date()
 
   };
 
@@ -24,18 +25,20 @@ export default class ScheduledBooking extends Component {
   }
 
   componentDidMount() {
-    Api.instance()
-      .getMyAppointments(AppointmentStatus.scheduled, true)
-      .then(appointments => {
-        this.setState({ appointments });
-      })
-      .catch(err => {
-        ViewUtils.showToast(err);
-      })
-      .finally(() => {
-        this.setState({ isLoading: false })
-      })
-      ;
+    this.onTabsChange(this.state.selected)
+    console.warn('===date===' , moment().format('YYYY-MM-DD'), moment().add(15, 'days').format('YYYY-MM-DD'))
+    // Api.instance()
+    //   .getMyAppointments(AppointmentStatus.scheduled, true)
+    //   .then(appointments => {
+    //     this.setState({ appointments });
+    //   })
+    //   .catch(err => {
+    //     ViewUtils.showToast(err);
+    //   })
+    //   .finally(() => {
+    //     this.setState({ isLoading: false })
+    //   })
+    //   ;
   }
 
   onValueChange(value) {
@@ -44,6 +47,84 @@ export default class ScheduledBooking extends Component {
     });
   }
 
+  onTabsChange =selected =>{
+this.eventData(selected)
+this.setState({selected})
+  }
+
+
+
+eventData(param){
+  switch (param) {
+    case 'Coming7days':
+    this.coming7days()
+      break;
+  case 'Coming15days':
+    this.coming15days()
+      break;
+  case 'UpcomingAppointments':
+  this.upcomingAppointments()
+    }
+}
+
+coming7days(){
+
+  this.setState({ isLoading: true})
+  Api.instance()
+  .getMyAppointmentsComing15Days(AppointmentStatus.scheduled, true,moment().format('YYYY-MM-DD') ,moment().add(7, 'days').format('YYYY-MM-DD') 
+     )
+
+  .then(appointments => {
+    this.setState({ appointments });
+    console.warn('aaa' , appointments) 
+  })
+  .catch(err => {
+    ViewUtils.showToast(err);  
+  })
+  .finally(() => {
+    this.setState({ isLoading: false })
+  });
+}
+
+coming15days(){
+  this.setState({ isLoading: true})
+  Api.instance()
+   .getMyAppointmentsComing15Days(AppointmentStatus.scheduled, true, moment().format('YYYY-MM-DD') ,moment().add(15, 'days').format('YYYY-MM-DD') 
+     )
+
+  .then(appointments => {
+    this.setState({ appointments });
+    console.warn('aaa' , appointments) 
+  })
+  .catch(err => {
+    ViewUtils.showToast(err);  
+  })
+  .finally(() => {
+    this.setState({ isLoading: false })
+  });
+}
+
+upcomingAppointments(){
+  return(
+    // console.warn('Upcoming?Appointments')
+ Api.instance()
+ .getMyAppointments(AppointmentStatus.scheduled , true)
+ .then(appointments => {
+  this.setState({appointments});
+  console.warn('upcomingAppointments' , appointments)
+  
+})
+  .catch(err => {
+    ViewUtils.showToast(err)
+  })
+  .finally(() => {
+    this.setState({isLoading :false})
+  })  
+ )
+  
+}
+
+  
 
   render() {
     const { navigate } = this.props.navigation;
@@ -89,16 +170,16 @@ export default class ScheduledBooking extends Component {
               placeholderStyle={{ color: '#bfc6ea' }}
               placeholderIconColor="#007aff"
               selectedValue={this.state.selected}
-              onValueChange={this.onValueChange.bind(this)}>
+              onValueChange={this.onTabsChange.bind(this)}>
               {/* <Picker.Item
                                             color="gray"
                                             selected={false}
                                             label="Select Vital Type"
                                             value=""
                                         /> */}
-              <Picker.Item  label="Coming 7 days" value="key0" />
-              <Picker.Item label="Coming 15 days" value="key1" />
-              <Picker.Item label="Upcoming Appointments" value="key2" />
+              <Picker.Item  label="Coming 7 days" value="Coming7days" />
+              <Picker.Item label="Coming 15 days" value="Coming15days" />
+              <Picker.Item label="Upcoming Appointments" value="UpcomingAppointments" />
             </Picker>
           </Item>
           <View style={{ flex: 8, paddingHorizontal: 2, paddingBottom: 55 }}>

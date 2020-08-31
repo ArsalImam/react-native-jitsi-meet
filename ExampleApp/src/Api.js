@@ -3,6 +3,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Configs, Roles, AppointmentStatus } from './Configs';
 import * as AxiosLogger from 'axios-logger';
+import moment from 'moment';
 
 export default class Api {
   static myInstance = null;
@@ -60,7 +61,7 @@ export default class Api {
         this.getHeaders(),
       );
       return response.data;
-      
+
     } catch (error) {
       return error
     }
@@ -110,14 +111,14 @@ export default class Api {
 
 
   async patientRegister(item, drCode) {
-console.warn(item);
+    console.warn(item);
     let response = await this.client.get(
       this.getUrl(`Clients?filter[where][doctorCode]=${drCode}`),
     );
     let data = response.data;
     if (data.length > 0) {
-      console.warn(('>',data[0].id));
-      item.doctorId=data[0].id;
+      console.warn(('>', data[0].id));
+      item.doctorId = data[0].id;
       let patientObj = await this.savePatient(item);
       await this.saveUser(patientObj);
       if (data.error) throw data.error.message;
@@ -471,8 +472,7 @@ console.warn(item);
     return data;
   }
 
-
-  async getMyAppointments(status = '', requirePatient = false) {
+  async getMyAppointments(status = '', requirePatient = false,) {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
 
@@ -505,6 +505,97 @@ console.warn(item);
     return data;
   }
 
+//
+async getMyAppointmentsComing15Days(status = '', requirePatient = false, todaysDate = '', lastDate = '') {
+  let user = await this._user();
+  let _user = JSON.parse(JSON.stringify(user));
+
+  let id_param = this._relationalParamByRole(_user.role);
+  let userId = _user.id;
+
+  if (_user.role == Roles.patient && status == AppointmentStatus.available) {
+    id_param = "doctorId";
+    userId = _user.doctorId;
+  }
+  let includes = '';
+  let wheres = '';
+  if (requirePatient) {
+    includes = `&filter[include]=patient`;
+  }
+
+  if (status != '') {
+    wheres = `&filter[where][status]=${status}`;
+  }
+
+  if (todaysDate != '') {
+    todaysDate = `&filter[where][and][0][date][gt]=${todaysDate}`
+  }
+
+  if (lastDate != '') {
+    lastDate = `&filter[where][and][1][date][lt]=${lastDate}`
+  }
+
+  let response = await this.client.get(
+    this.getUrl(
+      `Appointments?filter[where][${id_param}]=${
+      userId
+      }${includes}${wheres}&filter[order]=id%20DESC${todaysDate}${lastDate}`
+
+
+      //   &filter[where][and][0][date][lt]=${moment().format('YYYY-MM-DD')}&filter[where][and][1][date][gt]=${moment().subtract(7, 'days').format('YYYY-MM-DD')}`,
+    ),
+  );
+  let data = response.data;
+  if (data.error) throw data.error.message;
+  return data;
+}
+//
+
+
+  async getMyAppointmentsPast15Days(status = '', requirePatient = false, todaysDate = '', lastDate = '') {
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+
+    let id_param = this._relationalParamByRole(_user.role);
+    let userId = _user.id;
+
+    if (_user.role == Roles.patient && status == AppointmentStatus.available) {
+      id_param = "doctorId";
+      userId = _user.doctorId;
+    }
+    let includes = '';
+    let wheres = '';
+    if (requirePatient) {
+      includes = `&filter[include]=patient`;
+    }
+
+    if (status != '') {
+      wheres = `&filter[where][status]=${status}`;
+    }
+
+    if (todaysDate != '') {
+      todaysDate = `&filter[where][and][0][date][lt]=${todaysDate}`
+    }
+
+    if (lastDate != '') {
+      lastDate = `&filter[where][and][1][date][gt]=${lastDate}`
+    }
+
+    let response = await this.client.get(
+      this.getUrl(
+        `Appointments?filter[where][${id_param}]=${
+        userId
+        }${includes}${wheres}&filter[order]=id%20DESC${todaysDate}${lastDate}`
+
+
+        //   &filter[where][and][0][date][lt]=${moment().format('YYYY-MM-DD')}&filter[where][and][1][date][gt]=${moment().subtract(7, 'days').format('YYYY-MM-DD')}`,
+      ),
+    );
+    let data = response.data;
+    if (data.error) throw data.error.message;
+    return data;
+  }
+  // https://api.etibb.online/api/Appointments?filter[where][doctorId]=5f3154e8039d6c7964019889&filter[where][and][0][date][lt]=2020-08-26&filter[where][and][1][date][gt]=2020-8-11
   async getMyPatients() {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
@@ -531,10 +622,10 @@ console.warn(item);
     }
   }
 
-  removeUser = async() => {
+  removeUser = async () => {
     AsyncStorage.clear();
-    this._userRole='';
-}
+    this._userRole = '';
+  }
 
   async savePatient(data) {
     let response = await this.client.post(
@@ -549,10 +640,10 @@ console.warn(item);
     console.warn('image data ==>', JSON.stringify(data));
     let response = await this.client.post(
       this.getUrl(`Contents/${Configs.containers.images}/upload`), data, {
-        
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     }
     );
     return response.data;
