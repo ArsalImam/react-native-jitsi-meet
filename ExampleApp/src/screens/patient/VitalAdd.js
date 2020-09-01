@@ -54,7 +54,7 @@ export default class VitalAdd extends Component {
                         { flex: 3, backgroundColor: '#297dec' }
                     }>
                             <Text style={[CommonStyles.fontRegular, { marginTop: 65, paddingHorizontal: 18 }]}>
-                                <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Vital Add\n`}</Text>
+                                <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Vital Add fkdsfhfhl\n`}</Text>
                                 <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
                             </Text>
                         </View>
