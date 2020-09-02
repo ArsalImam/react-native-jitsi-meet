@@ -20,6 +20,10 @@ import MedicationAdd from './screens/medications/MedicationAdd';
 import MedicationList from './screens/medications/MedicationList';
 import DiagnosisAdd from './screens/diagnosis/DiagnosisAdd';
 import DiagnosisList from './screens/diagnosis/DiagnosisList';
+import RefertoSpecialistAdd from './screens/refertoSpecialist/RefertoSpecialistAdd';
+import RefertoSpecialistList from './screens/refertoSpecialist/RefertoSpecialistList';
+import FollowUpAdd from './screens/FollowUp/FollowUpAdd';
+import FollowUpList from './screens/FollowUp/FollowUpList';
 import InvestigationAdd from './screens/investigation/InvestigationAdd';
 import InvestigationList from './screens/investigation/InvestigationList';
 import ProcedureAdd from './screens/surgicalProcedure/ProcedureAdd';
@@ -355,6 +359,100 @@ export default class Routes extends React.Component {
           //   },
           // }}
         />
+
+<Stack.Screen
+          name="FollowUpAdd"
+          component={FollowUpAdd}
+          options={{
+            title: '',
+            headerStyle: {backgroundColor: 'transparent'},
+            headerTransparent: true,
+            headerTitleAlign: 'center',
+            headerTitleStyle: {color: '#fff'},
+            headerTintColor: '#fff',
+            navigationOptions: {
+              header: ({goBack}) => ({
+                left: <Left onPress={goBack} />,
+              }),
+              
+            },
+            cardStyle: {
+              backgroundColor: 'transparent',
+            },
+          }}
+        />
+
+        <Stack.Screen
+          name="FollowUpList"
+          component={FollowUpList}
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent',
+            },
+          }}
+
+          // options={{
+          //   title: '',
+          //   headerStyle: {backgroundColor: 'transparent'},
+          //   headerTransparent: true,
+          //   headerTitleAlign: 'center',
+          //   headerTitleStyle: {color: '#fff'},
+          //   headerTintColor: '#fff',
+          //   navigationOptions: {
+          //     header: ({goBack}) => ({
+          //       left: <Left onPress={goBack} />,
+          //     }),
+              
+          //   },
+          //   cardStyle: {
+          //     backgroundColor: 'transparent',
+          //   },
+          // }}
+        />
+
+<Stack.Screen
+          name="RefertoSpecialistList"
+          component={RefertoSpecialistList}
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent',
+            },
+          }}
+
+          // options={{
+          //   title: '',
+          //   headerStyle: {backgroundColor: 'transparent'},
+          //   headerTransparent: true,
+          //   headerTitleAlign: 'center',
+          //   headerTitleStyle: {color: '#fff'},
+          //   headerTintColor: '#fff',
+          //   navigationOptions: {
+          //     header: ({goBack}) => ({
+          //       left: <Left onPress={goBack} />,
+          //     }),
+              
+          //   },
+          //   cardStyle: {
+          //     backgroundColor: 'transparent',
+          //   },
+          // }}
+        />
+
+        <Stack.Screen
+          name="RefertoSpecialistAdd"
+          component={RefertoSpecialistAdd}
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent',
+            },
+          }}
+
+        
+        />
+
 
         <Stack.Screen
           name="InvestigationAdd"
@@ -695,7 +793,9 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="WebView"
           component={WebView}
-          options={{headerShown: true}}
+          options={{           
+              headerShown: true
+          }}
         />
       </Stack.Navigator>
     );

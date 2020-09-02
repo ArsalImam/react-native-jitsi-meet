@@ -88,6 +88,15 @@ export default class Sidebar extends Component {
           </Left>
         </ListItem>
 
+        <ListItem button={true} onPress={() => { 
+          this.props.closeDrawer();
+          this.props.changeScreenHandler.navigate('RefertoSpecialistList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) }} >
+          <Left>
+            <Icon active name="followUp" type="FontAwesome5" style={[CommonStyles.textSizeMedium]} />
+            <Text style={[CommonStyles.textSizeAverage, { marginLeft: 10 }]}>Refer to Specialist</Text>
+          </Left>
+        </ListItem>
+
         <ListItem button={true} onPress={() => {
           this.props.closeDrawer();
           this.props.changeScreenHandler.navigate('InvestigationList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) }} >

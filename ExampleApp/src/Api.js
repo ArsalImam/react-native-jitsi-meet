@@ -88,6 +88,7 @@ export default class Api {
         "doctorId": _user.id,
         "patientId": patientId,
         "answer": item.name,
+        "select Date":item.answer,
         "active": false
       }
       let customProperties = [];
@@ -238,7 +239,7 @@ export default class Api {
   async createMedication(data) {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
-
+    
     data.doctorId = _user.id;
 
     let response = await this.client.post(
@@ -246,6 +247,9 @@ export default class Api {
       data,
       this.getHeaders(),
     );
+
+    console.warn("response.data == ",response.data)
+
     return response.data;
   }
 
@@ -278,13 +282,12 @@ export default class Api {
   }
 
 
-  // FollowUp List
-  async getFollowUpList() {
+  async getReferToSpecialistList() {
 
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
-      this.getUrl(`setups-patients?filter[where][and][0][doctorId]=5f315472039d6c7964019887&filter[where][and][1][patientId]=5f3154e8039d6c7964019889&filter[where][and][2][setup-type]=followup&filter[order]=id%20DESC`),
+      this.getUrl(`Setups?filter[where][doctorId]=${_user.id}&filter[where][setupType]=referToSpecialist&filter[order]=createdAt%20DESC`),
     );
     let data = response.data;
     console.warn('data', data);
@@ -292,6 +295,34 @@ export default class Api {
     return data;
   }
 
+  async getSpecialists() {
+
+    let response = await this.client.get(
+      this.getUrl(`Clients?filter[where][role]=MEDICAL_SPECIALIST&filter[order]=id%20DESC`),
+    );
+    let data = response.data;
+    console.warn('data', data);
+    if (data.error) throw data.error.message;
+    return data;
+  }
+
+
+  // FollowUp List
+  async getFollowUpList() {
+
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+
+      let response = await this.client.get(
+        this.getUrl(`Setups?filter[where][doctorId]=${_user.id}&filter[where][setupType]=followUp&filter[order]=createdAt%20DESC`),
+      );
+
+    let data = response.data;
+    console.warn('data', data);
+    if (data.error) throw data.error.message;
+    return data;
+  }
+  
 
   // investigation List
   async getInvestigationList() {

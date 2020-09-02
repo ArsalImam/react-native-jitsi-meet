@@ -35,17 +35,19 @@ export default class FollowUpAdd extends Component {
 
         let data = {
             "setupType": "followUp",
-            date: this.state.answer,
+            "name": this.state.answer,
+            "description":''
         }
-
         
+        console.warn("this.state.answer ===",this.state.answer)
+
         if(this.state.answer != ""){
             this.setState({ isLoading: true })
             Api.instance()
-            .getFollowUpList(data)
+            .createMedication(data)
             .then(response => {
                // this.props.navigation.replace('DiagnosisList');
-                 this.props.route.params.onFollowUpAdd();
+                this.props.route.params.onFollowUpAdd();
                 this.props.navigation.goBack();
                 ViewUtils.showToast('FollowUp has been saved successfully!');
             })
@@ -53,7 +55,7 @@ export default class FollowUpAdd extends Component {
                 ViewUtils.showAlert(
                     'Unable to Perform this Action',       
                 );
-               // ViewUtils.showToast(err);
+                ViewUtils.showToast(err);
             })
             .finally(() => {
                 this.setState({ isLoading: false });
@@ -62,9 +64,12 @@ export default class FollowUpAdd extends Component {
             ViewUtils.showAlert(
                 'Please Provide FollowUp Date',       
             );    
-        }
+        }    
         
     };
+
+
+
     render() {
         if (this.state.appointmentId != null) {
             return (
