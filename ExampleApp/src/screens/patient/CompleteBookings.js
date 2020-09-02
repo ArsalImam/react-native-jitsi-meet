@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, ImageBackground } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
 import { CheckBox } from 'react-native-elements';
-import { Icon } from 'native-base';
+import { Icon ,Item ,Picker} from 'native-base';
 import CommonStyles from '../../CommonStyles';
 import Api from '../../Api';
 import { AppointmentStatus } from '../../Configs';
@@ -13,8 +13,10 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class CompleteBookings extends Component {
   state = {
-    appointments: [],
-    isloading: true,
+    appointments:[],
+    isloading: false,
+    statusCode: "last7Days",
+    now: new Date()
   };
 
   constructor(props) {
@@ -46,22 +48,98 @@ export default class CompleteBookings extends Component {
   }
 
   componentDidMount() {
-    Api.instance()
-      .getMyAppointments(AppointmentStatus.completed, true)
-      .then(appointments => {
-        console.warn('apointments', appointments)
-        this.setState({ appointments });
-      })
-      .catch(err => {
-        ViewUtils.showToast(err);
-      })
-      .finally(() => {
-        this.setState({ isLoading: false })
-      })
-      ;
 
-     //çç console.warn('sdfgf', this.state.appointments)
-  }
+    this.tabsChange(this.state.statusCode);
+    
+ }
+
+
+ tabsChange = statusCode => {
+ this.eventData(statusCode);
+  this.setState({ statusCode });
+};
+
+eventData(param) {
+    switch (param) {
+      case 'allAppointments':
+        this.allAppointments();
+        break;
+      case 'last15Days':
+       this.last15Days()
+        break;
+      case 'last7Days':
+        this.last7Days()
+        break;
+    }
+    
+
+}
+
+ last15Days() {
+
+  Api.instance()
+  .getMyAppointmentsPast15Days(AppointmentStatus.completed, true, moment().format('YYYY-MM-DD'), moment().subtract(15, 'days').format('YYYY-MM-DD'))
+  .then(appointments => {
+    this.setState({ appointments }); 
+  })
+  .catch(err => {
+    ViewUtils.showToast(err);  
+  })
+  .finally(() => {
+    this.setState({ isLoading: false })
+  });
+ }
+
+ allAppointments() {
+   this.setState({ isLoading: true})
+  Api.instance()
+  .getMyAppointments(AppointmentStatus.completed, true)
+  .then(appointments => {
+    this.setState({ appointments }); 
+  })
+  .catch(err => {
+    ViewUtils.showToast(err);  
+  })
+  .finally(() => {
+    this.setState({ isLoading: false })
+  });
+ }
+
+ last15Days() {
+  this.setState({ isLoading: true})
+  Api.instance()
+  .getMyAppointmentsPast15Days(AppointmentStatus.completed, true, moment().format('YYYY-MM-DD'), moment().subtract(15, 'days').format('YYYY-MM-DD'))
+  .then(appointments => {
+    this.setState({ appointments }); 
+  })
+  .catch(err => {
+    ViewUtils.showToast(err);  
+  })
+  .finally(() => {
+    this.setState({ isLoading: false })
+  });
+ }
+
+ last7Days() {
+  this.setState({ isLoading: true})
+  Api.instance()
+  .getMyAppointmentsPast15Days(AppointmentStatus.completed, true, moment().format('YYYY-MM-DD'), moment().subtract(7, 'days').format('YYYY-MM-DD'))
+  .then(appointments => {
+    this.setState({ appointments }); 
+  })
+  .catch(err => {
+    ViewUtils.showToast(err);  
+  })
+  .finally(() => {
+    this.setState({ isLoading: false })
+  });
+ }
+
+  onValueChange() {
+ 
+}
+
+
   render() {
     return (
       <View style={[CommonStyles.container]}>
@@ -85,11 +163,39 @@ export default class CompleteBookings extends Component {
                   CommonStyles.fontRegular,
                   CommonStyles.textSizeAverage,
                 ]}>
-                It is a list of your all booking patients{' '}
+                It is a list of your all booking patients
+                
               </Text>
             </Text>
 
           </View>
+          <Item
+            picker
+            style={[
+              CommonStyles.container,
+              CommonStyles.itemStyle,
+              { marginVertical: 10, paddingTop: 10 },
+            ]}>
+            <Picker
+              mode="dropdown"
+              iosIcon={<Icon name="arrow-down" />}
+
+              placeholder="Choose Frequency"
+              placeholderStyle={{ color: '#bfc6ea' }}
+              placeholderIconColor="#007aff"
+              selectedValue={this.state.statusCode}
+              onValueChange={this.tabsChange.bind(this)}>
+              {/* <Picker.Item
+                                            color="gray"
+                                            selected={false}
+                                            label="Select Vital Type"
+                                            value=""
+                                        /> */}
+              <Picker.Item  label="Past 7 days" value="last7Days"/>
+              <Picker.Item label="Past 15 days" value="last15Days" />
+              <Picker.Item label="Past Appointments" value="allAppointments" />
+            </Picker>
+          </Item>
           <View style={{ flex: 8, paddingHorizontal: 2, paddingBottom: 55 }}>
             <FlatGrid
               itemDimension={320}
@@ -148,6 +254,7 @@ export default class CompleteBookings extends Component {
                             ]}>{`Time: `}</Text>
                           <Text style={CommonStyles.fontMedium}>
                             {moment(item.date).format('hh:mm A')}
+
                           </Text>
                         </Text>
                       </View>

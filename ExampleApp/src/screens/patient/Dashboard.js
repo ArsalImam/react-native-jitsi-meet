@@ -44,6 +44,8 @@ class Dashboard extends React.Component {
     Api.instance()
       .getMyAppointments()
       .then(appointments => {
+        console.warn('bisma bisma' , appointments.length)
+
         let schAppointment = appointments.filter(x => x.status == 'Scheduled');
         let completedAppointment = appointments.filter(x => x.status == 'Completed')
         console.warn('Completed' , completedAppointment)
@@ -145,7 +147,7 @@ class Dashboard extends React.Component {
 
         if (this.state.user.imageUrl) {
           console.warn('image image', this.state.user.imageUrl)
-          let imageData = new FormData;
+          let imageData = new FormData();
           imageData.append('file', {
               url: this.state.user.imageUrl,
               name: this.state.user.imageUrl
@@ -156,6 +158,7 @@ class Dashboard extends React.Component {
       }
       })
       .catch(err => ViewUtils.showToast(err));
+
   }
 
   goToPatientsRooms() {
@@ -197,20 +200,38 @@ class Dashboard extends React.Component {
                 CommonStyles.mt30,
                 {flexDirection: 'row'},
               ]}>
-              {/* <View style={{width: 53, height: 53, marginRight: 10}}>
-              <Image
-                  style={[CommonStyles.container, CommonStyles.backgroundImage]}
-                  source={require('../../assets/drawable-xxxhdpi/Rectangle.png')}
-                />
-              </View> */}
+          
               <View style={[{width: 53, height: 53, marginRight: 10}]}>
-                <Image
+
+              {this.state.user.imageUrl != '' ? (
+                        <Image
+                          style={{
+                            width: '100%',
+                            height: '97%',
+                            resizeMode: 'contain',
+                          }}
+                          source={{
+                            uri: this.state.user.imageUrl
+                          }}
+                        />
+                      ) : (
+                        <Image
+                          style={{
+                            width: '100%',
+                            height: '97%',
+                            resizeMode: 'contain',
+                          }}
+                          source={require('../../assets/drawable-xxxhdpi/Mask.png')}
+                        />
+                      )}
+
+                {/* <Image
                   style={{height: '97%', width: '100%', resizeMode: 'contain'}}
                   // source={require('../../assets/drawable-xxxhdpi/Mask.png')}
                  source={{
                                                     uri: this.state.user.imageUrl
                                                 }}
-                />
+                /> */}
               </View>
               <View style={{justifyContent: 'flex-end'}}>
                 <Text style={[CommonStyles.fontMedium, {fontSize: 21}]}>
@@ -378,7 +399,9 @@ class Dashboard extends React.Component {
                         CommonStyles.centerText,
                         {fontSize: 32, color: '#297dec'},
                       ]}>
-                      {this.state.totalConsultation}
+                      {/* {this.state.totalConsultation} */}
+                      {this.state.totalPrescription}
+                    
                     </Text>
                   </View>
                 </View>

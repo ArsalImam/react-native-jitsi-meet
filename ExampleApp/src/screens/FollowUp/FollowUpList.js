@@ -9,7 +9,7 @@ import { StyleSheet, Text, View, ImageBackground, StatusBar, ActivityIndicator, 
 import moment from 'moment';
 import Loader from '../../components/Loader';
 
-export default class TherapyList extends Component {
+export default class FollowUpList extends Component {
 
     constructor(props) {
         super(props);
@@ -17,7 +17,7 @@ export default class TherapyList extends Component {
 
             this.state = {
                 isLoading: true,
-                therapyList: [],
+                diagnosisList: [],
                 appointmentId: this.props.route.params.appointmentId,
                 patientId: this.props.route.params.patientId,
             }
@@ -25,18 +25,18 @@ export default class TherapyList extends Component {
 
             this.state = {
                 isLoading: true,
-                therapyList: [],
+                diagnosisList: [],
 
             }
         }
     }
 
-    _getTherapyList(){
+    _getFollowUpList(){
         this.setState({ isLoading: true });
-        Api.instance().getTherapyList()
+        Api.instance().getFollowUpList()
         .then((data) => {
-            console.warn('=====>', data)
-            this.setState({ therapyList: data });
+            console.warn('=====>', data["FollowUpList"])
+            this.setState({ followUpList: data });
         }
         ).catch(err => console.log(err))
         .finally(() => {
@@ -45,11 +45,26 @@ export default class TherapyList extends Component {
     }
 
     componentDidMount() {
-        this._getTherapyList();
+        this._getFollowUpList();
     }
 
-    addToConsultation(item) {
-        item.setupType = 'suggestedTherapy'
+
+    // componentWillMount() {
+    //     Api.instance().getDiagnosisList()
+    //         .then((data) => {
+    //             console.warn('=====>', data["Diagnosis"])
+    //             this.setState({ diagnosisList: data });
+    //         }
+    //         ).catch(err => console.log(err))
+    //         .finally(() => {
+    //             this.setState({ isLoading: false });
+    //         })
+
+    // }
+
+    
+    addFollowUp(item) {
+        item.setupType = 'followUp'
         Api.instance().addReport(item, this.state.appointmentId, this.state.patientId)
             .then(response => {
                 console.warn(response);
@@ -60,11 +75,9 @@ export default class TherapyList extends Component {
             .finally(() => {
 
             });
+
     }
-
-
     render() {
-
         if (this.state.appointmentId != null) {
             return (
                 <View style={{ height: '75%' }}>
@@ -76,8 +89,9 @@ export default class TherapyList extends Component {
                         <View style={
                             { flex: 3, backgroundColor: '#297dec' }
                         }>
-                            <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
-                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Therapy List\n`}</Text>
+                            <Text
+                                style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
+                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`FollowUp List\n`}</Text>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Bookings </Text>
                             </Text>
                         </View>
@@ -85,15 +99,13 @@ export default class TherapyList extends Component {
                         <View style={{ flex: 8 }}>
                             <FlatGrid
                                 itemDimension={350}
-                                items={this.state.therapyList}
+                                items={this.state.followUpList}
                                 spacing={15}
                                 style={[CommonStyles.container, { marginTop: 5 }
                                 ]}
                                 renderItem={({ item }) => (
 
-                                    <TouchableOpacity style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5, CommonStyles.bgColor]}
-                                        onPress={() => { this.addToConsultation(item) }}
-                                    >
+                                    <View style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5, CommonStyles.bgColor]}>
 
                                         <ImageBackground
                                             style={[
@@ -102,12 +114,12 @@ export default class TherapyList extends Component {
                                             ]}
                                             source={require('../../assets/img/bookingbg2x.png')}>
 
-                                            <View style={[CommonStyles.container, { flexDirection: 'row', padding: 12 }]}>
+                                            <TouchableOpacity style={[CommonStyles.container, { flexDirection: 'row', padding: 12 }]} onPress={() => { this.addfollowUpList(item) }}>
 
                                                 <View style={[CommonStyles.container, { justifyContent: 'space-between' }]}>
 
                                                     <Text style={{ marginBottom: 10 }} >
-                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Question: \n`}</Text>
+                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`FollowUp Name: \n`}</Text>
                                                         <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.name}</Text>
                                                     </Text>
 
@@ -126,12 +138,12 @@ export default class TherapyList extends Component {
                                                     </Text>
 
                                                 </View>
-                                            </View>
+                                            </TouchableOpacity>
 
 
 
                                         </ImageBackground>
-                                    </TouchableOpacity>
+                                    </View>
                                 )}
                             />
                         </View>
@@ -151,7 +163,7 @@ export default class TherapyList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('TherapyAdd', {appointmentId: this.state.appointmentId,onTherapyAdd: () => this._getTherapyList()})
+                                    this.props.navigation.navigate('FollowUpAdd', { appointmentId: this.props.route.params.appointmentId, onFollowUpAdd: () => this._getFollowUpList()})
                                 }}
                                 style={[
                                     CommonStyles.container,
@@ -169,7 +181,7 @@ export default class TherapyList extends Component {
                                         CommonStyles.padding,
                                         { opacity: 0.5 },
                                     ]}>
-                                    Add Therapy
+                                    Add FollowUp
                              </Text>
                             </TouchableOpacity>
                         </View>
@@ -192,7 +204,8 @@ export default class TherapyList extends Component {
                     </ImageBackground>
                 </View>
             )
-        } else {
+        }
+        else {
             return (
                 <View style={[CommonStyles.container]}>
                     <ImageBackground style={[
@@ -204,7 +217,7 @@ export default class TherapyList extends Component {
                             { flex: 2.3 }
                         }>
                             <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
-                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Therapy List\n`}</Text>
+                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`FollowUp List\n`}</Text>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Bookings </Text>
                             </Text>
                         </View>
@@ -212,7 +225,7 @@ export default class TherapyList extends Component {
                         <View style={{ flex: 8 }}>
                             <FlatGrid
                                 itemDimension={350}
-                                items={this.state.therapyList}
+                                items={this.state.followUpList}
                                 spacing={15}
                                 style={[CommonStyles.container, { marginTop: 5 }
                                 ]}
@@ -232,7 +245,7 @@ export default class TherapyList extends Component {
                                                 <View style={[CommonStyles.container, { justifyContent: 'space-between' }]}>
 
                                                     <Text style={{ marginBottom: 10 }} >
-                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Question: \n`}</Text>
+                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`FollowUp Name: \n`}</Text>
                                                         <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.name}</Text>
                                                     </Text>
 
@@ -276,7 +289,7 @@ export default class TherapyList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('TherapyAdd',{onTherapyAdd: () => this._getTherapyList()})
+                                    this.props.navigation.navigate('DiagnosisAdd',{onFollowUpAdd: () => this._getFollowUpList()})
                                 }}
                                 style={[
                                     CommonStyles.container,
@@ -294,7 +307,7 @@ export default class TherapyList extends Component {
                                         CommonStyles.padding,
                                         { opacity: 0.5 },
                                     ]}>
-                                    Add Therapy
+                                    Add FollowUp
                              </Text>
                             </TouchableOpacity>
                         </View>
@@ -317,6 +330,7 @@ export default class TherapyList extends Component {
                     </ImageBackground>
                 </View>
             )
+
         }
     }
-} 
+}

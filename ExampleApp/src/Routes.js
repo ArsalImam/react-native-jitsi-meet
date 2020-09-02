@@ -277,7 +277,7 @@ export default class Routes extends React.Component {
           name="MedicationList"
           component={MedicationList}
           options={{
-            headerShown: true,
+            headerShown: false,
             cardStyle: {
               backgroundColor: 'transparent'
             }
@@ -330,30 +330,30 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="DiagnosisList"
           component={DiagnosisList}
-          // options={{
-          //   headerShown: false,
-          //   cardStyle: {
-          //     backgroundColor: 'transparent',
-          //   },
-          // }}
-
           options={{
-            title: '',
-            headerStyle: {backgroundColor: 'transparent'},
-            headerTransparent: true,
-            headerTitleAlign: 'center',
-            headerTitleStyle: {color: '#fff'},
-            headerTintColor: '#fff',
-            navigationOptions: {
-              header: ({goBack}) => ({
-                left: <Left onPress={goBack} />,
-              }),
-              
-            },
+            headerShown: false,
             cardStyle: {
               backgroundColor: 'transparent',
             },
           }}
+
+          // options={{
+          //   title: '',
+          //   headerStyle: {backgroundColor: 'transparent'},
+          //   headerTransparent: true,
+          //   headerTitleAlign: 'center',
+          //   headerTitleStyle: {color: '#fff'},
+          //   headerTintColor: '#fff',
+          //   navigationOptions: {
+          //     header: ({goBack}) => ({
+          //       left: <Left onPress={goBack} />,
+          //     }),
+              
+          //   },
+          //   cardStyle: {
+          //     backgroundColor: 'transparent',
+          //   },
+          // }}
         />
 
         <Stack.Screen
@@ -381,28 +381,28 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="InvestigationList"
           component={InvestigationList}
-          // options={{
-          //   headerShown: false,
-          //   cardStyle: {
-          //     backgroundColor: 'transparent',
-          //   },
-          // }}
           options={{
-            title: '',
-            headerStyle: {backgroundColor: 'transparent'},
-            headerTransparent: true,
-            headerTitleAlign: 'center',
-            headerTitleStyle: {color: '#fff'},
-            headerTintColor: '#fff',
-            navigationOptions: {
-              header: ({goBack}) => ({
-                left: <Left onPress={goBack} />,
-              }),
-              cardStyle: {
-                backgroundColor: 'transparent',
-              },
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent',
             },
           }}
+          // options={{
+          //   title: '',
+          //   headerStyle: {backgroundColor: 'transparent'},
+          //   headerTransparent: true,
+          //   headerTitleAlign: 'center',
+          //   headerTitleStyle: {color: '#fff'},
+          //   headerTintColor: '#fff',
+          //   navigationOptions: {
+          //     header: ({goBack}) => ({
+          //       left: <Left onPress={goBack} />,
+          //     }),
+          //     cardStyle: {
+          //       backgroundColor: 'transparent',
+          //     },
+          //   },
+          // }}
         />
 
         <Stack.Screen
@@ -479,28 +479,28 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="TherapyList"
           component={TherapyList}
-          // options={{
-          //   headerShown: false,
-          //   cardStyle: {
-          //     backgroundColor: 'transparent',
-          //   },
-          // }}
           options={{
-            title: '',
-            headerStyle: {backgroundColor: 'transparent'},
-            headerTransparent: true,
-            headerTitleAlign: 'center',
-            headerTitleStyle: {color: '#fff'},
-            headerTintColor: '#fff',
-            navigationOptions: {
-              header: ({goBack}) => ({
-                left: <Left onPress={goBack} />,
-              }),
-              cardStyle: {
-                backgroundColor: 'transparent',
-              },
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent',
             },
           }}
+          // options={{
+          //   title: '',
+          //   headerStyle: {backgroundColor: 'transparent'},
+          //   headerTransparent: true,
+          //   headerTitleAlign: 'center',
+          //   headerTitleStyle: {color: '#fff'},
+          //   headerTintColor: '#fff',
+          //   navigationOptions: {
+          //     header: ({goBack}) => ({
+          //       left: <Left onPress={goBack} />,
+          //     }),
+          //     cardStyle: {
+          //       backgroundColor: 'transparent',
+          //     },
+          //   },
+          // }}
         />
 
         <Stack.Screen
@@ -528,28 +528,28 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="PatientHistoryList"
           component={PatientHistoryList}
-          // options={{
-          //   headerShown: false,
-          //   cardStyle: {
-          //     backgroundColor: 'transparent',
-          //   },
-          // }}
           options={{
-            title: '',
-            headerStyle: {backgroundColor: 'transparent'},
-            headerTransparent: true,
-            headerTitleAlign: 'center',
-            headerTitleStyle: {color: '#fff'},
-            headerTintColor: '#fff',
-            navigationOptions: {
-              header: ({goBack}) => ({
-                left: <Left onPress={goBack} />,
-              }),
-              cardStyle: {
-                backgroundColor: 'transparent',
-              },
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent',
             },
           }}
+          // options={{
+          //   title: '',
+          //   headerStyle: {backgroundColor: 'transparent'},
+          //   headerTransparent: true,
+          //   headerTitleAlign: 'center',
+          //   headerTitleStyle: {color: '#fff'},
+          //   headerTintColor: '#fff',
+          //   navigationOptions: {
+          //     header: ({goBack}) => ({
+          //       left: <Left onPress={goBack} />,
+          //     }),
+          //     cardStyle: {
+          //       backgroundColor: 'transparent',
+          //     },
+          //   },
+          // }}
         />
 
         <Stack.Screen
@@ -695,9 +695,7 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="WebView"
           component={WebView}
-          options={{
-            title: '',
-            headerShown: true}}
+          options={{headerShown: true}}
         />
       </Stack.Navigator>
     );

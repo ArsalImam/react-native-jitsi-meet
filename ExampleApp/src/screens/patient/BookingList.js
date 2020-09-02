@@ -5,6 +5,7 @@ import { CheckBox } from 'react-native-elements';
 import CommonStyles from '../../CommonStyles';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Api from '../../Api';
+import { Icon } from 'native-base';
 import { AppointmentStatus, Roles } from '../../Configs';
 import moment from 'moment';
 import { ViewUtils } from '../../Utils';
@@ -187,6 +188,21 @@ export default class BookingList extends Component {
                       </View>
                     </View>
                   </ImageBackground>
+                  <View style={[CommonStyles.container, {justifyContent:'center', backgroundColor: '#E53935', marginTop: 5, borderBottomEndRadius: 5, borderBottomStartRadius: 5 }]}>
+                    <TouchableOpacity
+                    onPress={() => {}}
+                    style={[CommonStyles.container, CommonStyles.centerElement, { flexDirection: 'row' }]}
+                    >
+                      
+                      <Icon
+                        name="clock"
+                        type='Fontisto'
+                        style={{ fontSize: 20, color: '#FFF', margin: 10 }}
+                      />
+                      <Text style={[CommonStyles.textColorWhite, CommonStyles.centerText, CommonStyles.padding]}>BOOK NOW</Text>
+
+                    </TouchableOpacity>
+                  </View>
                 </TouchableOpacity>
               )}
             />

@@ -3,18 +3,21 @@ import { Text, View, ImageBackground } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
 import { CheckBox } from 'react-native-elements';
 import CommonStyles from '../../CommonStyles';
-import { Icon } from 'native-base';
+import { Icon, Item, Picker } from 'native-base';
 import Api from '../../Api';
 import { AppointmentStatus } from '../../Configs';
 import moment from 'moment';
 import Loader from '../../components/Loader';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {ViewUtils} from '../../Utils';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ViewUtils } from '../../Utils';
 
 export default class ScheduledBooking extends Component {
   state = {
     appointments: [],
-    isLoading: true
+    isLoading: true,
+    selected: "UpcomingAppointments",
+    now: new Date()
+
   };
 
   constructor(props) {
@@ -22,22 +25,109 @@ export default class ScheduledBooking extends Component {
   }
 
   componentDidMount() {
-    Api.instance()
-      .getMyAppointments(AppointmentStatus.scheduled, true)
-      .then(appointments => {
-        this.setState({ appointments});
-      })
-      .catch(err => {
-        ViewUtils.showToast(err);
-      })
-      .finally(() =>{
-        this.setState({ isLoading: false})
-      })
-      ;
+    this.onTabsChange(this.state.selected)
+    console.warn('===date===' , moment().format('YYYY-MM-DD'), moment().add(15, 'days').format('YYYY-MM-DD'))
+    // Api.instance()
+    //   .getMyAppointments(AppointmentStatus.scheduled, true)
+    //   .then(appointments => {
+    //     this.setState({ appointments });
+    //   })
+    //   .catch(err => {
+    //     ViewUtils.showToast(err);
+    //   })
+    //   .finally(() => {
+    //     this.setState({ isLoading: false })
+    //   })
+    //   ;
   }
 
+  onValueChange(value) {
+    this.setState({
+      selected: value
+    });
+  }
+
+  onTabsChange =selected =>{
+this.eventData(selected)
+this.setState({selected})
+  }
+
+
+
+eventData(param){
+  switch (param) {
+    case 'Coming7days':
+    this.coming7days()
+      break;
+  case 'Coming15days':
+    this.coming15days()
+      break;
+  case 'UpcomingAppointments':
+  this.upcomingAppointments()
+    }
+}
+
+coming7days(){
+
+  this.setState({ isLoading: true})
+  Api.instance()
+  .getMyAppointmentsComing15Days(AppointmentStatus.scheduled, true,moment().format('YYYY-MM-DD') ,moment().add(7, 'days').format('YYYY-MM-DD') 
+     )
+
+  .then(appointments => {
+    this.setState({ appointments });
+    console.warn('aaa' , appointments) 
+  })
+  .catch(err => {
+    ViewUtils.showToast(err);  
+  })
+  .finally(() => {
+    this.setState({ isLoading: false })
+  });
+}
+
+coming15days(){
+  this.setState({ isLoading: true})
+  Api.instance()
+   .getMyAppointmentsComing15Days(AppointmentStatus.scheduled, true, moment().format('YYYY-MM-DD') ,moment().add(15, 'days').format('YYYY-MM-DD') 
+     )
+
+  .then(appointments => {
+    this.setState({ appointments });
+    console.warn('aaa' , appointments) 
+  })
+  .catch(err => {
+    ViewUtils.showToast(err);  
+  })
+  .finally(() => {
+    this.setState({ isLoading: false })
+  });
+}
+
+upcomingAppointments(){
+  return(
+    // console.warn('Upcoming?Appointments')
+ Api.instance()
+ .getMyAppointments(AppointmentStatus.scheduled , true)
+ .then(appointments => {
+  this.setState({appointments});
+  console.warn('upcomingAppointments' , appointments)
+  
+})
+  .catch(err => {
+    ViewUtils.showToast(err)
+  })
+  .finally(() => {
+    this.setState({isLoading :false})
+  })  
+ )
+  
+}
+
+  
+
   render() {
-    const {navigate} = this.props.navigation;
+    const { navigate } = this.props.navigation;
     return (
       <View style={[CommonStyles.container]}>
         <ImageBackground
@@ -65,14 +155,40 @@ export default class ScheduledBooking extends Component {
               </Text>
             </Text>
           </View>
-  
-          <View style={{flex: 8, paddingHorizontal: 2, paddingBottom: 55}}>
-           <FlatGrid
+          <Item
+            picker
+            style={[
+              CommonStyles.container,
+              CommonStyles.itemStyle,
+              { marginVertical: 10, paddingTop: 10 },
+            ]}>
+            <Picker
+              mode="dropdown"
+              iosIcon={<Icon name="arrow-down" />}
+
+              placeholder="Choose Frequency"
+              placeholderStyle={{ color: '#bfc6ea' }}
+              placeholderIconColor="#007aff"
+              selectedValue={this.state.selected}
+              onValueChange={this.onTabsChange.bind(this)}>
+              {/* <Picker.Item
+                                            color="gray"
+                                            selected={false}
+                                            label="Select Vital Type"
+                                            value=""
+                                        /> */}
+              <Picker.Item  label="Coming 7 days" value="Coming7days" />
+              <Picker.Item label="Coming 15 days" value="Coming15days" />
+              <Picker.Item label="Upcoming Appointments" value="UpcomingAppointments" />
+            </Picker>
+          </Item>
+          <View style={{ flex: 8, paddingHorizontal: 2, paddingBottom: 55 }}>
+            <FlatGrid
               itemDimension={320}
               spacing={15}
               items={this.state.appointments}
               style={[CommonStyles.container]}
-              renderItem={({item}) => (
+              renderItem={({ item }) => (
                 <TouchableOpacity
                   onPress={() => {
                     ViewUtils.showAlert(
@@ -83,7 +199,7 @@ export default class ScheduledBooking extends Component {
                           appointmentId: item.id,
                         });
                       },
-                      () => {},
+                      () => { },
                     );
                   }}
                   style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5, CommonStyles.bgColor]}>
@@ -193,12 +309,12 @@ export default class ScheduledBooking extends Component {
                       </View>
                     </View>
                   </ImageBackground>
-                  <View style={[CommonStyles.container, {justifyContent:'center', backgroundColor: '#297DEC', marginTop: 5, borderBottomEndRadius: 5, borderBottomStartRadius: 5 }]}>
+                  <View style={[CommonStyles.container, { justifyContent: 'center', backgroundColor: '#297DEC', marginTop: 5, borderBottomEndRadius: 5, borderBottomStartRadius: 5 }]}>
                     <TouchableOpacity
-                    onPress={() => {}}
-                    style={[CommonStyles.container, CommonStyles.centerElement, { flexDirection: 'row' }]}
+                      onPress={() => { }}
+                      style={[CommonStyles.container, CommonStyles.centerElement, { flexDirection: 'row' }]}
                     >
-                      
+
                       <Icon
                         name="phone"
                         type='Fontisto'
@@ -212,9 +328,9 @@ export default class ScheduledBooking extends Component {
               )}
             />
           </View>
-          
+
           <Loader
-                    loading={this.state.isLoading}/>
+            loading={this.state.isLoading} />
         </ImageBackground>
       </View>
     );
