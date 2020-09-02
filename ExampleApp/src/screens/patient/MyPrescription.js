@@ -22,10 +22,10 @@ export default class MyPresciption extends Component {
   }
 
 
-  _generateReport() {
+  _generateReport(appointmentId) {
     
     const prescribtionUrl = Api.instance().getUrl(
-      `consultation-reports/getReport?appointmentId=${this.appointmentId}&prescription`
+      `consultation-reports/getReport?appointmentId=${appointmentId}&prescription`
     );
         this.props.navigation.navigate('WebView', {
           prescribtionUrl,
@@ -34,9 +34,9 @@ export default class MyPresciption extends Component {
     
   }
 
-  _generatePrescrition() {
+  _generatePrescrition(appointmentId) {
     const prescribtionUrl = Api.instance().getUrl(
-      `consultation-reports/getReport?appointmentId=${this.appointmentId}&prescription=true`
+      `consultation-reports/getReport?appointmentId=${appointmentId}&prescription=true`
       );
         this.props.navigation.navigate('WebView', {
           prescribtionUrl,
@@ -273,7 +273,7 @@ export default class MyPresciption extends Component {
                     <TouchableOpacity
                     
 
-                    onPress={() => {this._generateReport()}}
+                    onPress={() => {this._generateReport(item.id)}}
                       style={[CommonStyles.container, CommonStyles.centerElement, { flexDirection: 'row' }]}
                     >
                       <Icon
@@ -286,7 +286,7 @@ export default class MyPresciption extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                    onPress={() => {this._generatePrescrition()}}
+                    onPress={() => {this._generatePrescrition(item.id)}}
                       style={[CommonStyles.container, CommonStyles.centerElement, { flexDirection: 'row' }]}
                     >
                       <Icon

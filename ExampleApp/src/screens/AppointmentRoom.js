@@ -21,6 +21,7 @@ import RealtimeDatabase from '../RealtimeDatabase';
 export default class AppointmentRoom extends React.Component {
   appointmentId = '';
   appointment = {};
+  timer = ""
   constructor(props) {
     super(props);
 
@@ -68,23 +69,20 @@ export default class AppointmentRoom extends React.Component {
           this.timer = setInterval(() => this.checkStatus(appointmentId), 5000);
         }
       });
-
-    // if(this.state.role == ''){
-    //   this.timer = setInterval(()=> this.checkStatus(), 5000)
-    // }
   }
 
   checkStatus(appointmentId) {
     Api.instance()
       .getAppointmentById(appointmentId)
       .then(response => {
-        if (response.status == 'completed') {
+        console.warn("status === ",response.status)
+        if (response.status == 'Completed') {
           console.warn("complete call")
           ViewUtils.showAlert(
             'Call ended.',       
         );
+       clearInterval(this.timer)
           JitsiMeet.endCall();
-          this.props.navigation.goBack();
           this.props.navigation.navigate('WebView', {
             prescribtionUrl,
           });

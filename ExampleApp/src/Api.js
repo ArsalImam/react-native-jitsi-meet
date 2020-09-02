@@ -277,6 +277,22 @@ export default class Api {
     return data;
   }
 
+
+  // FollowUp List
+  async getFollowUpList() {
+
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+    let response = await this.client.get(
+      this.getUrl(`Setups?filter[where][doctorId]=${_user.id}&filter[where][setupType]=diagnosis&filter[order]=createdAt%20DESC`),
+    );
+    let data = response.data;
+    console.warn('data', data);
+    if (data.error) throw data.error.message;
+    return data;
+  }
+
+
   // investigation List
   async getInvestigationList() {
 
@@ -365,7 +381,7 @@ export default class Api {
   async createPrescription(data) {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
-
+    console.warn("data -- ",data)
     data.doctorId = _user.id;
 
     let response = await this.client.post(
