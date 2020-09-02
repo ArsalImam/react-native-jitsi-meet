@@ -52,14 +52,14 @@ export default class Sidebar extends Component {
         </ListItem>
 
 
-        <ListItem button={true} onPress={() => { 
+        {/* <ListItem button={true} onPress={() => { 
           this.props.closeDrawer();
           this.props.changeScreenHandler.navigate('AddPrescribtion', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) }} >
           <Left>
             <Icon active name="medicinebox" type='AntDesign' style={[CommonStyles.textSizeMedium]} />
             <Text style={[CommonStyles.textSizeAverage, { marginLeft: 10 }]}>Prescribe Medication</Text>
           </Left>
-        </ListItem>
+        </ListItem> */}
 
         <ListItem button={true} onPress={() => { 
           this.props.closeDrawer();
