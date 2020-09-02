@@ -100,7 +100,7 @@ export default class PatientProfile extends React.Component {
                           style={{
                             width: '100%',
                             height: 105,
-                            resizeMode: 'cover',
+                            resizeMode: 'contain',
                           }}
                           source={{
                             uri: this.state.user.imageUrl,

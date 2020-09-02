@@ -35,7 +35,10 @@ export default class Vital extends Component {
             }
         }
     }
+componentDidMount(){
+//    console.warn('aaaaaaaaaaaaa'  , this.props.route.params)
 
+}
 
     _selectVitalComponenet = (params) => {
         switch (params) {
@@ -105,8 +108,7 @@ export default class Vital extends Component {
             Api.instance()
                 .createVital(data)
                 .then(response => {
-                    //this.props.navigation.replace('VitalList');
-                    this.props.route.params.onVitalAdd();
+                    // this.props.route.params.onVitalAdd();
                     this.props.navigation.goBack();
                     ViewUtils.showToast('Vital has been saved successfully!');
                 })

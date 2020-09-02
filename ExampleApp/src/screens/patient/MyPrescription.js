@@ -13,7 +13,7 @@ import { ViewUtils } from '../../Utils';
 export default class MyPresciption extends Component {
     
   state = {
-    appointments: [],
+    appointments:[],
     isloading: true,
   };
 
@@ -38,8 +38,10 @@ export default class MyPresciption extends Component {
     const prescribtionUrl = Api.instance().getUrl(
       `consultation-reports/getReport?appointmentId=${appointmentId}&prescription=true`
       );
+    console.warn('=========')
         this.props.navigation.navigate('WebView', {
           prescribtionUrl,
+        
         });
     
   }
