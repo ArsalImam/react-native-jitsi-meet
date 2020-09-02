@@ -202,21 +202,36 @@ class Dashboard extends React.Component {
               ]}>
           
               <View style={[{width: 53, height: 53, marginRight: 10}]}>
+
               {this.state.user.imageUrl != '' ? (
-                <Image
+                        <Image
+                          style={{
+                            width: '100%',
+                            height: '97%',
+                            resizeMode: 'contain',
+                          }}
+                          source={{
+                            uri: this.state.user.imageUrl
+                          }}
+                        />
+                      ) : (
+                        <Image
+                          style={{
+                            width: '100%',
+                            height: '97%',
+                            resizeMode: 'contain',
+                          }}
+                          source={require('../../assets/drawable-xxxhdpi/Mask.png')}
+                        />
+                      )}
+
+                {/* <Image
                   style={{height: '97%', width: '100%', resizeMode: 'contain'}}
                   // source={require('../../assets/drawable-xxxhdpi/Mask.png')}
-                 source={{ uri: this.state.user.imageUrl   }}
-                />
-                ) : (
-                  <Image
-                  style={{height: '97%', width: '100%', resizeMode: 'contain'}}
-
-                  source={require('../../assets/drawable-xxxhdpi/Mask.png')}
-                />
-                )}
-
-
+                 source={{
+                                                    uri: this.state.user.imageUrl
+                                                }}
+                /> */}
               </View>
               <View style={{justifyContent: 'flex-end'}}>
                 <Text style={[CommonStyles.fontMedium, {fontSize: 21}]}>
