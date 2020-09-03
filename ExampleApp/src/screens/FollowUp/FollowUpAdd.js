@@ -16,8 +16,7 @@ export default class FollowUpAdd extends Component {
 
             this.state = {
                 isLoading: false,
-                name: '',
-                startDate: '',
+                answer: '',
                 data: [],
                 appointmentId: this.props.route.params.appointmentId,
                 patientId: this.props.route.params.patientId,
@@ -26,8 +25,7 @@ export default class FollowUpAdd extends Component {
 
             this.state = {
                 isLoading: false,
-                name: '',
-                startDate: '',
+                answer: '',
                 data: []
             }
         }
@@ -37,17 +35,17 @@ export default class FollowUpAdd extends Component {
 
         let data = {
             "setupType": "followUp",
-            date: this.state.startDate,
+            date: this.state.answer,
         }
 
         
-        if(this.state.name != ""){
+        if(this.state.answer != ""){
             this.setState({ isLoading: true })
             Api.instance()
-            .createMedication(data)
+            .getFollowUpList(data)
             .then(response => {
                // this.props.navigation.replace('DiagnosisList');
-                this.props.route.params.onFollowUpAdd();
+                 this.props.route.params.onFollowUpAdd();
                 this.props.navigation.goBack();
                 ViewUtils.showToast('FollowUp has been saved successfully!');
             })
@@ -62,7 +60,7 @@ export default class FollowUpAdd extends Component {
             });
         }else {
             ViewUtils.showAlert(
-                'Please Provide followUp Name',       
+                'Please Provide FollowUp Date',       
             );    
         }
         
@@ -95,7 +93,7 @@ export default class FollowUpAdd extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  Start Date{' '}
+                  Select Date{' '}
                 </Label>
 
                 <Item style={[CommonStyles.container, CommonStyles.itemStyle]}>
@@ -118,8 +116,8 @@ export default class FollowUpAdd extends Component {
                         marginLeft: -10,
                       },
                     ]}
-                    value={this.state.startDate}
-                    onDateChange={val => this.setState({startDate: val})}
+                    value={this.state.answer}
+                    onDateChange={val => this.setState({answer: val})}
                     disabled={false}
                   />
                   <Icon active name="calendar" style={{marginLeft: 20}} />
@@ -209,7 +207,7 @@ export default class FollowUpAdd extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  Start Date{' '}
+                  Select Date{' '}
                 </Label>
 
                 <Item style={[CommonStyles.container, CommonStyles.itemStyle]}>
@@ -232,8 +230,8 @@ export default class FollowUpAdd extends Component {
                         marginLeft: -10,
                       },
                     ]}
-                    value={this.state.startDate}
-                    onDateChange={val => this.setState({startDate: val})}
+                    value={this.state.answer}
+                    onDateChange={val => this.setState({answer: val})}
                     disabled={false}
                   />
                   <Icon active name="calendar" style={{marginLeft: 20}} />

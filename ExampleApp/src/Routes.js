@@ -20,6 +20,8 @@ import MedicationAdd from './screens/medications/MedicationAdd';
 import MedicationList from './screens/medications/MedicationList';
 import DiagnosisAdd from './screens/diagnosis/DiagnosisAdd';
 import DiagnosisList from './screens/diagnosis/DiagnosisList';
+import FollowUpAdd from './screens/FollowUp/FollowUpAdd';
+import FollowUpList from './screens/FollowUp/FollowUpList';
 import InvestigationAdd from './screens/investigation/InvestigationAdd';
 import InvestigationList from './screens/investigation/InvestigationList';
 import ProcedureAdd from './screens/surgicalProcedure/ProcedureAdd';
@@ -63,6 +65,7 @@ export default class Routes extends React.Component {
         <Drawer.Screen name="MedicationList" component={MedicationList}
        /> 
         <Drawer.Screen name="DiagnosisList" component={DiagnosisList} />
+        <Drawer.Screen name="FollowUpList" component={FollowUpList} />
         <Drawer.Screen name="InvestigationList" component={InvestigationList} />
         <Drawer.Screen name="ProcedureList" component={ProcedureList} />
         <Drawer.Screen name="TherapyList" component={TherapyList} />
@@ -355,6 +358,58 @@ export default class Routes extends React.Component {
           //   },
           // }}
         />
+
+      <Stack.Screen
+          name="FollowUpAdd"
+          component={FollowUpAdd}
+          options={{
+            title: '',
+            headerStyle: {backgroundColor: 'transparent'},
+            headerTransparent: true,
+            headerTitleAlign: 'center',
+            headerTitleStyle: {color: '#fff'},
+            headerTintColor: '#fff',
+            navigationOptions: {
+              header: ({goBack}) => ({
+                left: <Left onPress={goBack} />,
+              }),
+              
+            },
+            cardStyle: {
+              backgroundColor: 'transparent',
+            },
+          }}
+        />
+
+        <Stack.Screen
+          name="FollowUpList"
+          component={FollowUpList}
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent',
+            },
+          }}
+
+          // options={{
+          //   title: '',
+          //   headerStyle: {backgroundColor: 'transparent'},
+          //   headerTransparent: true,
+          //   headerTitleAlign: 'center',
+          //   headerTitleStyle: {color: '#fff'},
+          //   headerTintColor: '#fff',
+          //   navigationOptions: {
+          //     header: ({goBack}) => ({
+          //       left: <Left onPress={goBack} />,
+          //     }),
+              
+          //   },
+          //   cardStyle: {
+          //     backgroundColor: 'transparent',
+          //   },
+          // }}
+        />
+
 
         <Stack.Screen
           name="InvestigationAdd"

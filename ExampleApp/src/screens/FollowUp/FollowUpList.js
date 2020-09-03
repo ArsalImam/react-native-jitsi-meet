@@ -17,7 +17,7 @@ export default class FollowUpList extends Component {
 
             this.state = {
                 isLoading: true,
-                diagnosisList: [],
+                followUpList: [],
                 appointmentId: this.props.route.params.appointmentId,
                 patientId: this.props.route.params.patientId,
             }
@@ -25,7 +25,7 @@ export default class FollowUpList extends Component {
 
             this.state = {
                 isLoading: true,
-                diagnosisList: [],
+                followUpList: [],
 
             }
         }
@@ -35,7 +35,7 @@ export default class FollowUpList extends Component {
         this.setState({ isLoading: true });
         Api.instance().getFollowUpList()
         .then((data) => {
-            console.warn('=====>', data["FollowUpList"])
+            console.warn('=====>', data["FollowUp"])
             this.setState({ followUpList: data });
         }
         ).catch(err => console.log(err))
@@ -67,7 +67,7 @@ export default class FollowUpList extends Component {
         item.setupType = 'followUp'
         Api.instance().addReport(item, this.state.appointmentId, this.state.patientId)
             .then(response => {
-                console.warn(response);
+                console.warn('AMMAD',response);
                 this.props.navigation.goBack();
             }).catch(err => {
 
@@ -114,21 +114,40 @@ export default class FollowUpList extends Component {
                                             ]}
                                             source={require('../../assets/img/bookingbg2x.png')}>
 
-                                            <TouchableOpacity style={[CommonStyles.container, { flexDirection: 'row', padding: 12 }]} onPress={() => { this.addfollowUpList(item) }}>
+                                            <TouchableOpacity style={[CommonStyles.container, { flexDirection: 'row', padding: 12 }]} onPress={() => { this.addFollowUp(item) }}>
 
-                                                <View style={[CommonStyles.container, { justifyContent: 'space-between' }]}>
-
-                                                    <Text style={{ marginBottom: 10 }} >
-                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`FollowUp Name: \n`}</Text>
-                                                        <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.name}</Text>
-                                                    </Text>
-
-                                                    <Text>
-                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Description: \n`}</Text>
-                                                        <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.description}</Text>
-                                                    </Text>
-
-                                                </View>
+                                            <View
+                        style={[
+                          CommonStyles.container,
+                          { justifyContent: 'space-between' },
+                        ]}>
+                        <View
+                          style={[
+                            CommonStyles.container,
+                            {
+                              justifyContent: 'space-between',
+                              alignItems: 'flex-end',
+                            },
+                          ]}>
+                          
+                          <Text style={{ marginBottom: 6 }}>
+                            <Text
+                              style={[
+                                CommonStyles.textSizeSmall,
+                                CommonStyles.fontRegular,
+                                { color: '#333333' },
+                              ]}>{`Date: `}</Text>
+                            <Text
+                              style={[
+                                CommonStyles.fontMedium,
+                                CommonStyles.textSizeAverage,
+                                { color: '#333333' },
+                              ]}>
+                              {moment(item.answer).format('DD-MM-yyyy')}
+                            </Text>
+                          </Text>
+                        </View>
+                      </View>
 
                                                 <View style={[CommonStyles.container, { justifyContent: 'space-between', alignItems: 'flex-end' }]}>
 

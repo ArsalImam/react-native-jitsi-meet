@@ -284,7 +284,7 @@ export default class Api {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
-      this.getUrl(`Setups?filter[where][doctorId]=${_user.id}&filter[where][setupType]=diagnosis&filter[order]=createdAt%20DESC`),
+      this.getUrl(`setups-patients?filter[where][and][0][doctorId]=5f315472039d6c7964019887&filter[where][and][1][patientId]=5f3154e8039d6c7964019889&filter[where][and][2][setup-type]=followup&filter[order]=id%20DESC`),
     );
     let data = response.data;
     console.warn('data', data);
