@@ -59,7 +59,11 @@ export default class Sidebar extends Component {
         <ListItem
           button={true} onPress={() => { 
             this.props.closeDrawer();
+<<<<<<< HEAD
             this.props.changeScreenHandler.navigate('ResultsofLabTest', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
+=======
+            this.props.changeScreenHandler.navigate('EmrMedicalRecordList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
+>>>>>>> 7c1e3941bffdd932b01e5b8f616113daffebc0b8
           <Left>
             <Icon active name='history' type='FontAwesome' style={{ fontSize: 21}} />
             <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>View Scanned Medical Records</Text>
