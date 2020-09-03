@@ -216,12 +216,8 @@ console.warn('tesssssssssssst' , response.body);
                             <KeyboardAwareScrollView style={[{ backgroundColor: '#fff', borderRadius: 5, }]}>
 
                                 <TouchableOpacity
-<<<<<<< HEAD
-                                    onPress={() =>this.imagePicker()}
-=======
                                     onPress={() => {  }}
                                     // this.handleChoosePhoto()
->>>>>>> 2fb24b131103bdbf8221796226ff40346b92c015
                                     style={{ marginVertical: 20, alignSelf: 'center' }}>
                                     <Icon name="filetext1" type="AntDesign" style={{ fontSize: 100 }} />
                                     <Icon name="camera" type="AntDesign" style={{ fontSize: 40, marginTop: -40, marginLeft: 65 }} />
