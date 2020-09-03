@@ -115,7 +115,8 @@ export default class UploadMedicalRecord extends Component {
                             <KeyboardAwareScrollView style={[{ backgroundColor: '#fff', borderRadius: 5, }]}>
 
                                 <TouchableOpacity
-                                    onPress={() => { this.handleChoosePhoto() }}
+                                    onPress={() => {  }}
+                                    // this.handleChoosePhoto()
                                     style={{ marginVertical: 20, alignSelf: 'center' }}>
                                     <Icon name="filetext1" type="AntDesign" style={{ fontSize: 100 }} />
                                     <Icon name="camera" type="AntDesign" style={{ fontSize: 40, marginTop: -40, marginLeft: 65 }} />
@@ -185,7 +186,7 @@ export default class UploadMedicalRecord extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this._savePatientHistory();
+                                    //this._savePatientHistory();
                                 }}
                                 style={[
                                     CommonStyles.container,
@@ -243,7 +244,8 @@ export default class UploadMedicalRecord extends Component {
                             <KeyboardAwareScrollView style={[{ backgroundColor: '#fff', borderRadius: 5, }]}>
 
                                 <TouchableOpacity
-                                    onPress={() => { this.handleChoosePhoto() }}
+                                    onPress={() => {  }}
+                                    // this.handleChoosePhoto()
                                     style={{ marginVertical: 20, alignSelf: 'center' }}>
                                     <Icon name="filetext1" type="AntDesign" style={{ fontSize: 100 }} />
                                     <Icon name="camera" type="AntDesign" style={{ fontSize: 40, marginTop: -40, marginLeft: 65 }} />
