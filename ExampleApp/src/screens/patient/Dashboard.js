@@ -33,22 +33,30 @@ class Dashboard extends React.Component {
       appointments: [],
       user: {},
       lastestAppointment: {time: '0:00 am', timeLeft: '0 mins'},
-      showLoader: true,
+      showLoader: false,
       role: '',
       imageUrl: '',
 
     };
   }
   _getAllAppointments() {
+ 
+    // this.setState({ showLoader: true })
+
     //getting appointment data
     Api.instance()
       .getMyAppointments()
       .then(appointments => {
         console.warn('bisma bisma' , appointments.length)
+        // console.warn('bisma bisma' , appointments)
 
         let schAppointment = appointments.filter(x => x.status == 'Scheduled');
+        console.warn('Schedule' , schAppointment.length)
+
         let completedAppointment = appointments.filter(x => x.status == 'Completed')
         console.warn('Completed' , completedAppointment)
+        console.warn('Completed' , completedAppointment.length)
+
         if (schAppointment.length > 0) {
           let lastAppointment = schAppointment.reverse()[0];
           let date = moment(lastAppointment.date);
@@ -85,6 +93,7 @@ class Dashboard extends React.Component {
 
         })
       })
+
       .catch(err => {
         ViewUtils.showToast(err);
       })
@@ -106,8 +115,12 @@ class Dashboard extends React.Component {
     let patients = response.filter(x => x.role == 'ROLE_PATIENT');
     this.setState({totalPatients: patients.length});
   }
-
   componentDidMount() {
+    this.props.navigation.addListener(
+      'focus',  payload => {
+    this.setState({ showLoader: true })
+
+
     Api.instance()
       .getUserRole()
       .then(role => this.setState({role}));
@@ -158,7 +171,9 @@ class Dashboard extends React.Component {
       }
       })
       .catch(err => ViewUtils.showToast(err));
-
+      
+    })
+     
   }
 
   goToPatientsRooms() {
@@ -202,36 +217,21 @@ class Dashboard extends React.Component {
               ]}>
           
               <View style={[{width: 53, height: 53, marginRight: 10}]}>
-
               {this.state.user.imageUrl != '' ? (
-                        <Image
-                          style={{
-                            width: '100%',
-                            height: '97%',
-                            resizeMode: 'contain',
-                          }}
-                          source={{
-                            uri: this.state.user.imageUrl
-                          }}
-                        />
-                      ) : (
-                        <Image
-                          style={{
-                            width: '100%',
-                            height: '97%',
-                            resizeMode: 'contain',
-                          }}
-                          source={require('../../assets/drawable-xxxhdpi/Mask.png')}
-                        />
-                      )}
-
-                {/* <Image
+                <Image
                   style={{height: '97%', width: '100%', resizeMode: 'contain'}}
                   // source={require('../../assets/drawable-xxxhdpi/Mask.png')}
-                 source={{
-                                                    uri: this.state.user.imageUrl
-                                                }}
-                /> */}
+                 source={{ uri: this.state.user.imageUrl   }}
+                />
+                ) : (
+                  <Image
+                  style={{height: '97%', width: '100%', resizeMode: 'contain'}}
+
+                  source={require('../../assets/drawable-xxxhdpi/Mask.png')}
+                />
+                )}
+
+
               </View>
               <View style={{justifyContent: 'flex-end'}}>
                 <Text style={[CommonStyles.fontMedium, {fontSize: 21}]}>
