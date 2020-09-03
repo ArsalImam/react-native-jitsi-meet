@@ -89,13 +89,12 @@ export default class UploadIllustrations extends React.Component {
                     uri: Platform.OS === 'android' ? response.uri : response.uri.replace('file://', '')
                 });
 
-                // Api.instance().uploadImage(fileData)
-                //     .then((response)=>{
-                //        console.warn(response.body);
-                //     });
-                // const source = {uri: response.uri};
+                Api.instance().uploadImage(fileData)
+                    .then((response)=>{
+                       console.warn(JSON.stringify(response));
+                    });
+                const source = {uri: response.uri};
 
-                // You can also display the image using data:
                 // const source = { uri: 'data:image/jpeg;base64,' + response.data };
 
                 // this.setState({

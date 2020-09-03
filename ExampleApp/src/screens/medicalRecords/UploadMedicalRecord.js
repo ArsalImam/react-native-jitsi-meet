@@ -109,6 +109,60 @@ export default class UploadMedicalRecord extends Component {
     //         }
     //     });
     //    }
+
+    handleChoosePhoto = () => {
+
+        const options = {
+            title: '',
+            noData: true,
+            // customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
+            storageOptions: {
+                skipBackup: true,
+                path: 'images',
+            },
+        };
+
+
+        ImagePicker.showImagePicker(options, (response) => {
+            console.warn('Response = ', response);
+
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else {
+                // show loader
+                const fileData = new FormData();
+                fileData.append('uploadFile', {
+                    name: response.fileName,
+                    type: response.type,
+                    uri: Platform.OS === 'android' ? response.uri : response.uri.replace('file://', '')
+                });
+
+                Api.instance().uploadImage(fileData)
+                    .then((response)=>{
+                       console.warn(JSON.stringify(response));
+                       console.warn("response.result.uploadFile.name == ",response.result.uploadFile.name)
+                       this.state.imageUri = "Contents/${container}/download/${fileName}"
+                    });
+                const source = {uri: response.uri};
+
+                // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+                // this.setState({
+                //     filePath: source,
+                // });
+            }
+        });
+        /* ImagePicker.launchImageLibrary(options, (response) => {
+             console.warn('Response = ', response.uri);
+             if (response) {
+                 this.setState({ image: response.uri })
+         }
+         });*/
+    }
+
+
 imagePicker = () => {
    
       var options = {
@@ -216,8 +270,10 @@ console.warn('tesssssssssssst' , response.body);
                             <KeyboardAwareScrollView style={[{ backgroundColor: '#fff', borderRadius: 5, }]}>
 
                                 <TouchableOpacity
-                                    onPress={() => {  }}
-                                    // this.handleChoosePhoto()
+                                    onPress={() => {  
+                                        this.handleChoosePhoto()
+                                    }}
+                                     
                                     style={{ marginVertical: 20, alignSelf: 'center' }}>
                                     <Icon name="filetext1" type="AntDesign" style={{ fontSize: 100 }} />
                                     <Icon name="camera" type="AntDesign" style={{ fontSize: 40, marginTop: -40, marginLeft: 65 }} />
@@ -287,7 +343,7 @@ console.warn('tesssssssssssst' , response.body);
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    //this._savePatientHistory();
+                                    this._savePatientHistory();
                                 }}
                                 style={[
                                     CommonStyles.container,
@@ -345,8 +401,10 @@ console.warn('tesssssssssssst' , response.body);
                             <KeyboardAwareScrollView style={[{ backgroundColor: '#fff', borderRadius: 5, }]}>
 
                                 <TouchableOpacity
-                                    onPress={() => {  }}
-                                    // this.handleChoosePhoto()
+                                    onPress={() => { 
+                                        this.handleChoosePhoto()
+                                     }}
+                                
                                     style={{ marginVertical: 20, alignSelf: 'center' }}>
                                     <Icon name="filetext1" type="AntDesign" style={{ fontSize: 100 }} />
                                     <Icon name="camera" type="AntDesign" style={{ fontSize: 40, marginTop: -40, marginLeft: 65 }} />
