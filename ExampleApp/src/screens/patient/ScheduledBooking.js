@@ -25,6 +25,13 @@ export default class ScheduledBooking extends Component {
   }
 
   componentDidMount() {
+    this.props.navigation.addListener(
+      'focus' , payload => {
+        this.setState({isLoading : true})
+
+        this.upcomingAppointments();
+      }
+    )
     this.onTabsChange(this.state.selected)
     console.warn('===date===' , moment().format('YYYY-MM-DD'), moment().add(15, 'days').format('YYYY-MM-DD'))
     // Api.instance()
