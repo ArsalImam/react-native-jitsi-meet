@@ -49,7 +49,7 @@ export default class Sidebar extends Component {
         <ListItem
           button={true} onPress={() => { 
             this.props.closeDrawer();
-            this.props.changeScreenHandler.navigate('PatientHistoryList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
+            this.props.changeScreenHandler.navigate('ResultsofLabTest', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
           <Left>
             <Icon active name='history' type='FontAwesome' style={{ fontSize: 21}} />
             <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>Referral Letter</Text>
@@ -59,7 +59,7 @@ export default class Sidebar extends Component {
         <ListItem
           button={true} onPress={() => { 
             this.props.closeDrawer();
-            this.props.changeScreenHandler.navigate('PatientHistoryList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
+            this.props.changeScreenHandler.navigate('ResultsofLabTest', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
           <Left>
             <Icon active name='history' type='FontAwesome' style={{ fontSize: 21}} />
             <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>View Scanned Medical Records</Text>
@@ -69,7 +69,7 @@ export default class Sidebar extends Component {
         <ListItem
           button={true} onPress={() => { 
             this.props.closeDrawer();
-            this.props.changeScreenHandler.navigate('PatientHistoryList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
+            this.props.changeScreenHandler.navigate('ResultsofLabTest', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
           <Left>
             <Icon active name='history' type='FontAwesome' style={{ fontSize: 21}} />
             <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>View Results of Lab Test</Text>
@@ -79,7 +79,7 @@ export default class Sidebar extends Component {
         <ListItem
           button={true} onPress={() => { 
             this.props.closeDrawer();
-            this.props.changeScreenHandler.navigate('PatientHistoryList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
+            this.props.changeScreenHandler.navigate('ResultsofLabTest', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
           <Left>
             <Icon active name='history' type='FontAwesome' style={{ fontSize: 21}} />
             <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>View X-Ray,MRI,CT,US Scans</Text>
@@ -89,7 +89,7 @@ export default class Sidebar extends Component {
         <ListItem
           button={true} onPress={() => { 
             this.props.closeDrawer();
-            this.props.changeScreenHandler.navigate('PatientHistoryList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
+            this.props.changeScreenHandler.navigate('ResultsofLabTest', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
           <Left>
             <Icon active name='history' type='FontAwesome' style={{ fontSize: 21}} />
             <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>View Misc Images ECG,Skin Lesion</Text>
@@ -99,7 +99,7 @@ export default class Sidebar extends Component {
         <ListItem
           button={true} onPress={() => { 
             this.props.closeDrawer();
-            this.props.changeScreenHandler.navigate('PatientHistoryList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
+            this.props.changeScreenHandler.navigate('ResultsofLabTest', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
           <Left>
             <Icon active name='history' type='FontAwesome' style={{ fontSize: 21}} />
             <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>View Audio and Video Files</Text>
@@ -113,7 +113,7 @@ export default class Sidebar extends Component {
         <ListItem
           button={true} onPress={() => { 
             this.props.closeDrawer();
-            this.props.changeScreenHandler.navigate('PatientHistoryList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
+            this.props.changeScreenHandler.navigate('ResultsofLabTest', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
           <Left>
             <Icon active name='history' type='FontAwesome' style={{ fontSize: 21}} />
             <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>Vital Signs</Text>
