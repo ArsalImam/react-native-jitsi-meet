@@ -151,7 +151,7 @@ export default class Sidebar extends Component {
           this.props.closeDrawer();
           this.props.changeScreenHandler.navigate('FollowUpList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) }} >
           <Left>
-            <Icon active name="followUp" type="FontAwesome5" style={[CommonStyles.textSizeMedium]} />
+            <Icon active name="diagnoses" type="FontAwesome5" style={[CommonStyles.textSizeMedium]} />
             <Text style={[CommonStyles.textSizeAverage, { marginLeft: 10 }]}>FollowUp</Text>
           </Left>
         </ListItem>
