@@ -52,6 +52,9 @@ class Dashboard extends React.Component {
 
         let schAppointment = appointments.filter(x => x.status == 'Scheduled');
         console.warn('Schedule' , schAppointment.length)
+        this.setState({
+          upComingCount: schAppointment.length
+        })
 
         let completedAppointment = appointments.filter(x => x.status == 'Completed')
         console.warn('Completed' , completedAppointment)
@@ -77,7 +80,7 @@ class Dashboard extends React.Component {
           };
 
           this.setState({
-            upComingCount: schAppointment.length,
+            // upComingCount: schAppointment.length,
             lastestAppointment,
             
           });

@@ -21,6 +21,7 @@ export default class UploadMedicalRecord extends Component {
                 image: null,
                 appointmentId: this.props.route.params.appointmentId,
                 patientId: this.props.route.params.patientId,
+                imageUri: '',
             }
         } else {
             this.state = {
@@ -28,59 +29,155 @@ export default class UploadMedicalRecord extends Component {
                 name: '',
                 data: [],
                 image: null,
+                imageUri: '',
+
             }
         }
     }
 
-    cancelAttachment = () => {
-        this.props.navigation.navigate('UploadIllustrations', this.props.route.params);
+    // cancelAttachment = () => {
+    //     this.props.navigation.navigate('UploadIllustrations', this.props.route.params);
 
-        this.setState({ dialogVisible: false });
-    };
+    //     this.setState({ dialogVisible: false });
+    // };
 
-    sendImage = () => {
-        this.props.navigation.navigate('IllustrationsList', this.props.route.params);
-        this.setState({ dialogVisible: false });
-    };
+    // sendImage = () => {
+    //     this.props.navigation.navigate('IllustrationsList', this.props.route.params);
+    //     this.setState({ dialogVisible: false });
+    // };
 
 
-    handleChoosePhoto = (mediaType) => {
-        const options = { noData: true, mediaType };
-        ImagePicker.showImagePicker(options, (response) => {
+    // handleChoosePhoto = (mediaType) => {
+    //     const options = { noData: true, mediaType };
+    //     ImagePicker.showImagePicker(options, (response) => {
 
-            console.warn('Response = ', response);
+    //         console.warn('Response = ', response);
 
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            } else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
-            } else {
-                const source = { uri: response.uri };
+    //         if (response.didCancel) {
+    //             console.log('User cancelled image picker');
+    //         } else if (response.error) {
+    //             console.log('ImagePicker Error: ', response.error);
+    //         } else if (response.customButton) {
+    //             console.log('User tapped custom button: ', response.customButton);
+    //         } else {
+    //             const source = { uri: response.uri };
 
-                this.setState({
-                    image: source,
-                });
-            }
+    //             this.setState({
+    //                 image: source,
+    //             });
+    //         }
+    //     });
+    // }
+    
+
+    // handleChoosePhoto = () => {
+
+    //     const options = {
+    //         title: '',
+    //         noData: true,
+    //         // customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
+    //         storageOptions: {
+    //             skipBackup: true,
+    //             path: 'images',
+    //         },
+    //     };
+
+    //     ImagePicker.showImagePicker(options, (response) => {
+    //         console.warn('Response = ', response);
+
+    //         if (response.didCancel) {
+    //             console.warn('User cancelled image picker');
+    //         } else if (response.error) {
+    //             console.warn('ImagePicker Error: ', response.error);
+    //         } else {
+    //             console.warn('else called')
+    //             // this.setState({
+    //             //     imageUri: response.uri,
+    //             //   });
+    //             // show loader
+    //             const fileData = new FormData();
+    //             this.setState({
+    //                 imageUri: response.uri,
+    //               });
+    //             // fileData.append('uploadFile', {
+                 
+    //             //     name: response.fileName,
+    //             //     type: response.type,
+    //             //     uri: Platform.OS === 'android' ? response.uri : response.uri.replace('file://', ''),
+                 
+    //             // });
+    //         }
+    //     });
+    //    }
+imagePicker = () => {
+   
+      var options = {
+        title: '',
+        noData:true,
+        storageOptions: {
+          skipBackup: true,
+          path: 'images',
+         },
+      };
+      ImagePicker.showImagePicker(options, response => {
+        if (response.didCancel) {
+                console.warn('User cancelled image picker');
+        } else if (response.error) {
+          console.warn('ImagePicker Error: ', response.error);
+        }  else {
+        //   this.setState({
+        //     imageUri: response.uri,
+        //     imageFilename : response.fileName
+        //   });
+        let imageData = new FormData();
+        imageData.append('file', {
+uri: response.uri , 
+name:response.fileName,
+
         });
-    }
+console.warn('imageeee Data' ,imageData )
+Api.instance()
+.uploadImage(imageData)
 
+.then(response => {
+console.warn('tesssssssssssst' , response.body);
+})
+        }
+      });
+    
+  };
+    
     _savePatientHistory = () => {
 
+        if (this.state.imageUri) {
+            // console.warn('Image URl', this.state.imageUri);
+            // let imageData = new FormData();
+            // imageData.append('file', {
+            //   uri: this.state.imageUri,
+            //   name: this.state.imageFilename,
+              
+            // });
+        
+
         let data = {
-            "setupType": "anatomicalIllustration",
-            "name": this.state.name,
-            "description": this.state.description,
+            // "setupType": "medicalRecord",
+            // "name": this.state.name,
+            // "description": this.state.description,
+            "url":this.state.imageUri,
+            // "filenmae":this.state.imageFilename,
+            // "vital Type" :this.state.vitalType
         }
 
         this.setState({ isLoading: true })
 
-        Api.instance()
-            .createMedication(data)
+                       Api.instance()
+                       .uploadImage(data)
+                   
             .then(response => {
-                this.props.navigation.replace('PatientHistoryList');
-                ViewUtils.showToast('Question has been saved successfully!');
+                console.warn('tesssssssssssst' , response.body);
+                this.props.navigation.replace('MedicalRecordList');
+                ViewUtils.showToast('Saved successfully!');
+            console.warn('=======response=======' , response)    
             })
             .catch(err => {
                 ViewUtils.showToast(err);
@@ -88,9 +185,13 @@ export default class UploadMedicalRecord extends Component {
             .finally(() => {
                 this.setState({ isLoading: false });
             });
+        }
+        else{
+            console.warn('not working')
+        }
     };
     render() {
-        const { image } = this.state;
+        // const { image } = this.state;
 
         if (this.state.appointmentId != null) {
 
@@ -115,23 +216,23 @@ export default class UploadMedicalRecord extends Component {
                             <KeyboardAwareScrollView style={[{ backgroundColor: '#fff', borderRadius: 5, }]}>
 
                                 <TouchableOpacity
-                                    onPress={() => { this.handleChoosePhoto() }}
+                                    onPress={() =>this.imagePicker()}
                                     style={{ marginVertical: 20, alignSelf: 'center' }}>
                                     <Icon name="filetext1" type="AntDesign" style={{ fontSize: 100 }} />
                                     <Icon name="camera" type="AntDesign" style={{ fontSize: 40, marginTop: -40, marginLeft: 65 }} />
-                                    {image && (
-                                        <Image
-                                            source={{ uri: image.uri }}
+                                    {/* {image && ( */}
+                                        {/* <Image
+                                            source={{ uri: this.state.imageUri }}
                                             style={{ width: 300, height: 300 }}
-                                        />
-                                    )}
+                                        /> */}
+                                    {/* )} */}
                                 </TouchableOpacity>
 
 
                                 <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 20 }]}>
                                     <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Title*</Label>
                                     <Input
-                                        value={this.state.name}
+                                        // value={this.state.name}
                                         onChangeText={val => this.setState({ name: val })}
                                         style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
                                 </Item>
@@ -152,7 +253,7 @@ export default class UploadMedicalRecord extends Component {
                                         placeholderStyle={{ color: '#bfc6ea' }}
                                         placeholderIconColor="#007aff"
 
-                                        selectedValue={this.state.vitalType}
+                                        // selectedValue={this.state.vitalType}
                                         onValueChange={val => { this.setState({ vitalType: val }) }}>
                                         <Picker.Item
                                             color="gray"
@@ -249,17 +350,18 @@ export default class UploadMedicalRecord extends Component {
                                     <Icon name="camera" type="AntDesign" style={{ fontSize: 40, marginTop: -40, marginLeft: 65 }} />
                                     {image && (
                                         <Image
-                                            source={{ uri: image.uri }}
+                                            source={{ uri: image.uri}}
                                             style={{ width: 300, height: 300 }}
                                         />
                                     )}
+                                    
                                 </TouchableOpacity>
 
 
                                 <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 20 }]}>
                                     <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Title*</Label>
                                     <Input
-                                        value={this.state.notes}
+                                        // value={this.state.notes}
                                         onChangeText={val => this.setState({ name: val })}
                                         style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
                                 </Item>
@@ -280,7 +382,7 @@ export default class UploadMedicalRecord extends Component {
                                         placeholderStyle={{ color: '#bfc6ea' }}
                                         placeholderIconColor="#007aff"
 
-                                        selectedValue={this.state.vitalType}
+                                        // selectedValue={this.state.vitalType}
                                         onValueChange={val => { this.setState({ vitalType: val }) }}>
                                         <Picker.Item
                                             color="gray"
