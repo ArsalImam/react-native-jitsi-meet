@@ -158,12 +158,7 @@ export default class RefertoSpecialistAdd extends Component {
                     onValueChange={val => { this.setState({ doctorEmail: val }) }}
                   >
                       {this._setSpecialists()}
-                    {/* <Picker.Item label={this.state.doctorName} value={this.state.doctorName} />
-                    <Picker.Item label="Past 15 days" value="last15Days" />
-                    <Picker.Item
-                      label="Past Appointments"
-                      value="allAppointments"
-                    /> */}
+                 
                   </Picker>
                 </Item>
 
@@ -297,12 +292,7 @@ export default class RefertoSpecialistAdd extends Component {
                     onValueChange={val => { this.setState({ doctorEmail: val }) }}
                   >
                       {this._setSpecialists()}
-                    {/* <Picker.Item label={this.state.doctorName} value={this.state.doctorName} />
-                    <Picker.Item label="Past 15 days" value="last15Days" />
-                    <Picker.Item
-                      label="Past Appointments"
-                      value="allAppointments"
-                    /> */}
+                  
                   </Picker>
                 </Item>
 

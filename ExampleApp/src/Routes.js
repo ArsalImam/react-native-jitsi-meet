@@ -444,7 +444,18 @@ export default class Routes extends React.Component {
           name="RefertoSpecialistAdd"
           component={RefertoSpecialistAdd}
           options={{
-            headerShown: false,
+            title: '',
+            headerStyle: {backgroundColor: 'transparent'},
+            headerTransparent: true,
+            headerTitleAlign: 'center',
+            headerTitleStyle: {color: '#fff'},
+            headerTintColor: '#fff',
+            navigationOptions: {
+              header: ({goBack}) => ({
+                left: <Left onPress={goBack} />,
+              }),
+              
+            },
             cardStyle: {
               backgroundColor: 'transparent',
             },
