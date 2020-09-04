@@ -79,6 +79,7 @@ import com.android.build.OutputFile
 
 project.ext.react = [
     entryFile: "index.js",
+     bundleInRelease: true,
     bundleAssetName: "app.bundle",
     enableHermes: false,  // clean and rebuild if changing
 ]
@@ -147,12 +148,20 @@ android {
         }
     }
     signingConfigs {
-        debug {
+        // debug {
+        //     storeFile file('./telemedicine.jks')
+        //     storePassword 'telemedicine.jks'
+        //     keyAlias 'telemedicine.jks'
+        //     keyPassword 'telemedicine.jks'
+        // }
+    release {
             storeFile file('./telemedicine.jks')
             storePassword 'telemedicine.jks'
             keyAlias 'telemedicine.jks'
             keyPassword 'telemedicine.jks'
         }
+
+
     }
     buildTypes {
         debug {
@@ -161,7 +170,8 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://facebook.github.io/react-native/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            //signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
@@ -176,6 +186,16 @@ android {
         pickFirst 'lib/x86_64/libc++_shared.so'
         pickFirst 'lib/armeabi-v7a/libc++_shared.so'
         pickFirst 'lib/armeabi-v7a/libjsc.so'
+
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude("META-INF/*.kotlin_module") 
     }
 
     // applicationVariants are e.g. debug, release
