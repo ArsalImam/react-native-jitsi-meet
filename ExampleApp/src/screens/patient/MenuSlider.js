@@ -46,7 +46,7 @@ class MenuSlider extends React.Component {
         ];
 
         const medicalProfile = [
-            { name: 'Medication', iconName: 'medicinebox', iconFamily: 'AntDesign', iconSize: '18', route: 'MedicationList' },
+            { name: 'Medication', iconName: 'medicinebox', iconFamily: 'AntDesign', iconSize: '18', route: 'ResultsofLabTest' },
             { name: 'Diagnosis', iconName: 'bed', iconFamily: 'FontAwesome', iconSize: '18', route: 'DiagnosisList' },
             { name: 'Investigation', iconName: 'ios-flower', iconFamily: 'Ionicon', iconSize: '18', route: 'InvestigationList' },
             { name: 'Surgical Procedure', iconName: 'box-cutter', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: 'ProcedureList' },

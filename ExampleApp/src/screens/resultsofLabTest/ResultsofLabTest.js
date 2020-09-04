@@ -12,20 +12,10 @@ export default class ResultsofLabTest extends Component {
     this.state.entries = ['a', 'a', 'a'];
   }
 
-  _renderItem = ({item, index}) => {
-    return (
-      <View>
-        <Image
-          style={{height: '97%', width: '100%', resizeMode: 'contain'}}
-          source={require('../../assets/drawable-xxxhdpi/Mask.png')}
-        />
-      </View>
-    );
-  };
-
+ 
   render() {
     return (
-      <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
+      <View style={{flex: 1}}>
          <Canvas/>
       </View>
     );
