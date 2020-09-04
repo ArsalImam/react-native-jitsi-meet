@@ -32,8 +32,10 @@ import TherapyAdd from './screens/suggestedTherapy/TherapyAdd';
 import TherapyList from './screens/suggestedTherapy/TherapyList';
 import PatientHistoryAdd from './screens/patientHistoryForm/PatientHistoryAdd';
 import PatientHistoryList from './screens/patientHistoryForm/PatientHistoryList';
-import EmrMedicalRecordList from './screens/emrMedicalRecord/EmrMedicalRecordList';
-import EmrMedicalRecordAdd from './screens/emrMedicalRecord/EmrMedicalRecordAdd';
+import ViewScanMedicalRecord from './screens/viewScanMedicalRecord/ViewScanMedicalRecord';
+import ViewReferralLetter from './screens/viewReferralLetter/ViewReferralLetter';
+import ViewXRayScan from './screens/viewXRayScan/ViewXRayScan';
+import ViewMiscImagesSkinLesion from './screens/viewMiscImagesSkinLesion/ViewMiscImagesSkinLesion';
 import UploadIllustrations from './screens/uploadIllustration/UploadIllustrations';
 import IllustrationsList from './screens/uploadIllustration/IllustrationsList';
 import UploadMedicalRecord from './screens/medicalRecords/UploadMedicalRecord';
@@ -604,54 +606,7 @@ export default class Routes extends React.Component {
           // }}
         />
 
-        <Stack.Screen
-          name="EmrMedicalRecordAdd"
-          component={EmrMedicalRecordAdd}
-          options={{
-            title: '',
-            headerStyle: {backgroundColor: 'transparent'},
-            headerTransparent: true,
-            headerTitleAlign: 'center',
-            headerTitleStyle: {color: '#fff'},
-            headerTintColor: '#fff',
-            navigationOptions: {
-              header: ({goBack}) => ({
-                left: <Left onPress={goBack} />,
-              }),
-              
-            },
-            cardStyle: {
-              backgroundColor: 'transparent',
-            },
-          }}
-        />
-
-        <Stack.Screen
-          name="EmrMedicalRecordList"
-          component={EmrMedicalRecordList}
-          options={{
-            headerShown: false,
-            cardStyle: {
-              backgroundColor: 'transparent',
-            },
-          }}
-          // options={{
-          //   title: '',
-          //   headerStyle: {backgroundColor: 'transparent'},
-          //   headerTransparent: true,
-          //   headerTitleAlign: 'center',
-          //   headerTitleStyle: {color: '#fff'},
-          //   headerTintColor: '#fff',
-          //   navigationOptions: {
-          //     header: ({goBack}) => ({
-          //       left: <Left onPress={goBack} />,
-          //     }),
-          //     cardStyle: {
-          //       backgroundColor: 'transparent',
-          //     },
-          //   },
-          // }}
-        />
+        
 
 <Stack.Screen
           name="PatientHistoryAdd"
@@ -855,7 +810,46 @@ export default class Routes extends React.Component {
             headerShown: true,
           }}
         />
+
+        <Stack.Screen
+          name="ViewScanMedicalRecord"
+          component={ViewScanMedicalRecord}
+          options={{
+            headerShown: true,
+          }}
+        />
+
+        <Stack.Screen
+          name="ViewReferralLetter"
+          component={ViewReferralLetter}
+          options={{
+            headerShown: true,
+          }}
+        />
+
+        <Stack.Screen
+          name="ViewXRayScan"
+          component={ViewXRayScan}
+          options={{
+            headerShown: true,
+          }}
+        />
+
+        <Stack.Screen
+          name="View Misc,Images,Skin Lesion"
+          component={ViewMiscImagesSkinLesion}
+          options={{
+            headerShown: true,
+          }}
+        />
+
+
+
       </Stack.Navigator>
+
+
+
+
     );
   }
 }

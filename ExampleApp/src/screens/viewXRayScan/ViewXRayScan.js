@@ -3,7 +3,7 @@ import {Text, View, Image, StyleSheet} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import {SketchCanvas} from '@terrylinla/react-native-sketch-canvas';
 import Canvas from '../../components/canvas';
-export default class ResultsofLabTest extends Component {
+export default class ViewXRayScan extends Component {
   constructor(props) {
     super(props);
     this.state = {
