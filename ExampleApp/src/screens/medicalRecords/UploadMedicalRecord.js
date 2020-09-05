@@ -158,7 +158,7 @@ export default class UploadMedicalRecord extends Component {
               ? response.uri
               : response.uri.replace('file://', ''),
         });
-
+        this.setState({isLoading: true});
         Api.instance()
           .uploadImage(fileData)
           .then(response => {
@@ -166,10 +166,19 @@ export default class UploadMedicalRecord extends Component {
             // this.state.imageUri = `https://api.etibb.online/api/Contents/${
             //   Configs.containers.images
             // }/download/${response.result.files.uploadFile[0].name}`;
-
-            this.setState({imageUri:Api.instance().getMediaUrl(Configs.containers.images,response.result.files.uploadFile[0].name)})
+            this.setState({isLoading: false});
+            this.setState({
+              imageUri: Api.instance().getMediaUrl(
+                Configs.containers.images,
+                response.result.files.uploadFile[0].name,
+              ),
+            });
+          })
+          .catch(err => console.log(err))
+          .finally(() => {
+            this.setState({isLoading: false});
           });
-          // this.setState({uri : response.path})
+        // this.setState({uri : response.path})
         //console.warn("response ======= ",response.path)
         const source = {uri: response.uri};
       }
@@ -222,11 +231,9 @@ export default class UploadMedicalRecord extends Component {
       // });
 
       let data = {
-        setupType: this.state.vitalType,
         title: this.state.name,
-        description: '',
         url: this.state.imageUri,
-        type:this.state.vitalType
+        type: this.state.vitalType,
         // "filenmae":this.state.imageFilename,
         // "vital Type" :this.state.vitalType
       };
@@ -239,7 +246,7 @@ export default class UploadMedicalRecord extends Component {
         .then(response => {
           console.warn('tesssssssssssst', response.body);
           this.props.route.params.onUploadMedicalRecord();
-                this.props.navigation.goBack();
+          this.props.navigation.goBack();
 
           //this.props.navigation.replace('MedicalRecordList');
           ViewUtils.showToast('Saved successfully!');
@@ -314,7 +321,11 @@ export default class UploadMedicalRecord extends Component {
                   ) : (
                     <Image
                       source={{uri: this.state.imageUri}}
-                      style={{width: 300, height: 300,backgroundColor:'#E3E3E3'}}
+                      style={{
+                        width: 300,
+                        height: 300,
+                        backgroundColor: '#E3E3E3',
+                      }}
                     />
                   )}
 
@@ -365,7 +376,7 @@ export default class UploadMedicalRecord extends Component {
                     placeholder="Select Vital Type"
                     placeholderStyle={{color: '#bfc6ea'}}
                     placeholderIconColor="#007aff"
-                     selectedValue={this.state.vitalType}
+                    selectedValue={this.state.vitalType}
                     onValueChange={val => {
                       this.setState({vitalType: val});
                     }}>
@@ -375,22 +386,25 @@ export default class UploadMedicalRecord extends Component {
                       label="Document Type"
                       value=""
                     />
-                    <Picker.Item label="Referral Letter" value="BloodGlucose" />
+                    <Picker.Item
+                      label="Referral Letter"
+                      value="referralLetter"
+                    />
                     <Picker.Item
                       label="Scanned Medical Records"
-                      value="BloodPressure"
+                      value="medicalRecord"
                     />
                     <Picker.Item
                       label="Results of Laboratory Test"
-                      value="BloodOxygen"
+                      value="labReport"
                     />
                     <Picker.Item
                       label="X-rays, MRI, CT, US, Scans "
-                      value="BloodOxygen"
+                      value="xRay"
                     />
                     <Picker.Item
                       label="Misc Images ECG, Skin Lesion etc"
-                      value="BloodOxygen"
+                      value="misc"
                     />
                   </Picker>
                 </Item>
@@ -500,7 +514,11 @@ export default class UploadMedicalRecord extends Component {
                   ) : (
                     <Image
                       source={{uri: this.state.imageUri}}
-                      style={{width: 300, height: 300,backgroundColor:'#E3E3E3'}}
+                      style={{
+                        width: 300,
+                        height: 300,
+                        backgroundColor: '#E3E3E3',
+                      }}
                     />
                   )}
                 </TouchableOpacity>
@@ -544,32 +562,35 @@ export default class UploadMedicalRecord extends Component {
                     placeholder="Select Vital Type"
                     placeholderStyle={{color: '#bfc6ea'}}
                     placeholderIconColor="#007aff"
-                   selectedValue={this.state.vitalType}
+                    selectedValue={this.state.vitalType}
                     onValueChange={val => {
                       this.setState({vitalType: val});
                     }}>
-                    <Picker.Item
+                     <Picker.Item
                       color="gray"
                       selected={false}
                       label="Document Type"
                       value=""
                     />
-                    <Picker.Item label="Referral Letter" value="BloodGlucose" />
+                    <Picker.Item
+                      label="Referral Letter"
+                      value="referralLetter"
+                    />
                     <Picker.Item
                       label="Scanned Medical Records"
-                      value="BloodPressure"
+                      value="medicalRecord"
                     />
                     <Picker.Item
                       label="Results of Laboratory Test"
-                      value="BloodOxygen"
+                      value="labReport"
                     />
                     <Picker.Item
                       label="X-rays, MRI, CT, US, Scans "
-                      value="BloodOxygen"
+                      value="xRay"
                     />
                     <Picker.Item
                       label="Misc Images ECG, Skin Lesion etc"
-                      value="BloodOxygen"
+                      value="misc"
                     />
                   </Picker>
                 </Item>

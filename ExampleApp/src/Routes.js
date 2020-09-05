@@ -54,7 +54,7 @@ import CreateClinic from './screens/clinic/CreateClinic';
 import ClinicList from './screens/clinic/ClinicList';
 import SideBar from './components/drawer/SideBar';
 import MyPresciption from './screens/patient/MyPrescription';
-import ResultsofLabTest from './screens/resultsofLabTest/ResultsofLabTest'
+import ViewResultsofLabTest from './screens/viewResultsofLabTest/ViewResultsofLabTest'
 
 
 
@@ -804,10 +804,13 @@ export default class Routes extends React.Component {
         />
 
         <Stack.Screen
-          name="ResultsofLabTest"
-          component={ResultsofLabTest}
+          name="ViewResultsofLabTest"
+          component={ViewResultsofLabTest}
           options={{
-            headerShown: true,
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent',
+            },
           }}
         />
 
@@ -815,7 +818,10 @@ export default class Routes extends React.Component {
           name="ViewScanMedicalRecord"
           component={ViewScanMedicalRecord}
           options={{
-            headerShown: true,
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent',
+            },
           }}
         />
 
@@ -823,7 +829,10 @@ export default class Routes extends React.Component {
           name="ViewReferralLetter"
           component={ViewReferralLetter}
           options={{
-            headerShown: true,
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent',
+            },
           }}
         />
 
@@ -831,15 +840,21 @@ export default class Routes extends React.Component {
           name="ViewXRayScan"
           component={ViewXRayScan}
           options={{
-            headerShown: true,
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent',
+            },
           }}
         />
 
         <Stack.Screen
-          name="View Misc,Images,Skin Lesion"
+          name="ViewMiscImagesSkinLesion"
           component={ViewMiscImagesSkinLesion}
           options={{
-            headerShown: true,
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent',
+            },
           }}
         />
 

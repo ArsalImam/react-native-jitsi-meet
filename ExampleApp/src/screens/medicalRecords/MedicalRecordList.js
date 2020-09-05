@@ -75,6 +75,7 @@ export default class MedicalRecordList extends Component {
     }
   }
   render() {
+    console.warn("this.state.medicalRecordList === ",this.state.medicalRecordList)
     if (this.state.appointmentId != null) {
       return (
         <View style={{height: '75%'}}>

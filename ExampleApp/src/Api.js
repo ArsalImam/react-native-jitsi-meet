@@ -338,6 +338,19 @@ export default class Api {
     return data;
   }
 
+  async getMedicalRecordImages(patientId,type) {
+console.warn('umer==',patientId,type)
+    let response = await this.client.get(
+      this.getUrl(`MedicalRecords?filter[where][patientId]=${patientId}&filter[where][type]=${type}`),
+    );
+    let data = response.data;
+    console.warn('data', data);
+    if (data.error) throw data.error.message;
+    return data;
+  }
+
+  
+
   // suggestedTherapy List
   async getTherapyList() {
 
@@ -703,7 +716,7 @@ async getMyAppointmentsComing15Days(status = '', requirePatient = false, todaysD
     let _user = JSON.parse(JSON.stringify(user));
 
     data.patientId = _user.id;
-    
+    data.doctorId =_user.doctorId;
     let response = await this.client.post(
       this.getUrl(`MedicalRecords`),
       data,
