@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   ScrollView,
-  StatusBar,
+  StatusBar,Image
 } from 'react-native';
 import {
   Container,
@@ -20,7 +20,7 @@ import {
   Icon,
   Picker,
   Form,
-  Image,
+  
 } from 'native-base';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import CommonStyles from '../../CommonStyles';
@@ -55,17 +55,6 @@ export default class UploadIllustrations extends React.Component {
       };
     }
   }
-
-  // cancelAttachment = () => {
-  //     this.props.navigation.navigate('UploadIllustrations', this.props.route.params);
-
-  //     this.setState({ dialogVisible: false });
-  // };
-
-  // sendImage = () => {
-  //     this.props.navigation.navigate('IllustrationsList', this.props.route.params);
-  //     this.setState({ dialogVisible: false });
-  // };
 
   handleChoosePhoto = () => {
     const options = {
@@ -302,7 +291,7 @@ console.warn('uriiiii' , this.state.imageUri)
                     this.handleChoosePhoto();
                   }}
                   style={{marginVertical: 20, alignSelf: 'center'}}>
-                  {/* {this.state.imageUri == '' ? ( */}
+                  {this.state.imageUri == '' ? (
                   <View>
                     <Icon
                       name="filetext1"
@@ -315,12 +304,12 @@ console.warn('uriiiii' , this.state.imageUri)
                       style={{fontSize: 40, marginTop: -40, marginLeft: 65}}
                     />
                   </View>
-                     {/* ) : (
+                     ) : (
                     <Image
                       source={{uri: this.state.imageUri}}
                       style={{width: 300, height: 300,backgroundColor:'#E3E3E3'}}
                     />
-                  )}    */}
+                  )}    
                 </TouchableOpacity>
 
                 <Item
