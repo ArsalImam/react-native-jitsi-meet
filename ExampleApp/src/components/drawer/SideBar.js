@@ -28,7 +28,7 @@ export default class Sidebar extends Component {
       <Container style={{backgroundColor: '#F7FAFE', flex: 1}}>
         <Content>
 
-        {this.state.role==Roles.doctor ? (
+        {this.state.role==Roles.doctor ? (                                                                                                                                                                                                                                                                                                                                                                                                                 
         
         <List style={{backgroundColor: '#F7FAFE', paddingBottom: 50}}>
            
@@ -46,11 +46,71 @@ export default class Sidebar extends Component {
           </Left>
         </ListItem>
 
-        
+        <ListItem
+          button={true} onPress={() => { 
+            this.props.closeDrawer();
+            this.props.changeScreenHandler.navigate('ViewReferralLetter', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
+          <Left>
+            <Icon active name='history' type='FontAwesome' style={{ fontSize: 21}} />
+            <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>View Referral Letter</Text>
+          </Left>
+        </ListItem>
+
+        <ListItem
+          button={true} onPress={() => { 
+            this.props.closeDrawer();
+            this.props.changeScreenHandler.navigate('ViewScanMedicalRecord', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
+          <Left>
+            <Icon active name='history' type='FontAwesome' style={{ fontSize: 21}} />
+            <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>View Scan Medical Records</Text>
+          </Left>
+        </ListItem>
+
+        <ListItem
+          button={true} onPress={() => { 
+            this.props.closeDrawer();
+            this.props.changeScreenHandler.navigate('ResultsofLabTest', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
+          <Left>
+            <Icon active name='history' type='FontAwesome' style={{ fontSize: 21}} />
+            <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>View Results of Lab Test</Text>
+          </Left>
+        </ListItem>
+
+        <ListItem
+          button={true} onPress={() => { 
+            this.props.closeDrawer();
+            this.props.changeScreenHandler.navigate('ViewXRayScan', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
+          <Left>
+            <Icon active name='history' type='FontAwesome' style={{ fontSize: 21}} />
+            <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>View X-Ray,MRI,CT,US Scans</Text>
+          </Left>
+        </ListItem>
+
+        <ListItem
+          button={true} onPress={() => { 
+            this.props.closeDrawer();
+            this.props.changeScreenHandler.navigate('ViewMiscImagesSkinLesion', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
+          <Left>
+            <Icon active name='history' type='FontAwesome' style={{ fontSize: 21}} />
+            <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>View Misc Images ECG,Skin Lesion</Text>
+          </Left>
+        </ListItem>
+
+       
+
         <ListItem itemDivider  style={{ backgroundColor: 'grey'}}>
           <Text style={[CommonStyles.textSizeMedium, CommonStyles.textColorWhite, { textAlign: 'center', alignSelf: 'center' }]}>Doctor Advice</Text>
         </ListItem>
 
+        <ListItem
+          button={true} onPress={() => { 
+            this.props.closeDrawer();
+            this.props.changeScreenHandler.navigate('ResultsofLabTest', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
+          <Left>
+            <Icon active name='history' type='FontAwesome' style={{ fontSize: 21}} />
+            <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>Vital Signs</Text>
+          </Left>
+        </ListItem>
 
         <ListItem button={true} onPress={() => { 
           this.props.closeDrawer();
