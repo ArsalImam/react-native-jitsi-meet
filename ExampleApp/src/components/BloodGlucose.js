@@ -81,6 +81,7 @@ class BloodGlucose extends React.Component {
                         <Picker.Item label="After Snakes" value="After Snakes" />
 
                     </Picker>
+                    
                 </Item>
 
                 <Item
