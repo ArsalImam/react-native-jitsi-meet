@@ -31,7 +31,10 @@ class Dashboard extends React.Component {
       totalConsultation: 0,
       totalPatients: 0,
       appointments: [],
-      user: {},
+      user: {
+        personalDetails: {},
+
+      },
       lastestAppointment: {time: '0:00 am', timeLeft: '0 mins'},
       showLoader: false,
       role: '',
@@ -220,11 +223,11 @@ class Dashboard extends React.Component {
               ]}>
           
               <View style={[{width: 53, height: 53, marginRight: 10}]}>
-              {this.state.user.imageUrl != '' ? (
+              {this.state.user.personalDetails.url != '' ? (
                 <Image
                   style={{height: '97%', width: '100%', resizeMode: 'contain'}}
                   // source={require('../../assets/drawable-xxxhdpi/Mask.png')}
-                 source={{ uri: this.state.user.imageUrl   }}
+                 source={{ uri: this.state.user.personalDetails.url   }}
                 />
                 ) : (
                   <Image

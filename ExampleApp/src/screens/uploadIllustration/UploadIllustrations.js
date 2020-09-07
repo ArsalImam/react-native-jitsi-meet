@@ -94,9 +94,7 @@ export default class UploadIllustrations extends React.Component {
               imageUri: Api.instance().getMediaUrl(
                 Configs.containers.images,
                 response.result.files.uploadFile[0].name,
-              ),
-
-            });
+              )});
 console.warn('uriiiii' , this.state.imageUri)
         });
 
