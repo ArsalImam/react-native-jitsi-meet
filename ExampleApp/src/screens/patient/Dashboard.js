@@ -32,8 +32,7 @@ class Dashboard extends React.Component {
       totalPatients: 0,
       appointments: [],
       user: {
-        personalDetails: {},
-
+        personalDetails:{}
       },
       lastestAppointment: {time: '0:00 am', timeLeft: '0 mins'},
       showLoader: false,
@@ -44,14 +43,12 @@ class Dashboard extends React.Component {
   }
   _getAllAppointments() {
  
-    // this.setState({ showLoader: true })
 
     //getting appointment data
     Api.instance()
       .getMyAppointments()
       .then(appointments => {
         console.warn('bisma bisma' , appointments.length)
-        // console.warn('bisma bisma' , appointments)
 
         let schAppointment = appointments.filter(x => x.status == 'Scheduled');
         console.warn('Schedule' , schAppointment.length)
@@ -163,9 +160,11 @@ class Dashboard extends React.Component {
             global.role = this.state.user.role;
           },
         );
+        console.warn('user user ===>' , this.state.user)
 
         if (this.state.user.imageUrl) {
           console.warn('image image', this.state.user.imageUrl)
+          console.warn('user user ===>' , this.state.user)
           let imageData = new FormData();
           imageData.append('file', {
               url: this.state.user.imageUrl,
@@ -223,11 +222,11 @@ class Dashboard extends React.Component {
               ]}>
           
               <View style={[{width: 53, height: 53, marginRight: 10}]}>
-              {this.state.user.personalDetails.url != '' ? (
+              {this.state.user.imageUrl != '' ? (
                 <Image
                   style={{height: '97%', width: '100%', resizeMode: 'contain'}}
                   // source={require('../../assets/drawable-xxxhdpi/Mask.png')}
-                 source={{ uri: this.state.user.personalDetails.url   }}
+                 source={{ uri: this.state.user.imageUrl   }}
                 />
                 ) : (
                   <Image
