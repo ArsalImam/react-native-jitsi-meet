@@ -39,17 +39,21 @@ export default class MedicalRecordList extends Component {
     }
   }
 
-  componentDidMount() {
+  _getMedicalRecordList(){
     Api.instance()
-      .getMedicalRecordList()
-      .then(data => {
-        console.warn('=====>', data);
-        this.setState({medicalRecordList: data});
-      })
-      .catch(err => console.log(err))
-      .finally(() => {
-        this.setState({isLoading: false});
-      });
+    .getMedicalRecordList()
+    .then(data => {
+      console.warn('=====>', data);
+      this.setState({medicalRecordList: data});
+    })
+    .catch(err => console.log(err))
+    .finally(() => {
+      this.setState({isLoading: false});
+    });
+  }
+
+  componentDidMount() {
+    this._getMedicalRecordList();
   }
 
   addToConsultation(item) {
@@ -71,6 +75,7 @@ export default class MedicalRecordList extends Component {
     }
   }
   render() {
+    console.warn("this.state.medicalRecordList === ",this.state.medicalRecordList)
     if (this.state.appointmentId != null) {
       return (
         <View style={{height: '75%'}}>
@@ -217,6 +222,7 @@ export default class MedicalRecordList extends Component {
               <TouchableOpacity
                 onPress={() => {
                   this.props.navigation.navigate('UploadMedicalRecord', {
+                    onUploadMedicalRecord: () => this._getMedicalRecordList(),
                     appointmentId: this.state.appointmentId,
                   });
                 }}
@@ -397,7 +403,8 @@ export default class MedicalRecordList extends Component {
               <TouchableOpacity
                 onPress={() => {
                   this.props.navigation.navigate('UploadMedicalRecord', {
-                    appointmentId: '',
+                    onUploadMedicalRecord: () => this._getMedicalRecordList(),
+                    appointmentId: null,
                   });
                 }}
                 style={[

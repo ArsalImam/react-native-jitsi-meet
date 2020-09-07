@@ -86,7 +86,7 @@ export default class RefertoSpecialistAdd extends Component {
           ViewUtils.showToast('Referred successfully!');
         })
         .catch(err => {
-          ViewUtils.showAlert('Unable to Perform this Action',err);
+          ViewUtils.showAlert('Unable to Perform this Action');
         })
         .finally(() => {
           this.setState({isLoading: false});

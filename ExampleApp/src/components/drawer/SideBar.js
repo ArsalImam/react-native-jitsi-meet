@@ -51,7 +51,7 @@ export default class Sidebar extends Component {
             this.props.closeDrawer();
             this.props.changeScreenHandler.navigate('ViewReferralLetter', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
           <Left>
-            <Icon active name='history' type='FontAwesome' style={{ fontSize: 21}} />
+            <Icon active name='newsletter' type='Entypo' style={{ fontSize: 21}} />
             <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>View Referral Letter</Text>
           </Left>
         </ListItem>
@@ -61,7 +61,7 @@ export default class Sidebar extends Component {
             this.props.closeDrawer();
             this.props.changeScreenHandler.navigate('ViewScanMedicalRecord', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
           <Left>
-            <Icon active name='history' type='FontAwesome' style={{ fontSize: 21}} />
+            <Icon active name='file-medical' type='FontAwesome5' style={{ fontSize: 21}} />
             <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>View Scan Medical Records</Text>
           </Left>
         </ListItem>
@@ -69,9 +69,9 @@ export default class Sidebar extends Component {
         <ListItem
           button={true} onPress={() => { 
             this.props.closeDrawer();
-            this.props.changeScreenHandler.navigate('ResultsofLabTest', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
+            this.props.changeScreenHandler.navigate('ViewResultsofLabTest', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
           <Left>
-            <Icon active name='history' type='FontAwesome' style={{ fontSize: 21}} />
+            <Icon active name='laboratory' type='Fontisto' style={{ fontSize: 21}} />
             <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>View Results of Lab Test</Text>
           </Left>
         </ListItem>
@@ -81,7 +81,7 @@ export default class Sidebar extends Component {
             this.props.closeDrawer();
             this.props.changeScreenHandler.navigate('ViewXRayScan', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
           <Left>
-            <Icon active name='history' type='FontAwesome' style={{ fontSize: 21}} />
+            <Icon active name='x-ray' type='FontAwesome5' style={{ fontSize: 21}} />
             <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>View X-Ray,MRI,CT,US Scans</Text>
           </Left>
         </ListItem>
@@ -91,7 +91,7 @@ export default class Sidebar extends Component {
             this.props.closeDrawer();
             this.props.changeScreenHandler.navigate('ViewMiscImagesSkinLesion', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
           <Left>
-            <Icon active name='history' type='FontAwesome' style={{ fontSize: 21}} />
+            <Icon active name='folder-images' type='Entypo' style={{ fontSize: 21}} />
             <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>View Misc Images ECG,Skin Lesion</Text>
           </Left>
         </ListItem>
@@ -105,9 +105,9 @@ export default class Sidebar extends Component {
         <ListItem
           button={true} onPress={() => { 
             this.props.closeDrawer();
-            this.props.changeScreenHandler.navigate('ResultsofLabTest', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
+            this.props.changeScreenHandler.navigate('VitalList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
           <Left>
-            <Icon active name='history' type='FontAwesome' style={{ fontSize: 21}} />
+            <Icon active name='map-signs' type='FontAwesome' style={{ fontSize: 21}} />
             <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>Vital Signs</Text>
           </Left>
         </ListItem>
@@ -152,7 +152,7 @@ export default class Sidebar extends Component {
           this.props.closeDrawer();
           this.props.changeScreenHandler.navigate('RefertoSpecialistList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) }} >
           <Left>
-            <Icon active name="followUp" type="FontAwesome5" style={[CommonStyles.textSizeMedium]} />
+            <Icon active name="doctor" type="Fontisto" style={[CommonStyles.textSizeMedium]} />
             <Text style={[CommonStyles.textSizeAverage, { marginLeft: 10 }]}>Refer to Specialist</Text>
           </Left>
         </ListItem>

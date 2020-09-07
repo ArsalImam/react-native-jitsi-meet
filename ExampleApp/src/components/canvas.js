@@ -30,20 +30,9 @@ export default class Canvas extends Component {
         <View style={{flex: 1, flexDirection: 'row'}}>
           <RNSketchCanvas
 
-            containerStyle={{backgroundColor: 'transparent', flex: 1}}
-            canvasComponent={
-              <Carousel
-              ref={c => {
-                this._carousel = c;
-              }}
-              data={this.state.entries}
-              renderItem={this._renderItem}
-              sliderWidth={300}
-              itemWidth={300}
-            />
-
-            }
-            canvasStyle={{backgroundColor: '#0000000', flex: 1}}
+            containerStyle={{backgroundColor: 'transparent'}}
+           
+            canvasStyle={{backgroundColor: '#0000000'}}
             defaultStrokeIndex={0}
             defaultStrokeWidth={5}
             closeComponent={
@@ -113,7 +102,7 @@ export default class Canvas extends Component {
           />
         
         </View>
-        {/* <Carousel
+        <Carousel
           ref={c => {
             this._carousel = c;
           }}
@@ -121,7 +110,7 @@ export default class Canvas extends Component {
           renderItem={this._renderItem}
           sliderWidth={300}
           itemWidth={300}
-        /> */}
+        />
       </View>
     );
   }

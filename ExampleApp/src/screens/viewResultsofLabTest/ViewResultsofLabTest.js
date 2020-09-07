@@ -6,7 +6,7 @@ import Canvas from '../../components/canvas';
 import {Icon} from 'native-base';
 import Api from '../../Api';
 import CommonStyles from '../../CommonStyles';
-export default class ViewScanMedicalRecord extends Component {
+export default class ViewResultsofLabTest extends Component {
   constructor(props) {
     super(props);
       this.state = {
@@ -14,8 +14,7 @@ export default class ViewScanMedicalRecord extends Component {
         appointmentId: this.props.route.params.appointmentId,
         patientId: this.props.route.params.patientId,
         images: [],
-        type:"medicalRecord",
-        imageUri:'',
+        type:"labReport",
         noRecord:''
       };
 
@@ -32,7 +31,6 @@ export default class ViewScanMedicalRecord extends Component {
       .getMedicalRecordImages(patientId,type)
       .then(data => {
         let urls = data.map(x => x.url)
-        console.warn("urls === ",urls)
         this.setState({images: urls})
         if(this.state.images.length == 0){
           this.setState({noRecord:'No Record Found'})
@@ -68,7 +66,7 @@ export default class ViewScanMedicalRecord extends Component {
               style={[
                 CommonStyles.fontRegular,
                 CommonStyles.textSizeLarge,
-              ]}>{`View Scan Medical Record\n`}</Text>
+              ]}>{`View Results of Lab Test\n`}</Text>
             <Text
               style={[
                 CommonStyles.fontRegular,
