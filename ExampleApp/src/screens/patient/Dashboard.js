@@ -225,15 +225,30 @@ class Dashboard extends React.Component {
               {this.state.user.imageUrl != '' ? (
                 <Image
                   style={{height: '97%', width: '100%', resizeMode: 'contain'}}
-                  // source={require('../../assets/drawable-xxxhdpi/Mask.png')}
                  source={{ uri: this.state.user.imageUrl   }}
                 />
                 ) : (
-                  <Image
-                  style={{height: '97%', width: '100%', resizeMode: 'contain'}}
+                //   <Image
+                //   style={{height: '97%', width: '100%', resizeMode: 'contain'}}
 
-                  source={require('../../assets/drawable-xxxhdpi/Mask.png')}
-                />
+                //   source={require('../../assets/drawable-xxxhdpi/Mask.png')}
+                // />
+                // <Icon 
+                // style={{
+                //       width: '100%',
+                //       height: 105,
+                //       resizeMode: 'cover',
+                //     }}
+                // name="user" type="FontAwesome5"
+                
+                // />
+                <View
+                style={[{width: 53, height: 53,  justifyContent:'center' ,marginLeft:10 ,marginTop:5}]}
+                >
+                <Icon
+              
+                name="user" size={30} color='black' />
+</View>
                 )}
 
 

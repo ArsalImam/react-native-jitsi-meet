@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, TouchableOpacity, ImageBackground, ScrollView, StatusBar, Platform } from 'react-native';
-import { Container, Header, Content, DatePicker, Text, Item, Label, Input, ScrollableTab, Icon, Picker, Form, Image } from 'native-base';
+import { StyleSheet, View, TouchableOpacity, ImageBackground, ScrollView, StatusBar, Platform ,Image } from 'react-native';
+import { Container, Header, Content, DatePicker, Text, Item, Label, Input, ScrollableTab, Icon, Picker, Form } from 'native-base';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import CommonStyles from '../../CommonStyles'
 import Api from '../../Api';
@@ -124,6 +124,7 @@ console.warn('dataaaaaaaaaa ===>' ,data)
 }
 
     componentDidMount() {
+        
         Api.instance()
             ._user()
             .then(user => {
@@ -138,6 +139,7 @@ console.warn('dataaaaaaaaaa ===>' ,data)
                     country: user.personalDetails.country,
                     mobile: user.personalDetails.mobile,
                     dateOfBirth: user.personalDetails.dateOfBirth,
+                    imageUrl: user.imageUrl
                 });
             })
             .catch(err => ViewUtils.showToast(err));
@@ -193,8 +195,22 @@ console.warn('dataaaaaaaaaa ===>' ,data)
                                 onPress={() => { this.handleChoosePhoto() }}
 
                                 style={{ marginVertical: 20, alignSelf: 'center' }}>
+                               {this.state.imageUrl == '' ? (
                                 <Icon name="user-edit" type="FontAwesome5" style={{ fontSize: 70 }} />
+                               ) : (
+                                   <Image 
+                                   source={{
+                                       uri: this.state.imageUrl
 
+                                   }}
+                                   style={{
+                                    width: 120,
+                                    height: 120,
+                                    backgroundColor: '#E3E3E3',
+                                    borderRadius:60
+                                  }}
+                                   />
+                                )}
                             </TouchableOpacity>
 
                             <Item

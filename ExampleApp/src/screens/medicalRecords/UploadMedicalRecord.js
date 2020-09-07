@@ -173,6 +173,7 @@ export default class UploadMedicalRecord extends Component {
                 response.result.files.uploadFile[0].name,
               ),
             });
+            console.warn('imageURIIRIRIRIRR' , imageUri)
           })
           .catch(err => console.log(err))
           .finally(() => {
