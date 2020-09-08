@@ -35,23 +35,46 @@ export default class UploadIllustrations extends React.Component {
             },
         };
     }
+componentDidMount(){
+   console.warn('imageeeeeeee' , this.state.imageUrl) 
+}
 
     handleChoosePhoto = () => {
-        const options = { 
+       if(this.state.imageUrl != ''){
+            var options = { 
             title:'',
+            customButtons: [{ name: 'remove', title: 'Remove Profile Image'  }],
             noData: true,
             storageOption : {
             skipBackup:true ,
-            path : 'images'
-            }
-         };
+            path : 'images',
+          }
+         }
+        }
+        else{
+            var options = { 
+                   title:'',
+                   noData: true,
+                   storageOption : {
+                   skipBackup:true ,
+                   path : 'images',
+                 
+                   }
+                }
+             }
+          
         ImagePicker.showImagePicker(options, response => {
 
             console.warn('Response = ', response);
 
             if (response.didCancel) {
-                console.warn('user cancelled image Picker')
-            }else if(response.err) {
+                console.warn('User Tapped cancel')
+            }else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+                this.setState({imageUrl:''})
+            }
+            
+            else if(response.err) {
                 console.warn('Image Picker Error ' , err)
             }else{
                 const fileData = new FormData();
