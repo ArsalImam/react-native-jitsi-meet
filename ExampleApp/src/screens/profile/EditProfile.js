@@ -102,7 +102,6 @@ componentDidMount(){
     }
 
     saveImage =() => {
-// if(this.state.imageUrl){
     let data = {
         "salutation": this.state.salutation,
             "firstName": this.state.firstName,
@@ -115,7 +114,6 @@ componentDidMount(){
                 "country": this.state.country,
                 "dateOfBirth": this.state.dateOfBirth,
                 "mobile": this.state.mobile,
-        // 'url': this.state.imageUri,
 
     }
 }
@@ -140,10 +138,7 @@ console.warn('dataaaaaaaaaa ===>' ,data)
     this.setState({ isLoading: false });
     
 });
-    // }
-    // else{
-    //     console.warn('nothing happennned')
-    // }
+  
 }
 
     componentDidMount() {
@@ -167,38 +162,7 @@ console.warn('dataaaaaaaaaa ===>' ,data)
             })
             .catch(err => ViewUtils.showToast(err));
     }
-    // _updateProfile = () => {
-    //     let data = {
-    //         "salutation": this.state.salutation,
-    //         "firstName": this.state.firstName,
-    //         "lastName": this.state.lastName,
-    //         "email": this.state.user.email,
-    //         "speciality": this.state.speciality,
-    //         "personalDetails": {
-    //             "city": this.state.city,
-    //             "country": this.state.country,
-    //             "dateOfBirth": this.state.dateOfBirth,
-    //             "mobile": this.state.mobile,
-    //         }
-    //     }
-    //     this.setState({ isLoading: true });
-    //     Api.instance()
-    //         .updateProfile(data)
-    //         .then(response => {
-    //             // this.props.navigation.goBack();
-    //             this.props.navigation.replace('PatientProfile')
-    //             ViewUtils.showToast('Profile has been updated successfully!');
-    //             console.warn(data)
-    //         })
-    //         .catch(err => {
-    //             ViewUtils.showToast(err);
-    //         })
-    //         .finally(() => {
-    //             this.setState({ isLoading: false });
-                
-    //         });
-    // };
-
+    
     render() {
         const { image } = this.state;
         return (
