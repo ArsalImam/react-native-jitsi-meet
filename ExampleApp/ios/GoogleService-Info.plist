@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>719997437676-2ss7c172u4psn159poa11pa2ie73k8jt.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.719997437676-2ss7c172u4psn159poa11pa2ie73k8jt</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>719997437676-ipf7jt67mf7durdp5gqv45ak3ojphg49.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCgH5BaUynGPW5nv441tA55dsM3ZmFozjk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>719997437676</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.reactjs.native.example.Exemple</string>
+	<key>PROJECT_ID</key>
+	<string>telmed-2cd3d</string>
+	<key>STORAGE_BUCKET</key>
+	<string>telmed-2cd3d.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:719997437676:ios:095c17359ae71d992307c9</string>
+	<key>DATABASE_URL</key>
+	<string>https://telmed-2cd3d.firebaseio.com</string>
+</dict>
+</plist>

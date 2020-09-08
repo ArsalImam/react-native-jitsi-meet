@@ -41,6 +41,7 @@
 		C518F234790E4AA6B2D102C9 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A64197DCD6400DA3C6A86F /* MaterialIcons.ttf */; };
 		C9738132A4D34A82A196F8F6 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 68EB69A013734BB5986021D7 /* Octicons.ttf */; };
 		CE8AB953F8674F8CAF3CB4C7 /* DINPro-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = E16CAE6BC89D46FF90F8CEFD /* DINPro-Medium.otf */; };
+		D02241332506E05A006B1739 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D02241322506E059006B1739 /* GoogleService-Info.plist */; };
 		D8750AD04133491AA1234581 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5C78A263289B4C9598FB8354 /* FontAwesome5_Regular.ttf */; };
 		D913AFDB6EA44B83A170DE28 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 69562A2A87E74322B46188F3 /* Foundation.ttf */; };
 		E4431F016FF08BB7823CA1A8 /* libPods-Exemple.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF98C84FB00F9CE097E54171 /* libPods-Exemple.a */; };
@@ -111,6 +112,7 @@
 		B5EA49F192584EC4ABDF4DBE /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/native-base/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		BCB3729B735449009137E1AD /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		CAFC91E35F98422993D2891D /* Roboto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto.ttf; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; };
+		D02241322506E059006B1739 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D7602CEA7F5648BB9ACDEE43 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/native-base/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		D9B5BCFD0B864E0F92CACE4B /* DINPro-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DINPro-Regular.otf"; path = "../src/assets/fonts/DINPro-Regular.otf"; sourceTree = "<group>"; };
 		E16CAE6BC89D46FF90F8CEFD /* DINPro-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DINPro-Medium.otf"; path = "../src/assets/fonts/DINPro-Medium.otf"; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 		13B07FAE1A68108700A75B9A /* Exemple */ = {
 			isa = PBXGroup;
 			children = (
+				D02241322506E059006B1739 /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -383,6 +386,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = 69T4BQLRH3;
 						LastSwiftMigration = 1120;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -446,6 +450,7 @@
 				FFA44B52EDA24E2DB3E367FD /* FontAwesome.ttf in Resources */,
 				3D0546E7663B4E6DA9A89BBF /* FontAwesome5_Brands.ttf in Resources */,
 				D8750AD04133491AA1234581 /* FontAwesome5_Regular.ttf in Resources */,
+				D02241332506E05A006B1739 /* GoogleService-Info.plist in Resources */,
 				2A2D368076FA492D88536168 /* FontAwesome5_Solid.ttf in Resources */,
 				534EAFA9D2B044949AB0CE73 /* Fontisto.ttf in Resources */,
 				D913AFDB6EA44B83A170DE28 /* Foundation.ttf in Resources */,
@@ -798,6 +803,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 69T4BQLRH3;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -826,6 +832,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 69T4BQLRH3;
 				INFOPLIST_FILE = Exemple/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
