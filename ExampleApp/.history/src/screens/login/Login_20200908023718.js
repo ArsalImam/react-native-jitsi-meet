@@ -184,6 +184,7 @@ class Login extends Component {
                     name="password"
                     placeholder={'Password'}
                     placeholderTextColor="#FFF"
+                    passwordRules
                     style={[
                       CommonStyles.fontMedium,
                       CommonStyles.textColorWhite,

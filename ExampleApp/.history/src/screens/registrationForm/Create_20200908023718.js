@@ -258,6 +258,7 @@ class Create extends Component {
                                         name="password"
                                         placeholder={'Password'}
                                         placeholderTextColor="#FFF"
+                                        passwordRules
                                         style={[
                                             CommonStyles.fontMedium,
                                             CommonStyles.textColorWhite,
@@ -281,6 +282,7 @@ class Create extends Component {
                                         name="password"
                                         placeholder={'Confirm Password'}
                                         placeholderTextColor="#FFF"
+                                        passwordRules
                                         style={[
                                             CommonStyles.fontMedium,
                                             CommonStyles.textColorWhite,
@@ -304,6 +306,7 @@ class Create extends Component {
                                         name="password"
                                         placeholder={'Enter Doctor Code'}
                                         placeholderTextColor="#FFF"
+                                        passwordRules
                                         style={[
                                             CommonStyles.fontMedium,
                                             CommonStyles.textColorWhite,

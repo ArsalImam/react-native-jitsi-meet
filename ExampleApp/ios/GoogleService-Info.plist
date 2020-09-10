@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>719997437676-2ss7c172u4psn159poa11pa2ie73k8jt.apps.googleusercontent.com</string>
+	<string>719997437676-40b0upk5lltkvuv0hchhts9tid7b6432.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.719997437676-2ss7c172u4psn159poa11pa2ie73k8jt</string>
+	<string>com.googleusercontent.apps.719997437676-40b0upk5lltkvuv0hchhts9tid7b6432</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>719997437676-ipf7jt67mf7durdp5gqv45ak3ojphg49.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>org.reactjs.native.example.Exemple</string>
+	<string>com.digitrends.telemedicine</string>
 	<key>PROJECT_ID</key>
 	<string>telmed-2cd3d</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:719997437676:ios:095c17359ae71d992307c9</string>
+	<string>1:719997437676:ios:0516c2aaf39fe3f02307c9</string>
 	<key>DATABASE_URL</key>
 	<string>https://telmed-2cd3d.firebaseio.com</string>
 </dict>

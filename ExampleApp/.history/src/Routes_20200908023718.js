@@ -54,7 +54,9 @@ import CreateClinic from './screens/clinic/CreateClinic';
 import ClinicList from './screens/clinic/ClinicList';
 import SideBar from './components/drawer/SideBar';
 import MyPresciption from './screens/patient/MyPrescription';
-import ViewResultsofLabTest from './screens/viewResultsofLabTest/ViewResultsofLabTest';
+import ViewResultsofLabTest from './screens/viewResultsofLabTest/ViewResultsofLabTest'
+
+
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -604,7 +606,9 @@ export default class Routes extends React.Component {
           // }}
         />
 
-        <Stack.Screen
+        
+
+<Stack.Screen
           name="PatientHistoryAdd"
           component={PatientHistoryAdd}
           options={{
@@ -853,7 +857,14 @@ export default class Routes extends React.Component {
             },
           }}
         />
+
+
+
       </Stack.Navigator>
+
+
+
+
     );
   }
 }
