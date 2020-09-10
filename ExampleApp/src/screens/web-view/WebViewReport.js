@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {WebView as Web} from 'react-native-webview';
-import {View, Text, ImageBackground} from 'react-native';
+import { WebView } from 'react-native-webview';
 import CommonStyles from '../../CommonStyles';
-export default class WebView extends React.Component {
+export default class WebViewReport extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -11,8 +10,6 @@ export default class WebView extends React.Component {
     const {prescribtionUrl} = this.props.route.params;
     console.log(`prescribtionUrl ==========> ${prescribtionUrl}`);
     console.warn(`prescribtionUrl ==========> ${prescribtionUrl}`);
-  return <Web source={{uri: prescribtionUrl}} />
-    
-   
+    return <WebView source={{uri: prescribtionUrl}} />;
   }
 }

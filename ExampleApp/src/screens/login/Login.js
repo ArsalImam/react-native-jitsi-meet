@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+
+// import {} from 'react-native';
 import {
+  AsyncStorage ,
   Text,
   View,
   StyleSheet,
@@ -17,7 +20,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import Api from '../../Api';
 import { ViewUtils } from '../../Utils';
 import Loader from '../../components/Loader';
-import AsyncStorage from '@react-native-community/async-storage';
+// import AsyncStorage from '@react-native-community/async-storage';
 
 class Login extends Component {
   state = { email: '', password: '', showLoader: false, hidePassword: true };

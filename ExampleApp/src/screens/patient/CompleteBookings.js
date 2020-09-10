@@ -31,7 +31,7 @@ export default class CompleteBookings extends Component {
     const prescribtionUrl = Api.instance().getUrl(
       `consultation-reports/getReport?appointmentId=${appointmentId}&prescription`
     );
-        this.props.navigation.navigate('WebView', {
+        this.props.navigation.navigate('WebViewReport', {
           prescribtionUrl,
         });
     
@@ -41,7 +41,7 @@ export default class CompleteBookings extends Component {
     const prescribtionUrl = Api.instance().getUrl(
       `consultation-reports/getReport?appointmentId=${appointmentId}&prescription=true`
     );
-        this.props.navigation.navigate('WebView', {
+        this.props.navigation.navigate('WebViewReport', {
           prescribtionUrl,
         });
     

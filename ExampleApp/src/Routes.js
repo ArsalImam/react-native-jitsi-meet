@@ -44,7 +44,7 @@ import Create from './screens/registrationForm/Create';
 import EditProfile from './screens/profile/EditProfile';
 import {Button} from 'react-native';
 import AddPrescribtion from './screens/prescribeMedication/AddPrescribtion';
-import WebView from './screens/web-view/WebView';
+import WebViewReport from './screens/web-view/WebViewReport';
 
 import Scheduled from './screens/patient/ScheduledBooking';
 import Completed from './screens/patient/CompleteBookings';
@@ -796,8 +796,8 @@ export default class Routes extends React.Component {
         />
 
         <Stack.Screen
-          name="WebView"
-          component={WebView}
+          name="WebViewReport"
+          component={WebViewReport}
           options={{
             headerShown: true,
           }}

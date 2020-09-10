@@ -27,7 +27,7 @@ export default class MyPresciption extends Component {
     const prescribtionUrl = Api.instance().getUrl(
       `consultation-reports/getReport?appointmentId=${appointmentId}&prescription`
     );
-        this.props.navigation.navigate('WebView', {
+        this.props.navigation.navigate('WebViewReport', {
           prescribtionUrl,
         });
        
@@ -39,7 +39,7 @@ export default class MyPresciption extends Component {
       `consultation-reports/getReport?appointmentId=${appointmentId}&prescription=true`
       );
     console.warn('=========')
-        this.props.navigation.navigate('WebView', {
+        this.props.navigation.navigate('WebViewReport', {
           prescribtionUrl,
         
         });

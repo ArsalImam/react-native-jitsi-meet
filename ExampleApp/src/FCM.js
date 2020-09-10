@@ -1,11 +1,11 @@
-import firebase from 'react-native-firebase';
-import Api from "./Api";
+import messaging from '@react-native-firebase/messaging';
+import Api from './Api';
 
 export default class FCM {
   static myInstance = null;
   notifyUser: (title, message) => {};
 
- /**
+  /**
    * @returns {Api}
    */
   static instance() {
@@ -16,44 +16,46 @@ export default class FCM {
   }
 
   appInit() {
-       this.checkPermission();
+    this.checkPermission();
   }
 
   async checkPermission() {
-    const enabled = await firebase.messaging().hasPermission();
-    if (enabled) {
-        this.getToken();
-        await this.createNotificationListeners();
-    } else {
-        this.requestPermission();
-    }
-    }
+    const authStatus = await messaging().requestPermission();
 
-async getToken() {
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {
+      this.getToken();
+      await this.createNotificationListeners();
+    } else {
+      this.requestPermission();
+    }
+  }
+
+  async getToken() {
     let fcmToken = '';
     try {
-        fcmToken = await firebase.messaging().getToken();
-      } catch (error) {
-        console.error(error);
+      fcmToken = await messaging().getToken();
+    } catch (error) {
+      console.error(error);
     }
-       if (fcmToken) {
-            await Api.instance().updateFcmToken(fcmToken);
-        }   
-  
-}
+    if (fcmToken) {
+      await Api.instance().updateFcmToken(fcmToken);
+    }
+  }
 
-async requestPermission() {
-  try {
-      await firebase.messaging().requestPermission();
+  async requestPermission() {
+    try {
+      await messaging().requestPermission();
       // User has authorised
       this.getToken();
-  } catch (error) {
+    } catch (error) {
       // User has rejected permissions
       console.log('permission rejected');
+    }
   }
-}
-
-
 
   appDesroyed() {
     console.warn('appDesroyed', 'appDesroyed');
@@ -63,36 +65,43 @@ async requestPermission() {
     }
   }
 
-
   async createNotificationListeners() {
     console.warn('createNotificationListeners');
     /*
-    * Triggered when a particular notification has been received in foreground
-    * */
-    this.notificationListener = firebase.notifications().onNotification((notification) => {
-        this.onMessage(null, notification._data);
-    });
+     * Triggered when a particular notification has been received in foreground
+     * */
+    // this.notificationListener = messaging()
+    //   .onNotification(notification => {
+    //     this.onMessage(null, notification._data);
+    //   });
 
     /*
-    * If your app is in background, you can listen for when a notification is clicked / tapped / opened as follows:
-    * */
-    this.notificationOpenedListener = firebase.notifications().onNotificationOpened((notificationOpen) => {
+     * If your app is in background, you can listen for when a notification is clicked / tapped / opened as follows:
+     * */
+    this.notificationOpenedListener = messaging().onNotificationOpenedApp(
+      notificationOpen => {
         this.onMessage(null, notificationOpen.notification._data);
-    });
+      },
+    );
 
     /*
-    * If your app is closed, you can check if it was opened by a notification being clicked / tapped / opened as follows:
-    * */
-    const notificationOpen = await firebase.notifications().getInitialNotification();
-        if (notificationOpen) {
-        this.onMessage(null,  notificationOpen.notification._data);
+     * If your app is closed, you can check if it was opened by a notification being clicked / tapped / opened as follows:
+     * */
+    const notificationOpen = await messaging()
+      .getInitialNotification();
+    if (notificationOpen) {
+      this.onMessage(null, notificationOpen.notification._data);
     }
 
+    messaging().setBackgroundMessageHandler(async remoteMessage => {
+      this.onMessage(null, remoteMessage.notification._data);
+    });
+
     /*
-    * Triggered for data only payload in foreground
-    * */
-    this.messageListener = firebase.messaging().onMessage((message) => {
-          //process data message
+     * Triggered for data only payload in foreground
+     * */
+    this.messageListener = messaging().onMessage(async message => {
+      //process data message
       this.onMessage(null, message);
     });
   }

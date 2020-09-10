@@ -83,6 +83,10 @@ target 'Exemple' do
 
   pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
 
+
+
+  pod 'RNSound', :path => '../node_modules/react-native-sound'
+
   target 'ExempleTests' do
     inherit! :complete
     # Pods for testing

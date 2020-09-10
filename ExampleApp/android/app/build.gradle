@@ -217,12 +217,12 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
-    implementation project(path: ":react-native-firebase")
+    // implementation project(path: ":react-native-firebase")
   implementation project(path: ":@react-native-firebase_database")
     implementation "com.facebook.react:react-native:+"  // From node_modules
-    compile(project(':react-native-firebase')) {   
-        transitive = false
-    }
+    // compile(project(':react-native-firebase')) {   
+    //     transitive = false
+    // }
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
@@ -235,6 +235,18 @@ dependencies {
     debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.flipper'
     }
+
+   implementation(project(':react-native-jitsi-meet')) {
+    //   exclude group: 'com.facebook.react',module:'react-native-locale-detector'
+    //   exclude group: 'com.facebook.react',module:'react-native-vector-icons'
+    //   exclude group: 'com.facebook.react',module:'react-native-fetch-blob'
+    //   exclude group: 'com.facebook.react',module:'react-native-svg'
+      exclude group: 'com.facebook.react',module:'react-native-sound'
+      exclude group: 'com.facebook.react',module:'react-native-webview'
+    //   exclude group: 'com.facebook.react',module:'react-native-linear-gradient'
+    //   exclude group: 'com.facebook.react',module:'react-native-community-async-storage'
+    }
+
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";

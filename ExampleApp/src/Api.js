@@ -1,10 +1,10 @@
 import axios from 'axios';
 // import https from 'https';
-import AsyncStorage from '@react-native-community/async-storage';
+// import AsyncStorage from '@react-native-community/async-storage';
 import { Configs, Roles, AppointmentStatus } from './Configs';
 import * as AxiosLogger from 'axios-logger';
 import moment from 'moment';
-
+import {AsyncStorage } from 'react-native';
 export default class Api {
   static myInstance = null;
   client;

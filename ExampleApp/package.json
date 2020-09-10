@@ -13,12 +13,11 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@react-native-community/async-storage": "^1.11.0",
     "@react-native-community/datetimepicker": "^2.4.3",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-firebase/app": "^8.4.1",
     "@react-native-firebase/database": "^7.4.1",
-    "@react-native-firebase/messaging": "^7.2.1",
+    "@react-native-firebase/messaging": "^7.8.4",
     "@react-navigation/bottom-tabs": "^5.6.1",
     "@react-navigation/drawer": "^5.8.2",
     "@react-navigation/native": "^5.5.1",
@@ -33,7 +32,6 @@
     "react-native": "0.62.2",
     "react-native-elements": "^2.0.2",
     "react-native-fast-image": "^8.1.5",
-    "react-native-firebase": "^5.6.0",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-image-picker": "^2.3.2",
     "react-native-jitsi-meet": "^2.1.1",
@@ -47,9 +45,10 @@
     "react-native-screens": "^2.5.0",
     "react-native-snap-carousel": "^4.0.0-beta.6",
     "react-native-sound": "^0.11.0",
+    "react-native-sound-player": "^0.10.4",
     "react-native-splash-screen": "^3.2.0",
     "react-native-super-grid": "^3.2.0",
-    "react-native-webview": "^10.3.2"
+    "react-native-webview": "^10.8.3"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

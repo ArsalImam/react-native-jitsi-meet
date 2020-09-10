@@ -7,6 +7,8 @@ xmlns:tools="http://schemas.android.com/tools"
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 <uses-permission android:name="android.permission.CAMERA"/>
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+
 <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> -->
     <application
         android:name="com.telemedicine.MainApplication"
@@ -16,6 +18,7 @@ xmlns:tools="http://schemas.android.com/tools"
         android:roundIcon="@drawable/ic_launcher"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
+        android:hardwareAccelerated="true"
         tools:replace="android:allowBackup">
         <activity
             android:name="com.telemedicine.MainActivity"
@@ -38,7 +41,7 @@ xmlns:tools="http://schemas.android.com/tools"
                 <category android:name="android.intent.category.DEFAULT" />
                 </intent-filter>
         </receiver>
-        <service android:name="io.invertase.firebase.messaging.RNFirebaseMessagingService">
+        <!-- <service android:name="io.invertase.firebase.messaging.RNFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -48,7 +51,7 @@ xmlns:tools="http://schemas.android.com/tools"
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
-        <service android:name="io.invertase.firebase.messaging.RNFirebaseBackgroundMessagingService" />
+        <service android:name="io.invertase.firebase.messaging.RNFirebaseBackgroundMessagingService" /> -->
     </application>
 
 </manifest>

@@ -40,4 +40,12 @@ allprojects {
         jcenter()
         maven { url 'https://www.jitpack.io' }
     }
+
+//     configurations.all {
+//     resolutionStrategy.eachDependency { details ->
+//         if (details.requested.group == 'react-native-sound') {
+//             details.useVersion "0.11.0"
+//         }
+//     }
+// }
 }
