@@ -799,6 +799,7 @@ export default class Routes extends React.Component {
           name="WebViewReport"
           component={WebViewReport}
           options={{
+            title:'',
             headerShown: true,
           }}
         />
