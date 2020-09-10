@@ -244,7 +244,7 @@ class Dashboard extends React.Component {
                         marginTop: 5,
                       },
                     ]}>
-                    <Icon name="user" type="EvilIcons" size={30} color="black" />
+                    <Icon name="user" type="FontAwesome5" size={30} color="black" />
                   </View>
                 )}
               </View>
