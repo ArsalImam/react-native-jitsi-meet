@@ -32,11 +32,12 @@ class App extends React.Component {
     let that = this;
     FCM.instance().notifyUser = (title, message) => {
       const currentRouteName = that.navigationRef.getCurrentRoute().name
+
       debugger;
       console.warn('currentRouteName',JSON.stringify(currentRouteName) , 'mesage',message.data['type'])
         
       if (currentRouteName != 'AppointmentRoom' && message.data['type'] == 'appointment') {
-
+ 
           let appointmentId = message['id'];
 
           //playing audio
