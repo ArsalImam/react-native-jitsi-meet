@@ -94,9 +94,7 @@ export default class UploadIllustrations extends React.Component {
               imageUri: Api.instance().getMediaUrl(
                 Configs.containers.images,
                 response.result.files.uploadFile[0].name,
-              ),
-
-            });
+              )});
 console.warn('uriiiii' , this.state.imageUri)
         });
 
@@ -106,7 +104,7 @@ console.warn('uriiiii' , this.state.imageUri)
   };
   
   _savePatientHistory = () => {
-    if (this.state.imageUri) {
+    if (this.state.imageUri != '' && this.state.name != '') {
       let data = {
         setupType: 'anatomicalIllustration',
         name: this.state.name,
@@ -120,17 +118,18 @@ console.warn('uriiiii' , this.state.imageUri)
         .createMedication(data)
         .then(response => {
           console.warn('tesssssssssssst', response);
-          this.props.navigation.replace('IllustrationsList');
+          this.props.route.params.onAddAnatomicalIllustration();
+          this.props.navigation.goBack();
           ViewUtils.showToast('Question has been saved successfully!');
         })
         .catch(err => {
-          ViewUtils.showToast(err);
+          //ViewUtils.showToast(err);
         })
         .finally(() => {
           this.setState({isLoading: false});
         });
     } else {
-      ViewUtils.showAlert('Please Upload Image');
+      ViewUtils.showAlert('All Fields Required');
     }
   };
   render() {

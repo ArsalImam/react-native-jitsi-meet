@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Text, View, ImageBackground } from 'react-native';
+import { Text, View, ImageBackground,TouchableOpacity } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
 import { CheckBox } from 'react-native-elements';
 import CommonStyles from '../../CommonStyles';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import Api from '../../Api';
 import { Icon } from 'native-base';
+import Loader from '../../components/Loader';
 import { AppointmentStatus, Roles } from '../../Configs';
 import moment from 'moment';
 import { ViewUtils } from '../../Utils';
@@ -13,6 +13,7 @@ import { ViewUtils } from '../../Utils';
 export default class BookingList extends Component {
   state = {
     appointments: [],
+    isLoading: false
   };
 
   constructor(props) {
@@ -20,10 +21,12 @@ export default class BookingList extends Component {
   }
 
   componentDidMount() {
+
     this.refreshList();
   }
 
   refreshList() {
+    this.setState({isLoading : true})
     Api.instance()
     .getMyAppointments(AppointmentStatus.available, true)
     .then(appointments => {
@@ -31,6 +34,9 @@ export default class BookingList extends Component {
     })
     .catch(err => {
       ViewUtils.showToast(err);
+    })
+    .finally(() => {
+      this.setState({isLoading: false});
     });
   }
 
@@ -40,6 +46,8 @@ export default class BookingList extends Component {
         <ImageBackground
           style={[CommonStyles.container, CommonStyles.backgroundImage]}
           source={require('../../assets/img/bwback.png')}>
+                  <Loader loading={this.state.isLoading} />
+
           <View
             style={[CommonStyles.container, CommonStyles.padding, { flex: 2 }]}>
             <Text style={{ color: '#FFFFFF', paddingLeft: 12, marginTop: '15%' }}>

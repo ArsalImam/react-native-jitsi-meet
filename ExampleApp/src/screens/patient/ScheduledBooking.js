@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ImageBackground } from 'react-native';
+import { Text, View, ImageBackground,TouchableOpacity } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
 import { CheckBox } from 'react-native-elements';
 import CommonStyles from '../../CommonStyles';
@@ -8,7 +8,6 @@ import Api from '../../Api';
 import { AppointmentStatus } from '../../Configs';
 import moment from 'moment';
 import Loader from '../../components/Loader';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ViewUtils } from '../../Utils';
 
 export default class ScheduledBooking extends Component {

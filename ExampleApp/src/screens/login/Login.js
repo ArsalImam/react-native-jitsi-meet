@@ -13,6 +13,7 @@ import {
   StatusBar,
   BackHandler, 
   ActivityIndicator,
+  Alert
 } from 'react-native';
 import CommonStyles from '../../CommonStyles';
 import { Item, Input, Container, Icon,Toast } from 'native-base';

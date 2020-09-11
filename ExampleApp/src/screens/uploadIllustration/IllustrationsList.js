@@ -34,15 +34,19 @@ export default class PatientHistoryList extends Component {
     }
 
     componentDidMount() {
+        this._getAnatomicalIllustrationList();
+    }
+
+    _getAnatomicalIllustrationList(){
         Api.instance().getAnatomicalIllustrationList()
-            .then((data) => {
-                console.warn('=====>', data)
-                this.setState({ anatomicalIllustrationList: data });
-            }
-            ).catch(err => console.log(err))
-            .finally(() => {
-                this.setState({ isLoading: false });
-            })
+        .then((data) => {
+            console.warn('=====>', data)
+            this.setState({ anatomicalIllustrationList: data });
+        }
+        ).catch(err => console.log(err))
+        .finally(() => {
+            this.setState({ isLoading: false });
+        })
     }
 
 
@@ -156,7 +160,9 @@ export default class PatientHistoryList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('UploadIllustrations', {appointmentId: this.state.appointmentId,})
+                                    this.props.navigation.navigate('UploadIllustrations', {
+                                        appointmentId: this.state.appointmentId,
+                                        onAddAnatomicalIllustration: () => this._getAnatomicalIllustrationList(),})
                                 }}
                                 style={[
                                     CommonStyles.container,
@@ -279,7 +285,10 @@ export default class PatientHistoryList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('UploadIllustrations')
+                                    this.props.navigation.navigate('UploadIllustrations',{
+                                        onAddAnatomicalIllustration: () => this._getAnatomicalIllustrationList(),
+                                        appointmentId: null,
+                                    })
                                 }}
                                 style={[
                                     CommonStyles.container,
@@ -302,7 +311,7 @@ export default class PatientHistoryList extends Component {
                             </TouchableOpacity>
                         </View>
                         <Loader loading={this.state.isLoading} />
-                        {/* <View
+                        <View
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
@@ -316,7 +325,7 @@ export default class PatientHistoryList extends Component {
                                     style={{ color: '#FFF' }}
                                 />
                             </TouchableOpacity>
-                        </View> */}
+                        </View>
                     </ImageBackground>
                 </View>
             )

@@ -19,44 +19,53 @@ import Loader from '../../components/Loader';
 import {cos} from 'react-native-reanimated';
 
 export default class PatientProfile extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      isLoading: true,
+      isLoading: false,
       user: {
         personalDetails: {},
         qualifications: [],
         imageUrl: '',
+        url: '',
       },
       showLoader: true,
     };
   }
 
   componentDidMount() {
-    Api.instance()
-      ._user()
-      .then(user => {
-        console.warn('user res === ', user);
-        if (user == null) return;
-        this.setState({
-          user,
-          // imageUri:user.imageUrl
-        });
-        console.warn('userabc', user);
-        if (this.state.user.imageUrl) {
-          console.warn('image image', this.state.user.imageUrl);
-          let imageData = new FormData();
-          imageData.append('file', {
-            url: this.state.user.imageUrl,
-            name: this.state.user.imageUrl,
+    this.props.navigation.addListener('focus', payLoad => {
+      this.setState({isLoading: true});
+
+      Api.instance()
+
+        ._user()
+        .then(user => {
+          console.warn('user res === ', user);
+          if (user == null) return;
+          this.setState({
+            user,
           });
-          console.warn(imageData);
-        }
-      })
-      .catch(err => ViewUtils.showToast(err))
-      .finally(() => {
-        this.setState({isLoading: false});
-      });
+          console.warn('userabc', user);
+          if (this.state.user.imageUrl) {
+            console.warn('image image', this.state.user.imageUrl);
+            let imageData = new FormData();
+            imageData.append('file', {
+              url: this.state.user.imageUrl,
+              name: this.state.user.imageUrl,
+            });
+            console.warn(imageData);
+          } else {
+            console.warn('nothing found');
+          }
+        })
+
+        .catch(err => ViewUtils.showToast(err))
+
+        .finally(() => {
+          this.setState({isLoading: false});
+        });
+    });
   }
 
   render() {
@@ -95,18 +104,8 @@ export default class PatientProfile extends React.Component {
                           width: 105,
                         },
                       ]}>
-                      {this.state.user.imageUrl != '' ? (
-                        <Image
-                          style={{
-                            width: '100%',
-                            height: 105,
-                            resizeMode: 'contain',
-                          }}
-                          source={{
-                            uri: this.state.user.imageUrl,
-                          }}
-                        />
-                      ) : (
+                    
+                      {this.state.user.imageUrl == '' ?(
                         <Image
                           style={{
                             width: '100%',
@@ -115,9 +114,28 @@ export default class PatientProfile extends React.Component {
                           }}
                           source={require('../../assets/drawable-xxxhdpi/Mask.png')}
                         />
+                        // <Icon 
+                        // style={{
+                        //       width: '100%',
+                        //       height: 105,
+                        //       resizeMode: 'cover',
+                        //     }}
+                        // name="user" type="FontAwesome5"
+                        
+                        // />
+                      ) : (
+                        <Image
+                          style={{
+                            width: '100%',
+                            height: 105,
+                            resizeMode: 'contain',
+                          }}
+                          source={{
+                            uri: this.state.user.imageUrl
+                         
+                          }}
+                        />
                       )}
-
-                   
                     </View>
                     <View
                       style={[

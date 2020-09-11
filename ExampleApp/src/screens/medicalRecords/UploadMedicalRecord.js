@@ -43,6 +43,7 @@ export default class UploadMedicalRecord extends Component {
         patientId: this.props.route.params.patientId,
         imageUri: '',
         uri: '',
+        vitalType:''
       };
     } else {
       this.state = {
@@ -52,6 +53,7 @@ export default class UploadMedicalRecord extends Component {
         image: null,
         imageUri: '',
         uri: '',
+        vitalType:''
       };
     }
   }
@@ -173,6 +175,7 @@ export default class UploadMedicalRecord extends Component {
                 response.result.files.uploadFile[0].name,
               ),
             });
+            console.warn('imageURIIRIRIRIRR' , imageUri)
           })
           .catch(err => console.log(err))
           .finally(() => {
@@ -221,7 +224,7 @@ export default class UploadMedicalRecord extends Component {
   };
 
   _savePatientHistory = () => {
-    if (this.state.imageUri) {
+    if (this.state.imageUri != '' && this.state.name != '' && this.state.vitalType != '') {
       // console.warn('Image URl', this.state.imageUri);
       // let imageData = new FormData();
       // imageData.append('file', {
@@ -254,13 +257,13 @@ export default class UploadMedicalRecord extends Component {
         })
         .catch(err => {
           ViewUtils.showAlert('Unable to Perform this Action');
-          ViewUtils.showToast(err);
+          //ViewUtils.showToast(err);
         })
         .finally(() => {
           this.setState({isLoading: false});
         });
     } else {
-      ViewUtils.showAlert('Please Upload Image');
+      ViewUtils.showAlert('All Fields Required');
     }
   };
   render() {

@@ -185,14 +185,14 @@ export default class Sidebar extends Component {
           </Left>
         </ListItem>
 
-        <ListItem button={true} onPress={() => { 
+        {/* <ListItem button={true} onPress={() => { 
           this.props.closeDrawer();
           this.props.changeScreenHandler.navigate('IllustrationsList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) }} >
           <Left>
             <Icon active name="upload" type='Feather' style={[CommonStyles.textSizeMedium]} />
             <Text style={[CommonStyles.textSizeAverage, { marginLeft: 10 }]} >Upload</Text>
           </Left>
-        </ListItem>
+        </ListItem> */}
 
       </List>
       ) : (
