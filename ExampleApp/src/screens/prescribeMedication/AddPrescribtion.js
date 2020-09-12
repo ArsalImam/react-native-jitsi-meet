@@ -77,7 +77,7 @@ export default class AddPrescribtion extends Component {
 
     console.warn('data', data);
     this.setState({isLoading: true});
-    
+
     Api.instance()
       .createPrescription(data)
       .then(response => {
@@ -87,7 +87,9 @@ export default class AddPrescribtion extends Component {
         console.warn(data);
       })
       .catch(err => {
-        ViewUtils.showToast(err);
+        ViewUtils.showAlert(
+          'Please Fill Fields',       
+      );
       })
       .finally(() => {
         this.setState({isLoading: false});

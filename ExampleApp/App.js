@@ -35,10 +35,10 @@ class App extends React.Component {
 
       debugger;
       console.warn('currentRouteName',JSON.stringify(currentRouteName) , 'mesage',message.data['type'])
-        
+        console.warn("message ::: ",message)
       if (currentRouteName != 'AppointmentRoom' && message.data['type'] == 'appointment') {
  
-          let appointmentId = message['id'];
+          let appointmentId = message.data['id'];
 
           //playing audio
           that._playAudio();
@@ -46,6 +46,7 @@ class App extends React.Component {
           //showing toast with accept button
           ViewUtils.showToast('You have an appointment call', 'Answer', 10 * 1000, () => {
             that.whoosh.stop();
+            console.warn("APPP)))) appointmentId --- ",appointmentId)
             that.navigationRef.navigate('AppointmentRoom', {appointmentId});
           });
       } 

@@ -34,6 +34,36 @@ class Create extends Component {
         };
     }
 
+    _validateField(){
+        if(this.state.firstName == ''){
+            ViewUtils.showToast('First Name Field');
+            return false;
+        }else if(this.state.lastName == ''){
+            ViewUtils.showToast('Last Name Field');
+            return false;
+        }else if(this.state.gender == ''){
+            ViewUtils.showToast('Gender Field');
+            return false;
+        }else if(this.state.email == ''){
+            ViewUtils.showToast('Email Field');
+            return false;
+        }else if(this.state.password == ''){
+            ViewUtils.showToast('Password Field');
+            return false;
+        }else if(this.state.confirmPasword == ''){
+            ViewUtils.showToast('Confirm Password Field');
+            return false;
+        }else if(this.state.password != this.state.confirmPasword){
+            ViewUtils.showToast('Password and Confirm Password dont match');
+            return false;
+        }else if(this.state.drCode == ''){
+            ViewUtils.showToast('Doctor Code cannot be empty');
+            return false;
+        }
+
+        return true;
+    }
+
     _registerPatient = () => {
 
         /*  {
@@ -83,10 +113,8 @@ class Create extends Component {
             "role": "ROLE_PATIENT"
         }
 
-
-
-
-        Api.instance()
+        if(this._validateField()){
+            Api.instance()
             .patientRegister(data,this.state.drCode)
             .then(response => {
                 // this.addToConsultation(data);
@@ -97,11 +125,15 @@ class Create extends Component {
 
             })
             .catch(err => {
-                ViewUtils.showToast('Invalid Field');
+                ViewUtils.showToast('Doctor Code is Invalid!');
             })
             .finally(() => {
                 this.setState({isLoading: false});
-            });
+            });  
+        }
+
+
+        
     };
 
     render() {

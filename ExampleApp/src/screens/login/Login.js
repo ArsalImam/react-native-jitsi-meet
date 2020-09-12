@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 // import {} from 'react-native';
 import {
-  AsyncStorage ,
+  
   Text,
   View,
   StyleSheet,
@@ -13,7 +13,8 @@ import {
   StatusBar,
   BackHandler, 
   ActivityIndicator,
-  Alert
+  Alert,
+  AsyncStorage
 } from 'react-native';
 import CommonStyles from '../../CommonStyles';
 import { Item, Input, Container, Icon,Toast } from 'native-base';
@@ -21,7 +22,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import Api from '../../Api';
 import { ViewUtils } from '../../Utils';
 import Loader from '../../components/Loader';
-// import AsyncStorage from '@react-native-community/async-storage';
+//  import AsyncStorage from '@react-native-community/async-storage';
 
 class Login extends Component {
   state = { email: '', password: '', showLoader: false, hidePassword: true };
@@ -64,9 +65,24 @@ class Login extends Component {
   }
   _submitForm = () => {
     
-
-    if(this.state.email && this.state.password){
-      this.showLoader();
+    if(this.state.email == '' && this.state.password == ''){
+      ViewUtils.showAlert(
+        'Please Provide Email and Password',       
+    );
+    return;
+    }else if(this.state.email == ''){
+      ViewUtils.showAlert(
+        'Please Provide Email',       
+    );
+    return;
+    }else if(this.state.password == ''){
+      ViewUtils.showAlert(
+        'Please Provide Password',       
+    );
+    return;
+    }
+    
+    this.showLoader();
       Api.instance()
       .login(this.state.email, this.state.password)
       //.login(this.state.email, this.state.password)
@@ -82,14 +98,7 @@ class Login extends Component {
       .finally(() => {
         this.setState({ showLoader: false });
       });
-    }else{
-      ViewUtils.showAlert(
-        'Please Provide Email and Password.',       
-    );
 
-    }
-
-    
   };
 
   render() {

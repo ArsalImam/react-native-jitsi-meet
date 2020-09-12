@@ -733,7 +733,7 @@ export default class CreateClinic extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeAverage,
                   ]}>
-                  Number of Clinic Days
+                  Days/Weeks
                   </Label>
                 <Input
                   name="clinics"

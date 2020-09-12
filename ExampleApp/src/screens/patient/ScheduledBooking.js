@@ -197,6 +197,7 @@ upcomingAppointments(){
               renderItem={({ item }) => (
                 <TouchableOpacity
                   onPress={() => {
+                    console.warn("item.id == ",item.id)
                     ViewUtils.showAlert(
                       'Are you sure, you want to open consultation room?',
                       () => {

@@ -89,7 +89,7 @@ export default class ClinicList extends Component {
                                                     <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.appointmentSlotsText}</Text>
                                                 </Text>
                                                 <Text style={[CommonStyles.textSizeAverage, { color: '#333333' }]}>
-                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{`No.of Weeks: `}</Text>
+                                                    <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>{`Days/Weeks: `}</Text>
                                                     <Text style={CommonStyles.fontMedium}>{item.numOfClinics}</Text>
                                                 </Text>
                                             </View>

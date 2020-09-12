@@ -10,17 +10,18 @@ import {
   StatusBar,
   Button,
   ActivityIndicator,
+  AsyncStorage
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {Container, Header, Content, Tab, Tabs, TabHeading} from 'native-base';
 import CommonStyles from '../../CommonStyles';
-import {AsyncStorage} from 'react-native';
 import {Configs} from '../../Configs';
 import {ViewUtils} from '../../Utils';
 import Api from '../../Api';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import moment from 'moment';
 import Loader from '../../components/Loader';
+// import AsyncStorage from '@react-native-community/async-storage';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -360,7 +361,7 @@ class Dashboard extends React.Component {
                           (CommonStyles.fontMedium,
                           {fontSize: 17, color: '#000'})
                         }>
-                        In {this.state.lastestAppointment.timeLeft}
+                        is {this.state.lastestAppointment.timeLeft}
                       </Text>
                       <Text
                         style={
