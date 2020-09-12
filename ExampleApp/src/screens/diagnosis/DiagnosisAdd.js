@@ -31,44 +31,110 @@ export default class DiagnosisAdd extends Component {
                 data: []
             }
         }
+
+        console.warn("this.props.route.params ======= ",this.props.route.params)
     }
 
     _saveDiagnosis = () => {
 
-        let data = {
-            "setupType": "diagnosis",
-            "name": this.state.name,
-            "description": this.state.description,
+    
+        if(this.state.appointmentId != null){
+
+            let data = {
+               // date: this.state.startDate,
+                // "setupId": "",
+                // "doctorId": "5f01d90dffd17912ce896c56",
+                // "assistantId": "",
+                patientId: this.state.patientId,
+                answer: this.state.name,
+                notes:this.state.description,
+               // endDate: this.state.endDate,
+                'setup-type': 'diagnosis',
+                active: false,
+              };
+
+            if(this.state.name != ""){
+                this.setState({ isLoading: true })
+                Api.instance()
+                .createPrescription(data)
+                .then(response => {
+                    this.addToConsultation(data);
+                   // this.props.navigation.replace('DiagnosisList');
+                    this.props.route.params.onDiagnosisAdd();
+                    this.props.navigation.goBack();
+                    ViewUtils.showToast('Diagnosis has been saved successfully!');
+                })
+                .catch(err => {
+                    ViewUtils.showAlert(
+                        'Unable to Perform this Action',       
+                    );
+                   // ViewUtils.showToast(err);
+                })
+                .finally(() => {
+                    this.setState({ isLoading: false });
+                });
+            }else {
+                ViewUtils.showAlert(
+                    'Please Provide Diagnosis Name',       
+                );    
+            }
+        }else{
+
+            let data = {
+                "setupType": "diagnosis",
+                "name": this.state.name,
+                "description": this.state.description,
+            }
+
+            if(this.state.name != ""){
+                this.setState({ isLoading: true })
+                Api.instance()
+                .createMedication(data)
+                .then(response => {
+                   // this.props.navigation.replace('DiagnosisList');
+                    this.props.route.params.onDiagnosisAdd();
+                    this.props.navigation.goBack();
+                    ViewUtils.showToast('Diagnosis has been saved successfully!');
+                })
+                .catch(err => {
+                    ViewUtils.showAlert(
+                        'Unable to Perform this Action',       
+                    );
+                   // ViewUtils.showToast(err);
+                })
+                .finally(() => {
+                    this.setState({ isLoading: false });
+                });
+            }else {
+                ViewUtils.showAlert(
+                    'Please Provide Diagnosis Name',       
+                );    
+            }
         }
+        
 
         
-        if(this.state.name != ""){
-            this.setState({ isLoading: true })
-            Api.instance()
-            .createMedication(data)
-            .then(response => {
-               // this.props.navigation.replace('DiagnosisList');
-                this.props.route.params.onDiagnosisAdd();
-                this.props.navigation.goBack();
-                ViewUtils.showToast('Diagnosis has been saved successfully!');
-            })
-            .catch(err => {
-                ViewUtils.showAlert(
-                    'Unable to Perform this Action',       
-                );
-               // ViewUtils.showToast(err);
-            })
-            .finally(() => {
-                this.setState({ isLoading: false });
-            });
-        }else {
-            ViewUtils.showAlert(
-                'Please Provide Diagnosis Name',       
-            );    
-        }
         
     };
+
+    addToConsultation(item) {
+        Api.instance()
+          .addPrescribeMedication(
+            item,
+            this.state.appointmentId,
+            this.state.patientId,
+          )
+    
+          .then(response => {
+            console.warn('response', response);
+            ViewUtils.showToast('Medication has been added to Prescription');
+          })
+          .catch(err => {})
+          .finally(() => {});
+      }
+
     render() {
+        console.warn("this.state.appointmentId === ",this.state.appointmentId)
         if (this.state.appointmentId != null) {
             return (
 

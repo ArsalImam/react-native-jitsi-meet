@@ -32,17 +32,33 @@ export default class VitalList extends Component {
     }
 
     _getVitalList(){
-        this.setState({ isLoading: true })
 
-        Api.instance().getVitalList()
-            .then((data) => {
-                console.warn('=====>', data["Vitals"])
-                this.setState({ vitalList: data["Vitals"] });
-            }
-            ).catch(err => console.log(err))
-            .finally(() => {
-                this.setState({ isLoading: false });
-            })
+        if (this.state.appointmentId != null) {
+            this.setState({ isLoading: true })
+            Api.instance()
+            .getVitalListConsultation(this.state.patientId)
+                .then((data) => {
+                    console.warn('=====>', data)
+                    this.setState({ vitalList: data });
+                }
+                ).catch(err => console.log(err))
+                .finally(() => {
+                    this.setState({ isLoading: false });
+                })
+        }else{
+            this.setState({ isLoading: true })
+            Api.instance().getVitalList()
+                .then((data) => {
+                    console.warn('=====>', data["Vitals"])
+                    this.setState({ vitalList: data["Vitals"] });
+                }
+                ).catch(err => console.log(err))
+                .finally(() => {
+                    this.setState({ isLoading: false });
+                })
+        }
+
+        
     }
 
     componentDidMount() {
@@ -203,7 +219,10 @@ export default class VitalList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('Vital', { appointmentId: this.state.appointmentId, onVitalAdd: () => this._getVitalList()})
+                                    this.props.navigation.navigate('Vital', { 
+                                        appointmentId: this.state.appointmentId,
+                                        patientId:this.props.route.params.patientId,
+                                         onVitalAdd: () => this._getVitalList()})
                                 }}
                                 style={[
                                     CommonStyles.container,

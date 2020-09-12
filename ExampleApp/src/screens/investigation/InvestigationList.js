@@ -37,18 +37,36 @@ export default class InvestigationList extends Component {
   }
 
   _getInvestigationList() {
-    this.setState({isLoading: true});
-    Api.instance()
-      .getInvestigationList()
-      .then(data => {
-        console.warn('=====>', data['Diagnosis']);
-        console.warn('response data == ', data);
-        this.setState({diagnosisList: data});
-      })
-      .catch(err => console.log(err))
-      .finally(() => {
-        this.setState({isLoading: false});
-      });
+
+    if (this.state.appointmentId != null) {
+      this.setState({isLoading: true});
+      Api.instance()
+      .getListDuringConsultation('requestMedication',this.state.patientId)
+        .then(data => {
+          console.warn('=====>', data['Diagnosis']);
+          console.warn('response data == ', data);
+          this.setState({diagnosisList: data});
+        })
+        .catch(err => console.log(err))
+        .finally(() => {
+          this.setState({isLoading: false});
+        });
+    }else{
+      this.setState({isLoading: true});
+      Api.instance()
+        .getInvestigationList()
+        .then(data => {
+          console.warn('=====>', data['Diagnosis']);
+          console.warn('response data == ', data);
+          this.setState({diagnosisList: data});
+        })
+        .catch(err => console.log(err))
+        .finally(() => {
+          this.setState({isLoading: false});
+        });
+    }
+
+    
   }
 
   componentDidMount() {
@@ -157,7 +175,7 @@ export default class InvestigationList extends Component {
                                 CommonStyles.textSizeAverage,
                                 {color: '#333333'},
                               ]}>
-                              {item.name}
+                              {item.answer}
                             </Text>
                           </Text>
 
@@ -174,7 +192,7 @@ export default class InvestigationList extends Component {
                                 CommonStyles.textSizeAverage,
                                 {color: '#333333'},
                               ]}>
-                              {item.description}
+                              {item.notes}
                             </Text>
                           </Text>
                         </View>
@@ -226,6 +244,7 @@ export default class InvestigationList extends Component {
                 onPress={() => {
                   this.props.navigation.navigate('InvestigationAdd', {
                     appointmentId: this.state.appointmentId,
+                    patientId:this.props.route.params.patientId,
                     onInvestigationAdd: () => this._getInvestigationList(),
                   });
                 }}

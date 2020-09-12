@@ -35,37 +35,99 @@ export default class ProcedureAdd extends Component {
 
     _saveProcedure = () => {
 
-        let data = {
-            "setupType": "surgicalProcedure",
-            "name": this.state.name,
-            "description": this.state.description,
+        if(this.state.appointmentId != null){
+
+            let data = {
+                // date: this.state.startDate,
+                 // "setupId": "",
+                 // "doctorId": "5f01d90dffd17912ce896c56",
+                 // "assistantId": "",
+                 patientId: this.state.patientId,
+                 answer: this.state.name,
+                 notes:this.state.description,
+                // endDate: this.state.endDate,
+                 'setup-type': 'surgicalProcedure',
+                 active: false,
+               };
+
+            if(this.state.name != "" ){
+                this.setState({ isLoading: true })
+                Api.instance()
+                    .createPrescription(data)
+                    .then(response => {
+                        this.addToConsultation(data);
+                        this.props.route.params.onProcedureAdd();
+                        this.props.navigation.goBack();
+                       // this.props.navigation.replace('ProcedureList');
+                        ViewUtils.showToast('Procedure has been saved successfully!');
+                    })
+                    .catch(err => {
+                        ViewUtils.showAlert(
+                            'Unable to Perform this Action',       
+                        );
+                        //ViewUtils.showToast(err);
+                    })
+                    .finally(() => {
+                        this.setState({ isLoading: false });
+                    });
+                }else{
+                    ViewUtils.showAlert(
+                        'Please Provide Procedure Name',       
+                    );
+                }
+
+        }else{
+            let data = {
+                "setupType": "surgicalProcedure",
+                "name": this.state.name,
+                "description": this.state.description,
+            }
+
+            if(this.state.name != "" ){
+                this.setState({ isLoading: true })
+                Api.instance()
+                    .createMedication(data)
+                    .then(response => {
+                        this.props.route.params.onProcedureAdd();
+                        this.props.navigation.goBack();
+                       // this.props.navigation.replace('ProcedureList');
+                        ViewUtils.showToast('Procedure has been saved successfully!');
+                    })
+                    .catch(err => {
+                        ViewUtils.showAlert(
+                            'Unable to Perform this Action',       
+                        );
+                        //ViewUtils.showToast(err);
+                    })
+                    .finally(() => {
+                        this.setState({ isLoading: false });
+                    });
+                }else{
+                    ViewUtils.showAlert(
+                        'Please Provide Procedure Name',       
+                    );
+                }
         }
 
-        if(this.state.name != "" ){
-        this.setState({ isLoading: true })
-        Api.instance()
-            .createMedication(data)
-            .then(response => {
-                this.props.route.params.onProcedureAdd();
-                this.props.navigation.goBack();
-               // this.props.navigation.replace('ProcedureList');
-                ViewUtils.showToast('Procedure has been saved successfully!');
-            })
-            .catch(err => {
-                ViewUtils.showAlert(
-                    'Unable to Perform this Action',       
-                );
-                //ViewUtils.showToast(err);
-            })
-            .finally(() => {
-                this.setState({ isLoading: false });
-            });
-        }else{
-            ViewUtils.showAlert(
-                'Please Provide Procedure Name',       
-            );
-        }
+       
     };
+
+    addToConsultation(item) {
+        Api.instance()
+          .addPrescribeMedication(
+            item,
+            this.state.appointmentId,
+            this.state.patientId,
+          )
+    
+          .then(response => {
+            console.warn('response', response);
+            ViewUtils.showToast('Medication has been added to Prescription');
+          })
+          .catch(err => {})
+          .finally(() => {});
+      }
+
     render() { 
 
 

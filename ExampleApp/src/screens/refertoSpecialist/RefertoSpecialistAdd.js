@@ -70,31 +70,90 @@ export default class RefertoSpecialistAdd extends Component {
 
 
   _addReferredSpecialist = () => {
-    let data = {
-      setupType: 'referToSpecialist',
-      name: this.state.doctorEmail,
-      description: this.state.description,
-    };
+    
 
-    if (this.state.doctorEmail != '') {
-      this.setState({isLoading: true});
-      Api.instance()
-        .createMedication(data)
-        .then(response => {
-          this.props.route.params.onRefertoSpecialistAdd();
-          this.props.navigation.goBack();
-          ViewUtils.showToast('Referred successfully!');
-        })
-        .catch(err => {
-          ViewUtils.showAlert('Unable to Perform this Action');
-        })
-        .finally(() => {
-          this.setState({isLoading: false});
-        });
-    } else {
-      ViewUtils.showAlert('Please Provide Specialist Email');
+    if(this.state.appointmentId != null){
+      
+      let data = {
+        // date: this.state.startDate,
+         // "setupId": "",
+         // "doctorId": "5f01d90dffd17912ce896c56",
+         // "assistantId": "",
+         patientId: this.state.patientId,
+         answer: this.state.doctorEmail,
+         notes:this.state.description,
+        // endDate: this.state.endDate,
+         'setup-type': 'referToSpecialist',
+         active: false,
+       };
+
+      if (this.state.doctorEmail != '') {
+        this.setState({isLoading: true});
+        Api.instance()
+          .createPrescription(data)
+          .then(response => {
+            this.addToConsultation(data);
+            this.props.route.params.onRefertoSpecialistAdd();
+            this.props.navigation.goBack();
+            ViewUtils.showToast('Referred successfully!');
+          })
+          .catch(err => {
+            ViewUtils.showAlert('Unable to Perform this Action');
+          })
+          .finally(() => {
+            this.setState({isLoading: false});
+          });
+      } else {
+        ViewUtils.showAlert('Please Provide Specialist Email');
+      }
+    
+    }else{
+
+      let data = {
+        setupType: 'referToSpecialist',
+        name: this.state.doctorEmail,
+        description: this.state.description,
+      };
+
+      if (this.state.doctorEmail != '') {
+        this.setState({isLoading: true});
+        Api.instance()
+          .createMedication(data)
+          .then(response => {
+            this.props.route.params.onRefertoSpecialistAdd();
+            this.props.navigation.goBack();
+            ViewUtils.showToast('Referred successfully!');
+          })
+          .catch(err => {
+            ViewUtils.showAlert('Unable to Perform this Action');
+          })
+          .finally(() => {
+            this.setState({isLoading: false});
+          });
+      } else {
+        ViewUtils.showAlert('Please Provide Specialist Email');
+      }
     }
+
+   
   };
+
+
+  addToConsultation(item) {
+    Api.instance()
+      .addPrescribeMedication(
+        item,
+        this.state.appointmentId,
+        this.state.patientId,
+      )
+
+      .then(response => {
+        console.warn('response', response);
+        ViewUtils.showToast('Medication has been added to Prescription');
+      })
+      .catch(err => {})
+      .finally(() => {});
+  }
 
   _setSpecialists(){
       

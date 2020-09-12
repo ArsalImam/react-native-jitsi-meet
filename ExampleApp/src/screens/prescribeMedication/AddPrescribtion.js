@@ -49,6 +49,9 @@ export default class AddPrescribtion extends Component {
       // patientId,
       // patientId,
     };
+
+    console.warn("this.props.route.params ======= ",this.props.route.params)
+
   }
 
   _savePrescribeMedication = () => {

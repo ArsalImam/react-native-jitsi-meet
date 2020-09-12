@@ -57,15 +57,40 @@ componentDidMount(){
     }
 
     _saveVital = () => {
-        let data = {
-            "notes": this.state.notes,
-        };
-        let childComponentData = null;
+        var data={};
+        if(this.state.appointmentId == null){
+            data = {
+                "notes": this.state.notes,
+            };
+        }else{
+            data = {
+                // date: this.state.startDate,
+                 // "setupId": "",
+                 // "doctorId": "5f01d90dffd17912ce896c56",
+                 // "assistantId": "",
 
+                 date: new Date(),
+        //          vitalType: this.state.vitalType,
+                 notes: this.state.notes,
+                 patientId: this.props.route.params.patientId,
+                 value: this.state.multipleValues[0],
+                 multipleValues: this.state.multipleValues,
+
+                //  patientId: this.state.patientId,
+                //  answer: this.state.vitalType,
+                //  notes:this.state.notes,
+                // endDate: this.state.endDate,
+                //  'setup-type': 'vital',
+                //  active: false,
+               };
+        }
+
+             
+        let childComponentData = null;
         switch (this.state.vitalType) {
             case 'Blood Glucose':
                 childComponentData = this.glucoseComponent._onSave();
-
+                console.warn("childComponentData === ",childComponentData)
                 Object.assign(data, {
                     "multipleValues": [
                         parseInt(childComponentData.value),
@@ -79,6 +104,8 @@ componentDidMount(){
                 break;
             case 'Blood Pressure':
                 childComponentData = this.pressureComponent._onSave();
+
+                console.warn("childComponentData === ",childComponentData)
                 Object.assign(data, {
                     "multipleValues": [
                         parseInt(childComponentData.systolic),
@@ -91,6 +118,9 @@ componentDidMount(){
                 break
             case 'Blood Oxygen':
                 childComponentData = this.oxygenComponent._onSave();
+
+                console.warn("childComponentData === ",childComponentData)
+
                 Object.assign(data, {
                     "multipleValues": [
                         parseInt(childComponentData.value)
@@ -103,34 +133,87 @@ componentDidMount(){
 
         }
         
-        if(this.state.vitalType != ""){
-            this.setState({ isLoading: true });
-            Api.instance()
-                .createVital(data)
-                .then(response => {
-                    // this.props.route.params.onVitalAdd();
-                    this.props.navigation.goBack();
-                    ViewUtils.showToast('Vital has been saved successfully!');
-                })
-                .catch(err => {
-                    //ViewUtils.showToast(err);
-                    ViewUtils.showAlert(
-                        'Unable to Perform this Action',       
-                    );
-                })
-                .finally(() => {
-                    this.setState({ isLoading: false });
-                });
-        }else{
-            ViewUtils.showAlert(
-                'Please Provide Vital Type',       
-            );
+        console.warn("multipleValues === ",JSON.stringify(this.state.multipleValues))
+
+        if(this.state.appointmentId != null){
+        
+            if(this.state.vitalType !=  ""){
+                this.setState({ isLoading: true });
+                Api.instance()
+                    .createVitals(data)
+                    .then(response => {
+                        this.addToConsultation(data);
+                        this.props.route.params.onVitalAdd();
+                        this.props.navigation.goBack();
+                        ViewUtils.showToast('Vital has been saved successfully!');
+                    })
+                    .catch(err => {
+                        //ViewUtils.showToast(err);
+                        ViewUtils.showAlert(
+                            'Unable to Perform this Action',       
+                        );
+                    })
+                    .finally(() => {
+                        this.setState({ isLoading: false });
+                    });
+            }else{
+                ViewUtils.showAlert(
+                    'Please Provide Vital Type',       
+                );
+            }
+
+
+        }else {
+
+            if(this.state.vitalType != ""){
+                this.setState({ isLoading: true });
+                Api.instance()
+                    .createVital(data)
+                    .then(response => {
+                        this.props.route.params.onVitalAdd();
+                        this.props.navigation.goBack();
+                        ViewUtils.showToast('Vital has been saved successfully!');
+                    })
+                    .catch(err => {
+                        //ViewUtils.showToast(err);
+                        ViewUtils.showAlert(
+                            'Unable to Perform this Action',       
+                        );
+                    })
+                    .finally(() => {
+                        this.setState({ isLoading: false });
+                    });
+            }else{
+                ViewUtils.showAlert(
+                    'Please Provide Vital Type',       
+                );
+            }
         }
+
         
     };
 
+    
+    addToConsultation(item) {
+        Api.instance()
+          .addPrescribeMedication(
+            item,
+            this.state.appointmentId,
+            this.state.patientId,
+          )
+    
+          .then(response => {
+            console.warn('response', response);
+            ViewUtils.showToast('Medication has been added to Prescription');
+          })
+          .catch(err => {})
+          .finally(() => {});
+      }
 
     render() {
+
+        console.log("this.state.patientId ==== ",this.state.patientId)
+
         if (this.state.appointmentId != null) {
             return (
                 <View style={{ height: '75%' }}>

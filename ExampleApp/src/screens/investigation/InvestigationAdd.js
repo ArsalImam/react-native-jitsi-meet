@@ -32,13 +32,56 @@ export default class InvestigationAdd extends Component {
     }
 
     _saveInvestigation = () => {
+     
+        if(this.state.appointmentId != null){
+            
+            let data = {
+                // date: this.state.startDate,
+                 // "setupId": "",
+                 // "doctorId": "5f01d90dffd17912ce896c56",
+                 // "assistantId": "",
+                 patientId: this.state.patientId,
+                 answer: this.state.name,
+                 notes:this.state.description,
+                // endDate: this.state.endDate,
+                 'setup-type': 'requestMedication',
+                 active: false,
+               };
 
-        let data = {
-            "setupType": "investigation",
-            "name": this.state.name,
-            "description": this.state.description,
-        }
-       
+            if(this.state.name != ""){
+                this.setState({ isLoading: true })
+                Api.instance()
+                .createPrescription(data)
+                .then(response => {
+                    this.addToConsultation(data);
+                    this.props.route.params.onInvestigationAdd();
+                    this.props.navigation.goBack();
+                    //this.props.navigation.replace('InvestigationList');
+                    ViewUtils.showToast('Investigation has been saved successfully!');
+                })
+                .catch(err => {
+                    ViewUtils.showAlert(
+                        'Unable to Perform this Action',       
+                    );
+                    //ViewUtils.showToast(err);
+                })
+                .finally(() => {
+                    this.setState({ isLoading: false });
+                });
+            }else{
+                ViewUtils.showAlert(
+                    'Please Provide Investigation Name',       
+                );
+            }
+
+        }else{
+               
+            let data = {
+                "setupType": "investigation",
+                "name": this.state.name,
+                "description": this.state.description,
+            }
+
         if(this.state.name != ""){
             this.setState({ isLoading: true })
             Api.instance()
@@ -62,8 +105,29 @@ export default class InvestigationAdd extends Component {
             ViewUtils.showAlert(
                 'Please Provide Investigation Name',       
             );
-        }  
+        }
+
+        }
+  
     };
+
+
+    addToConsultation(item) {
+        Api.instance()
+          .addPrescribeMedication(
+            item,
+            this.state.appointmentId,
+            this.state.patientId,
+          )
+    
+          .then(response => {
+            console.warn('response', response);
+            ViewUtils.showToast('Medication has been added to Prescription');
+          })
+          .catch(err => {})
+          .finally(() => {});
+      }
+
     render() {     
         if (this.state.appointmentId != null) {
             return (
