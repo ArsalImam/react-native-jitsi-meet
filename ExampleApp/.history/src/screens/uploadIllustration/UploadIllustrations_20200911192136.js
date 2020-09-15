@@ -64,14 +64,12 @@ export default class UploadIllustrations extends React.Component {
       storageOptions: {
         skipBackup: true,
         path: 'images',
-        cameraRoll: true,
-        waitUntilSaved: true,
       },
     };
 
     ImagePicker.showImagePicker(options, response => {
       console.warn('Response = ', response);
-
+     
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -85,7 +83,8 @@ export default class UploadIllustrations extends React.Component {
           uri:
             Platform.OS === 'android'
               ? response.uri
-              : response.uri.replace('file://', ''),
+              : response.uri.substring(path.indexOf('/Documents')),
+              
         });
 
         Api.instance()
@@ -121,8 +120,8 @@ export default class UploadIllustrations extends React.Component {
         .createMedication(data)
         .then(response => {
           console.warn('tesssssssssssst', response);
-          this.props.navigation.navigate('IllustrationsList');
-          ViewUtils.showToast('Image has been saved successfully!');
+          this.props.navigation.replace('IllustrationsList');
+          ViewUtils.showToast('Question has been saved successfully!');
         })
         .catch(err => {
           ViewUtils.showToast(err);

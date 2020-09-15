@@ -64,8 +64,8 @@ export default class UploadIllustrations extends React.Component {
       storageOption: {
         skipBackup: true,
         path: 'images',
-        cameraRoll: true,
-        waitUntilSaved: true,
+        // cameraRoll: true,
+        // waitUntilSaved: true,
       },
     };
     ImagePicker.showImagePicker(options, response => {

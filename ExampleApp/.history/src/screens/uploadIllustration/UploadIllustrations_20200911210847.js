@@ -29,6 +29,7 @@ import Loader from '../../components/Loader';
 import {ViewUtils} from '../../Utils';
 import ImagePicker from 'react-native-image-picker';
 import {Configs} from '../../Configs';
+import FastImage from 'react-native-fast-image';
 
 export default class UploadIllustrations extends React.Component {
   constructor(props) {
@@ -186,7 +187,7 @@ export default class UploadIllustrations extends React.Component {
                       />
                     </View>
                   ) : (
-                    <Image
+                    <FastImage
                       source={{uri: this.state.imageUri}}
                       style={{
                         width: 300,

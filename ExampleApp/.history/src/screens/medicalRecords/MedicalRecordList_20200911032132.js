@@ -23,7 +23,7 @@ import Avatar from 'react-native-elements';
 import FastImage from 'react-native-fast-image';
 export default class MedicalRecordList extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     if (this.props.route.params) {
       this.state = {
         isLoading: true,
@@ -110,7 +110,7 @@ export default class MedicalRecordList extends Component {
                     style={[
                       CommonStyles.container,
                       CommonStyles.shadow,
-                    CommonStyles.br5,
+                      CommonStyles.br5,
                       CommonStyles.bgColor,
                     ]}>
                     <ImageBackground

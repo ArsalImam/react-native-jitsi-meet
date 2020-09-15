@@ -18,7 +18,7 @@ export default class PatientHistoryList extends Component {
         if (this.props.route.params) {
 
             this.state = {
-                isLoading: false,
+                isLoading: true,
                 anatomicalIllustrationList: [],
                 appointmentId: this.props.route.params.appointmentId,
                 patientId: this.props.route.params.patientId,
@@ -26,7 +26,7 @@ export default class PatientHistoryList extends Component {
         } else {
 
             this.state = {
-                isLoading: false,
+                isLoading: true,
                 anatomicalIllustrationList: [],
               
             }
@@ -34,7 +34,6 @@ export default class PatientHistoryList extends Component {
     }
 
     componentDidMount() {
-        this.setState({ isLoading: true });
         Api.instance().getAnatomicalIllustrationList()
             .then((data) => {
                 console.warn('=====>', data)
@@ -48,7 +47,6 @@ export default class PatientHistoryList extends Component {
 
 
     addToConsultation(item) {
-
         item.setupType = 'anatomicalIllustration'
         Api.instance().addReport(item, this.state.appointmentId,this.state.patientId)
             .then(response => {
@@ -130,12 +128,7 @@ export default class PatientHistoryList extends Component {
                                                         
                                                         <FastImage
                                                             style={{ width: 80, height: 110, borderRadius: 5, }}
-                                                            source={{uri: item.url,
-                                                                headers: { Authorization: '' },
-                                                                priority: FastImage.priority.normal,
-                                                            
-                                                            }}
-                                                            
+                                                            source={{uri: item.url}}
 
                                                             resizeMode={FastImage.resizeMode.contain}
                                                         />
@@ -309,7 +302,7 @@ export default class PatientHistoryList extends Component {
                             </TouchableOpacity>
                         </View>
                         <Loader loading={this.state.isLoading} />
-                        <View
+                        {/* <View
                             style={[
                                 CommonStyles.backButtonStyle
                             ]}>
@@ -323,7 +316,7 @@ export default class PatientHistoryList extends Component {
                                     style={{ color: '#FFF' }}
                                 />
                             </TouchableOpacity>
-                        </View>
+                        </View> */}
                     </ImageBackground>
                 </View>
             )

@@ -5,8 +5,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   ScrollView,
-  StatusBar,
-  Image,
+  StatusBar,Image
 } from 'react-native';
 import {
   Container,
@@ -21,6 +20,7 @@ import {
   Icon,
   Picker,
   Form,
+  
 } from 'native-base';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import CommonStyles from '../../CommonStyles';
@@ -64,13 +64,12 @@ export default class UploadIllustrations extends React.Component {
       storageOptions: {
         skipBackup: true,
         path: 'images',
-        cameraRoll: true,
-        waitUntilSaved: true,
       },
     };
 
     ImagePicker.showImagePicker(options, response => {
       console.warn('Response = ', response);
+      
 
       if (response.didCancel) {
         console.log('User cancelled image picker');
@@ -85,7 +84,7 @@ export default class UploadIllustrations extends React.Component {
           uri:
             Platform.OS === 'android'
               ? response.uri
-              : response.uri.replace('file://', ''),
+              : response.uri = '~' + response.uri.substring(response.uri.indexOf('/Documents')),
         });
 
         Api.instance()
@@ -96,16 +95,15 @@ export default class UploadIllustrations extends React.Component {
               imageUri: Api.instance().getMediaUrl(
                 Configs.containers.images,
                 response.result.files.uploadFile[0].name,
-              ),
-            });
-            console.warn('uriiiii', this.state.imageUri);
-          });
+              )});
+console.warn('uriiiii' , this.state.imageUri)
+        });
 
         const source = {uri: response.uri};
       }
     });
   };
-
+  
   _savePatientHistory = () => {
     if (this.state.imageUri) {
       let data = {
@@ -121,8 +119,8 @@ export default class UploadIllustrations extends React.Component {
         .createMedication(data)
         .then(response => {
           console.warn('tesssssssssssst', response);
-          this.props.navigation.navigate('IllustrationsList');
-          ViewUtils.showToast('Image has been saved successfully!');
+          this.props.navigation.replace('IllustrationsList');
+          ViewUtils.showToast('Question has been saved successfully!');
         })
         .catch(err => {
           ViewUtils.showToast(err);
@@ -185,7 +183,7 @@ export default class UploadIllustrations extends React.Component {
                         style={{fontSize: 40, marginTop: -40, marginLeft: 65}}
                       />
                     </View>
-                  ) : (
+                   ) : (
                     <Image
                       source={{uri: this.state.imageUri}}
                       style={{
@@ -194,7 +192,7 @@ export default class UploadIllustrations extends React.Component {
                         backgroundColor: '#E3E3E3',
                       }}
                     />
-                  )}
+                  )} 
                 </TouchableOpacity>
 
                 <Item
@@ -293,28 +291,24 @@ export default class UploadIllustrations extends React.Component {
                   }}
                   style={{marginVertical: 20, alignSelf: 'center'}}>
                   {this.state.imageUri == '' ? (
-                    <View>
-                      <Icon
-                        name="filetext1"
-                        type="AntDesign"
-                        style={{fontSize: 100}}
-                      />
-                      <Icon
-                        name="camera"
-                        type="AntDesign"
-                        style={{fontSize: 40, marginTop: -40, marginLeft: 65}}
-                      />
-                    </View>
-                  ) : (
+                  <View>
+                    <Icon
+                      name="filetext1"
+                      type="AntDesign"
+                      style={{fontSize: 100}}
+                    />
+                    <Icon
+                      name="camera"
+                      type="AntDesign"
+                      style={{fontSize: 40, marginTop: -40, marginLeft: 65}}
+                    />
+                  </View>
+                     ) : (
                     <Image
                       source={{uri: this.state.imageUri}}
-                      style={{
-                        width: 300,
-                        height: 300,
-                        backgroundColor: '#E3E3E3',
-                      }}
+                      style={{width: 300, height: 300,backgroundColor:'#E3E3E3'}}
                     />
-                  )}
+                  )}    
                 </TouchableOpacity>
 
                 <Item

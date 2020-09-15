@@ -59,6 +59,8 @@ class Login extends Component {
     });
   }
   _submitForm = () => {
+    
+
     if(this.state.email && this.state.password){
       this.showLoader();
       Api.instance()
@@ -82,6 +84,8 @@ class Login extends Component {
     );
 
     }
+
+    
   };
 
   render() {
@@ -144,7 +148,7 @@ class Login extends Component {
                   </View>
                 </View>
               </View>
-              <View style={{marginTop: 110}}>
+              <View style={{marginTop: 145}}>
                 <View>
                 <Item regular style={CommonStyles.loginItemStyle}>
                   <Input

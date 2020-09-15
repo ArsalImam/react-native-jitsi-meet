@@ -59,6 +59,8 @@ class Login extends Component {
     });
   }
   _submitForm = () => {
+    
+
     if(this.state.email && this.state.password){
       this.showLoader();
       Api.instance()
@@ -216,9 +218,9 @@ class Login extends Component {
                 <Text
                   style={[
                     CommonStyles.fontRegular,
-                    {marginTop: 10, color: 'white', fontSize: 12},
+                    {marginTop: 10, color: 'white', fontSize: 12, textAlign: 'left'},
                   ]}>
-                  Powered By Pharmevo
+                  Powered By          
                 </Text>
                 <View style={{width: 107, height: 50}}>
                   <Image

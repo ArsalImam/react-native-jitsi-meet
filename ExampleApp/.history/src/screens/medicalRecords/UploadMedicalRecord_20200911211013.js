@@ -6,7 +6,6 @@ import {
   ImageBackground,
   ScrollView,
   StatusBar,
-  Image,
 } from 'react-native';
 import {
   Container,
@@ -22,6 +21,7 @@ import {
   Picker,
   Form,
 } from 'native-base';
+import {Image} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import CommonStyles from '../../CommonStyles';
 import Api from '../../Api';
@@ -30,31 +30,104 @@ import {ViewUtils} from '../../Utils';
 import ImagePicker from 'react-native-image-picker';
 import {Configs} from '../../Configs';
 
-export default class UploadIllustrations extends React.Component {
+export default class UploadMedicalRecord extends Component {
   constructor(props) {
     super(props);
     if (this.props.route.params) {
       this.state = {
         isLoading: false,
-        uri: '',
         name: '',
-        imageUri: '',
+        data: [],
         image: null,
-        filePath: {},
         appointmentId: this.props.route.params.appointmentId,
         patientId: this.props.route.params.patientId,
+        imageUri: '',
+        uri: '',
       };
     } else {
       this.state = {
         isLoading: false,
-        uri: '',
         name: '',
-        imageUri: '',
+        data: [],
         image: null,
-        filePath: {},
+        imageUri: '',
+        uri: '',
       };
     }
   }
+
+  // cancelAttachment = () => {
+  //     this.props.navigation.navigate('UploadIllustrations', this.props.route.params);
+
+  //     this.setState({ dialogVisible: false });
+  // };
+
+  // sendImage = () => {
+  //     this.props.navigation.navigate('IllustrationsList', this.props.route.params);
+  //     this.setState({ dialogVisible: false });
+  // };
+
+  // handleChoosePhoto = (mediaType) => {
+  //     const options = { noData: true, mediaType };
+  //     ImagePicker.showImagePicker(options, (response) => {
+
+  //         console.warn('Response = ', response);
+
+  //         if (response.didCancel) {
+  //             console.log('User cancelled image picker');
+  //         } else if (response.error) {
+  //             console.log('ImagePicker Error: ', response.error);
+  //         } else if (response.customButton) {
+  //             console.log('User tapped custom button: ', response.customButton);
+  //         } else {
+  //             const source = { uri: response.uri };
+
+  //             this.setState({
+  //                 image: source,
+  //             });
+  //         }
+  //     });
+  // }
+
+  // handleChoosePhoto = () => {
+
+  //     const options = {
+  //         title: '',
+  //         noData: true,
+  //         // customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
+  //         storageOptions: {
+  //             skipBackup: true,
+  //             path: 'images',
+  //         },
+  //     };
+
+  //     ImagePicker.showImagePicker(options, (response) => {
+  //         console.warn('Response = ', response);
+
+  //         if (response.didCancel) {
+  //             console.warn('User cancelled image picker');
+  //         } else if (response.error) {
+  //             console.warn('ImagePicker Error: ', response.error);
+  //         } else {
+  //             console.warn('else called')
+  //             // this.setState({
+  //             //     imageUri: response.uri,
+  //             //   });
+  //             // show loader
+  //             const fileData = new FormData();
+  //             this.setState({
+  //                 imageUri: response.uri,
+  //               });
+  //             // fileData.append('uploadFile', {
+
+  //             //     name: response.fileName,
+  //             //     type: response.type,
+  //             //     uri: Platform.OS === 'android' ? response.uri : response.uri.replace('file://', ''),
+
+  //             // });
+  //         }
+  //     });
+  //    }
 
   handleChoosePhoto = () => {
     const options = {
@@ -87,44 +160,103 @@ export default class UploadIllustrations extends React.Component {
               ? response.uri
               : response.uri.replace('file://', ''),
         });
-
+        this.setState({isLoading: true});
         Api.instance()
           .uploadImage(fileData)
           .then(response => {
-            console.warn('=====heyssssss===', JSON.stringify(response));
+            console.warn(JSON.stringify(response));
+            // this.state.imageUri = `https://api.etibb.online/api/Contents/${
+            //   Configs.containers.images
+            // }/download/${response.result.files.uploadFile[0].name}`;
+            this.setState({isLoading: false});
             this.setState({
               imageUri: Api.instance().getMediaUrl(
                 Configs.containers.images,
                 response.result.files.uploadFile[0].name,
               ),
             });
-            console.warn('uriiiii', this.state.imageUri);
+            console.warn('imageURIIRIRIRIRR' , imageUri)
+          })
+          .catch(err => console.log(err))
+          .finally(() => {
+            this.setState({isLoading: false});
           });
-
+        // this.setState({uri : response.path})
+        //console.warn("response ======= ",response.path)
         const source = {uri: response.uri};
+      }
+    });
+  };
+
+  imagePicker = () => {
+    var options = {
+      title: '',
+      noData: true,
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    ImagePicker.showImagePicker(options, response => {
+      if (response.didCancel) {
+        console.warn('User cancelled image picker');
+      } else if (response.error) {
+        console.warn('ImagePicker Error: ', response.error);
+      } else {
+        //   this.setState({
+        //     imageUri: response.uri,
+        //     imageFilename : response.fileName
+        //   });
+        let imageData = new FormData();
+        imageData.append('file', {
+          uri: response.uri,
+          name: response.fileName,
+        });
+        console.warn('imageeee Data', imageData);
+        Api.instance()
+          .uploadImage(imageData)
+
+          .then(response => {
+            console.warn('tesssssssssssst', response.body);
+          });
       }
     });
   };
 
   _savePatientHistory = () => {
     if (this.state.imageUri) {
+      // console.warn('Image URl', this.state.imageUri);
+      // let imageData = new FormData();
+      // imageData.append('file', {
+      //   uri: this.state.imageUri,
+      //   name: this.state.imageFilename,
+
+      // });
+
       let data = {
-        setupType: 'anatomicalIllustration',
-        name: this.state.name,
-        description: this.state.description,
+        title: this.state.name,
         url: this.state.imageUri,
+        type: this.state.vitalType,
+        // "filenmae":this.state.imageFilename,
+        // "vital Type" :this.state.vitalType
       };
 
       this.setState({isLoading: true});
 
       Api.instance()
-        .createMedication(data)
+        .saveMedicalRecord(data)
+
         .then(response => {
-          console.warn('tesssssssssssst', response);
-          this.props.navigation.navigate('IllustrationsList');
-          ViewUtils.showToast('Image has been saved successfully!');
+          console.warn('tesssssssssssst', response.body);
+          this.props.route.params.onUploadMedicalRecord();
+          this.props.navigation.goBack();
+
+          //this.props.navigation.replace('MedicalRecordList');
+          ViewUtils.showToast('Saved successfully!');
+          //console.warn('=======response=======', response);
         })
         .catch(err => {
+          ViewUtils.showAlert('Unable to Perform this Action');
           ViewUtils.showToast(err);
         })
         .finally(() => {
@@ -135,7 +267,7 @@ export default class UploadIllustrations extends React.Component {
     }
   };
   render() {
-    const {image} = this.state;
+    // const { image } = this.state;
 
     if (this.state.appointmentId != null) {
       return (
@@ -143,7 +275,11 @@ export default class UploadIllustrations extends React.Component {
           <ImageBackground
             style={[CommonStyles.container, CommonStyles.backgroundImage]}
             source={require('../../assets/img/background.png')}>
-            <View style={{flex: 3, backgroundColor: '#297dec'}}>
+            <View
+              style={{
+                flex: 3,
+                backgroundColor: '#297dec',
+              }}>
               <Text
                 style={[
                   CommonStyles.fontRegular,
@@ -153,7 +289,7 @@ export default class UploadIllustrations extends React.Component {
                   style={[
                     CommonStyles.textSizeLarge,
                     CommonStyles.textColorWhite,
-                  ]}>{`Upload Anatomical Illustrations\n`}</Text>
+                  ]}>{`Upload Medical Record\n`}</Text>
                 <Text
                   style={[
                     CommonStyles.textSizeSmall,
@@ -195,6 +331,13 @@ export default class UploadIllustrations extends React.Component {
                       }}
                     />
                   )}
+
+                  {/* {image && ( */}
+                  {/* {<Image
+                                            source={{ uri: this.state.imageUri }}
+                                            style={{ width: 300, height: 300 }}
+                                        />} */}
+                  {/* )} */}
                 </TouchableOpacity>
 
                 <Item
@@ -209,16 +352,64 @@ export default class UploadIllustrations extends React.Component {
                       CommonStyles.fontRegular,
                       CommonStyles.textSizeAverage,
                     ]}>
-                    Anatomical Name*
+                    Title*
                   </Label>
                   <Input
-                    value={this.state.notes}
+                    // value={this.state.name}
                     onChangeText={val => this.setState({name: val})}
                     style={[
                       CommonStyles.fontRegular,
                       CommonStyles.textSizeMedium,
                     ]}
                   />
+                </Item>
+
+                <Item
+                  picker
+                  style={[
+                    CommonStyles.container,
+                    CommonStyles.itemStyle,
+                    {paddingTop: 10},
+                  ]}>
+                  <Picker
+                    mode="dropdown"
+                    style={{textAlign: 'left'}}
+                    focusable
+                    iosIcon={<Icon name="arrow-down" />}
+                    placeholder="Select Vital Type"
+                    placeholderStyle={{color: '#bfc6ea'}}
+                    placeholderIconColor="#007aff"
+                    selectedValue={this.state.vitalType}
+                    onValueChange={val => {
+                      this.setState({vitalType: val});
+                    }}>
+                    <Picker.Item
+                      color="gray"
+                      selected={false}
+                      label="Document Type"
+                      value=""
+                    />
+                    <Picker.Item
+                      label="Referral Letter"
+                      value="referralLetter"
+                    />
+                    <Picker.Item
+                      label="Scanned Medical Records"
+                      value="medicalRecord"
+                    />
+                    <Picker.Item
+                      label="Results of Laboratory Test"
+                      value="labReport"
+                    />
+                    <Picker.Item
+                      label="X-rays, MRI, CT, US, Scans "
+                      value="xRay"
+                    />
+                    <Picker.Item
+                      label="Misc Images ECG, Skin Lesion etc"
+                      value="misc"
+                    />
+                  </Picker>
                 </Item>
               </KeyboardAwareScrollView>
             </View>
@@ -236,6 +427,9 @@ export default class UploadIllustrations extends React.Component {
                 },
               ]}>
               <TouchableOpacity
+                onPress={() => {
+                  this._savePatientHistory();
+                }}
                 style={[
                   CommonStyles.container,
                   CommonStyles.centerText,
@@ -252,6 +446,21 @@ export default class UploadIllustrations extends React.Component {
                   ]}>
                   SAVE
                 </Text>
+              </TouchableOpacity>
+            </View>
+
+            <Loader loading={this.state.isLoading} />
+
+            <View style={[CommonStyles.backButtonStyle]}>
+              <TouchableOpacity
+                onPress={() => {
+                  this.props.navigation.goBack();
+                }}>
+                <Icon
+                  name="arrow-back"
+                  type="MaterialIcons"
+                  style={{fontSize: 26, color: '#FFF'}}
+                />
               </TouchableOpacity>
             </View>
           </ImageBackground>
@@ -273,7 +482,7 @@ export default class UploadIllustrations extends React.Component {
                   style={[
                     CommonStyles.textSizeLarge,
                     CommonStyles.textColorWhite,
-                  ]}>{`Upload Anatomical Illustrations\n`}</Text>
+                  ]}>{`Upload Medical Record\n`}</Text>
                 <Text
                   style={[
                     CommonStyles.textSizeSmall,
@@ -329,16 +538,64 @@ export default class UploadIllustrations extends React.Component {
                       CommonStyles.fontRegular,
                       CommonStyles.textSizeAverage,
                     ]}>
-                    Anatomical Name*
+                    Title*
                   </Label>
                   <Input
-                    value={this.state.notes}
+                    // value={this.state.notes}
                     onChangeText={val => this.setState({name: val})}
                     style={[
                       CommonStyles.fontRegular,
                       CommonStyles.textSizeMedium,
                     ]}
                   />
+                </Item>
+
+                <Item
+                  picker
+                  style={[
+                    CommonStyles.container,
+                    CommonStyles.itemStyle,
+                    {paddingTop: 10},
+                  ]}>
+                  <Picker
+                    mode="dropdown"
+                    style={{textAlign: 'left'}}
+                    focusable
+                    iosIcon={<Icon name="arrow-down" />}
+                    placeholder="Select Vital Type"
+                    placeholderStyle={{color: '#bfc6ea'}}
+                    placeholderIconColor="#007aff"
+                    selectedValue={this.state.vitalType}
+                    onValueChange={val => {
+                      this.setState({vitalType: val});
+                    }}>
+                     <Picker.Item
+                      color="gray"
+                      selected={false}
+                      label="Document Type"
+                      value=""
+                    />
+                    <Picker.Item
+                      label="Referral Letter"
+                      value="referralLetter"
+                    />
+                    <Picker.Item
+                      label="Scanned Medical Records"
+                      value="medicalRecord"
+                    />
+                    <Picker.Item
+                      label="Results of Laboratory Test"
+                      value="labReport"
+                    />
+                    <Picker.Item
+                      label="X-rays, MRI, CT, US, Scans "
+                      value="xRay"
+                    />
+                    <Picker.Item
+                      label="Misc Images ECG, Skin Lesion etc"
+                      value="misc"
+                    />
+                  </Picker>
                 </Item>
               </KeyboardAwareScrollView>
             </View>
@@ -356,7 +613,9 @@ export default class UploadIllustrations extends React.Component {
                 },
               ]}>
               <TouchableOpacity
-                onPress={() => this._savePatientHistory()}
+                onPress={() => {
+                  this._savePatientHistory();
+                }}
                 style={[
                   CommonStyles.container,
                   CommonStyles.centerText,
@@ -373,6 +632,21 @@ export default class UploadIllustrations extends React.Component {
                   ]}>
                   SAVE
                 </Text>
+              </TouchableOpacity>
+            </View>
+
+            <Loader loading={this.state.isLoading} />
+
+            <View style={[CommonStyles.backButtonStyle]}>
+              <TouchableOpacity
+                onPress={() => {
+                  this.props.navigation.goBack();
+                }}>
+                <Icon
+                  name="arrow-back"
+                  type="MaterialIcons"
+                  style={{fontSize: 26, color: '#FFF'}}
+                />
               </TouchableOpacity>
             </View>
           </ImageBackground>

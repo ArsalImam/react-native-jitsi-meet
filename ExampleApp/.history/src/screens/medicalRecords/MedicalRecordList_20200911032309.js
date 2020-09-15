@@ -110,7 +110,7 @@ export default class MedicalRecordList extends Component {
                     style={[
                       CommonStyles.container,
                       CommonStyles.shadow,
-                    CommonStyles.br5,
+                      CommonStyles.br5,
                       CommonStyles.bgColor,
                     ]}>
                     <ImageBackground

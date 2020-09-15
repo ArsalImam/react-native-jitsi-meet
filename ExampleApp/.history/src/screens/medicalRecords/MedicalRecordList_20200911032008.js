@@ -23,7 +23,7 @@ import Avatar from 'react-native-elements';
 import FastImage from 'react-native-fast-image';
 export default class MedicalRecordList extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     if (this.props.route.params) {
       this.state = {
         isLoading: true,
@@ -75,7 +75,7 @@ export default class MedicalRecordList extends Component {
     }
   }
   render() {
-   
+    console.warn("this.state.medicalRecordList === ",this.state.medicalRecordList)
     if (this.state.appointmentId != null) {
       return (
         <View style={{height: '75%'}}>
@@ -110,7 +110,7 @@ export default class MedicalRecordList extends Component {
                     style={[
                       CommonStyles.container,
                       CommonStyles.shadow,
-                    CommonStyles.br5,
+                      CommonStyles.br5,
                       CommonStyles.bgColor,
                     ]}>
                     <ImageBackground
@@ -195,7 +195,7 @@ export default class MedicalRecordList extends Component {
                           <View style={[{alignSelf: 'center', marginTop: 20}]}>
                             <FastImage
                               style={{width: 90, height: 120, borderRadius: 5}}
-                              source={{uri: item.url, priority: FastImage.priority.normal}}
+                              source={{uri: item.url}}
                               resizeMode={FastImage.resizeMode.contain}
                             />
                           </View>
@@ -376,7 +376,7 @@ export default class MedicalRecordList extends Component {
                           <View style={[{alignSelf: 'center', marginTop: 20}]}>
                             <FastImage
                               style={{width: 90, height: 120, borderRadius: 5}}
-                              source={{uri: item.url, priority: FastImage.priority.normal,}}
+                              source={{uri: item.url, priority: FastImage.priority.normal}}
                               resizeMode={FastImage.resizeMode.contain}
                             />
                           </View>
