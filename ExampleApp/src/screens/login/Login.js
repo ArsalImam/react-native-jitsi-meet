@@ -106,23 +106,23 @@ class Login extends Component {
       <View style={[CommonStyles.container]}>
         <ImageBackground
           style={[CommonStyles.container, CommonStyles.backgroundImage]}
-          source={require('../../assets/img/loginbg.png')}>
+          source={require('../../assets/img/newloginbg.png')}>
           <KeyboardAwareScrollView style={CommonStyles.container}>
             <View style={[CommonStyles.margin, { margin: 30 }]}>
               <View
                 style={[
                   CommonStyles.container,
-                  { marginTop: 50, marginBottom: 40, justifyContent: 'center' },
+                  { marginTop: 220, marginBottom: 5, justifyContent: 'center' },
                 ]}>
                 <Text
                   style={[
                     CommonStyles.fontMedium,
                     {
-                      fontSize: 32,
+                      fontSize: 20,
                       color: '#FFF',
                     },
                   ]}>
-                  Welcome
+                  Welcome to
                 </Text>
                 <View
                   style={[
@@ -134,31 +134,29 @@ class Login extends Component {
                     style={[
                       CommonStyles.fontMedium,
                       {
-                        fontSize: 32,
+                        fontSize: 20,
                         color: '#FFF',
-                        marginRight: 15,
                         
                       },
-                    ]}>to
+                    ]}>Professor Dr. A. H. Aamir
                   </Text>
-
-                  <View
-                    style={{
-                      width: 203,
-                      height: 75,
-                      marginTop: -20,
-                      marginHorizontal: 5,
-                    }}>
-                    <Image
-                      style={[
-                        CommonStyles.mt10,
-                        CommonStyles.container,
-                        CommonStyles.backgroundImage,
-                        { width: '100%', height: '100%' },
-                      ]}
-                      source={require('../../assets/img/etibb_logo_final_01.png')}
-                    />
-                  </View>
+                </View>
+                <View
+                  style={[
+                    CommonStyles.container,
+                    CommonStyles.horizontalContainer,
+                    {  justifyContent: 'flex-start' },
+                  ]}>
+                  <Text
+                    style={[
+                      CommonStyles.fontMedium,
+                      {
+                        fontSize: 16,
+                        color: '#bfbfbf',
+                        
+                      },
+                    ]}>TeleClinic
+                  </Text>
                 </View>
               </View>
               <View style={{marginTop: 145}}>
@@ -226,30 +224,7 @@ class Login extends Component {
                 </View>
              
 
-              <View
-                style={[
-                  CommonStyles.container,
-                  {alignItems: 'center', marginTop: 60},
-                ]}>
-                <Text
-                  style={[
-                    CommonStyles.fontRegular,
-                    {marginTop: 10, color: 'white', fontSize: 12},
-                  ]}>
-                  Powered By Pharmevo
-                </Text>
-                <View style={{width: 107, height: 50}}>
-                  <Image
-                    style={[
-                      // CommonStyles.mt10,
-                      // CommonStyles.container,
-                      // CommonStyles.backgroundImage,
-                      { width: '100%', height: '100%' },
-                    ]}
-                    source={require('../../assets/img/logo.png')}
-                  />
-                </View>
-              </View>
+             
               </View>
             </View>
             </View>

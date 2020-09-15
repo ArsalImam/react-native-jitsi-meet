@@ -1,9 +1,0 @@
-# Logs
-*.log
-
-# Dependency directory
-node_modules
-
-example
-
-.editorconfig
