@@ -622,7 +622,7 @@ export default class Api {
     if (!fcmToken) {
       throw 'token not token';
     }
-
+    
     let user = await this._user();
     if (!user) {
       throw 'user not logged in yet!';

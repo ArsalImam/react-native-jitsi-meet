@@ -195,7 +195,7 @@ export default class UploadIllustrations extends React.Component {
                   CommonStyles.textSizeSmall,
                   CommonStyles.textColorWhite,
                 ]}>
-                Update your Profile{' '}
+                Edit your Profile{' '}
               </Text>
             </Text>
           </View>
