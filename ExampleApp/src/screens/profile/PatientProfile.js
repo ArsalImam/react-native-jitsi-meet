@@ -8,6 +8,7 @@ import {
   StatusBar,
   Image,
   TouchableOpacity,
+  Linking,
 } from 'react-native';
 import {FlatGrid} from 'react-native-super-grid';
 import CommonStyles from '../../CommonStyles';
@@ -17,6 +18,7 @@ import {ViewUtils} from '../../Utils';
 import Api from '../../Api';
 import Loader from '../../components/Loader';
 import {cos} from 'react-native-reanimated';
+import {Button} from 'react-native-paper';
 
 export default class PatientProfile extends React.Component {
   constructor(props) {
@@ -68,6 +70,10 @@ export default class PatientProfile extends React.Component {
     });
   }
 
+  shareToWhatsApp = text => {
+    Linking.openURL(`whatsapp://send?text=Doctor Code:${text}`);
+  };
+
   render() {
     return (
       <View style={[CommonStyles.container]}>
@@ -104,8 +110,7 @@ export default class PatientProfile extends React.Component {
                           width: 105,
                         },
                       ]}>
-                    
-                      {this.state.user.imageUrl == '' ?(
+                      {this.state.user.imageUrl == '' ? (
                         <Image
                           style={{
                             width: '100%',
@@ -114,16 +119,16 @@ export default class PatientProfile extends React.Component {
                           }}
                           source={require('../../assets/drawable-xxxhdpi/Mask.png')}
                         />
-                        // <Icon 
+                      ) : (
+                        // <Icon
                         // style={{
                         //       width: '100%',
                         //       height: 105,
                         //       resizeMode: 'cover',
                         //     }}
                         // name="user" type="FontAwesome5"
-                        
+
                         // />
-                      ) : (
                         <Image
                           style={{
                             width: '100%',
@@ -131,8 +136,7 @@ export default class PatientProfile extends React.Component {
                             resizeMode: 'contain',
                           }}
                           source={{
-                            uri: this.state.user.imageUrl
-                         
+                            uri: this.state.user.imageUrl,
                           }}
                         />
                       )}
@@ -185,7 +189,6 @@ export default class PatientProfile extends React.Component {
                         {`\n`}
                       </Text>
                     </Text>
-
                     <Text
                       style={[
                         CommonStyles.textColorWhite,
@@ -209,6 +212,37 @@ export default class PatientProfile extends React.Component {
                       }
                       {`\n`}
                     </Text>
+                    {/* <TouchableOpacity onPress={()=> this.shareToWhatsApp()}>
+                      <Text>
+                        Share Doctor Code
+                      </Text>
+                    </TouchableOpacity> */}
+
+                    <TouchableOpacity
+                      style={[
+                        CommonStyles.container,
+                        CommonStyles.br5,
+                        {
+                          backgroundColor: '#333333',
+                          marginTop: 5,
+                          marginHorizontal: 50,
+                        },
+                      ]}
+                      onPress={()=>this.shareToWhatsApp(this.state.user.doctorCode)}
+                      
+                      >
+                      <Text
+                        style={[
+                          CommonStyles.fontRegular,
+                          CommonStyles.padding,
+                          CommonStyles.margin,
+                          CommonStyles.centerText,
+                          CommonStyles.textColorWhite,
+                        ]}>
+                          
+                        SHARE DOCTOR CODE
+                      </Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
               </ImageBackground>

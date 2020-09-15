@@ -95,7 +95,7 @@ export default class RefertoSpecialistAdd extends Component {
             this.addToConsultation(data);
             this.props.route.params.onRefertoSpecialistAdd();
             this.props.navigation.goBack();
-            ViewUtils.showToast('Referred successfully!');
+            ViewUtils.showToast('Specialist has been referred successfully!');
           })
           .catch(err => {
             ViewUtils.showAlert('Unable to Perform this Action');
@@ -122,7 +122,7 @@ export default class RefertoSpecialistAdd extends Component {
           .then(response => {
             this.props.route.params.onRefertoSpecialistAdd();
             this.props.navigation.goBack();
-            ViewUtils.showToast('Referred successfully!');
+            ViewUtils.showToast('Specialist has been referred!');
           })
           .catch(err => {
             ViewUtils.showAlert('Unable to Perform this Action');
@@ -149,7 +149,7 @@ export default class RefertoSpecialistAdd extends Component {
 
       .then(response => {
         console.warn('response', response);
-        ViewUtils.showToast('Medication has been added to Prescription');
+        
       })
       .catch(err => {})
       .finally(() => {});
@@ -192,7 +192,7 @@ export default class RefertoSpecialistAdd extends Component {
                     CommonStyles.textSizeSmall,
                     CommonStyles.textColorWhite,
                   ]}>
-                  It is a list of your all booking patients{' '}
+                  Add a new Reffer to Specialist{' '}
                 </Text>
               </Text>
             </View>
@@ -325,7 +325,7 @@ export default class RefertoSpecialistAdd extends Component {
                     CommonStyles.textSizeSmall,
                     CommonStyles.textColorWhite,
                   ]}>
-                  It is a list of your all booking patients{' '}
+                  Add a new Reffer to Specialist{' '}
                 </Text>
               </Text>
             </View>

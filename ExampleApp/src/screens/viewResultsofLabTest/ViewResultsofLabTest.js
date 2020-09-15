@@ -72,7 +72,7 @@ export default class ViewResultsofLabTest extends Component {
                 CommonStyles.fontRegular,
                 CommonStyles.textSizeSmall,
               ]}>
-              It is a list of your all Bookings{' '}
+              It is a list of your all Lab Test Results{' '}
             </Text>
           </Text>
         </View>

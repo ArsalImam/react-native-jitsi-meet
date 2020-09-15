@@ -115,7 +115,7 @@ export default class FollowUpList extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Bookings{' '}
+                  It is a list of your all Follow ups{' '}
                 </Text>
               </Text>
             </View>
@@ -285,7 +285,7 @@ export default class FollowUpList extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Bookings{' '}
+                  It is a list of your all Follow ups{' '}
                 </Text>
               </Text>
             </View>

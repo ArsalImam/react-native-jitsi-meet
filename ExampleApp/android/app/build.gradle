@@ -132,7 +132,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.telemedicine"
+        applicationId "com.etibb"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

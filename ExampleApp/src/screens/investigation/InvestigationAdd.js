@@ -56,7 +56,6 @@ export default class InvestigationAdd extends Component {
                     this.addToConsultation(data);
                     this.props.route.params.onInvestigationAdd();
                     this.props.navigation.goBack();
-                    //this.props.navigation.replace('InvestigationList');
                     ViewUtils.showToast('Investigation has been saved successfully!');
                 })
                 .catch(err => {
@@ -122,7 +121,7 @@ export default class InvestigationAdd extends Component {
     
           .then(response => {
             console.warn('response', response);
-            ViewUtils.showToast('Medication has been added to Prescription');
+           
           })
           .catch(err => {})
           .finally(() => {});
@@ -142,7 +141,7 @@ export default class InvestigationAdd extends Component {
                     }>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
                                 <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Investigation Add\n`}</Text>
-                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
+                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>Add a new Investigation Record </Text>
                             </Text>
                         </View>
 
@@ -234,7 +233,7 @@ export default class InvestigationAdd extends Component {
                         <View style={{ flex: 2.3 }}>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
                                 <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Investigation Add\n`}</Text>
-                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
+                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>Add a new Investigation Record </Text>
                             </Text>
                         </View>
 

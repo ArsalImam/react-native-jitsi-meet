@@ -87,7 +87,7 @@ export default class MedicationList extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Bookings{' '}
+                  It is a list of your all Medications{' '}
                 </Text>
               </Text>
             </View>
@@ -293,7 +293,7 @@ export default class MedicationList extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Bookings{' '}
+                  It is a list of your all Medications{' '}
                 </Text>
               </Text>
             </View>

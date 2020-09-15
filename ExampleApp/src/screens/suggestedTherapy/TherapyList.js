@@ -94,7 +94,7 @@ export default class TherapyList extends Component {
                         }>
                             <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Therapy List\n`}</Text>
-                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Bookings </Text>
+                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Therapies </Text>
                             </Text>
                         </View>
 
@@ -123,7 +123,7 @@ export default class TherapyList extends Component {
                                                 <View style={[CommonStyles.container, { justifyContent: 'space-between' }]}>
 
                                                     <Text style={{ marginBottom: 10 }} >
-                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Question: \n`}</Text>
+                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Therapy: \n`}</Text>
                                                         <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.answer}</Text>
                                                     </Text>
 
@@ -224,7 +224,7 @@ export default class TherapyList extends Component {
                         }>
                             <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Therapy List\n`}</Text>
-                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Bookings </Text>
+                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Therapies</Text>
                             </Text>
                         </View>
 
@@ -251,7 +251,7 @@ export default class TherapyList extends Component {
                                                 <View style={[CommonStyles.container, { justifyContent: 'space-between' }]}>
 
                                                     <Text style={{ marginBottom: 10 }} >
-                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Question: \n`}</Text>
+                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Therapy: \n`}</Text>
                                                         <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.name}</Text>
                                                     </Text>
 

@@ -265,6 +265,7 @@ export default class Api {
           _user.id
         }&filter[where][and][1][patientId]=${patientId}&filter[where][and][2][setup-type]=${setupType}&filter[order]=id%20DESC`,
       ),
+      
     );
     let data = response.data;
     console.warn('data', data);
@@ -325,6 +326,24 @@ export default class Api {
     if (data.error) throw data.error.message;
     return data;
   }
+
+  async getObservationList() {
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+    let response = await this.client.get(
+      this.getUrl(
+        `Setups?filter[where][doctorId]=${
+          _user.id
+        }&filter[where][setupType]=observation&filter[order]=createdAt%20DESC`,
+      ),
+    );
+    let data = response.data;
+    console.warn('data', data);
+    if (data.error) throw data.error.message;
+    return data;
+  }
+
+
 
   async getReferToSpecialistList() {
     let user = await this._user();
@@ -599,6 +618,7 @@ export default class Api {
   }
 
   async updateFcmToken(fcmToken: string) {
+    console.warn("fcmToken fcm :: ",fcmToken)
     if (!fcmToken) {
       throw 'token not token';
     }
@@ -613,9 +633,11 @@ export default class Api {
       fcmToken,
     });
     let data = response.data;
+    console.warn("data fcm :: ",data)
     if (data.error) throw data.error.message;
     console.warn('fcm updated', fcmToken);
     await AsyncStorage.setItem('fcmToken', fcmToken);
+    console.warn('fcm AsyncStorage has set');
     return data;
   }
 

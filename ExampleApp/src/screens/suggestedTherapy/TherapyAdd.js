@@ -127,7 +127,7 @@ export default class TherapyAdd extends Component {
     
           .then(response => {
             console.warn('response', response);
-            ViewUtils.showToast('Medication has been added to Prescription');
+            
           })
           .catch(err => {})
           .finally(() => {});
@@ -150,7 +150,7 @@ export default class TherapyAdd extends Component {
                     }>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
                                 <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Therapy Add\n`}</Text>
-                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
+                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>Add a new Therapy </Text>
                             </Text>
                         </View>
     
@@ -251,7 +251,7 @@ export default class TherapyAdd extends Component {
                     }>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
                                 <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Therapy Add\n`}</Text>
-                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
+                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>Add a new Therapy </Text>
                             </Text>
                         </View>
     

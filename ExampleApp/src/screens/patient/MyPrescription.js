@@ -149,7 +149,7 @@ export default class MyPresciption extends Component {
                   CommonStyles.fontRegular,
                   CommonStyles.textSizeAverage,
                 ]}>
-                It is a list of your all booking patients{' '}
+                It is a list of your all prescriptions{' '}
               </Text>
             </Text>
 

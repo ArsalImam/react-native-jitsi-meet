@@ -20,6 +20,8 @@ import MedicationAdd from './screens/medications/MedicationAdd';
 import MedicationList from './screens/medications/MedicationList';
 import DiagnosisAdd from './screens/diagnosis/DiagnosisAdd';
 import DiagnosisList from './screens/diagnosis/DiagnosisList';
+import ObservationAdd from './screens/observation/ObservationAdd';
+import ObservationList from './screens/observation/ObservationList';
 import RefertoSpecialistAdd from './screens/refertoSpecialist/RefertoSpecialistAdd';
 import RefertoSpecialistList from './screens/refertoSpecialist/RefertoSpecialistList';
 import FollowUpAdd from './screens/FollowUp/FollowUpAdd';
@@ -55,6 +57,7 @@ import ClinicList from './screens/clinic/ClinicList';
 import SideBar from './components/drawer/SideBar';
 import MyPresciption from './screens/patient/MyPrescription';
 import ViewResultsofLabTest from './screens/viewResultsofLabTest/ViewResultsofLabTest'
+import ChatLogs from './screens/chatLogs/ChatLogs';
 
 
 
@@ -343,24 +346,53 @@ export default class Routes extends React.Component {
             },
           }}
 
-          // options={{
-          //   title: '',
-          //   headerStyle: {backgroundColor: 'transparent'},
-          //   headerTransparent: true,
-          //   headerTitleAlign: 'center',
-          //   headerTitleStyle: {color: '#fff'},
-          //   headerTintColor: '#fff',
-          //   navigationOptions: {
-          //     header: ({goBack}) => ({
-          //       left: <Left onPress={goBack} />,
-          //     }),
-
-          //   },
-          //   cardStyle: {
-          //     backgroundColor: 'transparent',
-          //   },
-          // }}
         />
+
+<Stack.Screen
+          name="ObservationAdd"
+          component={ObservationAdd}
+          options={{
+            title: '',
+            headerStyle: {backgroundColor: 'transparent'},
+            headerTransparent: true,
+            headerTitleAlign: 'center',
+            headerTitleStyle: {color: '#fff'},
+            headerTintColor: '#fff',
+            navigationOptions: {
+              header: ({goBack}) => ({
+                left: <Left onPress={goBack} />,
+              }),
+            },
+            cardStyle: {
+              backgroundColor: 'transparent',
+            },
+          }}
+        />
+
+        <Stack.Screen
+          name="ObservationList"
+          component={ObservationList}
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent',
+            },
+          }}
+
+        />
+
+<Stack.Screen
+          name="ChatLogs"
+          component={ChatLogs}
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent',
+            },
+          }}
+
+        />
+
 
         <Stack.Screen
           name="FollowUpAdd"

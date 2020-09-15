@@ -59,7 +59,7 @@ export default class ProcedureAdd extends Component {
                         this.props.route.params.onProcedureAdd();
                         this.props.navigation.goBack();
                        // this.props.navigation.replace('ProcedureList');
-                        ViewUtils.showToast('Procedure has been saved successfully!');
+                       ViewUtils.showToast('Procedure has been saved successfully!');
                     })
                     .catch(err => {
                         ViewUtils.showAlert(
@@ -122,7 +122,7 @@ export default class ProcedureAdd extends Component {
     
           .then(response => {
             console.warn('response', response);
-            ViewUtils.showToast('Medication has been added to Prescription');
+            
           })
           .catch(err => {})
           .finally(() => {});
@@ -146,7 +146,7 @@ export default class ProcedureAdd extends Component {
                     }>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
                                 <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Procedure Add\n`}</Text>
-                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
+                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>Add a new Procedure </Text>
                             </Text>
                         </View>
 
@@ -245,7 +245,7 @@ export default class ProcedureAdd extends Component {
                         <View style={{ flex: 2.3 }}>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
                                 <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Procedure Add\n`}</Text>
-                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
+                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>Add a new Procedure </Text>
                             </Text>
                         </View>
 

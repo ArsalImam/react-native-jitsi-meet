@@ -123,7 +123,7 @@ export default class ProcedureList extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Bookings{' '}
+                  It is a list of your all Procedures{' '}
                 </Text>
               </Text>
             </View>
@@ -167,7 +167,7 @@ export default class ProcedureList extends Component {
                                 CommonStyles.fontRegular,
                                 CommonStyles.textSizeSmall,
                                 {color: '#333333'},
-                              ]}>{`Question: \n`}</Text>
+                              ]}>{`Procedure: \n`}</Text>
                             <Text
                               style={[
                                 CommonStyles.fontMedium,
@@ -300,7 +300,7 @@ export default class ProcedureList extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Bookings{' '}
+                  It is a list of your all Procedures{' '}
                 </Text>
               </Text>
             </View>
@@ -341,7 +341,7 @@ export default class ProcedureList extends Component {
                                 CommonStyles.fontRegular,
                                 CommonStyles.textSizeSmall,
                                 {color: '#333333'},
-                              ]}>{`Question: \n`}</Text>
+                              ]}>{`Procedure: \n`}</Text>
                             <Text
                               style={[
                                 CommonStyles.fontMedium,

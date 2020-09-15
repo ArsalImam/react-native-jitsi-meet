@@ -67,10 +67,10 @@ export default class AppointmentRoom extends React.Component {
             this.appointment = response;
           });
 
-        if (this.state.role=='ROLE_PATIENT') {
+
           console.warn("checkstaus")
           this.timer = setInterval(() => this.checkStatus(appointmentId), 5000);
-        }
+        
       }).catch(err => {
         ViewUtils.showToast(err);
     })
