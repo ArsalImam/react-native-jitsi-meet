@@ -622,7 +622,7 @@ export default class Api {
     if (!fcmToken) {
       throw 'token not token';
     }
-    
+    await AsyncStorage.setItem('fcmToken', fcmToken);
     let user = await this._user();
     if (!user) {
       throw 'user not logged in yet!';
@@ -636,7 +636,6 @@ export default class Api {
     console.warn("data fcm :: ",data)
     if (data.error) throw data.error.message;
     console.warn('fcm updated', fcmToken);
-    await AsyncStorage.setItem('fcmToken', fcmToken);
     console.warn('fcm AsyncStorage has set');
     return data;
   }

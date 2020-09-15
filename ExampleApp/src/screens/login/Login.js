@@ -52,7 +52,7 @@ class Login extends Component {
     // })
     AsyncStorage.getItem('@user').then(token => {
       console.log('token', token);
-
+      console.warn('token in willmount', token);
       if (token) {
         console.log('token', token);
         this.props.navigation.replace('MyDrawer');
