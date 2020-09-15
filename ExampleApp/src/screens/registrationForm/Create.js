@@ -11,7 +11,9 @@ import {
     ActivityIndicator,
 } from 'react-native';
 import CommonStyles from '../../CommonStyles';
-import {Item, Input, Container, Picker, Icon} from 'native-base';
+
+import moment from 'moment';
+import {Item, Input, Container, Picker,DatePicker, Icon} from 'native-base';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import Api from '../../Api';
 import {ViewUtils} from '../../Utils';
@@ -31,6 +33,10 @@ class Create extends Component {
             password: '',
             confirmPasword: '',
             drCode: '',
+            dateOfBirth:'',
+            mobile:'',
+            personalDetails: {},
+
         };
     }
 
@@ -59,7 +65,14 @@ class Create extends Component {
         }else if(this.state.drCode == ''){
             ViewUtils.showToast('Doctor Code cannot be empty');
             return false;
+        }else if(this.state.age == ''){
+            ViewUtils.showToast('Doctor Code cannot be empty');
+            return false;
+        }else if(this.state.phoneNumber == ''){
+            ViewUtils.showToast('Doctor Code cannot be empty');
+            return false;
         }
+
 
         return true;
     }
@@ -98,6 +111,8 @@ class Create extends Component {
             "username": this.state.firstName + this.state.lastName,
             "personalDetails": {
                 "gender": this.state.gender,
+                "mobile": this.state.mobile,
+                "dateOfBirth": this.state.dateOfBirth,
                 "country": "Pakistan",
                 "postalCode": "",
                 "address2": "",
@@ -178,6 +193,8 @@ class Create extends Component {
 
                                 <View style={[CommonStyles.container, CommonStyles.horizontalContainer,]}>
 
+                                    
+
                                     <Item regular
                                           style={[CommonStyles.container, CommonStyles.loginItemStyle, {marginRight: 5}]}>
                                         <Input
@@ -221,6 +238,35 @@ class Create extends Component {
                                     </Item>
 
                                 </View>
+                            <Label
+                                    style={[
+                                    {marginTop: 10, alignSelf: 'center', width: '88%'},
+                                    CommonStyles.fontRegular,
+                                    CommonStyles.textSizeSmall,
+                                    ]}>
+                                    {' '}
+                                    Date of Birth
+                                </Label>
+                                <Item regular style={[CommonStyles.loginItemStyle, CommonStyles.mt10]}>
+                                <DatePicker
+
+                                        textStyle={{color: '#fff'}}
+                                        itemTextStyle={{color: 'red'}}
+                                        style={{color: '#fff',}}
+                                        itemStyle={{backgroundColor: '#fff'}}
+                                        placeholderTextColor="#FFF"
+                                style={[
+                                    CommonStyles.fontMedium,
+                                    CommonStyles.textColorWhite,
+                                    CommonStyles.textSizeNormal,
+                                ]}
+                                value={moment(this.state.dateOfBirth).format('L')}
+                                onDateChange={val => this.setState({dateOfBirth: val})}
+                                disabled={false}
+                                />
+                                <Icon active name="calendar" 
+                                  style={{color: "#fff"}}/>
+                            </Item>
 
                                 <Item regular
                                       picker
@@ -323,6 +369,28 @@ class Create extends Component {
                                     />
                                 </Item>
 
+                                <Item
+                                    regular
+                                    style={[CommonStyles.loginItemStyle, CommonStyles.mt10]}>
+                                    <Input
+
+                                    autoCapitalize="none"
+                                    returnKeyType="done"
+                                    selectionColor="#fff"
+                                    textContentType="password"
+                                    name="password"
+                                    placeholder={'Mobile Number'}
+                                    placeholderTextColor="#FFF"
+                                    keyboardType={'number-pad'}
+                                    value={this.state.mobile}
+                                    onChangeText={val => this.setState({mobile: val})}
+                                    style={[
+                                        CommonStyles.fontMedium,
+                                        CommonStyles.textColorWhite,
+                                        CommonStyles.textSizeNormal,
+                                    ]}
+                                    />
+                                </Item>
                                 <Item
                                     regular
                                     style={[CommonStyles.loginItemStyle, CommonStyles.mt10]}>
