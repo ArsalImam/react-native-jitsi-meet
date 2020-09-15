@@ -17,6 +17,8 @@ import moment from 'moment';
 import {ViewUtils} from '../../Utils';
 import Api from '../../Api';
 import Loader from '../../components/Loader';
+
+import { Roles } from '../.././Configs';
 import {cos} from 'react-native-reanimated';
 import {Button} from 'react-native-paper';
 
@@ -32,8 +34,11 @@ export default class PatientProfile extends React.Component {
         url: '',
       },
       showLoader: true,
+      role: ''
     };
   }
+
+
 
   componentDidMount() {
     this.props.navigation.addListener('focus', payLoad => {
@@ -68,6 +73,9 @@ export default class PatientProfile extends React.Component {
           this.setState({isLoading: false});
         });
     });
+
+    
+    Api.instance().getUserRole().then(role => this.setState({ role }));
   }
 
   shareToWhatsApp = text => {
@@ -189,35 +197,69 @@ export default class PatientProfile extends React.Component {
                         {`\n`}
                       </Text>
                     </Text>
-                    <Text
-                      style={[
-                        CommonStyles.textColorWhite,
-                        CommonStyles.fontRegular,
-                        CommonStyles.textSizeAverage,
-                      ]}>
-                      {`Doctor Code: `} {this.state.user.doctorCode} {`\n`}
-                      {`\nCall: `} {this.state.user.personalDetails.mobile}{' '}
-                      {`\n`}
-                      {`\nAge: `}{' '}
-                      {
-                        moment(this.state.user.personalDetails.dateOfBirth)
-                          .fromNow()
-                          .split(' ')[0]
-                      }
-                      {` `}
-                      {
-                        moment(this.state.user.personalDetails.dateOfBirth)
-                          .fromNow()
-                          .split(' ')[1]
-                      }
-                      {`\n`}
-                    </Text>
+                   
+{this.state.role == Roles.patient ? (
+           <Text
+           style={[
+             CommonStyles.textColorWhite,
+             CommonStyles.fontRegular,
+             CommonStyles.textSizeAverage,
+           ]}>
+
+
+           {`\nCall: `} {this.state.user.personalDetails.mobile}{' '}
+           {`\n`}
+           {`\nAge: `}{' '}
+           {
+             moment(this.state.user.personalDetails.dateOfBirth)
+               .fromNow()
+               .split(' ')[0]
+           }
+           {` `}
+           {
+             moment(this.state.user.personalDetails.dateOfBirth)
+               .fromNow()
+               .split(' ')[1]
+           }
+           {`\n`}
+         </Text>         
+) : (
+  <Text
+  style={[
+    CommonStyles.textColorWhite,
+    CommonStyles.fontRegular,
+    CommonStyles.textSizeAverage,
+  ]}>
+
+
+  {`Doctor Code: `} {this.state.user.doctorCode}
+   {`\n`}
+  {`\nCall: `} {this.state.user.personalDetails.mobile}{' '}
+  {`\n`}
+  {`\nAge: `}{' '}
+  {
+    moment(this.state.user.personalDetails.dateOfBirth)
+      .fromNow()
+      .split(' ')[0]
+  }
+  {` `}
+  {
+    moment(this.state.user.personalDetails.dateOfBirth)
+      .fromNow()
+      .split(' ')[1]
+  }
+  {`\n`}
+</Text>
+)}
+
+
                     {/* <TouchableOpacity onPress={()=> this.shareToWhatsApp()}>
                       <Text>
                         Share Doctor Code
                       </Text>
                     </TouchableOpacity> */}
 
+{this.state.role == Roles.doctor && (
                     <TouchableOpacity
                       style={[
                         CommonStyles.container,
@@ -243,6 +285,7 @@ export default class PatientProfile extends React.Component {
                         SHARE DOCTOR CODE
                       </Text>
                     </TouchableOpacity>
+)}
                   </View>
                 </View>
               </ImageBackground>
