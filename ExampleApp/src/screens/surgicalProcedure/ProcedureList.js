@@ -37,17 +37,34 @@ export default class ProcedureList extends Component {
   }
 
   _getProcedureList() {
-    this.setState({isLoading: true});
-    Api.instance()
-      .getProcedureList()
-      .then(data => {
-        console.warn('=====>', data);
-        this.setState({procedureList: data});
-      })
-      .catch(err => console.log(err))
-      .finally(() => {
-        this.setState({isLoading: false});
-      });
+
+    if (this.state.appointmentId != null) {
+      this.setState({isLoading: true});
+      Api.instance()
+      .getListDuringConsultation('surgicalProcedure',this.state.patientId)
+        .then(data => {
+          console.warn('=====>', data);
+          this.setState({procedureList: data});
+        })
+        .catch(err => console.log(err))
+        .finally(() => {
+          this.setState({isLoading: false});
+        });
+    }else{
+      this.setState({isLoading: true});
+      Api.instance()
+        .getProcedureList()
+        .then(data => {
+          console.warn('=====>', data);
+          this.setState({procedureList: data});
+        })
+        .catch(err => console.log(err))
+        .finally(() => {
+          this.setState({isLoading: false});
+        });
+    }
+
+  
   }
 
   componentDidMount() {
@@ -106,7 +123,7 @@ export default class ProcedureList extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Bookings{' '}
+                  It is a list of your all Procedures{' '}
                 </Text>
               </Text>
             </View>
@@ -150,14 +167,14 @@ export default class ProcedureList extends Component {
                                 CommonStyles.fontRegular,
                                 CommonStyles.textSizeSmall,
                                 {color: '#333333'},
-                              ]}>{`Question: \n`}</Text>
+                              ]}>{`Procedure: \n`}</Text>
                             <Text
                               style={[
                                 CommonStyles.fontMedium,
                                 CommonStyles.textSizeAverage,
                                 {color: '#333333'},
                               ]}>
-                              {item.name}
+                              {item.answer}
                             </Text>
                           </Text>
 
@@ -174,7 +191,7 @@ export default class ProcedureList extends Component {
                                 CommonStyles.textSizeAverage,
                                 {color: '#333333'},
                               ]}>
-                              {item.description}
+                              {item.notes}
                             </Text>
                           </Text>
                         </View>
@@ -227,6 +244,7 @@ export default class ProcedureList extends Component {
                 onPress={() => {
                   this.props.navigation.navigate('ProcedureAdd', {
                     appointmentId: this.state.appointmentId,
+                    patientId:this.props.route.params.patientId,
                     onProcedureAdd: () => this._getProcedureList(),
                   });
                 }}
@@ -282,7 +300,7 @@ export default class ProcedureList extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Bookings{' '}
+                  It is a list of your all Procedures{' '}
                 </Text>
               </Text>
             </View>
@@ -323,7 +341,7 @@ export default class ProcedureList extends Component {
                                 CommonStyles.fontRegular,
                                 CommonStyles.textSizeSmall,
                                 {color: '#333333'},
-                              ]}>{`Question: \n`}</Text>
+                              ]}>{`Procedure: \n`}</Text>
                             <Text
                               style={[
                                 CommonStyles.fontMedium,

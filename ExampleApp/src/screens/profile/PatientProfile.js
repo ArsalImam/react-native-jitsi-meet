@@ -8,6 +8,7 @@ import {
   StatusBar,
   Image,
   TouchableOpacity,
+  Linking,
 } from 'react-native';
 import {FlatGrid} from 'react-native-super-grid';
 import CommonStyles from '../../CommonStyles';
@@ -16,7 +17,10 @@ import moment from 'moment';
 import {ViewUtils} from '../../Utils';
 import Api from '../../Api';
 import Loader from '../../components/Loader';
+
+import { Roles } from '../.././Configs';
 import {cos} from 'react-native-reanimated';
+import {Button} from 'react-native-paper';
 
 export default class PatientProfile extends React.Component {
   constructor(props) {
@@ -30,8 +34,11 @@ export default class PatientProfile extends React.Component {
         url: '',
       },
       showLoader: true,
+      role: ''
     };
   }
+
+
 
   componentDidMount() {
     this.props.navigation.addListener('focus', payLoad => {
@@ -66,7 +73,14 @@ export default class PatientProfile extends React.Component {
           this.setState({isLoading: false});
         });
     });
+
+    
+    Api.instance().getUserRole().then(role => this.setState({ role }));
   }
+
+  shareToWhatsApp = text => {
+    Linking.openURL(`whatsapp://send?text=Doctor Code:${text}`);
+  };
 
   render() {
     return (
@@ -104,8 +118,7 @@ export default class PatientProfile extends React.Component {
                           width: 105,
                         },
                       ]}>
-                    
-                      {this.state.user.imageUrl == '' ?(
+                      {this.state.user.imageUrl == '' ? (
                         <Image
                           style={{
                             width: '100%',
@@ -114,16 +127,16 @@ export default class PatientProfile extends React.Component {
                           }}
                           source={require('../../assets/drawable-xxxhdpi/Mask.png')}
                         />
-                        // <Icon 
+                      ) : (
+                        // <Icon
                         // style={{
                         //       width: '100%',
                         //       height: 105,
                         //       resizeMode: 'cover',
                         //     }}
                         // name="user" type="FontAwesome5"
-                        
+
                         // />
-                      ) : (
                         <Image
                           style={{
                             width: '100%',
@@ -131,8 +144,7 @@ export default class PatientProfile extends React.Component {
                             resizeMode: 'contain',
                           }}
                           source={{
-                            uri: this.state.user.imageUrl
-                         
+                            uri: this.state.user.imageUrl,
                           }}
                         />
                       )}
@@ -185,30 +197,95 @@ export default class PatientProfile extends React.Component {
                         {`\n`}
                       </Text>
                     </Text>
+                   
+{this.state.role == Roles.patient ? (
+           <Text
+           style={[
+             CommonStyles.textColorWhite,
+             CommonStyles.fontRegular,
+             CommonStyles.textSizeAverage,
+           ]}>
 
-                    <Text
+
+           {`\nCall: `} {this.state.user.personalDetails.mobile}{' '}
+           {`\n`}
+           {`\nAge: `}{' '}
+           {
+             moment(this.state.user.personalDetails.dateOfBirth)
+               .fromNow()
+               .split(' ')[0]
+           }
+           {` `}
+           {
+             moment(this.state.user.personalDetails.dateOfBirth)
+               .fromNow()
+               .split(' ')[1]
+           }
+           {`\n`}
+         </Text>         
+) : (
+  <Text
+  style={[
+    CommonStyles.textColorWhite,
+    CommonStyles.fontRegular,
+    CommonStyles.textSizeAverage,
+  ]}>
+
+
+  {`Doctor Code: `} {this.state.user.doctorCode}
+   {`\n`}
+  {`\nCall: `} {this.state.user.personalDetails.mobile}{' '}
+  {`\n`}
+  {`\nAge: `}{' '}
+  {
+    moment(this.state.user.personalDetails.dateOfBirth)
+      .fromNow()
+      .split(' ')[0]
+  }
+  {` `}
+  {
+    moment(this.state.user.personalDetails.dateOfBirth)
+      .fromNow()
+      .split(' ')[1]
+  }
+  {`\n`}
+</Text>
+)}
+
+
+                    {/* <TouchableOpacity onPress={()=> this.shareToWhatsApp()}>
+                      <Text>
+                        Share Doctor Code
+                      </Text>
+                    </TouchableOpacity> */}
+
+{this.state.role == Roles.doctor && (
+                    <TouchableOpacity
                       style={[
-                        CommonStyles.textColorWhite,
-                        CommonStyles.fontRegular,
-                        CommonStyles.textSizeAverage,
-                      ]}>
-                      {`Doctor Code: `} {this.state.user.doctorCode} {`\n`}
-                      {`\nCall: `} {this.state.user.personalDetails.mobile}{' '}
-                      {`\n`}
-                      {`\nAge: `}{' '}
-                      {
-                        moment(this.state.user.personalDetails.dateOfBirth)
-                          .fromNow()
-                          .split(' ')[0]
-                      }
-                      {` `}
-                      {
-                        moment(this.state.user.personalDetails.dateOfBirth)
-                          .fromNow()
-                          .split(' ')[1]
-                      }
-                      {`\n`}
-                    </Text>
+                        CommonStyles.container,
+                        CommonStyles.br5,
+                        {
+                          backgroundColor: '#333333',
+                          marginTop: 5,
+                          marginHorizontal: 50,
+                        },
+                      ]}
+                      onPress={()=>this.shareToWhatsApp(this.state.user.doctorCode)}
+                      
+                      >
+                      <Text
+                        style={[
+                          CommonStyles.fontRegular,
+                          CommonStyles.padding,
+                          CommonStyles.margin,
+                          CommonStyles.centerText,
+                          CommonStyles.textColorWhite,
+                        ]}>
+                          
+                        SHARE DOCTOR CODE
+                      </Text>
+                    </TouchableOpacity>
+)}
                   </View>
                 </View>
               </ImageBackground>

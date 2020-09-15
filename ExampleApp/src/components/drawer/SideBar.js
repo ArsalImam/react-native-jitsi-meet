@@ -185,13 +185,20 @@ export default class Sidebar extends Component {
           </Left>
         </ListItem>
 
-        <ListItem itemDivider  style={{ backgroundColor: 'grey'}}>
-          <Text style={[CommonStyles.textSizeMedium, CommonStyles.textColorWhite, { textAlign: 'center', alignSelf: 'center' }]}>Patient Education</Text>
-        </ListItem>
 
         <ListItem button={true} onPress={() => {
           this.props.closeDrawer();
-          this.props.changeScreenHandler.navigate('TherapyList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) }} >
+          this.props.changeScreenHandler.navigate('ObservationList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) }} >
+          <Left>
+            <Icon active name="ios-flower" type='Ionicons' style={[CommonStyles.textSizeMedium]} />
+            <Text style={[CommonStyles.textSizeAverage, { marginLeft: 10 }]} >Observation</Text>
+          </Left>
+        </ListItem>
+
+
+        <ListItem button={true} onPress={() => {
+          this.props.closeDrawer();
+          this.props.changeScreenHandler.navigate('ChatLogs', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) }} >
           <Left>
             <Icon active name="ios-flower" type='Ionicons' style={[CommonStyles.textSizeMedium]} />
             <Text style={[CommonStyles.textSizeAverage, { marginLeft: 10 }]} >Chat Logs</Text>

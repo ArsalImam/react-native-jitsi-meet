@@ -5,7 +5,7 @@ import {Configs, Roles, AppointmentStatus} from './Configs';
 import * as AxiosLogger from 'axios-logger';
 import moment from 'moment';
 import {AsyncStorage} from 'react-native';
-import {ViewUtils} from './Utils'
+import {ViewUtils} from './Utils';
 export default class Api {
   static myInstance = null;
   client;
@@ -21,7 +21,7 @@ export default class Api {
         return response;
       },
       function(error) {
-      //  ViewUtils.showToast(error.response);
+        //  ViewUtils.showToast(error.response);
         return Promise.reject(error);
       },
     );
@@ -161,7 +161,7 @@ export default class Api {
   }
 
   async notifyAppointment(appointmentId) {
-    console.warn("inide appointmentId == ",appointmentId)
+    console.warn('inide appointmentId == ', appointmentId);
     try {
       let user = await this._user();
       let _user = JSON.parse(JSON.stringify(user));
@@ -256,6 +256,43 @@ export default class Api {
     return response.data;
   }
 
+  async getListDuringConsultation(setupType, patientId) {
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+    let response = await this.client.get(
+      this.getUrl(
+        `setups-patients?filter[where][and][0][doctorId]=${
+          _user.id
+        }&filter[where][and][1][patientId]=${patientId}&filter[where][and][2][setup-type]=${setupType}&filter[order]=id%20DESC`,
+      ),
+      
+    );
+    let data = response.data;
+    console.warn('data', data);
+    if (data.error) throw data.error.message;
+    return data;
+  }
+
+  async getVitalListConsultation(patientId) {
+    console.warn(patientId)
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+    let response = await this.client.get(
+      this.getUrl(
+        `vitals?filter[where][patientId]=${
+          patientId
+        }&filter[order]=id%20DESC`,
+      ),
+    );
+  
+    let data = response.data;
+    console.warn('data', data);
+    if (data.error) throw data.error.message;
+    return data;
+  }
+
+
+  
   // Medication List
   async getMedicationList() {
     let user = await this._user();
@@ -289,6 +326,24 @@ export default class Api {
     if (data.error) throw data.error.message;
     return data;
   }
+
+  async getObservationList() {
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+    let response = await this.client.get(
+      this.getUrl(
+        `Setups?filter[where][doctorId]=${
+          _user.id
+        }&filter[where][setupType]=observation&filter[order]=createdAt%20DESC`,
+      ),
+    );
+    let data = response.data;
+    console.warn('data', data);
+    if (data.error) throw data.error.message;
+    return data;
+  }
+
+
 
   async getReferToSpecialistList() {
     let user = await this._user();
@@ -464,8 +519,29 @@ export default class Api {
       data,
       this.getHeaders(),
     );
+
+      console.warn("response ----- ",JSON.stringify(response))
+
     return response.data;
   }
+
+  async createVitals(data) {
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+    console.warn('data -- ', data);
+    // data.doctorId = _user.id;
+
+    let response = await this.client.post(
+      this.getUrl('vitals'),
+      data,
+      this.getHeaders(),
+    );
+
+      console.warn("response ----- ",JSON.stringify(response))
+
+    return response.data;
+  }
+
 
   // Update Profile
   async updateProfile(data) {
@@ -486,7 +562,7 @@ export default class Api {
   }
 
   async updateAppointmentStatus(appointmentId) {
-    console.warn("appointmentId in updae ===",appointmentId)
+    console.warn('appointmentId in updae ===', appointmentId);
     let appointment = {
       status: AppointmentStatus.completed,
     };
@@ -542,10 +618,11 @@ export default class Api {
   }
 
   async updateFcmToken(fcmToken: string) {
+    console.warn("fcmToken fcm :: ",fcmToken)
     if (!fcmToken) {
       throw 'token not token';
     }
-
+    await AsyncStorage.setItem('fcmToken', fcmToken);
     let user = await this._user();
     if (!user) {
       throw 'user not logged in yet!';
@@ -556,9 +633,10 @@ export default class Api {
       fcmToken,
     });
     let data = response.data;
+    console.warn("data fcm :: ",data)
     if (data.error) throw data.error.message;
     console.warn('fcm updated', fcmToken);
-    await AsyncStorage.setItem('fcmToken', fcmToken);
+    console.warn('fcm AsyncStorage has set');
     return data;
   }
 

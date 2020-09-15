@@ -49,6 +49,9 @@ export default class AddPrescribtion extends Component {
       // patientId,
       // patientId,
     };
+
+    console.warn("this.props.route.params ======= ",this.props.route.params)
+
   }
 
   _savePrescribeMedication = () => {
@@ -134,7 +137,7 @@ export default class AddPrescribtion extends Component {
                     CommonStyles.textSizeSmall,
                     CommonStyles.textColorWhite,
                   ]}>
-                  It is a list of your all booking patients{' '}
+                  Add a new Prescription{' '}
                 </Text>
               </Text>
             </View>

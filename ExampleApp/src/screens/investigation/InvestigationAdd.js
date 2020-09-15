@@ -32,13 +32,55 @@ export default class InvestigationAdd extends Component {
     }
 
     _saveInvestigation = () => {
+     
+        if(this.state.appointmentId != null){
+            
+            let data = {
+                // date: this.state.startDate,
+                 // "setupId": "",
+                 // "doctorId": "5f01d90dffd17912ce896c56",
+                 // "assistantId": "",
+                 patientId: this.state.patientId,
+                 answer: this.state.name,
+                 notes:this.state.description,
+                // endDate: this.state.endDate,
+                 'setup-type': 'requestMedication',
+                 active: false,
+               };
 
-        let data = {
-            "setupType": "investigation",
-            "name": this.state.name,
-            "description": this.state.description,
-        }
-       
+            if(this.state.name != ""){
+                this.setState({ isLoading: true })
+                Api.instance()
+                .createPrescription(data)
+                .then(response => {
+                    this.addToConsultation(data);
+                    this.props.route.params.onInvestigationAdd();
+                    this.props.navigation.goBack();
+                    ViewUtils.showToast('Investigation has been saved successfully!');
+                })
+                .catch(err => {
+                    ViewUtils.showAlert(
+                        'Unable to Perform this Action',       
+                    );
+                    //ViewUtils.showToast(err);
+                })
+                .finally(() => {
+                    this.setState({ isLoading: false });
+                });
+            }else{
+                ViewUtils.showAlert(
+                    'Please Provide Investigation Name',       
+                );
+            }
+
+        }else{
+               
+            let data = {
+                "setupType": "investigation",
+                "name": this.state.name,
+                "description": this.state.description,
+            }
+
         if(this.state.name != ""){
             this.setState({ isLoading: true })
             Api.instance()
@@ -62,8 +104,29 @@ export default class InvestigationAdd extends Component {
             ViewUtils.showAlert(
                 'Please Provide Investigation Name',       
             );
-        }  
+        }
+
+        }
+  
     };
+
+
+    addToConsultation(item) {
+        Api.instance()
+          .addPrescribeMedication(
+            item,
+            this.state.appointmentId,
+            this.state.patientId,
+          )
+    
+          .then(response => {
+            console.warn('response', response);
+           
+          })
+          .catch(err => {})
+          .finally(() => {});
+      }
+
     render() {     
         if (this.state.appointmentId != null) {
             return (
@@ -78,7 +141,7 @@ export default class InvestigationAdd extends Component {
                     }>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
                                 <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Investigation Add\n`}</Text>
-                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
+                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>Add a new Investigation Record </Text>
                             </Text>
                         </View>
 
@@ -170,7 +233,7 @@ export default class InvestigationAdd extends Component {
                         <View style={{ flex: 2.3 }}>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
                                 <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Investigation Add\n`}</Text>
-                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
+                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>Add a new Investigation Record </Text>
                             </Text>
                         </View>
 

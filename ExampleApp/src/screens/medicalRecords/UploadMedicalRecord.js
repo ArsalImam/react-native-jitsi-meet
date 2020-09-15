@@ -295,7 +295,7 @@ export default class UploadMedicalRecord extends Component {
                     CommonStyles.textSizeSmall,
                     CommonStyles.textColorWhite,
                   ]}>
-                  It is a list of your all booking patients{' '}
+                  Upload new Medical Record{' '}
                 </Text>
               </Text>
             </View>
@@ -488,7 +488,7 @@ export default class UploadMedicalRecord extends Component {
                     CommonStyles.textSizeSmall,
                     CommonStyles.textColorWhite,
                   ]}>
-                  It is a list of your all booking patients{' '}
+                  Upload new Medical Record{' '}
                 </Text>
               </Text>
             </View>

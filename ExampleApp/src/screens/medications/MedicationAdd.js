@@ -96,7 +96,7 @@ export default class MedicationAdd extends Component {
                     }>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
                                 <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Medication Add\n`}</Text>
-                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
+                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>Add a new Medication </Text>
                             </Text>
                         </View>
 
@@ -204,7 +204,7 @@ export default class MedicationAdd extends Component {
                         <View style={{ flex: 2.3 }}>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
                                 <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Medication Add\n`}</Text>
-                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
+                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>Add a new Medication </Text>
                             </Text>
                         </View>
 

@@ -37,17 +37,32 @@ export default class FollowUpList extends Component {
   }
 
   _getFollowUpList() {
-    this.setState({isLoading: true});
-    Api.instance()
-      .getFollowUpList()
-      .then(data => {
-        console.warn('fooloup  =====>', data);
-        this.setState({followUpList: data});
-      })
-      .catch(err => console.log(err))
-      .finally(() => {
-        this.setState({isLoading: false});
-      });
+    if (this.state.appointmentId != null) {
+      this.setState({isLoading: true});
+      Api.instance()
+      .getListDuringConsultation('followup',this.state.patientId)
+        .then(data => {
+          console.warn('fooloup  =====>', data);
+          this.setState({followUpList: data});
+        })
+        .catch(err => console.log(err))
+        .finally(() => {
+          this.setState({isLoading: false});
+        });
+    }else{
+      this.setState({isLoading: true});
+      Api.instance()
+        .getFollowUpList()
+        .then(data => {
+          console.warn('fooloup  =====>', data);
+          this.setState({followUpList: data});
+        })
+        .catch(err => console.log(err))
+        .finally(() => {
+          this.setState({isLoading: false});
+        });
+    }
+    
   }
 
   componentDidMount() {
@@ -79,6 +94,9 @@ export default class FollowUpList extends Component {
       .finally(() => {});
   }
   render() {
+
+    console.warn("followUpList  ---- ",this.state.followUpList)
+
     if (this.state.appointmentId != null) {
       return (
         <View style={{height: '75%'}}>
@@ -97,7 +115,7 @@ export default class FollowUpList extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Bookings{' '}
+                  It is a list of your all Follow ups{' '}
                 </Text>
               </Text>
             </View>
@@ -149,14 +167,14 @@ export default class FollowUpList extends Component {
                                   CommonStyles.textSizeSmall,
                                   CommonStyles.fontRegular,
                                   {color: '#333333'},
-                                ]}>{`Date: `}</Text>
+                                ]}>{`Follow up Date: `}</Text>
                               <Text
                                 style={[
                                   CommonStyles.fontMedium,
                                   CommonStyles.textSizeAverage,
                                   {color: '#333333'},
                                 ]}>
-                                {moment(item.name).format('DD-MM-yyyy')}
+                                {moment(item.answer).format('DD-MM-yyyy')}
                               </Text>
                             </Text>
                           </View>
@@ -210,6 +228,7 @@ export default class FollowUpList extends Component {
                 onPress={() => {
                   this.props.navigation.navigate('FollowUpAdd', {
                     appointmentId: this.props.route.params.appointmentId,
+                    patientId:this.props.route.params.patientId,
                     onFollowUpAdd: () => this._getFollowUpList(),
                   });
                 }}
@@ -266,7 +285,7 @@ export default class FollowUpList extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Bookings{' '}
+                  It is a list of your all Follow ups{' '}
                 </Text>
               </Text>
             </View>

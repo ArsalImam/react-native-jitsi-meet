@@ -195,7 +195,7 @@ export default class UploadIllustrations extends React.Component {
                   CommonStyles.textSizeSmall,
                   CommonStyles.textColorWhite,
                 ]}>
-                It is a list of your all booking patients{' '}
+                Edit your Profile{' '}
               </Text>
             </Text>
           </View>

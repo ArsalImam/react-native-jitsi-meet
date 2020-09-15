@@ -162,7 +162,7 @@ eventData(param) {
                   CommonStyles.fontRegular,
                   CommonStyles.textSizeAverage,
                 ]}>
-                It is a list of your all booking patients
+                It is a list of your all completed bookings
                 
               </Text>
             </Text>
