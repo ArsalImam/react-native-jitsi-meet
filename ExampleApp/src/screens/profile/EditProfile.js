@@ -7,6 +7,7 @@ import {
   ScrollView,
   StatusBar,
   Platform,
+  Image,
 } from 'react-native';
 import {
   Container,
@@ -21,7 +22,6 @@ import {
   Icon,
   Picker,
   Form,
-  Image,
 } from 'native-base';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import CommonStyles from '../../CommonStyles';
@@ -38,6 +38,7 @@ export default class UploadIllustrations extends React.Component {
     this.state = {
       isLoading: false,
       image: null,
+      imageUrl: '',
       salutation: '',
       firstName: '',
       lastName: '',
@@ -55,21 +56,40 @@ export default class UploadIllustrations extends React.Component {
       },
     };
   }
+  componentDidMount() {
+    console.warn('imageeeeeeee', this.state.imageUrl);
+  }
 
   handleChoosePhoto = () => {
-    const options = {
-      title: '',
-      noData: true,
-      storageOption: {
-        skipBackup: true,
-        path: 'images',
-      },
-    };
+    if (this.state.imageUrl != '') {
+      var options = {
+        title: '',
+        customButtons: [{name: 'remove', title: 'Remove Profile Image'}],
+        noData: true,
+        storageOption: {
+          skipBackup: true,
+          path: 'images',
+        },
+      };
+    } else {
+      var options = {
+        title: '',
+        noData: true,
+        storageOption: {
+          skipBackup: true,
+          path: 'images',
+        },
+      };
+    }
+
     ImagePicker.showImagePicker(options, response => {
       console.warn('Response = ', response);
 
       if (response.didCancel) {
-        console.warn('user cancelled image Picker');
+        console.warn('User Tapped cancel');
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+        this.setState({imageUrl: ''});
       } else if (response.err) {
         console.warn('Image Picker Error ', err);
       } else {
@@ -87,7 +107,7 @@ export default class UploadIllustrations extends React.Component {
             .then(response => {
               console.warn('reponse ==>', JSON.stringify(response));
               this.setState({
-                imageUri: Api.instance().getMediaUrl(
+                imageUrl: Api.instance().getMediaUrl(
                   Configs.containers.images,
                   response.result.files.uploadFile[0].name,
                 ),
@@ -98,40 +118,40 @@ export default class UploadIllustrations extends React.Component {
   };
 
   saveImage = () => {
-    if (this.state.imageUri) {
-      let data = {
-        salutation: this.state.salutation,
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        email: this.state.user.email,
-        speciality: this.state.speciality,
-        personalDetails: {
-          city: this.state.city,
-          country: this.state.country,
-          dateOfBirth: this.state.dateOfBirth,
-          mobile: this.state.mobile,
-          url: this.state.imageUri,
-        },
-      };
+    let data = {
+      salutation: this.state.salutation,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      email: this.state.user.email,
+      speciality: this.state.speciality,
+      imageUrl: this.state.imageUrl,
+      personalDetails: {
+        city: this.state.city,
+        country: this.state.country,
+        dateOfBirth: this.state.dateOfBirth,
+        mobile: this.state.mobile,
+      },
+    };
 
-      this.setState({
-        isLoading: true,
+    this.setState({
+      isLoading: true,
+    });
+    Api.instance()
+      .updateProfile(data)
+      .then(response => {
+        console.warn('data =====>', response);
+        // this.props.navigation.navigate('PatientProfile')
+        this.props.navigation.goBack();
+
+        ViewUtils.showToast('Profile has been updated successfully!');
+        console.warn('dataaaaaaaaaa ===>', data);
+      })
+      .catch(err => {
+        ViewUtils.showToast(err);
+      })
+      .finally(() => {
+        this.setState({isLoading: false});
       });
-      Api.instance()
-        .updateProfile(data)
-        .then(response => {
-          console.warn('data =====>', response);
-          this.props.navigation.replace('PatientProfile');
-          ViewUtils.showToast('Profile has been updated successfully!');
-          console.warn('dataaaaaaaaaa ===>', data);
-        })
-        .catch(err => {
-          ViewUtils.showToast(err);
-        })
-        .finally(() => {
-          this.setState({isLoading: false});
-        });
-    }
   };
 
   componentDidMount() {
@@ -149,41 +169,11 @@ export default class UploadIllustrations extends React.Component {
           country: user.personalDetails.country,
           mobile: user.personalDetails.mobile,
           dateOfBirth: user.personalDetails.dateOfBirth,
+          imageUrl: user.imageUrl,
         });
       })
       .catch(err => ViewUtils.showToast(err));
   }
-  // _updateProfile = () => {
-  //     let data = {
-  //         "salutation": this.state.salutation,
-  //         "firstName": this.state.firstName,
-  //         "lastName": this.state.lastName,
-  //         "email": this.state.user.email,
-  //         "speciality": this.state.speciality,
-  //         "personalDetails": {
-  //             "city": this.state.city,
-  //             "country": this.state.country,
-  //             "dateOfBirth": this.state.dateOfBirth,
-  //             "mobile": this.state.mobile,
-  //         }
-  //     }
-  //     this.setState({ isLoading: true });
-  //     Api.instance()
-  //         .updateProfile(data)
-  //         .then(response => {
-  //             // this.props.navigation.goBack();
-  //             this.props.navigation.replace('PatientProfile')
-  //             ViewUtils.showToast('Profile has been updated successfully!');
-  //             console.warn(data)
-  //         })
-  //         .catch(err => {
-  //             ViewUtils.showToast(err);
-  //         })
-  //         .finally(() => {
-  //             this.setState({ isLoading: false });
-
-  //         });
-  // };
 
   render() {
     const {image} = this.state;
@@ -218,11 +208,33 @@ export default class UploadIllustrations extends React.Component {
                   this.handleChoosePhoto();
                 }}
                 style={{marginVertical: 20, alignSelf: 'center'}}>
-                <Icon
-                  name="user-edit"
-                  type="FontAwesome5"
-                  style={{fontSize: 70}}
-                />
+                {this.state.imageUrl == '' ? (
+                  <Icon
+                    name="user-edit"
+                    type="FontAwesome5"
+                    style={{fontSize: 70}}
+                  />
+                ) : (
+                  <View
+                    style={{
+                      width: 120,
+                      height: 120,
+                      backgroundColor: '#E3E3E3',
+                      borderRadius: 60,
+                    }}>
+                    <Image
+                      source={{
+                        uri: this.state.imageUrl,
+                      }}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        borderRadius: 60,
+                        resizeMode: 'cover',
+                      }}
+                    />
+                  </View>
+                )}
               </TouchableOpacity>
 
               <Item

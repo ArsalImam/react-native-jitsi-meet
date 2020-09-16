@@ -89,6 +89,7 @@ export default class AppointmentRoom extends React.Component {
         }
       });
   }
+  
 
   handleBackButton() {
     return true;
