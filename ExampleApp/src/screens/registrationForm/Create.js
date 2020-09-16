@@ -13,7 +13,7 @@ import {
 import CommonStyles from '../../CommonStyles';
 
 import moment from 'moment';
-import {Item, Input, Container, Picker,DatePicker, Icon} from 'native-base';
+import {Item, Input, Container, Picker,DatePicker, Icon, Label } from 'native-base';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import Api from '../../Api';
 import {ViewUtils} from '../../Utils';
@@ -62,13 +62,17 @@ class Create extends Component {
         }else if(this.state.password != this.state.confirmPasword){
             ViewUtils.showToast('Password and Confirm Password dont match');
             return false;
-        }else if(this.state.drCode == ''){
-            ViewUtils.showToast('Doctor Code cannot be empty');
+        }else if(this.state.dateOfBirth == ''){
+            ViewUtils.showToast('DOB cannot be empty');
             return false;
-        }else if(this.state.age == ''){
-            ViewUtils.showToast('Doctor Code cannot be empty');
+        }else if(this.state.mobile == ''){
+            ViewUtils.showToast('Mobile Number cannot be empty');
             return false;
-        }else if(this.state.phoneNumber == ''){
+        }else if(this.state.city == ''){
+            ViewUtils.showToast('City cannot be empty');
+            return false;
+        }
+        else if(this.state.drCode == ''){
             ViewUtils.showToast('Doctor Code cannot be empty');
             return false;
         }
@@ -113,6 +117,7 @@ class Create extends Component {
                 "gender": this.state.gender,
                 "mobile": this.state.mobile,
                 "dateOfBirth": this.state.dateOfBirth,
+                "city" : this.state.city,
                 "country": "Pakistan",
                 "postalCode": "",
                 "address2": "",
@@ -178,8 +183,7 @@ class Create extends Component {
                                     CommonStyles.textSizeNormal,
                                     CommonStyles.textColorWhite,
                                     {marginTop: 5},
-                                ]}>
-                                Enter your details to register for EvoTelemedicine
+                                ]}>Enter your details to register for Etibb
                             </Text>
 
                             {/* <Image
@@ -240,6 +244,20 @@ class Create extends Component {
                                 </View>
                            
                                 <Item regular style={[CommonStyles.loginItemStyle, CommonStyles.mt10]}>
+<<<<<<< HEAD
+=======
+                                <Label
+                                    style={[
+                                    {marginTop: 3, alignSelf: 'center', fontSize: 15, },
+                                    CommonStyles.fontRegular,
+                                    CommonStyles.fontMedium,
+                                    CommonStyles.textColorWhite,
+                                    CommonStyles.container,
+                                    ]}>
+                                    {' '}
+                                    Date of Birth
+                                </Label>
+>>>>>>> 9f99dc7b9c7c99bad2deab5da11a99d629c8428c
                                 <DatePicker
 
                                         textStyle={{color: '#fff'}}
@@ -251,6 +269,7 @@ class Create extends Component {
                                     CommonStyles.fontMedium,
                                     CommonStyles.textColorWhite,
                                     CommonStyles.textSizeNormal,
+                                    CommonStyles.mt10,
                                 ]}
                                 value={moment(this.state.dateOfBirth).format('L')}
                                 onDateChange={val => this.setState({dateOfBirth: val})}
@@ -383,6 +402,29 @@ class Create extends Component {
                                     ]}
                                     />
                                 </Item>
+
+                                <Item
+                                    regular
+                                    style={[CommonStyles.loginItemStyle, CommonStyles.mt10]}>
+                                    <Input
+
+                                    autoCapitalize="none"
+                                    returnKeyType="done"
+                                    selectionColor="#fff"
+                                    textContentType="city"
+                                    name="city"
+                                    placeholder={'City'}
+                                    placeholderTextColor="#FFF"
+                                    value={this.state.city}
+                                    onChangeText={val => this.setState({city: val})}
+                                    style={[
+                                        CommonStyles.fontMedium,
+                                        CommonStyles.textColorWhite,
+                                        CommonStyles.textSizeNormal,
+                                    ]}
+                                    />
+                                </Item>
+
                                 <Item
                                     regular
                                     style={[CommonStyles.loginItemStyle, CommonStyles.mt10]}>
