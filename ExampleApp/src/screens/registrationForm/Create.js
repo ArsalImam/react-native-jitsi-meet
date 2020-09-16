@@ -238,15 +238,7 @@ class Create extends Component {
                                     </Item>
 
                                 </View>
-                            <Label
-                                    style={[
-                                    {marginTop: 10, alignSelf: 'center', width: '88%'},
-                                    CommonStyles.fontRegular,
-                                    CommonStyles.textSizeSmall,
-                                    ]}>
-                                    {' '}
-                                    Date of Birth
-                                </Label>
+                           
                                 <Item regular style={[CommonStyles.loginItemStyle, CommonStyles.mt10]}>
                                 <DatePicker
 
