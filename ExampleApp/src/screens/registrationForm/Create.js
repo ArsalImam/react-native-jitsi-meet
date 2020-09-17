@@ -245,7 +245,6 @@ class Create extends Component {
                             
                            
                                 <Item regular style={[CommonStyles.loginItemStyle, CommonStyles.mt10]}>
-
                                 <Label
                                     style={[
                                     {marginTop: 3, alignSelf: 'center', fontSize: 15, },
