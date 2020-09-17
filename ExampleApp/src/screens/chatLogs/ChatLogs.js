@@ -26,15 +26,14 @@ export default class ChatLogs extends Component {
     if (this.props.route.params) {
       this.state = {
         isLoading: true,
-        diagnosisList: [],
         appointmentId: this.props.route.params.appointmentId,
         patientId: this.props.route.params.patientId,
         doctorId: '',
+        messages: [],
       };
     } else {
       this.state = {
         isLoading: true,
-        diagnosisList: [],
       };
     }
   }
@@ -72,13 +71,17 @@ export default class ChatLogs extends Component {
           return appointmentEventObj.val().conversation[key];
         });
 
-        this.messages.forEach((data: any) => {
-          this.messageArray.push({
-            message: data.message,
-            userId: data.userId,
-            time: data.time,
-          });
-        });
+        this.setState({messages: this.messages});
+
+        console.warn('this.messages == ', this.messages);
+
+        // this.messages.forEach((data: any) => {
+        //   this.messageArray.push({
+        //     message: data.message,
+        //     userId: data.userId,
+        //     time: data.time,
+        //   });
+        // });
       });
   }
 
@@ -91,428 +94,182 @@ export default class ChatLogs extends Component {
   }
 
   _getLogChat(chat) {
-    if (chat.userId == this.state.doctorId) {
-      return (
-        <View>
-          <Text>{chat.message}</Text>
-          <Text>{new Date(chat.time).toLocaleString("en-US")}</Text>
-        </View>
+    console.warn('loggsssss');
+    console.warn('chat :: ', chat);
+    console.warn('chat.userId :: ', chat.userId);
+    console.warn('this.state.doctorId :: ', this.state.doctorId);
 
-        // <div
-        //     className="row"
-        //     style={{
-        //         marginBottom: "10px",
-        //         marginTop: "-10px",
-        //     }}
-        // >
-        //     <span
-        //         style={{
-        //             marginRight: 10,
-        //             marginTop: 30,
-        //         }}
-        //     >
-        //         <img
-        //             style={{
-        //                 borderRadius: "50%",
-        //                 height: 30,
-        //                 width: 30,
-        //             }}
-        //             src="../../../../images/doctorss.jpg"
-        //         />
-        //     </span>
-        //     <span>
-        //         <span
-        //             style={{
-        //                 borderRadius: 10,
-        //                 padding: "15px",
-        //                 backgroundColor: "#1565c0",
-        //                 color: "white",
-        //             }}
-        //         >
-        //             <span style={{marginRight: "10px"}}>
-        //                 {chat.message}{" "}
-        //             </span>
-        //             <span style={{color: "#d3d3d3"}}>
-        //                 {new Date(chat.time).toLocaleString("en-US")}
-        //             </span>
-        //         </span>
-        //     </span>
-        // </div>
+    if (chat.userId == this.state.doctorId) {
+      console.warn('chat.time -- ', chat.time);
+      return (
+        <View
+          style={[CommonStyles.container, {flexDirection: 'row', padding: 12}]}>
+          <View
+            style={[CommonStyles.container, {justifyContent: 'space-between'}]}>
+            <Text style={{marginBottom: 10}}>
+              <Text
+                style={[
+                  CommonStyles.fontRegular,
+                  CommonStyles.textSizeSmall,
+                  {color: '#333333'},
+                ]}>{`Doctor Message: \n`}</Text>
+              <Text
+                style={[
+                  CommonStyles.fontMedium,
+                  CommonStyles.textSizeAverage,
+                  {color: '#333333'},
+                ]}>
+                {chat.message}
+              </Text>
+            </Text>
+          </View>
+
+          <View
+            style={[
+              CommonStyles.container,
+              {
+                justifyContent: 'space-between',
+                alignItems: 'flex-end',
+              },
+            ]}>
+            <Text>
+              <Text
+                style={[
+                  CommonStyles.textSizeSmall,
+                  CommonStyles.fontRegular,
+                  {color: '#333333'},
+                ]}>{`Date: `}</Text>
+              <Text
+                style={[
+                  CommonStyles.fontMedium,
+                  CommonStyles.textSizeAverage,
+                  {color: '#333333'},
+                ]}>
+                {moment(chat.time).format('ll')}
+              </Text>
+            </Text>
+          </View>
+        </View>
       );
     } else if (chat.userId == this.props.route.params.patientId) {
       return (
-        <View>
-        <Text>{chat.message}</Text>
-        <Text>{new Date(chat.time).toLocaleString("en-US")}</Text>
-      </View>
+        <View
+          style={[CommonStyles.container, {flexDirection: 'row', padding: 12}]}>
+          <View
+            style={[CommonStyles.container, {justifyContent: 'space-between'}]}>
+            <Text style={{marginBottom: 10}}>
+              <Text
+                style={[
+                  CommonStyles.fontRegular,
+                  CommonStyles.textSizeSmall,
+                  {color: '#333333'},
+                ]}>{`Patient Message: \n`}</Text>
+              <Text
+                style={[
+                  CommonStyles.fontMedium,
+                  CommonStyles.textSizeAverage,
+                  {color: '#333333'},
+                ]}>
+                {chat.message}
+              </Text>
+            </Text>
+          </View>
+
+          <View
+            style={[
+              CommonStyles.container,
+              {
+                justifyContent: 'space-between',
+                alignItems: 'flex-end',
+              },
+            ]}>
+            <Text>
+              <Text
+                style={[
+                  CommonStyles.textSizeSmall,
+                  CommonStyles.fontRegular,
+                  {color: '#333333'},
+                ]}>{`Date: `}</Text>
+              <Text
+                style={[
+                  CommonStyles.fontMedium,
+                  CommonStyles.textSizeAverage,
+                  {color: '#333333'},
+                ]}>
+                {moment(chat.time).format('ll')}
+              </Text>
+            </Text>
+          </View>
+        </View>
       );
     }
   }
 
-  // componentWillMount() {
-  //     Api.instance().getDiagnosisList()
-  //         .then((data) => {
-  //             console.warn('=====>', data["Diagnosis"])
-  //             this.setState({ diagnosisList: data });
-  //         }
-  //         ).catch(err => console.log(err))
-  //         .finally(() => {
-  //             this.setState({ isLoading: false });
-  //         })
-
-  // }
-
   render() {
-    return <Text>hhhhhhh</Text>;
-    // if (this.state.appointmentId != null) {
-    //   return (
-    //     <View style={{height: '75%'}}>
-    //       <ImageBackground
-    //         style={[CommonStyles.container, CommonStyles.backgroundImage]}
-    //         source={require('../../assets/img/background.png')}>
-    //         <View style={{flex: 3, backgroundColor: '#297dec'}}>
-    //           <Text style={{color: '#FFFFFF', paddingLeft: 17, marginTop: 65}}>
-    //             <Text
-    //               style={[
-    //                 CommonStyles.fontRegular,
-    //                 CommonStyles.textSizeLarge,
-    //               ]}>{`Diagnosis List\n`}</Text>
-    //             <Text
-    //               style={[
-    //                 CommonStyles.fontRegular,
-    //                 CommonStyles.textSizeSmall,
-    //               ]}>
-    //               It is a list of your all Bookings{' '}
-    //             </Text>
-    //           </Text>
-    //         </View>
+    if (this.state.appointmentId != null) {
+      return (
+        <View style={{height: '75%'}}>
+          <ImageBackground
+            style={[CommonStyles.container, CommonStyles.backgroundImage]}
+            source={require('../../assets/img/background.png')}>
+            <View style={{flex: 3, backgroundColor: '#297dec'}}>
+              <Text style={{color: '#FFFFFF', paddingLeft: 17, marginTop: 65}}>
+                <Text
+                  style={[
+                    CommonStyles.fontRegular,
+                    CommonStyles.textSizeLarge,
+                  ]}>{`Chat Logs\n`}</Text>
+                <Text
+                  style={[
+                    CommonStyles.fontRegular,
+                    CommonStyles.textSizeSmall,
+                  ]}>
+                  It is a list of your all Chat Logs{' '}
+                </Text>
+              </Text>
+            </View>
 
-    //         <View style={{flex: 8}}>
-    //           <FlatGrid
-    //             itemDimension={350}
-    //             items={this.state.diagnosisList}
-    //             spacing={15}
-    //             style={[CommonStyles.container, {marginTop: 5}]}
-    //             renderItem={({item}) => (
-    //               <View
-    //                 style={[
-    //                   CommonStyles.container,
-    //                   CommonStyles.shadow,
-    //                   CommonStyles.br5,
-    //                   CommonStyles.bgColor,
-    //                 ]}>
-    //                 <ImageBackground
-    //                   style={[
-    //                     CommonStyles.container,
-    //                     CommonStyles.backgroundImage,
-    //                   ]}
-    //                   source={require('../../assets/img/bookingbg2x.png')}>
-    //                   <TouchableOpacity
-    //                     style={[
-    //                       CommonStyles.container,
-    //                       {flexDirection: 'row', padding: 12},
-    //                     ]}
-    //                     onPress={() => {
-    //                       this.addDiagnosis(item);
-    //                     }}>
-    //                     <View
-    //                       style={[
-    //                         CommonStyles.container,
-    //                         {justifyContent: 'space-between'},
-    //                       ]}>
-    //                       <Text style={{marginBottom: 10}}>
-    //                         <Text
-    //                           style={[
-    //                             CommonStyles.fontRegular,
-    //                             CommonStyles.textSizeSmall,
-    //                             {color: '#333333'},
-    //                           ]}>{`Diagnosis Name: \n`}</Text>
-    //                         <Text
-    //                           style={[
-    //                             CommonStyles.fontMedium,
-    //                             CommonStyles.textSizeAverage,
-    //                             {color: '#333333'},
-    //                           ]}>
-    //                           {item.answer}
-    //                         </Text>
-    //                       </Text>
-
-    //                       <Text>
-    //                         <Text
-    //                           style={[
-    //                             CommonStyles.fontRegular,
-    //                             CommonStyles.textSizeSmall,
-    //                             {color: '#333333'},
-    //                           ]}>{`Description: \n`}</Text>
-    //                         <Text
-    //                           style={[
-    //                             CommonStyles.fontMedium,
-    //                             CommonStyles.textSizeAverage,
-    //                             {color: '#333333'},
-    //                           ]}>
-    //                           {item.notes}
-    //                         </Text>
-    //                       </Text>
-    //                     </View>
-
-    //                     <View
-    //                       style={[
-    //                         CommonStyles.container,
-    //                         {
-    //                           justifyContent: 'space-between',
-    //                           alignItems: 'flex-end',
-    //                         },
-    //                       ]}>
-    //                       <Text>
-    //                         <Text
-    //                           style={[
-    //                             CommonStyles.textSizeSmall,
-    //                             CommonStyles.fontRegular,
-    //                             {color: '#333333'},
-    //                           ]}>{`Date: `}</Text>
-    //                         <Text
-    //                           style={[
-    //                             CommonStyles.fontMedium,
-    //                             CommonStyles.textSizeAverage,
-    //                             {color: '#333333'},
-    //                           ]}>
-    //                           {moment(item.createdAt).format('ll')}
-    //                         </Text>
-    //                       </Text>
-    //                     </View>
-    //                   </TouchableOpacity>
-    //                 </ImageBackground>
-    //               </View>
-    //             )}
-    //           />
-    //         </View>
-
-    //         <View
-    //           style={[
-    //             CommonStyles.fitToBottom,
-    //             CommonStyles.horizontalContainer,
-    //             {
-    //               backgroundColor: '#F7FAFE',
-    //               borderTopRightRadius: 5,
-    //               borderTopStartRadius: 5,
-    //               borderTopWidth: 3,
-    //               borderColor: '#FFF',
-    //             },
-    //           ]}>
-    //           <TouchableOpacity
-    //             onPress={() => {
-    //               this.props.navigation.navigate('DiagnosisAdd', {
-    //                 appointmentId: this.props.route.params.appointmentId,
-    //                 patientId: this.props.route.params.patientId,
-    //                 onDiagnosisAdd: () => this._getDiagnosisList(),
-    //               });
-    //             }}
-    //             style={[
-    //               CommonStyles.container,
-    //               CommonStyles.centerText,
-    //               {borderRightWidth: 0.5, borderColor: '#cfd2d6'},
-    //             ]}>
-    //             <Text
-    //               style={[
-    //                 CommonStyles.fontRegular,
-    //                 CommonStyles.textSizeNormal,
-    //                 CommonStyles.centerText,
-    //                 CommonStyles.margin,
-    //                 CommonStyles.padding,
-    //                 {opacity: 0.5},
-    //               ]}>
-    //               Add Diagnosis
-    //             </Text>
-    //           </TouchableOpacity>
-    //         </View>
-    //         <Loader loading={this.state.isLoading} />
-    //         <View style={[CommonStyles.backButtonStyle]}>
-    //           <TouchableOpacity
-    //             onPress={() => {
-    //               this.props.navigation.goBack();
-    //             }}>
-    //             <Icon
-    //               name="arrow-back"
-    //               type="MaterialIcons"
-    //               style={{color: '#FFF'}}
-    //             />
-    //           </TouchableOpacity>
-    //         </View>
-    //       </ImageBackground>
-    //     </View>
-    //   );
-    // } else {
-    //   return (
-    //     <View style={[CommonStyles.container]}>
-    //       <ImageBackground
-    //         style={[CommonStyles.container, CommonStyles.backgroundImage]}
-    //         source={require('../../assets/img/bwback.png')}>
-    //         <View style={{flex: 2.3}}>
-    //           <Text style={{color: '#FFFFFF', paddingLeft: 17, marginTop: 65}}>
-    //             <Text
-    //               style={[
-    //                 CommonStyles.fontRegular,
-    //                 CommonStyles.textSizeLarge,
-    //               ]}>{`Diagnosis List\n`}</Text>
-    //             <Text
-    //               style={[
-    //                 CommonStyles.fontRegular,
-    //                 CommonStyles.textSizeSmall,
-    //               ]}>
-    //               It is a list of your all Bookings{' '}
-    //             </Text>
-    //           </Text>
-    //         </View>
-
-    //         <View style={{flex: 8}}>
-    //           <FlatGrid
-    //             itemDimension={350}
-    //             items={this.state.diagnosisList}
-    //             spacing={15}
-    //             style={[CommonStyles.container, {marginTop: 5}]}
-    //             renderItem={({item}) => (
-    //               <View
-    //                 style={[
-    //                   CommonStyles.container,
-    //                   CommonStyles.shadow,
-    //                   CommonStyles.br5,
-    //                   CommonStyles.bgColor,
-    //                 ]}>
-    //                 <ImageBackground
-    //                   style={[
-    //                     CommonStyles.container,
-    //                     CommonStyles.backgroundImage,
-    //                   ]}
-    //                   source={require('../../assets/img/bookingbg2x.png')}>
-    //                   <View
-    //                     style={[
-    //                       CommonStyles.container,
-    //                       {flexDirection: 'row', padding: 12},
-    //                     ]}>
-    //                     <View
-    //                       style={[
-    //                         CommonStyles.container,
-    //                         {justifyContent: 'space-between'},
-    //                       ]}>
-    //                       <Text style={{marginBottom: 10}}>
-    //                         <Text
-    //                           style={[
-    //                             CommonStyles.fontRegular,
-    //                             CommonStyles.textSizeSmall,
-    //                             {color: '#333333'},
-    //                           ]}>{`Diagnosis Name: \n`}</Text>
-    //                         <Text
-    //                           style={[
-    //                             CommonStyles.fontMedium,
-    //                             CommonStyles.textSizeAverage,
-    //                             {color: '#333333'},
-    //                           ]}>
-    //                           {item.name}
-    //                         </Text>
-    //                       </Text>
-
-    //                       <Text>
-    //                         <Text
-    //                           style={[
-    //                             CommonStyles.fontRegular,
-    //                             CommonStyles.textSizeSmall,
-    //                             {color: '#333333'},
-    //                           ]}>{`Description: \n`}</Text>
-    //                         <Text
-    //                           style={[
-    //                             CommonStyles.fontMedium,
-    //                             CommonStyles.textSizeAverage,
-    //                             {color: '#333333'},
-    //                           ]}>
-    //                           {item.description}
-    //                         </Text>
-    //                       </Text>
-    //                     </View>
-
-    //                     <View
-    //                       style={[
-    //                         CommonStyles.container,
-    //                         {
-    //                           justifyContent: 'space-between',
-    //                           alignItems: 'flex-end',
-    //                         },
-    //                       ]}>
-    //                       <Text>
-    //                         <Text
-    //                           style={[
-    //                             CommonStyles.textSizeSmall,
-    //                             CommonStyles.fontRegular,
-    //                             {color: '#333333'},
-    //                           ]}>{`Date: `}</Text>
-    //                         <Text
-    //                           style={[
-    //                             CommonStyles.fontMedium,
-    //                             CommonStyles.textSizeAverage,
-    //                             {color: '#333333'},
-    //                           ]}>
-    //                           {moment(item.createdAt).format('ll')}
-    //                         </Text>
-    //                       </Text>
-    //                     </View>
-    //                   </View>
-    //                 </ImageBackground>
-    //               </View>
-    //             )}
-    //           />
-    //         </View>
-
-    //         <View
-    //           style={[
-    //             CommonStyles.fitToBottom,
-    //             CommonStyles.horizontalContainer,
-    //             {
-    //               backgroundColor: '#F7FAFE',
-    //               borderTopRightRadius: 5,
-    //               borderTopStartRadius: 5,
-    //               borderTopWidth: 3,
-    //               borderColor: '#FFF',
-    //             },
-    //           ]}>
-    //           <TouchableOpacity
-    //             onPress={() => {
-    //               this.props.navigation.navigate('DiagnosisAdd', {
-    //                 onDiagnosisAdd: () => this._getDiagnosisList(),
-    //               });
-    //             }}
-    //             style={[
-    //               CommonStyles.container,
-    //               CommonStyles.centerText,
-    //               {borderRightWidth: 0.5, borderColor: '#cfd2d6'},
-    //             ]}>
-    //             <Text
-    //               style={[
-    //                 CommonStyles.fontRegular,
-    //                 CommonStyles.textSizeNormal,
-    //                 CommonStyles.centerText,
-    //                 CommonStyles.margin,
-    //                 CommonStyles.padding,
-    //                 {opacity: 0.5},
-    //               ]}>
-    //               Add Diagnosis
-    //             </Text>
-    //           </TouchableOpacity>
-    //         </View>
-    //         <Loader loading={this.state.isLoading} />
-    //         <View style={[CommonStyles.backButtonStyle]}>
-    //           <TouchableOpacity
-    //             onPress={() => {
-    //               this.props.navigation.goBack();
-    //             }}>
-    //             <Icon
-    //               name="arrow-back"
-    //               type="MaterialIcons"
-    //               style={{color: '#FFF'}}
-    //             />
-    //           </TouchableOpacity>
-    //         </View>
-    //       </ImageBackground>
-    //     </View>
-    //   );
-    // }
+            <View style={{flex: 8}}>
+              <FlatGrid
+                itemDimension={350}
+                items={this.state.messages}
+                spacing={15}
+                style={[CommonStyles.container, {marginTop: 5}]}
+                renderItem={({item}) => (
+                  <View
+                    style={[
+                      CommonStyles.container,
+                      CommonStyles.shadow,
+                      CommonStyles.br5,
+                      CommonStyles.bgColor,
+                    ]}>
+                    <ImageBackground
+                      style={[
+                        CommonStyles.container,
+                        CommonStyles.backgroundImage,
+                      ]}
+                      source={require('../../assets/img/bookingbg2x.png')}>
+                      {this._getLogChat(item)}
+                    </ImageBackground>
+                  </View>
+                )}
+              />
+            </View>
+            <View style={[CommonStyles.backButtonStyle]}>
+              <TouchableOpacity
+                onPress={() => {
+                  this.props.navigation.goBack();
+                }}>
+                <Icon
+                  name="arrow-back"
+                  type="MaterialIcons"
+                  style={{color: '#FFF'}}
+                />
+              </TouchableOpacity>
+            </View>
+          </ImageBackground>
+        </View>
+      );
+    }
   }
 }
