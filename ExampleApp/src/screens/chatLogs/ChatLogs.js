@@ -61,10 +61,10 @@ export default class ChatLogs extends Component {
         // if (firebaseEvent1==null)
         //   return
 
-          if(firebaseEvent1 == null)
+          if(firebaseEvent1 == null){
             ViewUtils.showToast('Chat Log is Emty');
             return 
-
+          }
 
 
         console.warn('_user.id === ', _user.id);
