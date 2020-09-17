@@ -63,7 +63,11 @@ export default class ChatLogs extends Component {
 
           if(firebaseEvent1 == null){
             ViewUtils.showToast('Chat Log is Emty');
+<<<<<<< HEAD
             
+=======
+            return 
+>>>>>>> 3908066f9e917e5662546c0b60ea9f7f73b5f8e4
           }
 
 
