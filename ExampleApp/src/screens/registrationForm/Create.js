@@ -35,6 +35,7 @@ class Create extends Component {
             drCode: '',
             dateOfBirth:'',
             mobile:'',
+            city:'',
             personalDetails: {},
 
         };
@@ -186,11 +187,7 @@ class Create extends Component {
                                 ]}>Enter your details to register for Etibb
                             </Text>
 
-                            {/* <Image
-                style={[CommonStyles.mt30, { width: 96, height: 123 }]}
-                source={require('../../assets/img/layer_2.png')}
-              />
- */}
+                      
 
 
                             <View style={{marginTop: 60}}>
@@ -806,7 +803,7 @@ export default Create;
 //           style={[
 //             CommonStyles.fitToBottom,
 //             CommonStyles.horizontalContainer,
-//             {
+        //    {
 //               backgroundColor: '#eee',
 //               borderTopRightRadius: 5,
 //               borderTopStartRadius: 5,
