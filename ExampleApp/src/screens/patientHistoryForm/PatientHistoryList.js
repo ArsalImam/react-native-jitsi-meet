@@ -91,8 +91,15 @@ export default class PatientHistoryList extends Component {
                    Api.instance()
                      .updatePatientHistoryList(id, data)
                      .then(res => {
-                       console.warn(res);
-                     })
+                       
+                        this._getPatientHistoryList();
+
+                        this.setState({description: ''})
+
+                        
+                      })
+
+
                      .catch(err => {
                        ViewUtils.showAlert('Unable to Update');
                      });
@@ -432,7 +439,6 @@ export default class PatientHistoryList extends Component {
                                            <Input
                                            placeholder="Answer.."
                                            onChangeText={this._handleMultiInput('description')}
-                                           
                                             //  placeholder="Answer.."
                                             //  value={
                                             //    this.state
@@ -481,6 +487,7 @@ export default class PatientHistoryList extends Component {
                                            this.updateAnswer(
                                              item.id,
                                            );
+                                           
                                          }}
                                        />
                                      )}
