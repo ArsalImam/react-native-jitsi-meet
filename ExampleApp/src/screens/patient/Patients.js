@@ -103,13 +103,30 @@ export default class Patients extends Component {
                       marginTop: -7,
                       marginBottom: 8,
                     }}>
-                    <Image
-                      style={[
-                        CommonStyles.container,
-                        CommonStyles.backgroundImage,
-                      ]}
-                      source={require('../../assets/drawable-xxxhdpi/Rectangle.png')}
-                    />
+
+
+
+                      {item.imageUrl == '' ? (
+                        <Image
+                        style={[
+                          CommonStyles.container,
+                          CommonStyles.backgroundImage,
+                        ]}
+                          source={require('../../assets/drawable-xxxhdpi/Rectangle.png')}
+                        />
+                      ) : (
+                       
+                        <Image
+                        style={[
+                          CommonStyles.container,
+                          CommonStyles.backgroundImage,
+                        ]}
+                          source={{
+                            uri: item.imageUrl,
+                          }}
+                        />
+                      )}    
+
                   </View>
                   <View
                     style={[
