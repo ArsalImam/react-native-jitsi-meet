@@ -462,10 +462,11 @@ export default class Api {
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
       this.getUrl(
-        `setups-patient?filter[where][doctorId]=${role==Roles.patient?_user.doctorId:_user.id}&filter[where][setupType]=patientHistoryForm&filter[order]=createdAt%20DESC`,
+        `Setups?filter[where][doctorId]=${role==Roles.patient?_user.doctorId:_user.id}&filter[where][setupType]=patientHistoryForm&filter[order]=createdAt%20DESC`,
       ),
     );
     let data = response.data;
+    console.warn("data === ",data)
     console.warn('data', data);
     if (data.error) throw data.error.message;
     return data;

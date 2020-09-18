@@ -58,12 +58,6 @@ export default class ChatLogs extends Component {
           return;
         }
         var firebaseEvent1 = appointmentEventObj.val();
-<<<<<<< HEAD
-
-        if (firebaseEvent1 == null) {
-          return;
-        }
-=======
         // if (firebaseEvent1==null)
         //   return
 
@@ -73,7 +67,6 @@ export default class ChatLogs extends Component {
           }
 
 
->>>>>>> 65b73eb92d6a95194bb23e238396521cf658c0b6
         console.warn('_user.id === ', _user.id);
         console.warn('patientId === ', this.props.route.params.patientId);
         console.warn('data fireabse === ', firebaseEvent1);
