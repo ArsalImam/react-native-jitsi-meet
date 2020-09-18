@@ -458,15 +458,30 @@ export default class Api {
 
   // Patient History List
   async getPatientHistoryList() {
-    let user = await this._user();
+     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
       this.getUrl(
-        `Setups?filter[where][doctorId]=${
-          _user.id
-        }&filter[where][setupType]=patientHistoryForm&filter[order]=createdAt%20DESC`,
+        `setups-patient?filter[where][doctorId]=${role==Roles.patient?_user.doctorId:_user.id}&filter[where][setupType]=patientHistoryForm&filter[order]=createdAt%20DESC`,
       ),
     );
+    let data = response.data;
+    console.warn('data', data);
+    if (data.error) throw data.error.message;
+    return data;
+  }
+
+
+
+  async updatePatientHistoryList(id,updateData) {
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+    let response = await this.client.post(
+      this.getUrl(`setups-patient/update?where[id]=${id}`),
+      updateData,
+      this.getHeaders(),
+    );
+
     let data = response.data;
     console.warn('data', data);
     if (data.error) throw data.error.message;

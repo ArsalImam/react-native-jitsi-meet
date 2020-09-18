@@ -7,6 +7,7 @@ import {FlatGrid} from 'react-native-super-grid';
 import {CommonActions} from '@react-navigation/native';
 import database from '@react-native-firebase/database';
 import {AsyncStorage} from 'react-native';
+import {ViewUtils} from '../../Utils';
 import {
   StyleSheet,
   Text,
@@ -57,10 +58,22 @@ export default class ChatLogs extends Component {
           return;
         }
         var firebaseEvent1 = appointmentEventObj.val();
+<<<<<<< HEAD
 
         if (firebaseEvent1 == null) {
           return;
         }
+=======
+        // if (firebaseEvent1==null)
+        //   return
+
+          if(firebaseEvent1 == null){
+            ViewUtils.showToast('Chat Log is Emty');
+            return 
+          }
+
+
+>>>>>>> 65b73eb92d6a95194bb23e238396521cf658c0b6
         console.warn('_user.id === ', _user.id);
         console.warn('patientId === ', this.props.route.params.patientId);
         console.warn('data fireabse === ', firebaseEvent1);
