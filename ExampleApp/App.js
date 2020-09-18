@@ -16,6 +16,7 @@ import RealtimeDatabase from "./src/RealtimeDatabase";
 
 import { View, StyleSheet, StatusBar, SafeAreaView } from 'react-native';
 import { ViewUtils } from "./src/Utils";
+import Api from './src/Api';
 // Import the react-native-sound module
 var Sound = require('react-native-sound');
 
@@ -63,25 +64,29 @@ class App extends React.Component {
   }
 
   _initSound() {
+
     // Load the sound file 'whoosh.mp3' from the app bundle
     // See notes below about preloading sounds within initialization code below.
-    this.whoosh = new Sound('iphone.mp3', Sound.MAIN_BUNDLE, (error) => {
+    let ringtone = Api.instance().getMediaUrl('images','ringtone.mp3');
+
+    this.whoosh = new Sound(ringtone, Sound.MAIN_BUNDLE, (error) => {
       if (error) {
-        console.log('failed to load the sound', error);
+        console.warn('failed to load the sound', error);
         return;
       }
       // loaded successfully
-      console.log('duration in seconds: ' + this.whoosh.getDuration() + 'number of channels: ' + this.whoosh.getNumberOfChannels());
+      console.warn('duration in seconds: ' + this.whoosh.getDuration() + 'number of channels: ' + this.whoosh.getNumberOfChannels());
     });
   }
   _playAudio() {
     console.warn('_playAudio')
     // Play the sound with an onEnd callback
       this.whoosh.play((success) => {
+        console.warn("success === ",success)
         if (success) {
-          console.log('successfully finished playing');
+          console.warn('successfully finished playing');
         } else {
-          console.log('playback failed due to audio decoding errors');
+          console.warn('playback failed due to audio decoding errors');
         }
       });
   }
