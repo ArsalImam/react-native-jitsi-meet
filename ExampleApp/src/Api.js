@@ -458,6 +458,7 @@ export default class Api {
 
   // Patient History List
   async getPatientHistoryList() {
+    console.warn('a');
      let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
@@ -478,7 +479,7 @@ export default class Api {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.post(
-      this.getUrl(`setups-patient/update?where[id]=${id}`),
+      this.getUrl(`Setups/update?where[id]=${id}`),
       updateData,
       this.getHeaders(),
     );
