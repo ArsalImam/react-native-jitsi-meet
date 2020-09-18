@@ -45,6 +45,7 @@ export default class PatientHistoryList extends Component {
                  }
                  _getPatientHistoryList(){
                    this.setState({isLoading: true});
+                   console.warn("kahin")
                    Api.instance()
                      .getPatientHistoryList()
                      .then(data => {
@@ -56,6 +57,10 @@ export default class PatientHistoryList extends Component {
                      });
                  }
 
+
+                 componentDidMount(){
+                   this._getPatientHistoryList()
+                 }
 
 
                  addToConsultation(item) {

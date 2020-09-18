@@ -21,7 +21,7 @@ export default class Api {
         return response;
       },
       function(error) {
-        //  ViewUtils.showToast(error.response);
+         // ViewUtils.showToast(error.response);
         return Promise.reject(error);
       },
     );
@@ -467,6 +467,7 @@ export default class Api {
       ),
     );
     let data = response.data;
+    console.warn("data === ",data)
     console.warn('data', data);
     if (data.error) throw data.error.message;
     return data;
