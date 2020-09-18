@@ -239,13 +239,10 @@ class Create extends Component {
                                     </Item>
 
                                 </View>
-<<<<<<< HEAD
-=======
 
                             
 
                             
->>>>>>> b98860c6c75e5a8334d7cee850e72f91f07b5604
                            
                                 <Item regular style={[CommonStyles.loginItemStyle, CommonStyles.mt10]}>
                                 <Label
@@ -259,10 +256,6 @@ class Create extends Component {
                                     {' '}
                                     Date of Birth
                                 </Label>
-<<<<<<< HEAD
-=======
-
->>>>>>> b98860c6c75e5a8334d7cee850e72f91f07b5604
                                 <DatePicker
                                         date={this.state.bdate}
                                         placeholder="Select your birthday"
