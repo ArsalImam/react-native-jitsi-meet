@@ -21,7 +21,7 @@ export default class Api {
         return response;
       },
       function(error) {
-        //  ViewUtils.showToast(error.response);
+         // ViewUtils.showToast(error.response);
         return Promise.reject(error);
       },
     );
