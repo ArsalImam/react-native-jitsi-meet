@@ -83,7 +83,7 @@ export default class AppointmentRoom extends React.Component {
         );
        clearInterval(this.timer)
           JitsiMeet.endCall();
-          this.props.navigation.navigate('WebView', {
+          this.props.navigation.navigate('WebViewReport', {
             prescribtionUrl,
           });
         }
@@ -105,7 +105,7 @@ export default class AppointmentRoom extends React.Component {
       .updateAppointmentStatus(this.appointmentId)
       .then(response => {
         this.props.navigation.goBack();
-        this.props.navigation.navigate('WebView', {
+        this.props.navigation.navigate('WebViewReport', {
           prescribtionUrl,
         });
       })
