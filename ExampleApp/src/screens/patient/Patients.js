@@ -104,7 +104,7 @@ export default class Patients extends Component {
                       marginBottom: 8,
                     }}>
 
-                    { item.imageUrl == '' ? (
+                    {item.imageUrl == '' ? (
                         <Image
                         style={[
                           CommonStyles.container,
