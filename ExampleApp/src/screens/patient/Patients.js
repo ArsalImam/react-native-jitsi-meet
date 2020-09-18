@@ -108,21 +108,19 @@ export default class Patients extends Component {
 
                       {item.imageUrl == '' ? (
                         <Image
-                          style={{
-                            width: '100%',
-                            height: 105,
-                            resizeMode: 'cover',
-                          }}
+                        style={[
+                          CommonStyles.container,
+                          CommonStyles.backgroundImage,
+                        ]}
                           source={require('../../assets/drawable-xxxhdpi/Rectangle.png')}
                         />
                       ) : (
                        
                         <Image
-                          style={{
-                            width: '100%',
-                            height: 105,
-                            resizeMode: 'contain',
-                          }}
+                        style={[
+                          CommonStyles.container,
+                          CommonStyles.backgroundImage,
+                        ]}
                           source={{
                             uri: item.imageUrl,
                           }}
