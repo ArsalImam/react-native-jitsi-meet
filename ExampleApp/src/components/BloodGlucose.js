@@ -78,7 +78,7 @@ class BloodGlucose extends React.Component {
                         <Picker.Item label="Pre Lunch" value="Pre Lunch" />
                         <Picker.Item label="Post Lunch" value="Post Lunch" />
                         <Picker.Item label="Bed Time" value="Bed Time" />
-                        <Picker.Item label="After Snakes" value="After Snakes" />
+                        <Picker.Item label="After Snacks" value="After Snacks" />
 
                     </Picker>
                     

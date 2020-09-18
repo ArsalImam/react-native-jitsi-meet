@@ -32,16 +32,32 @@ export default class TherapyList extends Component {
     }
 
     _getTherapyList(){
-        this.setState({ isLoading: true });
-        Api.instance().getTherapyList()
-        .then((data) => {
-            console.warn('=====>', data)
-            this.setState({ therapyList: data });
+
+        if (this.state.appointmentId != null) {
+            this.setState({ isLoading: true });
+            Api.instance()
+            .getListDuringConsultation('suggestedTherapy',this.state.patientId)
+            .then((data) => {
+                console.warn('=====>', data)
+                this.setState({ therapyList: data });
+            }
+            ).catch(err => console.log(err))
+            .finally(() => {
+                this.setState({ isLoading: false });
+            })
+        }else{
+            this.setState({ isLoading: true });
+            Api.instance().getTherapyList()
+            .then((data) => {
+                console.warn('=====>', data)
+                this.setState({ therapyList: data });
+            }
+            ).catch(err => console.log(err))
+            .finally(() => {
+                this.setState({ isLoading: false });
+            })
         }
-        ).catch(err => console.log(err))
-        .finally(() => {
-            this.setState({ isLoading: false });
-        })
+       
     }
 
     componentDidMount() {
@@ -78,7 +94,7 @@ export default class TherapyList extends Component {
                         }>
                             <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Therapy List\n`}</Text>
-                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Bookings </Text>
+                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Therapies </Text>
                             </Text>
                         </View>
 
@@ -107,13 +123,13 @@ export default class TherapyList extends Component {
                                                 <View style={[CommonStyles.container, { justifyContent: 'space-between' }]}>
 
                                                     <Text style={{ marginBottom: 10 }} >
-                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Question: \n`}</Text>
-                                                        <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.name}</Text>
+                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Therapy: \n`}</Text>
+                                                        <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.answer}</Text>
                                                     </Text>
 
                                                     <Text>
                                                         <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Description: \n`}</Text>
-                                                        <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.description}</Text>
+                                                        <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.notes}</Text>
                                                     </Text>
 
                                                 </View>
@@ -151,7 +167,10 @@ export default class TherapyList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('TherapyAdd', {appointmentId: this.state.appointmentId,onTherapyAdd: () => this._getTherapyList()})
+                                    this.props.navigation.navigate('TherapyAdd', {
+                                        appointmentId: this.state.appointmentId,
+                                        patientId:this.props.route.params.patientId,
+                                        onTherapyAdd: () => this._getTherapyList()})
                                 }}
                                 style={[
                                     CommonStyles.container,
@@ -205,7 +224,7 @@ export default class TherapyList extends Component {
                         }>
                             <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Therapy List\n`}</Text>
-                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Bookings </Text>
+                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Therapies</Text>
                             </Text>
                         </View>
 
@@ -232,7 +251,7 @@ export default class TherapyList extends Component {
                                                 <View style={[CommonStyles.container, { justifyContent: 'space-between' }]}>
 
                                                     <Text style={{ marginBottom: 10 }} >
-                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Question: \n`}</Text>
+                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Therapy: \n`}</Text>
                                                         <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.name}</Text>
                                                     </Text>
 

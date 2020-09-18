@@ -61,7 +61,7 @@ export default class BookingList extends Component {
                   CommonStyles.fontRegular,
                   CommonStyles.textSizeAverage,
                 ]}>
-                It is a list of your all booking patients{' '}
+                It is a list of your all available bookings {' '}
               </Text>
             </Text>
           </View>
@@ -197,11 +197,8 @@ export default class BookingList extends Component {
                     </View>
                   </ImageBackground>
                   <View style={[CommonStyles.container, {justifyContent:'center', backgroundColor: '#E53935', marginTop: 5, borderBottomEndRadius: 5, borderBottomStartRadius: 5 }]}>
-                    <TouchableOpacity
-                    onPress={() => {}}
-                    style={[CommonStyles.container, CommonStyles.centerElement, { flexDirection: 'row' }]}
-                    >
-                      
+                      <View 
+                      style={[CommonStyles.container, CommonStyles.centerElement, { flexDirection: 'row' }]}>
                       <Icon
                         name="clock"
                         type='Fontisto'
@@ -209,7 +206,7 @@ export default class BookingList extends Component {
                       />
                       <Text style={[CommonStyles.textColorWhite, CommonStyles.centerText, CommonStyles.padding]}>BOOK NOW</Text>
 
-                    </TouchableOpacity>
+                      </View>
                   </View>
                 </TouchableOpacity>
               )}

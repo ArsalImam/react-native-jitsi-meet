@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import { StyleSheet, View, TouchableOpacity, ImageBackground, ScrollView, StatusBar } from 'react-native';
 import { Container, Header, Content, DatePicker, Text, Item, Label, Input, ScrollableTab, Icon, Picker, Form } from 'native-base';
@@ -7,8 +8,7 @@ import Api from '../../Api';
 import Loader from '../../components/Loader';
 import { ViewUtils } from '../../Utils'
 
-export default class ProcedureAdd extends Component {
-
+export default class ObservationAdd extends Component {
 
     constructor(props) {
         super(props);
@@ -17,7 +17,6 @@ export default class ProcedureAdd extends Component {
             this.state = {
                 isLoading: false,
                 name: '',
-                description: '',
                 data: [],
                 appointmentId: this.props.route.params.appointmentId,
                 patientId: this.props.route.params.patientId,
@@ -27,89 +26,91 @@ export default class ProcedureAdd extends Component {
             this.state = {
                 isLoading: false,
                 name: '',
-                description: '',
-                data: [],
+                data: []
             }
         }
+
+        console.warn("this.props.route.params ======= ",this.props.route.params)
     }
 
-    _saveProcedure = () => {
+    _saveObservation = () => {
 
+    
         if(this.state.appointmentId != null){
 
             let data = {
-                // date: this.state.startDate,
-                 // "setupId": "",
-                 // "doctorId": "5f01d90dffd17912ce896c56",
-                 // "assistantId": "",
-                 patientId: this.state.patientId,
-                 answer: this.state.name,
-                 notes:this.state.description,
-                // endDate: this.state.endDate,
-                 'setup-type': 'surgicalProcedure',
-                 active: false,
-               };
+                appointmentId: this.state.appointmentId,
+                assistantId: "",
+                setupId: "",
+                date: new Date(),
+                patientId: this.state.patientId,
+                answer: this.state.name,
+                'setup-type': 'observation',
+                active: false,
+              };
 
-            if(this.state.name != "" ){
+            if(this.state.name != ""){
                 this.setState({ isLoading: true })
                 Api.instance()
-                    .createPrescription(data)
-                    .then(response => {
-                        this.addToConsultation(data);
-                        this.props.route.params.onProcedureAdd();
-                        this.props.navigation.goBack();
-                       // this.props.navigation.replace('ProcedureList');
-                       ViewUtils.showToast('Procedure has been saved successfully!');
-                    })
-                    .catch(err => {
-                        ViewUtils.showAlert(
-                            'Unable to Perform this Action',       
-                        );
-                        //ViewUtils.showToast(err);
-                    })
-                    .finally(() => {
-                        this.setState({ isLoading: false });
-                    });
-                }else{
+                .createPrescription(data)
+                .then(response => {
+                    this.addToConsultation(data);
+                   // this.props.navigation.replace('DiagnosisList');
+                    this.props.route.params.onObservationAdd();
+                    this.props.navigation.goBack();
+                    ViewUtils.showToast('Observation has been saved successfully!');
+                })
+                .catch(err => {
                     ViewUtils.showAlert(
-                        'Please Provide Procedure Name',       
+                        'Unable to Perform this Action',       
                     );
-                }
-
+                    ViewUtils.showToast(err);
+                })
+                .finally(() => {
+                    this.setState({ isLoading: false });
+                });
+            }else {
+                ViewUtils.showAlert(
+                    'Please Provide Observation',       
+                );    
+            }
         }else{
+
             let data = {
-                "setupType": "surgicalProcedure",
-                "name": this.state.name,
-                "description": this.state.description,
+                "setupType": "observation",
+                answer: this.state.name,
             }
 
-            if(this.state.name != "" ){
+            if(this.state.name != ""){
                 this.setState({ isLoading: true })
                 Api.instance()
-                    .createMedication(data)
-                    .then(response => {
-                        this.props.route.params.onProcedureAdd();
-                        this.props.navigation.goBack();
-                       // this.props.navigation.replace('ProcedureList');
-                        ViewUtils.showToast('Procedure has been saved successfully!');
-                    })
-                    .catch(err => {
-                        ViewUtils.showAlert(
-                            'Unable to Perform this Action',       
-                        );
-                        //ViewUtils.showToast(err);
-                    })
-                    .finally(() => {
-                        this.setState({ isLoading: false });
-                    });
-                }else{
+                .createMedication(data)
+                .then(response => {
+                   // this.props.navigation.replace('DiagnosisList');
+                    this.props.route.params.onObservationAdd();
+                    this.props.navigation.goBack();
+                    ViewUtils.showToast('Observation has been saved successfully!');
+                })
+                .catch(err => {
                     ViewUtils.showAlert(
-                        'Please Provide Procedure Name',       
+                        'Unable to Perform this Action',       
                     );
-                }
+                    console.warn("error :: ",err)
+                    ViewUtils.showToast(err);
+                })
+                .finally(() => {
+                    this.setState({ isLoading: false });
+                });
+            }else {
+                ViewUtils.showAlert(
+                    'Please Provide Observation',       
+                );    
+            }
         }
+        
 
-       
+        
+        
     };
 
     addToConsultation(item) {
@@ -128,11 +129,9 @@ export default class ProcedureAdd extends Component {
           .finally(() => {});
       }
 
-    render() { 
-
-
+    render() {
+        console.warn("this.state.appointmentId === ",this.state.appointmentId)
         if (this.state.appointmentId != null) {
-
             return (
 
                 <View style={{ height: '75%' }}>
@@ -145,8 +144,8 @@ export default class ProcedureAdd extends Component {
                         { flex: 3, backgroundColor: '#297dec' }
                     }>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
-                                <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Procedure Add\n`}</Text>
-                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>Add a new Procedure </Text>
+                                <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Observation Add\n`}</Text>
+                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>Add a new Observation </Text>
                             </Text>
                         </View>
 
@@ -154,19 +153,10 @@ export default class ProcedureAdd extends Component {
                             <KeyboardAwareScrollView style={[{ backgroundColor: '#fff', borderRadius: 5, }]}>
 
                                 <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 20 }]}>
-                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Procedure Name*</Label>
+                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Observation*</Label>
                                     <Input
                                         value={this.state.notes}
                                         onChangeText={val => this.setState({ name: val })}
-                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
-                                </Item>
-
-                                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 10 }]}>
-                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Description</Label>
-                                    <Input
-                                        value={this.state.notes}
-                                        onChangeText={val => this.setState({ description: val })}
-                                        multiline={true}
                                         style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
                                 </Item>
                             </KeyboardAwareScrollView>
@@ -187,106 +177,7 @@ export default class ProcedureAdd extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this._saveProcedure();
-                                }}
-                                style={[
-                                    CommonStyles.container,
-                                    CommonStyles.centerText,
-                                    { borderRightWidth: 0.5, borderColor: '#cfd2d6' },
-                                ]}
-                            >
-                                <Text
-
-                                    style={[
-                                        CommonStyles.fontRegular,
-                                        CommonStyles.textSizeNormal,
-                                        CommonStyles.centerText,
-                                        CommonStyles.margin,
-                                        CommonStyles.padding,
-                                        { opacity: 0.5 },
-                                    ]}>
-                                    SAVE
-                                 </Text>
-                            </TouchableOpacity>
-                        </View>
-
-                        <Loader loading={this.state.isLoading} />
-
-                        {/* <View
-                            style={[
-                                CommonStyles.backButtonStyle
-                            ]}>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    this.props.navigation.goBack();
-                                }}>
-                                <Icon
-                                    name="arrow-back"
-                                    type="MaterialIcons"
-                                    style={{ fontSize: 26, color: '#FFF' }}
-                                />
-                            </TouchableOpacity>
-                        </View> */}
-                    </ImageBackground>
-                </View>
-            )
-
-        } else {
-
-            return (
-
-                <View style={[CommonStyles.container]}>
-
-                    <ImageBackground style={[
-                        CommonStyles.container,
-                        CommonStyles.backgroundImage
-                    ]}
-                        source={require('../../assets/img/bwback.png')}>
-                        <View style={{ flex: 2.3 }}>
-                            <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
-                                <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Procedure Add\n`}</Text>
-                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>Add a new Procedure </Text>
-                            </Text>
-                        </View>
-
-                        <View style={{ flex: 8, paddingHorizontal: 18, marginTop: 33 }}>
-                            <KeyboardAwareScrollView style={[{ backgroundColor: '#fff', borderRadius: 5, }]}>
-
-                                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 20 }]}>
-                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Procedure Name*</Label>
-                                    <Input
-                                        value={this.state.notes}
-                                        onChangeText={val => this.setState({ name: val })}
-                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
-                                </Item>
-
-                                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 10 }]}>
-                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Description</Label>
-                                    <Input
-                                        value={this.state.notes}
-                                        onChangeText={val => this.setState({ description: val })}
-                                        multiline={true}
-                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
-                                </Item>
-                            </KeyboardAwareScrollView>
-
-                        </View>
-
-                        <View
-                            style={[
-                                CommonStyles.fitToBottom,
-                                CommonStyles.horizontalContainer,
-                                {
-                                    backgroundColor: '#F7FAFE',
-                                    borderTopRightRadius: 5,
-                                    borderTopStartRadius: 5,
-                                    borderTopWidth: 3,
-                                    borderColor: '#FFF'
-                                },
-                            ]}>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    this._saveProcedure();
+                                    this._saveObservation();
                                 }}
                                 style={[
                                     CommonStyles.container,
@@ -329,8 +220,90 @@ export default class ProcedureAdd extends Component {
                     </ImageBackground>
                 </View>
             );
-        }
-    
+        } else {
+            return (
 
+                <View style={[CommonStyles.container]}>
+
+                    <ImageBackground style={[CommonStyles.container, CommonStyles.backgroundImage]} source={require('../../assets/img/bwback.png')}>
+                        <View style={{ flex: 2.3 }}>
+                            <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
+                                <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Observation Add\n`}</Text>
+                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>Add a new Observation </Text>
+                            </Text>
+                        </View>
+
+                        <View style={{ flex: 8, paddingHorizontal: 18, marginTop: 33 }}>
+                            <KeyboardAwareScrollView style={[{ backgroundColor: '#fff', borderRadius: 5, }]}>
+
+                                <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 20 }]}>
+                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Observation*</Label>
+                                    <Input
+                                        value={this.state.notes}
+                                        onChangeText={val => this.setState({ name: val })}
+                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
+                                </Item>
+                            </KeyboardAwareScrollView>
+
+                        </View>
+
+                        <View
+                            style={[
+                                CommonStyles.fitToBottom,
+                                CommonStyles.horizontalContainer,
+                                {
+                                    backgroundColor: '#F7FAFE',
+                                    borderTopRightRadius: 5,
+                                    borderTopStartRadius: 5,
+                                    borderTopWidth: 3,
+                                    borderColor: '#FFF'
+                                },
+                            ]}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this._saveObservation();
+                                }}
+                                style={[
+                                    CommonStyles.container,
+                                    CommonStyles.centerText,
+                                    { borderRightWidth: 0.5, borderColor: '#cfd2d6' },
+                                ]}
+                            >
+                                <Text
+
+                                    style={[
+                                        CommonStyles.fontRegular,
+                                        CommonStyles.textSizeNormal,
+                                        CommonStyles.centerText,
+                                        CommonStyles.margin,
+                                        CommonStyles.padding,
+                                        { opacity: 0.5 },
+                                    ]}>
+                                    SAVE
+                             </Text>
+                            </TouchableOpacity>
+                        </View>
+
+                        <Loader loading={this.state.isLoading} />
+
+                        {/* <View
+                            style={[
+                                CommonStyles.backButtonStyle
+                            ]}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.props.navigation.goBack();
+                                }}>
+                                <Icon
+                                    name="arrow-back"
+                                    type="MaterialIcons"
+                                    style={{ fontSize: 26, color: '#FFF' }}
+                                />
+                            </TouchableOpacity>
+                        </View> */}
+                    </ImageBackground>
+                </View>
+            );
+        }
     }
 }

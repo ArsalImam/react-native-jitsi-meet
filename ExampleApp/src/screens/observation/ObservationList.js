@@ -18,84 +18,54 @@ import {
 import moment from 'moment';
 import Loader from '../../components/Loader';
 
-export default class FollowUpList extends Component {
+export default class ObservationList extends Component {
   constructor(props) {
     super(props);
     if (this.props.route.params) {
       this.state = {
         isLoading: true,
-        followUpList: [],
+        observationList: [],
         appointmentId: this.props.route.params.appointmentId,
         patientId: this.props.route.params.patientId,
       };
     } else {
       this.state = {
         isLoading: true,
-        followUpList: [],
+        observationList: [],
       };
     }
   }
 
-  _getFollowUpList() {
-    if (this.state.appointmentId != null) {
+  _getObservationList() {
       this.setState({isLoading: true});
       Api.instance()
-      .getListDuringConsultation('followup',this.state.patientId)
+        .getListDuringConsultation('observation',this.state.patientId)
         .then(data => {
-          console.warn('fooloup  =====>', data);
-          this.setState({followUpList: data});
+          this.setState({observationList: data});
         })
         .catch(err => console.log(err))
         .finally(() => {
           this.setState({isLoading: false});
         });
-    }else{
-      this.setState({isLoading: true});
-      Api.instance()
-        .getFollowUpList()
-        .then(data => {
-          console.warn('fooloup  =====>', data);
-          this.setState({followUpList: data});
-        })
-        .catch(err => console.log(err))
-        .finally(() => {
-          this.setState({isLoading: false});
-        });
-    }
-    
   }
 
   componentDidMount() {
-    this._getFollowUpList();
+    this._getObservationList();
   }
 
-  // componentWillMount() {
-  //     Api.instance().getDiagnosisList()
-  //         .then((data) => {
-  //             console.warn('=====>', data["Diagnosis"])
-  //             this.setState({ diagnosisList: data });
-  //         }
-  //         ).catch(err => console.log(err))
-  //         .finally(() => {
-  //             this.setState({ isLoading: false });
-  //         })
-
-  // }
-
-  addFollowUp(item) {
-    item.setupType = 'followUp';
+  addObservation(item) {
+    item.setupType = 'observation';
     Api.instance()
       .addReport(item, this.state.appointmentId, this.state.patientId)
       .then(response => {
-        console.warn('AMMAD', response);
+        console.warn(response);
         this.props.navigation.goBack();
       })
       .catch(err => {})
       .finally(() => {});
   }
-  render() {
 
-    console.warn("followUpList  ---- ",this.state.followUpList)
+  render() {
 
     if (this.state.appointmentId != null) {
       return (
@@ -109,13 +79,13 @@ export default class FollowUpList extends Component {
                   style={[
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeLarge,
-                  ]}>{`FollowUp List\n`}</Text>
+                  ]}>{`Observation List\n`}</Text>
                 <Text
                   style={[
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Follow ups{' '}
+                  It is a list of your all Observations {' '}
                 </Text>
               </Text>
             </View>
@@ -123,7 +93,7 @@ export default class FollowUpList extends Component {
             <View style={{flex: 8}}>
               <FlatGrid
                 itemDimension={350}
-                items={this.state.followUpList}
+                items={this.state.observationList}
                 spacing={15}
                 style={[CommonStyles.container, {marginTop: 5}]}
                 renderItem={({item}) => (
@@ -146,38 +116,30 @@ export default class FollowUpList extends Component {
                           {flexDirection: 'row', padding: 12},
                         ]}
                         onPress={() => {
-                          this.addFollowUp(item);
+                          this.addObservation(item);
                         }}>
                         <View
                           style={[
                             CommonStyles.container,
                             {justifyContent: 'space-between'},
                           ]}>
-                          <View
-                            style={[
-                              CommonStyles.container,
-                              {
-                                justifyContent: 'space-between',
-                                alignItems: 'flex-end',
-                              },
-                            ]}>
-                            <Text style={{marginBottom: 6}}>
-                              <Text
-                                style={[
-                                  CommonStyles.textSizeSmall,
-                                  CommonStyles.fontRegular,
-                                  {color: '#333333'},
-                                ]}>{`Follow up Date: `}</Text>
-                              <Text
-                                style={[
-                                  CommonStyles.fontMedium,
-                                  CommonStyles.textSizeAverage,
-                                  {color: '#333333'},
-                                ]}>
-                                {moment(item.answer).format('DD-MM-yyyy')}
-                              </Text>
+                          <Text style={{marginBottom: 10}}>
+                            <Text
+                              style={[
+                                CommonStyles.fontRegular,
+                                CommonStyles.textSizeSmall,
+                                {color: '#333333'},
+                              ]}>{`Observation: \n`}</Text>
+                            <Text
+                              style={[
+                                CommonStyles.fontMedium,
+                                CommonStyles.textSizeAverage,
+                                {color: '#333333'},
+                              ]}>
+                              {item.answer}
                             </Text>
-                          </View>
+                          </Text>
+       
                         </View>
 
                         <View
@@ -226,10 +188,10 @@ export default class FollowUpList extends Component {
               ]}>
               <TouchableOpacity
                 onPress={() => {
-                  this.props.navigation.navigate('FollowUpAdd', {
+                  this.props.navigation.navigate('ObservationAdd', {
                     appointmentId: this.props.route.params.appointmentId,
-                    patientId:this.props.route.params.patientId,
-                    onFollowUpAdd: () => this._getFollowUpList(),
+                    patientId: this.props.route.params.patientId,
+                    onObservationAdd: () => this._getObservationList(),
                   });
                 }}
                 style={[
@@ -246,7 +208,7 @@ export default class FollowUpList extends Component {
                     CommonStyles.padding,
                     {opacity: 0.5},
                   ]}>
-                  Add FollowUp
+                  Add Observation
                 </Text>
               </TouchableOpacity>
             </View>
@@ -267,7 +229,6 @@ export default class FollowUpList extends Component {
         </View>
       );
     } else {
-        console.warn("asad")
       return (
         <View style={[CommonStyles.container]}>
           <ImageBackground
@@ -279,13 +240,13 @@ export default class FollowUpList extends Component {
                   style={[
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeLarge,
-                  ]}>{`FollowUp List\n`}</Text>
+                  ]}>{`Observation List\n`}</Text>
                 <Text
                   style={[
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Follow ups{' '}
+                  It is a list of your all Observations{' '}
                 </Text>
               </Text>
             </View>
@@ -293,7 +254,7 @@ export default class FollowUpList extends Component {
             <View style={{flex: 8}}>
               <FlatGrid
                 itemDimension={350}
-                items={this.state.followUpList}
+                items={this.state.observationList}
                 spacing={15}
                 style={[CommonStyles.container, {marginTop: 5}]}
                 renderItem={({item}) => (
@@ -326,7 +287,7 @@ export default class FollowUpList extends Component {
                                 CommonStyles.fontRegular,
                                 CommonStyles.textSizeSmall,
                                 {color: '#333333'},
-                              ]}>{`FollowUp Name: \n`}</Text>
+                              ]}>{`Observation: \n`}</Text>
                             <Text
                               style={[
                                 CommonStyles.fontMedium,
@@ -336,23 +297,7 @@ export default class FollowUpList extends Component {
                               {item.name}
                             </Text>
                           </Text>
-
-                          <Text>
-                            <Text
-                              style={[
-                                CommonStyles.fontRegular,
-                                CommonStyles.textSizeSmall,
-                                {color: '#333333'},
-                              ]}>{`Description: \n`}</Text>
-                            <Text
-                              style={[
-                                CommonStyles.fontMedium,
-                                CommonStyles.textSizeAverage,
-                                {color: '#333333'},
-                              ]}>
-                              {item.description}
-                            </Text>
-                          </Text>
+                     
                         </View>
 
                         <View
@@ -401,9 +346,8 @@ export default class FollowUpList extends Component {
               ]}>
               <TouchableOpacity
                 onPress={() => {
-                  this.props.navigation.navigate('FollowUpAdd', {
-                    onFollowUpAdd: () => this._getFollowUpList(),
-                    appointmentId: this.props.route.params.appointmentId,
+                  this.props.navigation.navigate('ObservationAdd', {
+                    onObservationAdd: () => this._getObservationList(),
                   });
                 }}
                 style={[
@@ -420,7 +364,7 @@ export default class FollowUpList extends Component {
                     CommonStyles.padding,
                     {opacity: 0.5},
                   ]}>
-                  Add FollowUp
+                  Add Observation
                 </Text>
               </TouchableOpacity>
             </View>

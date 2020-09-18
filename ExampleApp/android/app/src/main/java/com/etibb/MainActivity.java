@@ -1,4 +1,4 @@
-package com.telemedicine;
+package com.etibb;
 
 import com.facebook.react.ReactActivity;
 

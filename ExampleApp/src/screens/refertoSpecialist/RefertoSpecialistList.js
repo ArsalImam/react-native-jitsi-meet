@@ -32,15 +32,31 @@ export default class RefertoSpecialistList extends Component {
     }
 
     _getReferToSpecialistList(){
-        this.setState({ isLoading: true });
-        Api.instance().getReferToSpecialistList()
-        .then((data) => {          
-            this.setState({ refertoSpecialistList: data });
+
+        if (this.state.appointmentId != null) {
+            this.setState({ isLoading: true });
+            Api.instance()
+            .getListDuringConsultation('referToSpecialist',this.state.patientId)
+            .then((data) => {          
+                this.setState({ refertoSpecialistList: data });
+            }
+            ).catch(err => console.log(err))
+            .finally(() => {
+                this.setState({ isLoading: false });
+            })
+        }else{
+            this.setState({ isLoading: true });
+            Api.instance().getReferToSpecialistList()
+            .then((data) => {          
+                this.setState({ refertoSpecialistList: data });
+            }
+            ).catch(err => console.log(err))
+            .finally(() => {
+                this.setState({ isLoading: false });
+            })
         }
-        ).catch(err => console.log(err))
-        .finally(() => {
-            this.setState({ isLoading: false });
-        })
+
+        
     }
 
     componentDidMount() {
@@ -91,7 +107,7 @@ export default class RefertoSpecialistList extends Component {
                             <Text
                                 style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Refer to Specialist\n`}</Text>
-                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Bookings </Text>
+                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Referred Specialists </Text>
                             </Text>
                         </View>
 
@@ -118,13 +134,13 @@ export default class RefertoSpecialistList extends Component {
                                                 <View style={[CommonStyles.container, { justifyContent: 'space-between' }]}>
 
                                                     <Text style={{ marginBottom: 10 }} >
-                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Diagnosis Name: \n`}</Text>
-                                                        <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.name}</Text>
+                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Doctor Name: \n`}</Text>
+                                                        <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.answer}</Text>
                                                     </Text>
 
                                                     <Text>
                                                         <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Description: \n`}</Text>
-                                                        <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.description}</Text>
+                                                        <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.notes}</Text>
                                                     </Text>
 
                                                 </View>
@@ -162,7 +178,10 @@ export default class RefertoSpecialistList extends Component {
                             ]}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.navigation.navigate('RefertoSpecialistAdd', { appointmentId: this.props.route.params.appointmentId, onRefertoSpecialistAdd: () => this._getReferToSpecialistList()})
+                                    this.props.navigation.navigate('RefertoSpecialistAdd', {
+                                         appointmentId: this.props.route.params.appointmentId, 
+                                         patientId:this.props.route.params.patientId,
+                                        onRefertoSpecialistAdd: () => this._getReferToSpecialistList()})
                                 }}
                                 style={[
                                     CommonStyles.container,
@@ -217,7 +236,7 @@ export default class RefertoSpecialistList extends Component {
                         }>
                             <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Diagnosis List\n`}</Text>
-                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Bookings </Text>
+                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Referred Specialists </Text>
                             </Text>
                         </View>
 
@@ -244,7 +263,7 @@ export default class RefertoSpecialistList extends Component {
                                                 <View style={[CommonStyles.container, { justifyContent: 'space-between' }]}>
 
                                                     <Text style={{ marginBottom: 10 }} >
-                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Diagnosis Name: \n`}</Text>
+                                                        <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall, { color: '#333333', }]}>{`Doctor Name: \n`}</Text>
                                                         <Text style={[CommonStyles.fontMedium, CommonStyles.textSizeAverage, { color: '#333333', }]}>{item.name}</Text>
                                                     </Text>
 

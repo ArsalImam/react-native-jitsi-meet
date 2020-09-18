@@ -157,7 +157,7 @@ upcomingAppointments(){
                   CommonStyles.fontRegular,
                   CommonStyles.textSizeAverage,
                 ]}>
-                It is a list of your all booking patients{' '}
+                It is a list of your all scheduled bookings{' '}
               </Text>
             </Text>
           </View>
@@ -317,7 +317,19 @@ upcomingAppointments(){
                     </View>
                   </ImageBackground>
                   <View style={[CommonStyles.container, { justifyContent: 'center', backgroundColor: '#297DEC', marginTop: 5, borderBottomEndRadius: 5, borderBottomStartRadius: 5 }]}>
-                    <TouchableOpacity
+                    <View style={[CommonStyles.container, CommonStyles.centerElement, { flexDirection: 'row' }]}>
+                              
+                    <Icon
+                        name="phone"
+                        type='Fontisto'
+                        style={{ fontSize: 20, color: '#FFF', margin: 10 }}
+                      />
+                      <Text style={[CommonStyles.textColorWhite, CommonStyles.centerText, CommonStyles.padding]}>CALL</Text>
+
+                    </View>
+                    
+                    
+                    {/* <TouchableOpacity
                       onPress={() => { }}
                       style={[CommonStyles.container, CommonStyles.centerElement, { flexDirection: 'row' }]}
                     >
@@ -329,7 +341,7 @@ upcomingAppointments(){
                       />
                       <Text style={[CommonStyles.textColorWhite, CommonStyles.centerText, CommonStyles.padding]}>CALL</Text>
 
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                   </View>
                 </TouchableOpacity>
               )}

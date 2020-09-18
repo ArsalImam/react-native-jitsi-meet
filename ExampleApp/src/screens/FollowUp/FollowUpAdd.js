@@ -33,42 +33,102 @@ export default class FollowUpAdd extends Component {
 
     _saveFollowUp = () => {
 
-        let data = {
-            "setupType": "followUp",
-            "name": this.state.answer,
-            "description":''
-        }
+       
         
         console.warn("this.state.answer ===",this.state.answer)
 
-        if(this.state.answer != ""){
-            this.setState({ isLoading: true })
-            Api.instance()
-            .createMedication(data)
-            .then(response => {
-               // this.props.navigation.replace('DiagnosisList');
-                this.props.route.params.onFollowUpAdd();
-                this.props.navigation.goBack();
-                ViewUtils.showToast('FollowUp has been saved successfully!');
-            })
-            .catch(err => {
+        if(this.state.appointmentId != null){
+ 
+
+            let data = {
+                // date: this.state.startDate,
+                 // "setupId": "",
+                 // "doctorId": "5f01d90dffd17912ce896c56",
+                 // "assistantId": "",
+                 date: new Date(),
+                 patientId: this.state.patientId,
+                 answer: this.state.answer,
+                 notes:'',
+                // endDate: this.state.endDate,
+                 'setup-type': 'followup',
+                 active: false,
+               };
+
+            if(this.state.answer != ""){
+                this.setState({ isLoading: true })
+                Api.instance()
+                .createPrescription(data)
+                .then(response => {
+                    this.addToConsultation(data);
+                    this.props.route.params.onFollowUpAdd();
+                    this.props.navigation.goBack();
+                    ViewUtils.showToast('FollowUp has been saved successfully!');
+                })
+                .catch(err => {
+                    ViewUtils.showAlert(
+                        'Unable to Perform this Action',       
+                    );
+                    ViewUtils.showToast(err);
+                })
+                .finally(() => {
+                    this.setState({ isLoading: false });
+                });
+            }else {
                 ViewUtils.showAlert(
-                    'Unable to Perform this Action',       
-                );
-                ViewUtils.showToast(err);
-            })
-            .finally(() => {
-                this.setState({ isLoading: false });
-            });
+                    'Please Provide FollowUp Date',       
+                );    
+            }
         }else {
-            ViewUtils.showAlert(
-                'Please Provide FollowUp Date',       
-            );    
-        }    
-        
+
+            let data = {
+                "setupType": "followUp",
+                "name": this.state.answer,
+                "description":''
+            }
+
+            if(this.state.answer != ""){
+                this.setState({ isLoading: true })
+                Api.instance()
+                .createMedication(data)
+                .then(response => {
+                   // this.props.navigation.replace('DiagnosisList');
+                    this.props.route.params.onFollowUpAdd();
+                    this.props.navigation.goBack();
+                    ViewUtils.showToast('FollowUp has been saved successfully!');
+                })
+                .catch(err => {
+                    ViewUtils.showAlert(
+                        'Unable to Perform this Action',       
+                    );
+                    ViewUtils.showToast(err);
+                })
+                .finally(() => {
+                    this.setState({ isLoading: false });
+                });
+            }else {
+                ViewUtils.showAlert(
+                    'Please Provide FollowUp Date',       
+                );    
+            }  
+        }
+   
     };
 
-
+    addToConsultation(item) {
+        Api.instance()
+          .addPrescribeMedication(
+            item,
+            this.state.appointmentId,
+            this.state.patientId,
+          )
+    
+          .then(response => {
+            console.warn('response inisde addto  :: ', response);
+            
+          })
+          .catch(err => {})
+          .finally(() => {});
+      }
 
     render() {
         if (this.state.appointmentId != null) {
@@ -85,7 +145,7 @@ export default class FollowUpAdd extends Component {
                     }>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
                                 <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`FollowUp Add\n`}</Text>
-                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
+                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>Add a new Follow up </Text>
                             </Text>
                         </View>
 
@@ -199,7 +259,7 @@ export default class FollowUpAdd extends Component {
                         <View style={{ flex: 2.3 }}>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
                                 <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`FollowUp Add\n`}</Text>
-                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
+                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>Add a new Follow up  </Text>
                             </Text>
                         </View>
 

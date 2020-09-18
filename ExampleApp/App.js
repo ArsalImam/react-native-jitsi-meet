@@ -30,27 +30,32 @@ class App extends React.Component {
     
     this._initSound();
     let that = this;
-    FCM.instance().notifyUser = (title, message) => {
-      const currentRouteName = that.navigationRef.getCurrentRoute().name
-
-      debugger;
-      console.warn('currentRouteName',JSON.stringify(currentRouteName) , 'mesage',message.data['type'])
-        console.warn("message ::: ",message)
-      if (currentRouteName != 'AppointmentRoom' && message.data['type'] == 'appointment') {
- 
-          let appointmentId = message.data['id'];
-
-          //playing audio
-          that._playAudio();
-
-          //showing toast with accept button
-          ViewUtils.showToast('You have an appointment call', 'Answer', 10 * 1000, () => {
-            that.whoosh.stop();
-            console.warn("APPP)))) appointmentId --- ",appointmentId)
-            that.navigationRef.navigate('AppointmentRoom', {appointmentId});
-          });
-      } 
+    try{
+      FCM.instance().notifyUser = (title, message) => {
+        const currentRouteName = that.navigationRef.getCurrentRoute().name
+  
+        debugger;
+        console.warn('currentRouteName',JSON.stringify(currentRouteName) , 'mesage',message.data['type'])
+          console.warn("message ::: ",message)
+        if (currentRouteName != 'AppointmentRoom' && message.data['type'] == 'appointment') {
+            console.warn("andr aya")
+            let appointmentId = message.data['id'];
+  
+            //playing audio
+            that._playAudio();
+  
+            //showing toast with accept button
+            ViewUtils.showToast('You have an appointment call', 'Answer', 10 * 1000, () => {
+              that.whoosh.stop();
+              console.warn("APPP)))) appointmentId --- ",appointmentId)
+              that.navigationRef.navigate('AppointmentRoom', {appointmentId});
+            });
+        } 
+      }
+    }catch(e){
+      console.warn("error at fcm ::: ",e)
     }
+    
 
     RealtimeDatabase.instance().handleChangeRealtime= (data) =>{
      console.warn ('firebase data',data);

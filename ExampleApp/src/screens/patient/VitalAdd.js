@@ -55,7 +55,7 @@ export default class VitalAdd extends Component {
                     }>
                             <Text style={[CommonStyles.fontRegular, { marginTop: 65, paddingHorizontal: 18 }]}>
                                 <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Vital Add\n`}</Text>
-                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
+                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>Add a new Vital </Text>
                             </Text>
                         </View>
 
@@ -229,7 +229,7 @@ export default class VitalAdd extends Component {
                         <View style={{ flex: 2.3 }}>
                             <Text style={[CommonStyles.fontRegular, { marginTop: 65, paddingHorizontal: 18 }]}>
                                 <Text style={[CommonStyles.textSizeLarge, CommonStyles.textColorWhite]} >{`Vital Add\n`}</Text>
-                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>It is a list of your all booking patients </Text>
+                                <Text style={[CommonStyles.textSizeSmall, CommonStyles.textColorWhite]}>Add a new Vital </Text>
                             </Text>
                         </View>
 

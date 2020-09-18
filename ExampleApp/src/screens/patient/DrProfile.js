@@ -76,6 +76,7 @@ export default class DrProfile extends React.Component {
       },
     ];
     return (
+      
       <View style={[CommonStyles.container]}>
         <ImageBackground
           style={[CommonStyles.container, CommonStyles.backgroundImage]}
