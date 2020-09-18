@@ -118,7 +118,8 @@ export default class PatientProfile extends React.Component {
                           width: 105,
                         },
                       ]}>
-                       <Image
+                      {this.state.user.imageUrl == '' ?(
+                        <Image
                           style={{
                             width: '100%',
                             height: 105,
@@ -126,6 +127,28 @@ export default class PatientProfile extends React.Component {
                           }}
                           source={require('../../assets/drawable-xxxhdpi/Mask.png')}
                         />
+                        // <Icon 
+                        // style={{
+                        //       width: '100%',
+                        //       height: 105,
+                        //       resizeMode: 'cover',
+                        //     }}
+                        // name="user" type="FontAwesome5"
+                        
+                        // />
+                      ) : (
+                        <Image
+                          style={{
+                            width: '100%',
+                            height: 105,
+                            resizeMode: 'contain',
+                          }}
+                          source={{
+                            uri: this.state.user.imageUrl
+                         
+                          }}
+                        />
+                      )}
                      
                     </View>
                     <View
