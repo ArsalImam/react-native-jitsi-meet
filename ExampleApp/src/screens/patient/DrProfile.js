@@ -24,57 +24,7 @@ export default class DrProfile extends React.Component {
 
   render() {
     console.warn('this.state.patient.fname == ', this.state.patient.firstName);
-    const main = [
-      {
-        name: 'MBBS',
-        code: 'Cardio Specialist',
-        fromYears: '2002 - 2008',
-        Uni: 'UNIVERSITY OF LONDON',
-        route: '',
-      },
-      {
-        name: 'MBBS',
-        code: 'Cardio Specialist',
-        fromYears: '2002 - 2008',
-        Uni: 'UNIVERSITY OF LONDON',
-        route: '',
-      },
-      {
-        name: 'MBBS',
-        code: 'Cardio Specialist',
-        fromYears: '2002 - 2008',
-        Uni: 'UNIVERSITY OF LONDON',
-        route: '',
-      },
-      {
-        name: 'MBBS',
-        code: 'Cardio Specialist',
-        fromYears: '2002 - 2008',
-        Uni: 'UNIVERSITY OF LONDON',
-        route: '',
-      },
-      {
-        name: 'MBBS',
-        code: 'Cardio Specialist',
-        fromYears: '2002 - 2008',
-        Uni: 'UNIVERSITY OF LONDON',
-        route: '',
-      },
-      {
-        name: 'MBBS',
-        code: 'Cardio Specialist',
-        fromYears: '2002 - 2008',
-        Uni: 'UNIVERSITY OF LONDON',
-        route: '',
-      },
-      {
-        name: 'MBBS',
-        code: 'Cardio Specialist',
-        fromYears: '2002 - 2008',
-        Uni: 'UNIVERSITY OF LONDON',
-        route: '',
-      },
-    ];
+    
     return (
       
       <View style={[CommonStyles.container]}>
