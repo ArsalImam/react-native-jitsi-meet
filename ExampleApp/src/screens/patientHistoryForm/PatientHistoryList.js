@@ -31,13 +31,19 @@ export default class PatientHistoryList extends Component {
                      this.state = {
                        isLoading: true,
                        patientHistoryList: [],
+                       role:''
                      };
                    }
                  }
 
 
-                 
-                 _getPatientHistoryList() {
+                 componentDidMount(){
+                  Api.instance().getUserRole().then(role => this.setState({role}));
+
+                   this._getPatientHistoryList();
+
+                 }
+                 _getPatientHistoryList(){
                    this.setState({isLoading: true});
                    Api.instance()
                      .getPatientHistoryList()
