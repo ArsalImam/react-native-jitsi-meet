@@ -65,9 +65,8 @@ export default class AppointmentRoom extends React.Component {
             this.appointment = response;
           });
 
-        if (this.state.role != 'MEDICAL_SPECIALIST') {
           this.timer = setInterval(() => this.checkStatus(appointmentId), 5000);
-        }
+        
       });
   }
 

@@ -29,7 +29,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     
-    this._initSound();
+    //this._initSound();
     let that = this;
     try{
       FCM.instance().notifyUser = (title, message) => {
@@ -43,14 +43,15 @@ class App extends React.Component {
             let appointmentId = message.data['id'];
   
             //playing audio
-            that._playAudio();
+            //that._playAudio();
   
             //showing toast with accept button
-            ViewUtils.showToast('You have an appointment call', 'Answer', 10 * 1000, () => {
-              that.whoosh.stop();
-              console.warn("APPP)))) appointmentId --- ",appointmentId)
-              that.navigationRef.navigate('AppointmentRoom', {appointmentId});
-            });
+            that.navigationRef.navigate('IncomingCall', {appointmentId});
+            // ViewUtils.showToast('You have an appointment call', 'Answer', 10 * 1000, () => {
+            //   that.whoosh.stop();
+            //   console.warn("APPP)))) appointmentId --- ",appointmentId)
+            //   that.navigationRef.navigate('AppointmentRoom', {appointmentId});
+            // });
         } 
       }
     }catch(e){

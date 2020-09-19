@@ -49,6 +49,7 @@ import AddPrescribtion from './screens/prescribeMedication/AddPrescribtion';
 import WebViewReport from './screens/web-view/WebViewReport';
 
 import Scheduled from './screens/patient/ScheduledBooking';
+import IncomingCall from './screens/incomingCall/IncomingCall';
 import Completed from './screens/patient/CompleteBookings';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Icon, Left} from 'native-base';
@@ -56,10 +57,8 @@ import CreateClinic from './screens/clinic/CreateClinic';
 import ClinicList from './screens/clinic/ClinicList';
 import SideBar from './components/drawer/SideBar';
 import MyPresciption from './screens/patient/MyPrescription';
-import ViewResultsofLabTest from './screens/viewResultsofLabTest/ViewResultsofLabTest'
+import ViewResultsofLabTest from './screens/viewResultsofLabTest/ViewResultsofLabTest';
 import ChatLogs from './screens/chatLogs/ChatLogs';
-
-
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -345,10 +344,9 @@ export default class Routes extends React.Component {
               backgroundColor: 'transparent',
             },
           }}
-
         />
 
-<Stack.Screen
+        <Stack.Screen
           name="ObservationAdd"
           component={ObservationAdd}
           options={{
@@ -378,10 +376,9 @@ export default class Routes extends React.Component {
               backgroundColor: 'transparent',
             },
           }}
-
         />
 
-<Stack.Screen
+        <Stack.Screen
           name="ChatLogs"
           component={ChatLogs}
           options={{
@@ -390,9 +387,7 @@ export default class Routes extends React.Component {
               backgroundColor: 'transparent',
             },
           }}
-
         />
-
 
         <Stack.Screen
           name="FollowUpAdd"
@@ -638,9 +633,7 @@ export default class Routes extends React.Component {
           // }}
         />
 
-        
-
-<Stack.Screen
+        <Stack.Screen
           name="PatientHistoryAdd"
           component={PatientHistoryAdd}
           options={{
@@ -831,7 +824,7 @@ export default class Routes extends React.Component {
           name="WebViewReport"
           component={WebViewReport}
           options={{
-            title:'',
+            title: '',
             headerShown: true,
           }}
         />
@@ -891,13 +884,17 @@ export default class Routes extends React.Component {
           }}
         />
 
-
-
+        <Stack.Screen
+          name="IncomingCall"
+          component={IncomingCall}
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent',
+            },
+          }}
+        />
       </Stack.Navigator>
-
-
-
-
     );
   }
 }

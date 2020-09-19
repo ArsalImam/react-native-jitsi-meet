@@ -1,19 +1,21 @@
-import React, { Component } from 'react';
-import { Text, View, ImageBackground,TouchableOpacity } from 'react-native';
-import { FlatGrid } from 'react-native-super-grid';
-import { CheckBox } from 'react-native-elements';
+import React, {Component} from 'react';
+import {Text, View, ImageBackground, TouchableOpacity} from 'react-native';
+import {FlatGrid} from 'react-native-super-grid';
+import {CheckBox} from 'react-native-elements';
 import CommonStyles from '../../CommonStyles';
 import Api from '../../Api';
-import { Icon } from 'native-base';
+import {Icon} from 'native-base';
 import Loader from '../../components/Loader';
-import { AppointmentStatus, Roles } from '../../Configs';
+import {AppointmentStatus, Roles} from '../../Configs';
 import moment from 'moment';
-import { ViewUtils } from '../../Utils';
+import {ViewUtils} from '../../Utils';
 
 export default class BookingList extends Component {
   state = {
     appointments: [],
-    isLoading: false
+    isLoading: false,
+    todaysAppointments: [],
+    isScheduled: false,
   };
 
   constructor(props) {
@@ -21,23 +23,22 @@ export default class BookingList extends Component {
   }
 
   componentDidMount() {
-
     this.refreshList();
   }
 
   refreshList() {
-    this.setState({isLoading : true})
+    this.setState({isLoading: true});
     Api.instance()
-    .getMyAppointments(AppointmentStatus.available, true)
-    .then(appointments => {
-      this.setState({ appointments });
-    })
-    .catch(err => {
-      ViewUtils.showToast(err);
-    })
-    .finally(() => {
-      this.setState({isLoading: false});
-    });
+      .getMyAppointments(AppointmentStatus.available, true)
+      .then(appointments => {
+        this.setState({appointments});
+      })
+      .catch(err => {
+        ViewUtils.showToast(err);
+      })
+      .finally(() => {
+        this.setState({isLoading: false});
+      });
   }
 
   render() {
@@ -46,11 +47,11 @@ export default class BookingList extends Component {
         <ImageBackground
           style={[CommonStyles.container, CommonStyles.backgroundImage]}
           source={require('../../assets/img/bwback.png')}>
-                  <Loader loading={this.state.isLoading} />
+          <Loader loading={this.state.isLoading} />
 
           <View
-            style={[CommonStyles.container, CommonStyles.padding, { flex: 2 }]}>
-            <Text style={{ color: '#FFFFFF', paddingLeft: 12, marginTop: '15%' }}>
+            style={[CommonStyles.container, CommonStyles.padding, {flex: 2}]}>
+            <Text style={{color: '#FFFFFF', paddingLeft: 12, marginTop: '15%'}}>
               <Text
                 style={[
                   CommonStyles.DINAltBold,
@@ -61,21 +62,27 @@ export default class BookingList extends Component {
                   CommonStyles.fontRegular,
                   CommonStyles.textSizeAverage,
                 ]}>
-                It is a list of your all available bookings {' '}
+                It is a list of your all available bookings{' '}
               </Text>
             </Text>
           </View>
-          <View style={{ flex: 8, paddingHorizontal: 2, paddingBottom: 55 }}>
+          <View style={{flex: 8, paddingHorizontal: 2, paddingBottom: 55}}>
             <FlatGrid
               itemDimension={320}
               spacing={15}
               items={this.state.appointments}
               style={[CommonStyles.container]}
-              renderItem={({ item }) => (
+              renderItem={({item}) => (
                 <TouchableOpacity
-                  style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5, CommonStyles.bgColor]}
+                  style={[
+                    CommonStyles.container,
+                    CommonStyles.shadow,
+                    CommonStyles.br5,
+                    CommonStyles.bgColor,
+                  ]}
                   onPress={() => {
-                    Api.instance().getUserRole()
+                    Api.instance()
+                      .getUserRole()
                       .then(role => {
                         if (role === Roles.patient) {
                           this._createAppointment(item.id);
@@ -91,7 +98,6 @@ export default class BookingList extends Component {
                     style={[
                       CommonStyles.container,
                       CommonStyles.backgroundImage,
-
                     ]}
                     source={require('../../assets/img/bookingbg2x.png')}>
                     <View
@@ -106,20 +112,23 @@ export default class BookingList extends Component {
                       <View
                         style={[
                           CommonStyles.container,
-                          { justifyContent: 'space-between', paddingVertical: 12 },
+                          {
+                            justifyContent: 'space-between',
+                            paddingVertical: 12,
+                          },
                         ]}>
                         <Text>
                           <Text
                             style={[
                               CommonStyles.fontRegular,
                               CommonStyles.textSizeSmall,
-                              { color: '#333333' },
+                              {color: '#333333'},
                             ]}>{`Patient Name\n`}</Text>
                           <Text
                             style={[
                               CommonStyles.fontMedium,
                               CommonStyles.textSizeAverage,
-                              { color: '#333333' },
+                              {color: '#333333'},
                             ]}>
                             {'-'}
                           </Text>
@@ -128,7 +137,7 @@ export default class BookingList extends Component {
                         <Text
                           style={[
                             CommonStyles.textSizeAverage,
-                            { color: '#333333' },
+                            {color: '#333333'},
                           ]}>
                           <Text
                             style={[
@@ -143,7 +152,7 @@ export default class BookingList extends Component {
                       <View
                         style={[
                           CommonStyles.container,
-                          { justifyContent: 'space-between' },
+                          {justifyContent: 'space-between'},
                         ]}>
                         <View
                           style={[
@@ -176,18 +185,18 @@ export default class BookingList extends Component {
                             title={item.status}
                             checked={true}
                           />
-                          <Text style={{ marginBottom: 6 }}>
+                          <Text style={{marginBottom: 6}}>
                             <Text
                               style={[
                                 CommonStyles.textSizeSmall,
                                 CommonStyles.fontRegular,
-                                { color: '#333333' },
+                                {color: '#333333'},
                               ]}>{`Date: `}</Text>
                             <Text
                               style={[
                                 CommonStyles.fontMedium,
                                 CommonStyles.textSizeAverage,
-                                { color: '#333333' },
+                                {color: '#333333'},
                               ]}>
                               {moment(item.date).format('DD-MM-yyyy')}
                             </Text>
@@ -196,17 +205,37 @@ export default class BookingList extends Component {
                       </View>
                     </View>
                   </ImageBackground>
-                  <View style={[CommonStyles.container, {justifyContent:'center', backgroundColor: '#E53935', marginTop: 5, borderBottomEndRadius: 5, borderBottomStartRadius: 5 }]}>
-                      <View 
-                      style={[CommonStyles.container, CommonStyles.centerElement, { flexDirection: 'row' }]}>
+                  <View
+                    style={[
+                      CommonStyles.container,
+                      {
+                        justifyContent: 'center',
+                        backgroundColor: '#E53935',
+                        marginTop: 5,
+                        borderBottomEndRadius: 5,
+                        borderBottomStartRadius: 5,
+                      },
+                    ]}>
+                    <View
+                      style={[
+                        CommonStyles.container,
+                        CommonStyles.centerElement,
+                        {flexDirection: 'row'},
+                      ]}>
                       <Icon
                         name="clock"
-                        type='Fontisto'
-                        style={{ fontSize: 20, color: '#FFF', margin: 10 }}
+                        type="Fontisto"
+                        style={{fontSize: 20, color: '#FFF', margin: 10}}
                       />
-                      <Text style={[CommonStyles.textColorWhite, CommonStyles.centerText, CommonStyles.padding]}>BOOK NOW</Text>
-
-                      </View>
+                      <Text
+                        style={[
+                          CommonStyles.textColorWhite,
+                          CommonStyles.centerText,
+                          CommonStyles.padding,
+                        ]}>
+                        BOOK NOW
+                      </Text>
+                    </View>
                   </View>
                 </TouchableOpacity>
               )}
@@ -227,27 +256,60 @@ export default class BookingList extends Component {
     }
   }
 
-  _createAppointment(appointmentId) {
+  _getTodaysAppointments() {
     let that = this;
-    ViewUtils.showAlert(
-      'Do you want to create appointment?',
-      () => {
-        this.setState({ isLoading: true });
-        Api.instance()._user()
-          .then(user => {
-            Api.instance()
-              .updateAppointment(appointmentId, user.id)
-              .then(() => {
-                ViewUtils.showToast('Appointment has been booked successfully');
-                this.refreshList();
-              })
-              .catch(err => {
-                ViewUtils.showToast(err);
-              })
-              .finally(() => that.setState({ isLoading: false }));
+    Api.instance()
+      ._user()
+      .then(user => {
+        Api.instance()
+          .getTodaysAppointments(user.id)
+          .then(response => {
+            this.setState({todaysAppointments: response});
           })
-      },
-      () => { },
-    );
+          .catch(err => {
+            ViewUtils.showToast(err);
+          })
+          .finally(() => that.setState({isLoading: false}));
+      });
+  }
+
+  _createAppointment(appointmentId) {
+    this._getTodaysAppointments();
+
+    this.state.todaysAppointments.map(x => {
+      if (x.status == 'Scheduled') {
+        this.setState({isScheduled: true});
+      }
+    });
+    console.warn("this.state.isScheduled === ",this.state.isScheduled)
+    if (this.state.isScheduled !== true) {
+      let that = this;
+      ViewUtils.showAlert(
+        'Do you want to create appointment?',
+        () => {
+          this.setState({isLoading: true});
+          Api.instance()
+            ._user()
+            .then(user => {
+              Api.instance()
+                .updateAppointment(appointmentId, user.id)
+                .then(() => {
+                  console.warn('user.id ::: ', user.id);
+                  ViewUtils.showToast(
+                    'Appointment has been booked successfully',
+                  );
+                  this.refreshList();
+                })
+                .catch(err => {
+                  ViewUtils.showToast(err);
+                })
+                .finally(() => that.setState({isLoading: false}));
+            });
+        },
+        () => {},
+      );
+    }else{
+      ViewUtils.showAlert('Cannot create more than one appointment in a day.')
+    }
   }
 }
