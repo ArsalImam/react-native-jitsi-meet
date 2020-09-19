@@ -104,23 +104,15 @@ export default class Patients extends Component {
                       marginBottom: 8,
                     }}>
 
-<<<<<<< HEAD
-                    {item.imageUrl == '' ? (
-=======
 
 
                       {item.imageUrl == '' ? (
->>>>>>> c09296dfd8bc075f8771599dec3183905d656d62
                         <Image
                         style={[
                           CommonStyles.container,
                           CommonStyles.backgroundImage,
                         ]}
-<<<<<<< HEAD
-                        source={require('../../assets/drawable-xxxhdpi/Rectangle.png')}
-=======
                           source={require('../../assets/drawable-xxxhdpi/Rectangle.png')}
->>>>>>> c09296dfd8bc075f8771599dec3183905d656d62
                         />
                       ) : (
                        
@@ -133,12 +125,7 @@ export default class Patients extends Component {
                             uri: item.imageUrl,
                           }}
                         />
-<<<<<<< HEAD
-                      )}
-
-=======
                       )}    
->>>>>>> c09296dfd8bc075f8771599dec3183905d656d62
 
                   </View>
                   <View
