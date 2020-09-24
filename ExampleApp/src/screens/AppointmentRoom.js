@@ -15,7 +15,7 @@ import {
   TouchableOpacity,
   BackHandler,
 } from 'react-native';
-import {ViewUtils} from '../Utils';
+import { ViewUtils } from '../Utils';
 
 import RealtimeDatabase from '../RealtimeDatabase';
 export default class AppointmentRoom extends React.Component {
@@ -89,6 +89,7 @@ export default class AppointmentRoom extends React.Component {
         }
       });
   }
+  
 
   handleBackButton() {
     return true;

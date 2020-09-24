@@ -56,23 +56,40 @@ export default class UploadIllustrations extends React.Component {
       },
     };
   }
+  componentDidMount() {
+    console.warn('imageeeeeeee', this.state.imageUrl);
+  }
 
   handleChoosePhoto = () => {
-    const options = {
-      title: '',
-      noData: true,
-      storageOption: {
-        skipBackup: true,
-        path: 'images',
-        cameraRoll: true,
-        waitUntilSaved: true,
-      },
-    };
+    if (this.state.imageUrl != '') {
+      var options = {
+        title: '',
+        customButtons: [{name: 'remove', title: 'Remove Profile Image'}],
+        noData: true,
+        storageOption: {
+          skipBackup: true,
+          path: 'images',
+        },
+      };
+    } else {
+      var options = {
+        title: '',
+        noData: true,
+        storageOption: {
+          skipBackup: true,
+          path: 'images',
+        },
+      };
+    }
+
     ImagePicker.showImagePicker(options, response => {
       console.warn('Response = ', response);
 
       if (response.didCancel) {
-        console.warn('user cancelled image Picker');
+        console.warn('User Tapped cancel');
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+        this.setState({imageUrl: ''});
       } else if (response.err) {
         console.warn('Image Picker Error ', err);
       } else {
@@ -101,7 +118,6 @@ export default class UploadIllustrations extends React.Component {
   };
 
   saveImage = () => {
-    // if(this.state.imageUrl){
     let data = {
       salutation: this.state.salutation,
       firstName: this.state.firstName,
@@ -114,7 +130,6 @@ export default class UploadIllustrations extends React.Component {
         country: this.state.country,
         dateOfBirth: this.state.dateOfBirth,
         mobile: this.state.mobile,
-        // 'url': this.state.imageUri,
       },
     };
 
@@ -137,10 +152,6 @@ export default class UploadIllustrations extends React.Component {
       .finally(() => {
         this.setState({isLoading: false});
       });
-    // }
-    // else{
-    //     console.warn('nothing happennned')
-    // }
   };
 
   componentDidMount() {
@@ -163,37 +174,6 @@ export default class UploadIllustrations extends React.Component {
       })
       .catch(err => ViewUtils.showToast(err));
   }
-  // _updateProfile = () => {
-  //     let data = {
-  //         "salutation": this.state.salutation,
-  //         "firstName": this.state.firstName,
-  //         "lastName": this.state.lastName,
-  //         "email": this.state.user.email,
-  //         "speciality": this.state.speciality,
-  //         "personalDetails": {
-  //             "city": this.state.city,
-  //             "country": this.state.country,
-  //             "dateOfBirth": this.state.dateOfBirth,
-  //             "mobile": this.state.mobile,
-  //         }
-  //     }
-  //     this.setState({ isLoading: true });
-  //     Api.instance()
-  //         .updateProfile(data)
-  //         .then(response => {
-  //             // this.props.navigation.goBack();
-  //             this.props.navigation.replace('PatientProfile')
-  //             ViewUtils.showToast('Profile has been updated successfully!');
-  //             console.warn(data)
-  //         })
-  //         .catch(err => {
-  //             ViewUtils.showToast(err);
-  //         })
-  //         .finally(() => {
-  //             this.setState({ isLoading: false });
-
-  //         });
-  // };
 
   render() {
     const {image} = this.state;
@@ -235,17 +215,25 @@ export default class UploadIllustrations extends React.Component {
                     style={{fontSize: 70}}
                   />
                 ) : (
-                  <Image
-                    source={{
-                      uri: this.state.imageUrl,
-                    }}
+                  <View
                     style={{
                       width: 120,
                       height: 120,
                       backgroundColor: '#E3E3E3',
                       borderRadius: 60,
-                    }}
-                  />
+                    }}>
+                    <Image
+                      source={{
+                        uri: this.state.imageUrl,
+                      }}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        borderRadius: 60,
+                        resizeMode: 'cover',
+                      }}
+                    />
+                  </View>
                 )}
               </TouchableOpacity>
 
