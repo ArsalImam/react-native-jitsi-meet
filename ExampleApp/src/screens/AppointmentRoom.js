@@ -96,7 +96,7 @@ export default class AppointmentRoom extends React.Component {
     const prescribtionUrl = Api.instance().getUrl(
       `consultation-reports/getReport?appointmentId=${
         this.appointmentId
-      }&prescription=true`,
+      }& =true`,
     );
     /* Conference terminated event */
 
