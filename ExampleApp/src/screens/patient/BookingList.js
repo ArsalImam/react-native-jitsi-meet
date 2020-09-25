@@ -264,6 +264,7 @@ export default class BookingList extends Component {
         Api.instance()
           .getTodaysAppointments(user.id)
           .then(response => {
+            console.warn("response ::: ",response)
             this.setState({todaysAppointments: response});
           })
           .catch(err => {
