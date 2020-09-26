@@ -65,9 +65,8 @@ export default class AppointmentRoom extends React.Component {
             this.appointment = response;
           });
 
-        if (this.state.role != 'MEDICAL_SPECIALIST') {
           this.timer = setInterval(() => this.checkStatus(appointmentId), 5000);
-        }
+        
       });
   }
 
@@ -97,7 +96,7 @@ export default class AppointmentRoom extends React.Component {
     const prescribtionUrl = Api.instance().getUrl(
       `consultation-reports/getReport?appointmentId=${
         this.appointmentId
-      }&prescription=true`,
+      }& =true`,
     );
     /* Conference terminated event */
 

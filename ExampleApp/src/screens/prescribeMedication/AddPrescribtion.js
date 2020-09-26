@@ -97,10 +97,12 @@ export default class AddPrescribtion extends Component {
     }else if (this.state.reason == '') {
       ViewUtils.showAlert('Please Provide Reason');
       return;
-    }else if (this.state.startDate == null) {
-      ViewUtils.showAlert('Please Provide Start Date');
-      return;
-    }else if (this.state.notes == '') {
+    }
+    // else if (this.state.startDate == null) {
+    //   ViewUtils.showAlert('Please Provide Start Date');
+    //   return;
+    // }
+    else if (this.state.notes == '') {
       ViewUtils.showAlert('Please Provide Notes');
       return;
     }

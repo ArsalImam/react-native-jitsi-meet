@@ -21,7 +21,7 @@ export default class Api {
         return response;
       },
       function(error) {
-         // ViewUtils.showToast(error.response);
+        // ViewUtils.showToast(error.response);
         return Promise.reject(error);
       },
     );
@@ -265,7 +265,6 @@ export default class Api {
           _user.id
         }&filter[where][and][1][patientId]=${patientId}&filter[where][and][2][setup-type]=${setupType}&filter[order]=id%20DESC`,
       ),
-      
     );
     let data = response.data;
     console.warn('data', data);
@@ -274,25 +273,21 @@ export default class Api {
   }
 
   async getVitalListConsultation(patientId) {
-    console.warn(patientId)
+    console.warn(patientId);
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
       this.getUrl(
-        `vitals?filter[where][patientId]=${
-          patientId
-        }&filter[order]=id%20DESC`,
+        `vitals?filter[where][patientId]=${patientId}&filter[order]=id%20DESC`,
       ),
     );
-  
+
     let data = response.data;
     console.warn('data', data);
     if (data.error) throw data.error.message;
     return data;
   }
 
-
-  
   // Medication List
   async getMedicationList() {
     let user = await this._user();
@@ -342,8 +337,6 @@ export default class Api {
     if (data.error) throw data.error.message;
     return data;
   }
-
-
 
   async getReferToSpecialistList() {
     let user = await this._user();
@@ -459,23 +452,23 @@ export default class Api {
   // Patient History List
   async getPatientHistoryList() {
     console.warn('a');
-     let user = await this._user();
+    let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
       this.getUrl(
-        `Setups?filter[where][doctorId]=${role==Roles.patient?_user.doctorId:_user.id}&filter[where][setupType]=patientHistoryForm&filter[order]=createdAt%20DESC`,
+        `Setups?filter[where][doctorId]=${
+          role == Roles.patient ? _user.doctorId : _user.id
+        }&filter[where][setupType]=patientHistoryForm&filter[order]=createdAt%20DESC`,
       ),
     );
     let data = response.data;
-    console.warn("data === ",data)
+    console.warn('data === ', data);
     console.warn('data', data);
     if (data.error) throw data.error.message;
     return data;
   }
 
-
-
-  async updatePatientHistoryList(id,updateData) {
+  async updatePatientHistoryList(id, updateData) {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.post(
@@ -537,7 +530,7 @@ export default class Api {
       this.getHeaders(),
     );
 
-      console.warn("response ----- ",JSON.stringify(response))
+    console.warn('response ----- ', JSON.stringify(response));
 
     return response.data;
   }
@@ -554,11 +547,10 @@ export default class Api {
       this.getHeaders(),
     );
 
-      console.warn("response ----- ",JSON.stringify(response))
+    console.warn('response ----- ', JSON.stringify(response));
 
     return response.data;
   }
-
 
   // Update Profile
   async updateProfile(data) {
@@ -624,6 +616,21 @@ export default class Api {
     return data;
   }
 
+  async getTodaysAppointments(patientId) {
+    var start = new Date();
+    start.setHours(0, 0, 0, 0);
+
+    var end = new Date();
+    end.setHours(23, 59, 59, 999);
+
+    let response = await this.client.get(
+      this.getUrl(`Appointments?filter[where][patientId]=${patientId}&filter[where][and][0][date][lt]=${end.toISOString()}&filter[where][and][1][date][gt]=${start.toISOString()}`)
+    );
+    let data = response.data;
+    if (data.error) throw data.error.message;
+    return data;
+  }
+
   async getUserRole() {
     if (!this._userRole) {
       let user = await this._user();
@@ -635,7 +642,7 @@ export default class Api {
   }
 
   async updateFcmToken(fcmToken: string) {
-    console.warn("fcmToken fcm :: ",fcmToken)
+    console.warn('fcmToken fcm :: ', fcmToken);
     if (!fcmToken) {
       throw 'token not token';
     }
@@ -650,7 +657,7 @@ export default class Api {
       fcmToken,
     });
     let data = response.data;
-    console.warn("data fcm :: ",data)
+    console.warn('data fcm :: ', data);
     if (data.error) throw data.error.message;
     console.warn('fcm updated', fcmToken);
     console.warn('fcm AsyncStorage has set');
