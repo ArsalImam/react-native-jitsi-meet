@@ -31,9 +31,15 @@ export default class BookingList extends Component {
     Api.instance()
       .getMyAppointments(AppointmentStatus.available, true)
       .then(appointments => {
+       var scheduled = appointments.map(x => x.status == "Scheduled")
+        
+       if(scheduled !== null){
+        this.setState({isScheduled : true});
+       }
         this.setState({appointments});
       })
       .catch(err => {
+        console.warn("erororor  :: ",err)
         ViewUtils.showToast(err);
       })
       .finally(() => {
@@ -256,32 +262,49 @@ export default class BookingList extends Component {
     }
   }
 
-  _getTodaysAppointments() {
-    let that = this;
+  // _getTodaysAppointments() {
+  //   let that = this;
+  //   Api.instance()
+  //     ._user()
+  //     .then(user => {
+  //       Api.instance()
+  //         .getTodaysAppointments(user.id)
+  //         .then(response => {
+  //           console.warn("response ::: ",response)
+  //           if(response.length > 0){
+  //             this.setState({todaysAppointments: response});
+  //           }
+  //         })
+  //         .catch(err => {
+  //           ViewUtils.showToast(err);
+  //         })
+  //         .finally(() => that.setState({isLoading: false}));
+  //     });
+  // }
+
+  _getScheduledAppointments(){
     Api.instance()
-      ._user()
-      .then(user => {
-        Api.instance()
-          .getTodaysAppointments(user.id)
-          .then(response => {
-            console.warn("response ::: ",response)
-            this.setState({todaysAppointments: response});
-          })
-          .catch(err => {
-            ViewUtils.showToast(err);
-          })
-          .finally(() => that.setState({isLoading: false}));
-      });
+    .getScheduledAppointments()
+    .then(res => {
+      if(res.length > 0){
+        this.setState({isScheduled : true})
+      }
+   
+    })
+    .catch(err => {
+      console.warn("erororor  :: ",err)
+      ViewUtils.showToast(err);
+    })
+    .finally(() => {
+      this.setState({isLoading: false});
+    });
   }
 
-  _createAppointment(appointmentId) {
-    this._getTodaysAppointments();
 
-    this.state.todaysAppointments.map(x => {
-      if (x.status == 'Scheduled') {
-        this.setState({isScheduled: true});
-      }
-    });
+  _createAppointment(appointmentId) {
+
+    this._getScheduledAppointments();
+
     console.warn("this.state.isScheduled === ",this.state.isScheduled)
     if (this.state.isScheduled !== true) {
       let that = this;
