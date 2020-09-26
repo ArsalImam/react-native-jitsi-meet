@@ -52,7 +52,7 @@ export default class IncomingCall extends React.Component {
               flexDirection: 'row',
               justifyContent: 'space-evenly',
               alignItems: 'center',
-            }}>
+            }}> 
             <TouchableOpacity
               onPress={() => {
                 this.whoosh.stop();
