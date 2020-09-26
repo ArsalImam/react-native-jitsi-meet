@@ -52,12 +52,12 @@ export default class IncomingCall extends React.Component {
               flexDirection: 'row',
               justifyContent: 'space-evenly',
               alignItems: 'center',
-            }}>
+            }}> 
             <TouchableOpacity
               onPress={() => {
                 this.whoosh.stop();
                 // console.warn('APPP)))) appointmentId --- ', this.appointmentId);
-                this.props.navigation.navigate('AppointmentRoom', {
+                this.props.navigation.replace('AppointmentRoom', {
                   appointmentId: this.state.appointmentId,
                 });
               }}>
