@@ -681,6 +681,9 @@ export default class Api {
     let _user = JSON.parse(JSON.stringify(user));
 
 
+    console.warn("doctor id ::: ",_user.doctorId)
+    console.warn("patient id ::: ",_user.id)
+
     let response = await this.client.get(
       this.getUrl(
         `Appointments?filter[where][doctorId]=${_user.doctorId}&filter[where][patientId]=${_user.id}&filter[where][status]=Scheduled`,

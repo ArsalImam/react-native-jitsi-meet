@@ -31,11 +31,7 @@ export default class BookingList extends Component {
     Api.instance()
       .getMyAppointments(AppointmentStatus.available, true)
       .then(appointments => {
-       var scheduled = appointments.map(x => x.status == "Scheduled")
-        
-       if(scheduled !== null){
-        this.setState({isScheduled : true});
-       }
+
         this.setState({appointments});
       })
       .catch(err => {
@@ -282,14 +278,41 @@ export default class BookingList extends Component {
   //     });
   // }
 
-  _getScheduledAppointments(){
+  _getScheduledAppointments(appointmentId){
     Api.instance()
     .getScheduledAppointments()
     .then(res => {
+      console.warn("res sss ::: ",res)
       if(res.length > 0){
-        this.setState({isScheduled : true})
+        ViewUtils.showAlert('Cannot create more than one appointment in a day.')
+      }else{
+          let that = this;
+          ViewUtils.showAlert(
+            'Do you want to create appointment?',
+            () => {
+              this.setState({isLoading: true});
+              Api.instance()
+                ._user()
+                .then(user => {
+                  Api.instance()
+                    .updateAppointment(appointmentId, user.id)
+                    .then(() => {
+                      console.warn('user.id ::: ', user.id);
+                      ViewUtils.showToast(
+                        'Appointment has been booked successfully',
+                      );
+                      this.refreshList();
+                    })
+                    .catch(err => {
+                      ViewUtils.showToast(err);
+                    })
+                    .finally(() => that.setState({isLoading: false}));
+                });
+            },
+            () => {},
+          );
       }
-   
+      //console.warn("res ::: ",res)
     })
     .catch(err => {
       console.warn("erororor  :: ",err)
@@ -303,37 +326,9 @@ export default class BookingList extends Component {
 
   _createAppointment(appointmentId) {
 
-    this._getScheduledAppointments();
+    this._getScheduledAppointments(appointmentId);
 
     console.warn("this.state.isScheduled === ",this.state.isScheduled)
-    if (this.state.isScheduled !== true) {
-      let that = this;
-      ViewUtils.showAlert(
-        'Do you want to create appointment?',
-        () => {
-          this.setState({isLoading: true});
-          Api.instance()
-            ._user()
-            .then(user => {
-              Api.instance()
-                .updateAppointment(appointmentId, user.id)
-                .then(() => {
-                  console.warn('user.id ::: ', user.id);
-                  ViewUtils.showToast(
-                    'Appointment has been booked successfully',
-                  );
-                  this.refreshList();
-                })
-                .catch(err => {
-                  ViewUtils.showToast(err);
-                })
-                .finally(() => that.setState({isLoading: false}));
-            });
-        },
-        () => {},
-      );
-    }else{
-      ViewUtils.showAlert('Cannot create more than one appointment in a day.')
-    }
+    
   }
 }
