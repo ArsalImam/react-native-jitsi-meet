@@ -33,6 +33,7 @@ class App extends React.Component {
     let that = this;
     try{
       FCM.instance().notifyUser = (title, message) => {
+        console.warn("agae call")
         const currentRouteName = that.navigationRef.getCurrentRoute().name
   
         debugger;

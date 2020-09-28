@@ -603,10 +603,14 @@ export default class Api {
   }
 
   async updateAppointment(appointmentId, patientId) {
+    
     let appointment = {
       patientId,
       status: AppointmentStatus.scheduled,
     };
+
+    console.warn("patientId ::: ",patientId)
+
     let response = await this.client.post(
       this.getUrl(`Appointments/upsertWithWhere?[where][id]=${appointmentId}`),
       appointment,
@@ -617,16 +621,23 @@ export default class Api {
   }
 
   async getTodaysAppointments(patientId) {
-    var start = new Date();
-    start.setHours(0, 0, 0, 0);
+    console.warn("patientId ::: ",patientId)
 
-    var end = new Date();
-    end.setHours(23, 59, 59, 999);
+    var today = moment(new Date()).format('YYYY-MM-DD');
+    var tomorrow = moment(today)
+      .add('day', 1)
+      .format('YYYY-MM-DD');
+
+    console.warn("today :: ",today)
+    console.warn("tomorrow :: ",tomorrow)
 
     let response = await this.client.get(
-      this.getUrl(`Appointments?filter[where][patientId]=${patientId}&filter[where][and][0][date][lt]=${end.toISOString()}&filter[where][and][1][date][gt]=${start.toISOString()}`)
+      this.getUrl(
+        `Appointments?filter[where][and][0][date][lt]=${tomorrow}&filter[where][and][1][date][gt]=${today}&filter[where][status]=Scheduled&filter[where][patientId]=${patientId}`,
+      ),
     );
     let data = response.data;
+    console.warn('data res :: ', data);
     if (data.error) throw data.error.message;
     return data;
   }
@@ -664,9 +675,32 @@ export default class Api {
     return data;
   }
 
+  
+  async getScheduledAppointments(){
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+
+
+    console.warn("doctor id ::: ",_user.doctorId)
+    console.warn("patient id ::: ",_user.id)
+
+    let response = await this.client.get(
+      this.getUrl(
+        `Appointments?filter[where][doctorId]=${_user.doctorId}&filter[where][patientId]=${_user.id}&filter[where][status]=Scheduled`,
+      ),
+    );
+
+    let data = response.data;
+    if (data.error) throw data.error.message;
+    return data;
+  }
+
+
   async getMyAppointments(status = '', requirePatient = false) {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
+
+    console.warn("user sdsa ::: ",user)
 
     let id_param = this._relationalParamByRole(_user.role);
     let userId = _user.id;
