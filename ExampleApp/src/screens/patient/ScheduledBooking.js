@@ -192,7 +192,7 @@ upcomingAppointments(){
             <FlatGrid
               itemDimension={320}
               spacing={15}
-              items={this.state.appointments}
+              items={this.state.appointments.slice().reverse()}
               style={[CommonStyles.container]}
               renderItem={({ item }) => (
                 <TouchableOpacity
