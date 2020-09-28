@@ -31,7 +31,8 @@ export default class BookingList extends Component {
     Api.instance()
       .getMyAppointments(AppointmentStatus.available, true)
       .then(appointments => {
-
+        // let data = appointments.reverse()
+        // console.warn("appointments :: ",data)
         this.setState({appointments});
       })
       .catch(err => {
