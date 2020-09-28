@@ -721,7 +721,7 @@ export default class Api {
 
     let response = await this.client.get(
       this.getUrl(
-        `Appointments?filter[where][${id_param}]=${userId}${includes}${wheres}&filter[order]=id%20DESC`,
+        `Appointments?filter[where][${id_param}]=${userId}${includes}${wheres}&filter[limit]=2&filter[order]=id%20DESC`,
       ),
     );
     let data = response.data;
@@ -783,6 +783,7 @@ export default class Api {
     todaysDate = '',
     lastDate = '',
   ) {
+
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
 
@@ -804,13 +805,16 @@ export default class Api {
     }
 
     if (todaysDate != '') {
-      todaysDate = `&filter[where][and][0][date][lt]=${todaysDate}`;
+      todaysDate = `&filter[where][and][0][date][lte]=${todaysDate}`;
     }
 
     if (lastDate != '') {
-      lastDate = `&filter[where][and][1][date][gt]=${lastDate}`;
+      lastDate = `&filter[where][and][1][date][gte]=${lastDate}`;
     }
 
+    console.warn("todaysDate :: ",todaysDate)
+    console.warn("lastDate :: ",lastDate)
+    console.warn("URL ::: ",`Appointments?filter[where][${id_param}]=${userId}${includes}${wheres}&filter[order]=id%20DESC${todaysDate}${lastDate}`)
     let response = await this.client.get(
       this.getUrl(
         `Appointments?filter[where][${id_param}]=${userId}${includes}${wheres}&filter[order]=id%20DESC${todaysDate}${lastDate}`,
