@@ -73,7 +73,7 @@ export default class BookingList extends Component {
             <FlatGrid
               itemDimension={320}
               spacing={15}
-              items={this.state.appointments}
+              items={this.state.appointments.reverse()}
               style={[CommonStyles.container]}
               renderItem={({item}) => (
                 <TouchableOpacity
