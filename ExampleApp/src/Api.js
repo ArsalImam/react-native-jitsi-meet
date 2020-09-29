@@ -22,8 +22,8 @@ export default class Api {
       },
       function(error) {
         if(error.message == 'Network Error'){
-          //ViewUtils.showAlert("Check your Internet Connectiviy.")
-          console.warn("internet is off")
+          ViewUtils.showAlert("Check your Internet Connectiviy.")
+          //console.warn("internet is off")
         }else{
           return Promise.reject();
         }
