@@ -85,6 +85,7 @@ export default class BookingList extends Component {
                     CommonStyles.br5,
                     CommonStyles.bgColor,
                   ]}
+                  
                   onPress={() => {
                     Api.instance()
                       .getUserRole()

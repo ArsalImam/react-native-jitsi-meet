@@ -94,9 +94,7 @@ export default class AppointmentRoom extends React.Component {
   }
   onConferenceTerminated(nativeEvent) {
     const prescribtionUrl = Api.instance().getUrl(
-      `consultation-reports/getReport?appointmentId=${
-        this.appointmentId
-      }& =true`,
+      `consultation-reports/getReport?appointmentId=${ this.appointmentId}&prescription=true&auth=1`,
     );
     /* Conference terminated event */
 

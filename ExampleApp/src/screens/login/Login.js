@@ -40,7 +40,10 @@ class Login extends Component {
     this.setState({ showLoader: true });
   };
 
-  componentDidMount() { }
+  componentDidMount() {
+
+  }
+
 
   componentWillMount() {
     // Api.instance()
