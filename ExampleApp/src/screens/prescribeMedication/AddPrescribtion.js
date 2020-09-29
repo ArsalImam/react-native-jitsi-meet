@@ -79,22 +79,22 @@ export default class AddPrescribtion extends Component {
 
     console.warn('data', data);
     
-    if (this.state.medicine == '') {
+    if (this.state.medicine.trim() == '') {
       ViewUtils.showAlert('Please Provide Medicine');
       return;
-    } else if (this.state.strength == '') {
+    } else if (this.state.strength.trim() == '') {
       ViewUtils.showAlert('Please Provide Strength');
       return;
-    }else if (this.state.dose == '') {
+    }else if (this.state.dose.trim() == '') {
       ViewUtils.showAlert('Please Provide Dose');
       return;
-    }else if (this.state.frequency == '') {
+    }else if (this.state.frequency.trim() == '') {
       ViewUtils.showAlert('Please Provide Frequency');
       return;
-    }else if (this.state.route == '') {
+    }else if (this.state.route.trim() == '') {
       ViewUtils.showAlert(' Please Provide Route');
       return;
-    }else if (this.state.reason == '') {
+    }else if (this.state.reason.trim() == '') {
       ViewUtils.showAlert('Please Provide Reason');
       return;
     }
@@ -102,7 +102,7 @@ export default class AddPrescribtion extends Component {
     //   ViewUtils.showAlert('Please Provide Start Date');
     //   return;
     // }
-    else if (this.state.notes == '') {
+    else if (this.state.notes.trim() == '') {
       ViewUtils.showAlert('Please Provide Notes');
       return;
     }
@@ -141,6 +141,7 @@ export default class AddPrescribtion extends Component {
       .finally(() => {});
   }
   render() {
+    console.warn("ddd")
     if (this.state.appointmentId != null) {
       return (
         <View style={{height: '75%'}}>

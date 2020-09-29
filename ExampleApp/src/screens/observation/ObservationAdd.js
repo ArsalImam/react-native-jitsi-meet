@@ -49,7 +49,7 @@ export default class ObservationAdd extends Component {
                 active: false,
               };
 
-            if(this.state.name != ""){
+            if(this.state.name.trim() != ""){
                 this.setState({ isLoading: true })
                 Api.instance()
                 .createPrescription(data)
@@ -64,7 +64,7 @@ export default class ObservationAdd extends Component {
                     ViewUtils.showAlert(
                         'Unable to Perform this Action',       
                     );
-                    ViewUtils.showToast(err);
+                    //ViewUtils.showToast(err);
                 })
                 .finally(() => {
                     this.setState({ isLoading: false });
@@ -81,7 +81,7 @@ export default class ObservationAdd extends Component {
                 answer: this.state.name,
             }
 
-            if(this.state.name != ""){
+            if(this.state.name.trim() != ""){
                 this.setState({ isLoading: true })
                 Api.instance()
                 .createMedication(data)
@@ -96,7 +96,7 @@ export default class ObservationAdd extends Component {
                         'Unable to Perform this Action',       
                     );
                     console.warn("error :: ",err)
-                    ViewUtils.showToast(err);
+                    //ViewUtils.showToast(err);
                 })
                 .finally(() => {
                     this.setState({ isLoading: false });

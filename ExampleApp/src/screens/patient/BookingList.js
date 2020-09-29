@@ -38,7 +38,7 @@ export default class BookingList extends Component {
       })
       .catch(err => {
         console.warn("erororor  :: ",err)
-        ViewUtils.showToast(err);
+        //ViewUtils.showToast(err);
       })
       .finally(() => {
         this.setState({isLoading: false});
@@ -308,7 +308,7 @@ export default class BookingList extends Component {
                       this.refreshList();
                     })
                     .catch(err => {
-                      ViewUtils.showToast(err);
+                      //ViewUtils.showToast(err);
                     })
                     .finally(() => that.setState({isLoading: false}));
                 });
@@ -320,7 +320,7 @@ export default class BookingList extends Component {
     })
     .catch(err => {
       console.warn("erororor  :: ",err)
-      ViewUtils.showToast(err);
+      //ViewUtils.showToast(err);
     })
     .finally(() => {
       this.setState({isLoading: false});

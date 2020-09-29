@@ -54,7 +54,7 @@ export default class FollowUpAdd extends Component {
                  active: false,
                };
 
-            if(this.state.answer != ""){
+            if(this.state.answer.trim() != ""){
                 this.setState({ isLoading: true })
                 Api.instance()
                 .createPrescription(data)
@@ -68,7 +68,7 @@ export default class FollowUpAdd extends Component {
                     ViewUtils.showAlert(
                         'Unable to Perform this Action',       
                     );
-                    ViewUtils.showToast(err);
+                    //ViewUtils.showToast(err);
                 })
                 .finally(() => {
                     this.setState({ isLoading: false });
@@ -86,7 +86,7 @@ export default class FollowUpAdd extends Component {
                 "description":''
             }
 
-            if(this.state.answer != ""){
+            if(this.state.answer.trim() != ""){
                 this.setState({ isLoading: true })
                 Api.instance()
                 .createMedication(data)
@@ -100,7 +100,7 @@ export default class FollowUpAdd extends Component {
                     ViewUtils.showAlert(
                         'Unable to Perform this Action',       
                     );
-                    ViewUtils.showToast(err);
+                    //ViewUtils.showToast(err);
                 })
                 .finally(() => {
                     this.setState({ isLoading: false });

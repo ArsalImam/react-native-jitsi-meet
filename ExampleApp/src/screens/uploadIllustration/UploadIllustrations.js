@@ -104,7 +104,7 @@ console.warn('uriiiii' , this.state.imageUri)
   };
   
   _savePatientHistory = () => {
-    if (this.state.imageUri != '' && this.state.name != '') {
+    if (this.state.imageUri != '' && this.state.name.trim() != '') {
       let data = {
         setupType: 'anatomicalIllustration',
         name: this.state.name,

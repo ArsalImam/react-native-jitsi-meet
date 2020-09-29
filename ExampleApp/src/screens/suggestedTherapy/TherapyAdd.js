@@ -53,7 +53,7 @@ export default class TherapyAdd extends Component {
                  active: false,
                };
             
-            if(this.state.name != ""){
+            if(this.state.name.trim() != ""){
                 this.setState({ isLoading: true })
                 Api.instance()
                     .createPrescription(data)
@@ -87,7 +87,7 @@ export default class TherapyAdd extends Component {
             "name": this.state.name,
             "description": this.state.description,
         }
-            if(this.state.name != ""){
+            if(this.state.name.trim() != ""){
                 this.setState({ isLoading: true })
                 Api.instance()
                     .createMedication(data)

@@ -137,7 +137,7 @@ componentDidMount(){
 
         if(this.state.appointmentId != null){
         
-            if(this.state.vitalType !=  ""){
+            if(this.state.vitalType.trim() !=  ""){
                 this.setState({ isLoading: true });
                 Api.instance()
                     .createVitals(data)
@@ -165,7 +165,7 @@ componentDidMount(){
 
         }else {
 
-            if(this.state.vitalType != ""){
+            if(this.state.vitalType.trim() != ""){
                 this.setState({ isLoading: true });
                 Api.instance()
                     .createVital(data)

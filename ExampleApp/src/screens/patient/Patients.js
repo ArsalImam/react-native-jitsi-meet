@@ -33,7 +33,7 @@ export default class Patients extends Component {
       .getMyPatients()
       .then(response => this._filterOnlyPatients(response))
       .catch(err => {
-        ViewUtils.showToast(err);
+        //ViewUtils.showToast(err);
       })
       .finally(() => {
         this.setState({ isLoading: false });
@@ -204,7 +204,7 @@ export default class Patients extends Component {
             );
           })
           .catch(err => {
-            ViewUtils.showToast(err);
+            //ViewUtils.showToast(err);
           })
           .finally(() => that.setState({ isLoading: false }));
       },

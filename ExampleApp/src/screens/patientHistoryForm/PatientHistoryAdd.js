@@ -42,7 +42,7 @@ export default class PatientHistoryAdd extends Component {
         }
 
         
-        if(this.state.name != ""){
+        if(this.state.name.trim() != ""){
             this.setState({ isLoading: true })
             Api.instance()
             .createMedication(data)

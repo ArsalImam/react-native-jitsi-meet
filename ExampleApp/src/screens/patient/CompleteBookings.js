@@ -82,7 +82,7 @@ eventData(param) {
     this.setState({ appointments }); 
   })
   .catch(err => {
-    ViewUtils.showToast(err);  
+   // ViewUtils.showToast(err);  
   })
   .finally(() => {
     this.setState({ isLoading: false })
@@ -97,7 +97,7 @@ eventData(param) {
     this.setState({ appointments }); 
   })
   .catch(err => {
-    ViewUtils.showToast(err);  
+    //ViewUtils.showToast(err);  
   })
   .finally(() => {
     this.setState({ isLoading: false })
@@ -112,7 +112,7 @@ eventData(param) {
     this.setState({ appointments }); 
   })
   .catch(err => {
-    ViewUtils.showToast(err);  
+    //ViewUtils.showToast(err);  
   })
   .finally(() => {
     this.setState({ isLoading: false })
@@ -129,7 +129,7 @@ eventData(param) {
     this.setState({ appointments }); 
   })
   .catch(err => {
-    ViewUtils.showToast(err);  
+    //ViewUtils.showToast(err);  
   })
   .finally(() => {
     this.setState({ isLoading: false })

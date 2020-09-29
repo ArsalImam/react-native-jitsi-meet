@@ -147,7 +147,7 @@ export default class UploadIllustrations extends React.Component {
         console.warn('dataaaaaaaaaa ===>', data);
       })
       .catch(err => {
-        ViewUtils.showToast(err);
+        //ViewUtils.showToast(err);
       })
       .finally(() => {
         this.setState({isLoading: false});
@@ -172,7 +172,10 @@ export default class UploadIllustrations extends React.Component {
           imageUrl: user.imageUrl,
         });
       })
-      .catch(err => ViewUtils.showToast(err));
+      .catch(err => 
+        {
+          //ViewUtils.showToast(err)
+        });
   }
 
   render() {

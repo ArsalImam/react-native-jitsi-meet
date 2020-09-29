@@ -321,7 +321,14 @@ class Login extends Component {
             style: 'cancel'
         }, {
             text: 'OK',
-            onPress: () => BackHandler.exitApp()
+            onPress: () => {
+              if(BackHandler != null){
+                console.warn("not null")
+                BackHandler.exitApp()
+              }
+              
+            }
+
         }, ], {
             cancelable: false
         }

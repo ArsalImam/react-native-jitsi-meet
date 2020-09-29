@@ -85,7 +85,7 @@ coming7days(){
     console.warn('aaa' , appointments) 
   })
   .catch(err => {
-    ViewUtils.showToast(err);  
+    //ViewUtils.showToast(err);  
   })
   .finally(() => {
     this.setState({ isLoading: false })
@@ -103,7 +103,7 @@ coming15days(){
     console.warn('aaa' , appointments) 
   })
   .catch(err => {
-    ViewUtils.showToast(err);  
+   // ViewUtils.showToast(err);  
   })
   .finally(() => {
     this.setState({ isLoading: false })
@@ -121,7 +121,7 @@ upcomingAppointments(){
   
 })
   .catch(err => {
-    ViewUtils.showToast(err)
+    //ViewUtils.showToast(err)
   })
   .finally(() => {
     this.setState({isLoading :false})
