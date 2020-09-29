@@ -87,7 +87,7 @@ export default class RefertoSpecialistAdd extends Component {
          active: false,
        };
 
-      if (this.state.doctorEmail != '') {
+      if (this.state.doctorEmail.trim() != '') {
         this.setState({isLoading: true});
         Api.instance()
           .createPrescription(data)
@@ -115,7 +115,7 @@ export default class RefertoSpecialistAdd extends Component {
         description: this.state.description,
       };
 
-      if (this.state.doctorEmail != '') {
+      if (this.state.doctorEmail.trim() != '') {
         this.setState({isLoading: true});
         Api.instance()
           .createMedication(data)

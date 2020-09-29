@@ -21,8 +21,13 @@ export default class Api {
         return response;
       },
       function(error) {
+        if(error.message == 'Network Error'){
+          //ViewUtils.showAlert("Check your Internet Connectiviy.")
+          console.warn("internet is off")
+        }else{
+          return Promise.reject();
+        }
         // ViewUtils.showToast(error.response);
-        return Promise.reject(error);
       },
     );
   }

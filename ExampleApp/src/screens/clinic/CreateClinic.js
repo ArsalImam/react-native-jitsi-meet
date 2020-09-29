@@ -582,7 +582,7 @@ export default class CreateClinic extends Component {
         );
       })
       .catch(err => {
-        ViewUtils.showToast(err);
+        //ViewUtils.showToast(err);
       })
       .finally(() => {
         this.setState({ isLoading: false });

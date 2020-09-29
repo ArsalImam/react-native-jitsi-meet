@@ -206,7 +206,7 @@ class MenuSlider extends React.Component {
                                         ViewUtils.showToast('Your have been  sign out successfully!');
                                     })
                                     .catch(err => {
-                                        ViewUtils.showToast(err);
+                                        //ViewUtils.showToast(err);
                                     })
                                     .finally(() => {
                                         this.setState({ isLoading: false });

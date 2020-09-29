@@ -18,14 +18,14 @@ import { View, StyleSheet, StatusBar, SafeAreaView } from 'react-native';
 import { ViewUtils } from "./src/Utils";
 import Api from './src/Api';
 // Import the react-native-sound module
-var Sound = require('react-native-sound');
+//var Sound = require('react-native-sound');
 
 // Enable playback in silence mode
-Sound.setCategory('Playback');
+//Sound.setCategory('Playback');
 
 class App extends React.Component {
   navigationRef:any;
-  whoosh:any;
+  //whoosh:any;
   constructor(props) {
     super(props);
     
@@ -65,33 +65,33 @@ class App extends React.Component {
     }
   }
 
-  _initSound() {
+  // _initSound() {
 
-    // Load the sound file 'whoosh.mp3' from the app bundle
-    // See notes below about preloading sounds within initialization code below.
-    let ringtone = Api.instance().getMediaUrl('images','ringtone.mp3');
+  //   // Load the sound file 'whoosh.mp3' from the app bundle
+  //   // See notes below about preloading sounds within initialization code below.
+  //   let ringtone = Api.instance().getMediaUrl('images','ringtone.mp3');
 
-    this.whoosh = new Sound(ringtone, Sound.MAIN_BUNDLE, (error) => {
-      if (error) {
-        console.warn('failed to load the sound', error);
-        return;
-      }
-      // loaded successfully
-      console.warn('duration in seconds: ' + this.whoosh.getDuration() + 'number of channels: ' + this.whoosh.getNumberOfChannels());
-    });
-  }
-  _playAudio() {
-    console.warn('_playAudio')
-    // Play the sound with an onEnd callback
-      this.whoosh.play((success) => {
-        console.warn("success === ",success)
-        if (success) {
-          console.warn('successfully finished playing');
-        } else {
-          console.warn('playback failed due to audio decoding errors');
-        }
-      });
-  }
+  //   this.whoosh = new Sound(ringtone, Sound.MAIN_BUNDLE, (error) => {
+  //     if (error) {
+  //       console.warn('failed to load the sound', error);
+  //       return;
+  //     }
+  //     // loaded successfully
+  //     console.warn('duration in seconds: ' + this.whoosh.getDuration() + 'number of channels: ' + this.whoosh.getNumberOfChannels());
+  //   });
+  // }
+  // _playAudio() {
+  //   console.warn('_playAudio')
+  //   // Play the sound with an onEnd callback
+  //     this.whoosh.play((success) => {
+  //       console.warn("success === ",success)
+  //       if (success) {
+  //         console.warn('successfully finished playing');
+  //       } else {
+  //         console.warn('playback failed due to audio decoding errors');
+  //       }
+  //     });
+  // }
   componentDidMount() {
     // do stuff while splash screen is shown
     // After having done stuff (such as async tasks) hide the splash screen
@@ -102,7 +102,7 @@ class App extends React.Component {
 
   componentWillUnmount() {
       FCM.instance().appDesroyed();
-      this.whoosh.stop();
+      //this.whoosh.stop();
   }
 
   render() {

@@ -109,7 +109,7 @@ export default class AppointmentRoom extends React.Component {
         });
       })
       .catch(err => {
-        ViewUtils.showToast(err);
+        //ViewUtils.showToast(err);
       });
   }
 

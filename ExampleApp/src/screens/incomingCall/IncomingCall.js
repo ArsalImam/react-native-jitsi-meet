@@ -46,7 +46,9 @@ export default class IncomingCall extends React.Component {
       );
       console.warn('user user ===>', this.state.user); 
     })
-    .catch(err => ViewUtils.showToast(err));
+    .catch(err => {
+     // ViewUtils.showToast(err)
+    });
   }
 
 
