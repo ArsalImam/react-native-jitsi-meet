@@ -226,7 +226,7 @@ eventData(param) {
                           { justifyContent: 'space-between', paddingVertical: 12 },
                         ]}>
                         <Text>
-                          <Text
+                          <Text  
                             style={[
                               CommonStyles.fontRegular,
                               CommonStyles.textSizeSmall,
