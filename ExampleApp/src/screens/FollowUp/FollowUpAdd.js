@@ -54,7 +54,7 @@ export default class FollowUpAdd extends Component {
                  active: false,
                };
 
-            if(this.state.answer.trim() != ""){
+            if(this.state.answer != ""){
                 this.setState({ isLoading: true })
                 Api.instance()
                 .createPrescription(data)
@@ -86,7 +86,7 @@ export default class FollowUpAdd extends Component {
                 "description":''
             }
 
-            if(this.state.answer.trim() != ""){
+            if(this.state.answer != ""){
                 this.setState({ isLoading: true })
                 Api.instance()
                 .createMedication(data)
