@@ -15,6 +15,9 @@ export default class IncomingCall extends React.Component {
 
     this.state = {
       appointmentId: '',
+      user: {
+        personalDetails: {},
+      },
     };
 
     this._initSound();
@@ -27,10 +30,28 @@ export default class IncomingCall extends React.Component {
   
     const {appointmentId} = this.props.route.params;
     this.setState({appointmentId: appointmentId});
+    this._getUser();
+  }
+
+
+  _getUser(){
+    Api.instance()
+    ._user()
+    .then(user => {
+      if (user == null) return;
+      this.setState(
+        {
+          user,
+        },
+      );
+      console.warn('user user ===>', this.state.user); 
+    })
+    .catch(err => ViewUtils.showToast(err));
   }
 
 
   render() {
+    console.warn("firstName :: ",this.state.user.firstName)
     return (
       <View style={[CommonStyles.container, {backgroundColor: '#222222'}]}>
         <ImageBackground
@@ -41,9 +62,11 @@ export default class IncomingCall extends React.Component {
               style={{width: 150, height: 150}}
               source={require('../../assets/img/person-icon.png')}
             />
-            <Text style={{marginTop: 15, fontSize: 22, color: 'white'}}>
-              Test Doctor
-            </Text>
+            {this.state.user.role == 'ROLE_PATIENT' ? (
+              <Text style={{marginTop: 15, fontSize: 22, color: 'white'}}>Doctor</Text>
+            ) : (
+              <Text style={{marginTop: 15, fontSize: 22, color: 'white'}}>Patient</Text>
+            )}
           </View>
 
           <View
