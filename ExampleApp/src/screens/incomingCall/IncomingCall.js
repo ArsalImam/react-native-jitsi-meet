@@ -63,9 +63,9 @@ export default class IncomingCall extends React.Component {
               source={require('../../assets/img/person-icon.png')}
             />
             {this.state.user.role == 'ROLE_PATIENT' ? (
-              <Text style={{marginTop: 15, fontSize: 22, color: 'white'}}>Doctor</Text>
+              <Text style={{marginTop: 15, fontSize: 22, color: 'white'}}>Doctor is Calling</Text>
             ) : (
-              <Text style={{marginTop: 15, fontSize: 22, color: 'white'}}>Patient</Text>
+              <Text style={{marginTop: 15, fontSize: 22, color: 'white'}}>Patient is Calling</Text>
             )}
           </View>
 

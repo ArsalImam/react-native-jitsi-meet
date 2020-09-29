@@ -721,7 +721,7 @@ export default class Api {
 
     let response = await this.client.get(
       this.getUrl(
-        `Appointments?filter[where][${id_param}]=${userId}${includes}${wheres}&filter[limit]=2&filter[order]=id%20DESC`,
+        `Appointments?filter[where][${id_param}]=${userId}${includes}${wheres}&filter[order]=id%20DESC`,
       ),
     );
     let data = response.data;
