@@ -21,13 +21,8 @@ export default class Api {
         return response;
       },
       function(error) {
-        if(error.message == 'Network Error'){
-          //ViewUtils.showAlert("Check your Internet Connectiviy.")
-          console.warn("internet is off")
-        }else{
-          return Promise.reject();
-        }
         // ViewUtils.showToast(error.response);
+        return Promise.reject(error);
       },
     );
   }
@@ -726,7 +721,7 @@ export default class Api {
 
     let response = await this.client.get(
       this.getUrl(
-        `Appointments?filter[where][${id_param}]=${userId}${includes}${wheres}&filter[order]=id%20DESC`,
+        `Appointments?filter[where][${id_param}]=${userId}${includes}${wheres}&filter[limit]=2&filter[order]=id%20DESC`,
       ),
     );
     let data = response.data;

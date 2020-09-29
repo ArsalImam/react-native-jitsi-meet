@@ -40,10 +40,7 @@ class Login extends Component {
     this.setState({ showLoader: true });
   };
 
-  componentDidMount() {
-
-  }
-
+  componentDidMount() { }
 
   componentWillMount() {
     // Api.instance()
@@ -321,14 +318,7 @@ class Login extends Component {
             style: 'cancel'
         }, {
             text: 'OK',
-            onPress: () => {
-              if(BackHandler != null){
-                console.warn("not null")
-                BackHandler.exitApp()
-              }
-              
-            }
-
+            onPress: () => BackHandler.exitApp()
         }, ], {
             cancelable: false
         }
