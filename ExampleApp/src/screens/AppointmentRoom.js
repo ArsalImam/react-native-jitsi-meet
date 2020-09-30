@@ -15,7 +15,7 @@ import {
   TouchableOpacity,
   BackHandler,
 } from 'react-native';
-import {ViewUtils} from '../Utils';
+import { ViewUtils } from '../Utils';
 
 import RealtimeDatabase from '../RealtimeDatabase';
 export default class AppointmentRoom extends React.Component {
@@ -39,15 +39,13 @@ export default class AppointmentRoom extends React.Component {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     const {appointmentId} = this.props.route.params;
     this.appointmentId = appointmentId;
-    console.warn("before api called")
+
     Api.instance()
       ._user()
       .then(user => {
-        console.warn("api called")
         let _user = JSON.parse(JSON.stringify(user));
         this.setState({role: _user.role});
         console.warn('user appointment == ', _user);
-        console.warn(`starting conference on url =====> ${appointmentId}`);
 
         console.log(`starting conference on url =====> ${appointmentId}`);
 
@@ -60,31 +58,23 @@ export default class AppointmentRoom extends React.Component {
           avatar: 'https:/gravatar.com/avatar/abc123',
         };
         JitsiMeet.call(url, userInfo);
-        console.warn("this.state.role === ",this.state.role)
+
         Api.instance()
           .getAppointmentById(appointmentId)
           .then(response => {
             this.appointment = response;
           });
 
-
-          console.warn("checkstaus")
           this.timer = setInterval(() => this.checkStatus(appointmentId), 5000);
         
-      }).catch(err => {
-        ViewUtils.showToast(err);
-    })
-    .finally(() => {
-        this.setState({ isLoading: false });
-    });
+      });
   }
 
   checkStatus(appointmentId) {
-    console.warn("checkstaus")
     Api.instance()
       .getAppointmentById(appointmentId)
       .then(response => {
-        console.warn("status === ",JSON.stringify(response))
+        console.warn("status === ",response.status)
         if (response.status == 'Completed') {
           console.warn("complete call")
           ViewUtils.showAlert(
@@ -98,32 +88,26 @@ export default class AppointmentRoom extends React.Component {
         }
       });
   }
-  
 
   handleBackButton() {
     return true;
   }
   onConferenceTerminated(nativeEvent) {
     const prescribtionUrl = Api.instance().getUrl(
-      `consultation-reports/getReport?appointmentId=${
-        this.appointmentId
-      }&prescription=true`,
+      `consultation-reports/getReport?appointmentId=${ this.appointmentId}&prescription=true&auth=1`,
     );
     /* Conference terminated event */
-     
-    
+
     Api.instance()
       .updateAppointmentStatus(this.appointmentId)
       .then(response => {
-      
         this.props.navigation.goBack();
         this.props.navigation.navigate('WebViewReport', {
           prescribtionUrl,
         });
       })
       .catch(err => {
-        console.warn("err ==")
-        // ViewUtils.showToast(err);
+        //ViewUtils.showToast(err);
       });
   }
 

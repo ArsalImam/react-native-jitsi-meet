@@ -40,8 +40,8 @@ export default class AddPrescribtion extends Component {
       frequency: '',
       route: '',
       reason: '',
-      startDate: '',
-      endDate: '',
+      startDate: null,
+      endDate: null,
       notes: '',
       appointmentId: this.props.route.params.appointmentId,
       patientId: this.props.route.params.patientId,
@@ -50,8 +50,7 @@ export default class AddPrescribtion extends Component {
       // patientId,
     };
 
-    console.warn("this.props.route.params ======= ",this.props.route.params)
-
+    console.warn('this.props.route.params ======= ', this.props.route.params);
   }
 
   _savePrescribeMedication = () => {
@@ -79,8 +78,36 @@ export default class AddPrescribtion extends Component {
     };
 
     console.warn('data', data);
+    
+    if (this.state.medicine.trim() == '') {
+      ViewUtils.showAlert('Please Provide Medicine');
+      return;
+    } else if (this.state.strength.trim() == '') {
+      ViewUtils.showAlert('Please Provide Strength');
+      return;
+    }else if (this.state.dose.trim() == '') {
+      ViewUtils.showAlert('Please Provide Dose');
+      return;
+    }else if (this.state.frequency.trim() == '') {
+      ViewUtils.showAlert('Please Provide Frequency');
+      return;
+    }else if (this.state.route.trim() == '') {
+      ViewUtils.showAlert(' Please Provide Route');
+      return;
+    }else if (this.state.reason.trim() == '') {
+      ViewUtils.showAlert('Please Provide Reason');
+      return;
+    }
+    // else if (this.state.startDate == null) {
+    //   ViewUtils.showAlert('Please Provide Start Date');
+    //   return;
+    // }
+    else if (this.state.notes.trim() == '') {
+      ViewUtils.showAlert('Please Provide Notes');
+      return;
+    }
+    
     this.setState({isLoading: true});
-
     Api.instance()
       .createPrescription(data)
       .then(response => {
@@ -90,9 +117,8 @@ export default class AddPrescribtion extends Component {
         console.warn(data);
       })
       .catch(err => {
-        ViewUtils.showAlert(
-          'Please Fill Fields',       
-      );
+        console.warn('err === ', err);
+        ViewUtils.showAlert('Please Fill Fields');
       })
       .finally(() => {
         this.setState({isLoading: false});
@@ -115,6 +141,7 @@ export default class AddPrescribtion extends Component {
       .finally(() => {});
   }
   render() {
+    console.warn("ddd")
     if (this.state.appointmentId != null) {
       return (
         <View style={{height: '75%'}}>

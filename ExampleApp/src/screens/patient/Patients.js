@@ -33,7 +33,7 @@ export default class Patients extends Component {
       .getMyPatients()
       .then(response => this._filterOnlyPatients(response))
       .catch(err => {
-        ViewUtils.showToast(err);
+        //ViewUtils.showToast(err);
       })
       .finally(() => {
         this.setState({ isLoading: false });
@@ -103,13 +103,30 @@ export default class Patients extends Component {
                       marginTop: -7,
                       marginBottom: 8,
                     }}>
-                    <Image
-                      style={[
-                        CommonStyles.container,
-                        CommonStyles.backgroundImage,
-                      ]}
-                      source={require('../../assets/drawable-xxxhdpi/Rectangle.png')}
-                    />
+
+
+
+                      {item.imageUrl == '' ? (
+                        <Image
+                        style={[
+                          CommonStyles.container,
+                          CommonStyles.backgroundImage,
+                        ]}
+                          source={require('../../assets/drawable-xxxhdpi/Rectangle.png')}
+                        />
+                      ) : (
+                       
+                        <Image
+                        style={[
+                          CommonStyles.container,
+                          CommonStyles.backgroundImage,
+                        ]}
+                          source={{
+                            uri: item.imageUrl,
+                          }}
+                        />
+                      )}    
+
                   </View>
                   <View
                     style={[
@@ -187,7 +204,7 @@ export default class Patients extends Component {
             );
           })
           .catch(err => {
-            ViewUtils.showToast(err);
+            //ViewUtils.showToast(err);
           })
           .finally(() => that.setState({ isLoading: false }));
       },

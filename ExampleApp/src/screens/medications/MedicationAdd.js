@@ -51,7 +51,7 @@ export default class MedicationAdd extends Component {
 
         }
 
-        if(this.state.drugName != "" ){
+        if(this.state.drugName.trim() != "" ){
             this.setState({ isLoading: true })
             Api.instance()
             .createMedication(data)

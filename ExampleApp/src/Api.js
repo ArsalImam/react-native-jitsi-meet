@@ -21,7 +21,13 @@ export default class Api {
         return response;
       },
       function(error) {
-        //  ViewUtils.showToast(error.response);
+        if(error.message == 'Network Error'){
+          ViewUtils.showAlert("Check your Internet Connectiviy.")
+          //console.warn("internet is off")
+        }else{
+          return Promise.reject();
+        }
+        // ViewUtils.showToast(error.response);
         return Promise.reject(error);
       },
     );
@@ -265,7 +271,6 @@ export default class Api {
           _user.id
         }&filter[where][and][1][patientId]=${patientId}&filter[where][and][2][setup-type]=${setupType}&filter[order]=id%20DESC`,
       ),
-      
     );
     let data = response.data;
     console.warn('data', data);
@@ -274,25 +279,21 @@ export default class Api {
   }
 
   async getVitalListConsultation(patientId) {
-    console.warn(patientId)
+    console.warn(patientId);
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
       this.getUrl(
-        `vitals?filter[where][patientId]=${
-          patientId
-        }&filter[order]=id%20DESC`,
+        `vitals?filter[where][patientId]=${patientId}&filter[order]=id%20DESC`,
       ),
     );
-  
+
     let data = response.data;
     console.warn('data', data);
     if (data.error) throw data.error.message;
     return data;
   }
 
-
-  
   // Medication List
   async getMedicationList() {
     let user = await this._user();
@@ -342,8 +343,6 @@ export default class Api {
     if (data.error) throw data.error.message;
     return data;
   }
-
-
 
   async getReferToSpecialistList() {
     let user = await this._user();
@@ -458,15 +457,32 @@ export default class Api {
 
   // Patient History List
   async getPatientHistoryList() {
+    console.warn('a');
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
       this.getUrl(
         `Setups?filter[where][doctorId]=${
-          _user.id
+          role == Roles.patient ? _user.doctorId : _user.id
         }&filter[where][setupType]=patientHistoryForm&filter[order]=createdAt%20DESC`,
       ),
     );
+    let data = response.data;
+    console.warn('data === ', data);
+    console.warn('data', data);
+    if (data.error) throw data.error.message;
+    return data;
+  }
+
+  async updatePatientHistoryList(id, updateData) {
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+    let response = await this.client.post(
+      this.getUrl(`Setups/update?where[id]=${id}`),
+      updateData,
+      this.getHeaders(),
+    );
+
     let data = response.data;
     console.warn('data', data);
     if (data.error) throw data.error.message;
@@ -520,7 +536,7 @@ export default class Api {
       this.getHeaders(),
     );
 
-      console.warn("response ----- ",JSON.stringify(response))
+    console.warn('response ----- ', JSON.stringify(response));
 
     return response.data;
   }
@@ -537,11 +553,10 @@ export default class Api {
       this.getHeaders(),
     );
 
-      console.warn("response ----- ",JSON.stringify(response))
+    console.warn('response ----- ', JSON.stringify(response));
 
     return response.data;
   }
-
 
   // Update Profile
   async updateProfile(data) {
@@ -594,15 +609,41 @@ export default class Api {
   }
 
   async updateAppointment(appointmentId, patientId) {
+    
     let appointment = {
       patientId,
       status: AppointmentStatus.scheduled,
     };
+
+    console.warn("patientId ::: ",patientId)
+
     let response = await this.client.post(
       this.getUrl(`Appointments/upsertWithWhere?[where][id]=${appointmentId}`),
       appointment,
     );
     let data = response.data;
+    if (data.error) throw data.error.message;
+    return data;
+  }
+
+  async getTodaysAppointments(patientId) {
+    console.warn("patientId ::: ",patientId)
+
+    var today = moment(new Date()).format('YYYY-MM-DD');
+    var tomorrow = moment(today)
+      .add('day', 1)
+      .format('YYYY-MM-DD');
+
+    console.warn("today :: ",today)
+    console.warn("tomorrow :: ",tomorrow)
+
+    let response = await this.client.get(
+      this.getUrl(
+        `Appointments?filter[where][and][0][date][lt]=${tomorrow}&filter[where][and][1][date][gt]=${today}&filter[where][status]=Scheduled&filter[where][patientId]=${patientId}`,
+      ),
+    );
+    let data = response.data;
+    console.warn('data res :: ', data);
     if (data.error) throw data.error.message;
     return data;
   }
@@ -618,7 +659,7 @@ export default class Api {
   }
 
   async updateFcmToken(fcmToken: string) {
-    console.warn("fcmToken fcm :: ",fcmToken)
+    console.warn('fcmToken fcm :: ', fcmToken);
     if (!fcmToken) {
       throw 'token not token';
     }
@@ -633,16 +674,39 @@ export default class Api {
       fcmToken,
     });
     let data = response.data;
-    console.warn("data fcm :: ",data)
+    console.warn('data fcm :: ', data);
     if (data.error) throw data.error.message;
     console.warn('fcm updated', fcmToken);
     console.warn('fcm AsyncStorage has set');
     return data;
   }
 
+  
+  async getScheduledAppointments(){
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+
+
+    console.warn("doctor id ::: ",_user.doctorId)
+    console.warn("patient id ::: ",_user.id)
+
+    let response = await this.client.get(
+      this.getUrl(
+        `Appointments?filter[where][doctorId]=${_user.doctorId}&filter[where][patientId]=${_user.id}&filter[where][status]=Scheduled`,
+      ),
+    );
+
+    let data = response.data;
+    if (data.error) throw data.error.message;
+    return data;
+  }
+
+
   async getMyAppointments(status = '', requirePatient = false) {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
+
+    console.warn("user sdsa ::: ",user)
 
     let id_param = this._relationalParamByRole(_user.role);
     let userId = _user.id;
@@ -725,6 +789,7 @@ export default class Api {
     todaysDate = '',
     lastDate = '',
   ) {
+
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
 
@@ -746,13 +811,16 @@ export default class Api {
     }
 
     if (todaysDate != '') {
-      todaysDate = `&filter[where][and][0][date][lt]=${todaysDate}`;
+      todaysDate = `&filter[where][and][0][date][lte]=${todaysDate}`;
     }
 
     if (lastDate != '') {
-      lastDate = `&filter[where][and][1][date][gt]=${lastDate}`;
+      lastDate = `&filter[where][and][1][date][gte]=${lastDate}`;
     }
 
+    console.warn("todaysDate :: ",todaysDate)
+    console.warn("lastDate :: ",lastDate)
+    console.warn("URL ::: ",`Appointments?filter[where][${id_param}]=${userId}${includes}${wheres}&filter[order]=id%20DESC${todaysDate}${lastDate}`)
     let response = await this.client.get(
       this.getUrl(
         `Appointments?filter[where][${id_param}]=${userId}${includes}${wheres}&filter[order]=id%20DESC${todaysDate}${lastDate}`,

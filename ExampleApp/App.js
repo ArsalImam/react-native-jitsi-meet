@@ -16,22 +16,24 @@ import RealtimeDatabase from "./src/RealtimeDatabase";
 
 import { View, StyleSheet, StatusBar, SafeAreaView } from 'react-native';
 import { ViewUtils } from "./src/Utils";
+import Api from './src/Api';
 // Import the react-native-sound module
-var Sound = require('react-native-sound');
+//var Sound = require('react-native-sound');
 
 // Enable playback in silence mode
-Sound.setCategory('Playback');
+//Sound.setCategory('Playback');
 
 class App extends React.Component {
   navigationRef:any;
-  whoosh:any;
+  //whoosh:any;
   constructor(props) {
     super(props);
     
-    this._initSound();
+    //this._initSound();
     let that = this;
     try{
       FCM.instance().notifyUser = (title, message) => {
+        console.warn("agae call")
         const currentRouteName = that.navigationRef.getCurrentRoute().name
   
         debugger;
@@ -42,14 +44,15 @@ class App extends React.Component {
             let appointmentId = message.data['id'];
   
             //playing audio
-            that._playAudio();
+            //that._playAudio();
   
             //showing toast with accept button
-            ViewUtils.showToast('You have an appointment call', 'Answer', 10 * 1000, () => {
-              that.whoosh.stop();
-              console.warn("APPP)))) appointmentId --- ",appointmentId)
-              that.navigationRef.navigate('AppointmentRoom', {appointmentId});
-            });
+            that.navigationRef.navigate('IncomingCall', {appointmentId});
+            // ViewUtils.showToast('You have an appointment call', 'Answer', 10 * 1000, () => {
+            //   that.whoosh.stop();
+            //   console.warn("APPP)))) appointmentId --- ",appointmentId)
+            //   that.navigationRef.navigate('AppointmentRoom', {appointmentId});
+            // });
         } 
       }
     }catch(e){
@@ -62,29 +65,33 @@ class App extends React.Component {
     }
   }
 
-  _initSound() {
-    // Load the sound file 'whoosh.mp3' from the app bundle
-    // See notes below about preloading sounds within initialization code below.
-    this.whoosh = new Sound('iphone.mp3', Sound.MAIN_BUNDLE, (error) => {
-      if (error) {
-        console.log('failed to load the sound', error);
-        return;
-      }
-      // loaded successfully
-      console.log('duration in seconds: ' + this.whoosh.getDuration() + 'number of channels: ' + this.whoosh.getNumberOfChannels());
-    });
-  }
-  _playAudio() {
-    console.warn('_playAudio')
-    // Play the sound with an onEnd callback
-      this.whoosh.play((success) => {
-        if (success) {
-          console.log('successfully finished playing');
-        } else {
-          console.log('playback failed due to audio decoding errors');
-        }
-      });
-  }
+  // _initSound() {
+
+  //   // Load the sound file 'whoosh.mp3' from the app bundle
+  //   // See notes below about preloading sounds within initialization code below.
+  //   let ringtone = Api.instance().getMediaUrl('images','ringtone.mp3');
+
+  //   this.whoosh = new Sound(ringtone, Sound.MAIN_BUNDLE, (error) => {
+  //     if (error) {
+  //       console.warn('failed to load the sound', error);
+  //       return;
+  //     }
+  //     // loaded successfully
+  //     console.warn('duration in seconds: ' + this.whoosh.getDuration() + 'number of channels: ' + this.whoosh.getNumberOfChannels());
+  //   });
+  // }
+  // _playAudio() {
+  //   console.warn('_playAudio')
+  //   // Play the sound with an onEnd callback
+  //     this.whoosh.play((success) => {
+  //       console.warn("success === ",success)
+  //       if (success) {
+  //         console.warn('successfully finished playing');
+  //       } else {
+  //         console.warn('playback failed due to audio decoding errors');
+  //       }
+  //     });
+  // }
   componentDidMount() {
     // do stuff while splash screen is shown
     // After having done stuff (such as async tasks) hide the splash screen
@@ -95,7 +102,7 @@ class App extends React.Component {
 
   componentWillUnmount() {
       FCM.instance().appDesroyed();
-      this.whoosh.stop();
+      //this.whoosh.stop();
   }
 
   render() {

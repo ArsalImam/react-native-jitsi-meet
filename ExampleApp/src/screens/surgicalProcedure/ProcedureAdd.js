@@ -50,7 +50,7 @@ export default class ProcedureAdd extends Component {
                  active: false,
                };
 
-            if(this.state.name != "" ){
+            if(this.state.name.trim() != "" ){
                 this.setState({ isLoading: true })
                 Api.instance()
                     .createPrescription(data)
@@ -83,7 +83,7 @@ export default class ProcedureAdd extends Component {
                 "description": this.state.description,
             }
 
-            if(this.state.name != "" ){
+            if(this.state.name.trim() != "" ){
                 this.setState({ isLoading: true })
                 Api.instance()
                     .createMedication(data)

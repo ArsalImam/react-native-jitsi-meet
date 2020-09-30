@@ -67,7 +67,9 @@ export default class PatientProfile extends React.Component {
           }
         })
 
-        .catch(err => ViewUtils.showToast(err))
+        .catch(err => {
+          //ViewUtils.showToast(err)
+        })
 
         .finally(() => {
           this.setState({isLoading: false});

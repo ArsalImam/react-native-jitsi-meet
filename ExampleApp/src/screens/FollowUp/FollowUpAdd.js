@@ -68,7 +68,7 @@ export default class FollowUpAdd extends Component {
                     ViewUtils.showAlert(
                         'Unable to Perform this Action',       
                     );
-                    ViewUtils.showToast(err);
+                    //ViewUtils.showToast(err);
                 })
                 .finally(() => {
                     this.setState({ isLoading: false });
@@ -100,7 +100,7 @@ export default class FollowUpAdd extends Component {
                     ViewUtils.showAlert(
                         'Unable to Perform this Action',       
                     );
-                    ViewUtils.showToast(err);
+                    //ViewUtils.showToast(err);
                 })
                 .finally(() => {
                     this.setState({ isLoading: false });

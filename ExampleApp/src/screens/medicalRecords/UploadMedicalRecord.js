@@ -224,7 +224,7 @@ export default class UploadMedicalRecord extends Component {
   };
 
   _savePatientHistory = () => {
-    if (this.state.imageUri != '' && this.state.name != '' && this.state.vitalType != '') {
+    if (this.state.imageUri != '' && this.state.name.trim() != '' && this.state.vitalType.trim() != '') {
       // console.warn('Image URl', this.state.imageUri);
       // let imageData = new FormData();
       // imageData.append('file', {
