@@ -28,7 +28,7 @@ export default class Api {
           return Promise.reject();
         }
         // ViewUtils.showToast(error.response);
-        return Promise.reject(error);
+        //return Promise.reject(error);
       },
     );
   }
