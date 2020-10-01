@@ -792,7 +792,7 @@ export default class CreateClinic extends Component {
                     value=""
                   />
 
-                  <Picker.Item label="One Off" value="172799000" />
+                  <Picker.Item label="Alternate Day" value="172799000" />
                   <Picker.Item label="Every Week" value="604799000" />
                   <Picker.Item label="Alternate Week" value="1209599000" />
                   <Picker.Item label="Every Day" value="86399000" />
