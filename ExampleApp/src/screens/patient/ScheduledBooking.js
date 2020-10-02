@@ -157,7 +157,7 @@ upcomingAppointments(){
                   CommonStyles.fontRegular,
                   CommonStyles.textSizeAverage,
                 ]}>
-                It is a list of your all scheduled bookings{' '}
+                It is a list of all your scheduled bookings{' '}
               </Text>
             </Text>
           </View>

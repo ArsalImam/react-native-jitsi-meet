@@ -80,7 +80,7 @@ export default class ViewMiscImagesSkinLesion extends Component {
                 ]}>{`View Misc Images Skin Lesion\n`}</Text>
               <Text
                 style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>
-                It is a list of your all Misc Images Skin Lesion{' '}
+                It is a list of all your Misc Images Skin Lesion{' '}
               </Text>
             </Text>
           </View>

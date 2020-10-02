@@ -104,7 +104,7 @@ export default class ProcedureList extends Component {
             </TouchableOpacity>
                             <Text style={{ color: '#FFFFFF', paddingLeft: 17}}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Procedure List\n`}</Text>
-                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Bookings </Text>
+                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of all your Bookings </Text>
                             </Text>
                         </View> */}
 
@@ -123,7 +123,7 @@ export default class ProcedureList extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Procedures{' '}
+                  It is a list of all your Procedures{' '}
                 </Text>
               </Text>
             </View>
@@ -300,7 +300,7 @@ export default class ProcedureList extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Procedures{' '}
+                  It is a list of all your Procedures{' '}
                 </Text>
               </Text>
             </View>

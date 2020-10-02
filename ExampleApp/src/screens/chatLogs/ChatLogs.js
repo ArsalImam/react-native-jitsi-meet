@@ -234,7 +234,7 @@ export default class ChatLogs extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Chat Logs{' '}
+                  it is a list of all your Chat Logs{' '}
                 </Text>
               </Text>
             </View>

@@ -115,7 +115,7 @@ export default class DiagnosisList extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Diagnosises{' '}
+                  It is a list of all your Diagnosises{' '}
                 </Text>
               </Text>
             </View>
@@ -292,7 +292,7 @@ export default class DiagnosisList extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Diagnosises{' '}
+                  It is a list of all your Diagnosises{' '}
                 </Text>
               </Text>
             </View>

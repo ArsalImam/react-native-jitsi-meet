@@ -105,7 +105,7 @@ export default class InvestigationList extends Component {
             </TouchableOpacity>
                             <Text style={{ color: '#FFFFFF', paddingLeft: 17 }}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Investigation List\n`}</Text>
-                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Bookings </Text>
+                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of all your Bookings </Text>
                             </Text>
                         </View> */}
 
@@ -124,7 +124,7 @@ export default class InvestigationList extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Investigations{' '}
+                  It is a list of all your Investigations{' '}
                 </Text>
               </Text>
             </View>
@@ -300,7 +300,7 @@ export default class InvestigationList extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Investigations{' '}
+                  It is a list of all your Investigations{' '}
                 </Text>
               </Text>
             </View>

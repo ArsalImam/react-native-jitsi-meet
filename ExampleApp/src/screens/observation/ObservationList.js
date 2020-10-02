@@ -85,7 +85,7 @@ export default class ObservationList extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Observations {' '}
+                  It is a list of all your Observations {' '}
                 </Text>
               </Text>
             </View>
@@ -246,7 +246,7 @@ export default class ObservationList extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Observations{' '}
+                   It is a list of all your Observations{' '}
                 </Text>
               </Text>
             </View>
