@@ -104,49 +104,17 @@ class Login extends Component {
   render() {
     return (
       <View style={[CommonStyles.container]}>
-        <ImageBackground
-          style={[CommonStyles.container, CommonStyles.backgroundImage]}
-          source={require('../../assets/img/loginbg.png')}>
-          <KeyboardAwareScrollView style={CommonStyles.container}>
-            <View style={[CommonStyles.margin, { margin: 30 }]}>
-              <View
-                style={[
-                  CommonStyles.container,
-                  { marginTop: 50, marginBottom: 40, justifyContent: 'center' },
-                ]}>
-                <Text
+             <View
                   style={[
-                    CommonStyles.fontMedium,
-                    {
-                      fontSize: 32,
-                      color: '#FFF',
-                    },
-                  ]}>
-                  Welcome
-                </Text>
-                <View
-                  style={[
-                    CommonStyles.container,
                     CommonStyles.horizontalContainer,
-                    {  justifyContent: 'flex-start' },
+                    {  justifyContent: 'center',
+                    backgroundColor: '#fff' },
                   ]}>
-                  <Text
-                    style={[
-                      CommonStyles.fontMedium,
-                      {
-                        fontSize: 32,
-                        color: '#FFF',
-                        marginRight: 15,
-                        
-                      },
-                    ]}>to
-                  </Text>
-
                   <View
                     style={{
                       width: 203,
                       height: 75,
-                      marginTop: -20,
+                      marginTop: 20,
                       marginHorizontal: 5,
                     }}>
                     <Image
@@ -160,6 +128,18 @@ class Login extends Component {
                     />
                   </View>
                 </View>
+        <ImageBackground
+          style={[CommonStyles.container, CommonStyles.backgroundImage]}
+          source={require('../../assets/img/loginbg.png')}>
+          <KeyboardAwareScrollView style={CommonStyles.container}>
+            <View style={[CommonStyles.margin, { margin: 30 }]}>
+              <View
+                style={[
+                  CommonStyles.container,
+                  { marginTop: 50, marginBottom: 40, justifyContent: 'center' },
+                ]}>
+
+           
               </View>
               <View style={{marginTop: 145}}>
                 <View>

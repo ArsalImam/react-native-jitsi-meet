@@ -478,7 +478,7 @@ export default class Api {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.post(
-      this.getUrl(`Setups/update?where[id]=${id}`),
+      this.getUrl(`setups-patients/update?where[id]=${id}`),
       updateData,
       this.getHeaders(),
     );
