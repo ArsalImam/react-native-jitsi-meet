@@ -136,7 +136,6 @@ componentDidMount(){
         console.warn("multipleValues === ",JSON.stringify(this.state.multipleValues))
 
         if(this.state.appointmentId != null){
-        
             if(this.state.vitalType.trim() !=  ""){
                 this.setState({ isLoading: true });
                 Api.instance()
@@ -164,7 +163,7 @@ componentDidMount(){
 
 
         }else {
-
+            console.warn("sssss")
             if(this.state.vitalType.trim() != ""){
                 this.setState({ isLoading: true });
                 Api.instance()
@@ -175,7 +174,8 @@ componentDidMount(){
                         ViewUtils.showToast('Vital has been saved successfully!');
                     })
                     .catch(err => {
-                        //ViewUtils.showToast(err);
+                        console.warn("error ::: ",err)
+                        ViewUtils.showToast(err);
                         ViewUtils.showAlert(
                             'Unable to Perform this Action',       
                         );

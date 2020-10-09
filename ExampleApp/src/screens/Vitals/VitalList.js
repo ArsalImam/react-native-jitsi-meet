@@ -82,6 +82,7 @@ export default class VitalList extends Component {
     render() {
 
         if (this.state.appointmentId != null) {
+            console.warn("ssss")
             return (
                 <View style={{ height: '75%' }}>
                     <ImageBackground style={[
@@ -266,7 +267,7 @@ export default class VitalList extends Component {
                 </View>
             )
         } else {
-
+            console.warn("nnnnn")
             return (
                 <View style={[CommonStyles.container]}>
                     <ImageBackground style={[
