@@ -9,6 +9,7 @@ import {
   Image,
   TouchableOpacity,
   Linking,
+  AsyncStorage,
 } from 'react-native';
 import {FlatGrid} from 'react-native-super-grid';
 import CommonStyles from '../../CommonStyles';
@@ -18,7 +19,7 @@ import {ViewUtils} from '../../Utils';
 import Api from '../../Api';
 import Loader from '../../components/Loader';
 
-import { Roles } from '../.././Configs';            
+import {Roles} from '../.././Configs';
 import {cos} from 'react-native-reanimated';
 import {Button} from 'react-native-paper';
 
@@ -34,18 +35,27 @@ export default class PatientProfile extends React.Component {
         url: '',
       },
       showLoader: true,
-      role: ''
+      role: '',
     };
   }
 
-
+  componentWillMount() {
+    // Api.instance()
+    // ._user()
+    // .then(token => {
+    //   console.warn("token", token)
+    //   this.props.navigation.replace('MyDrawer')
+    // })
+    AsyncStorage.getItem('@user').then(token => {
+      console.log('token', token);
+      console.warn('token in willmount', token);
+    });
+  }
 
   componentDidMount() {
     this.props.navigation.addListener('focus', payLoad => {
       this.setState({isLoading: true});
-
       Api.instance()
-
         ._user()
         .then(user => {
           console.warn('user res === ', user);
@@ -76,8 +86,9 @@ export default class PatientProfile extends React.Component {
         });
     });
 
-    
-    Api.instance().getUserRole().then(role => this.setState({ role }));
+    Api.instance()
+      .getUserRole()
+      .then(role => this.setState({role}));
   }
 
   shareToWhatsApp = text => {
@@ -100,7 +111,8 @@ export default class PatientProfile extends React.Component {
                     CommonStyles.container,
                     {
                       paddingHorizontal: 16,
-                      paddingVertical: 67,
+                      paddingTop: 67,
+                      paddingBottom: 40
                     },
                   ]}>
                   <View
@@ -199,61 +211,56 @@ export default class PatientProfile extends React.Component {
                         {`\n`}
                       </Text>
                     </Text>
-                   
-{this.state.role == Roles.patient ? (
-           <Text
-           style={[
-             CommonStyles.textColorWhite,
-             CommonStyles.fontRegular,
-             CommonStyles.textSizeAverage,
-           ]}>
 
-
-           {`\nCall: `} {this.state.user.personalDetails.mobile}{' '}
-           {`\n`}
-           {`\nAge: `}{' '}
-           {
-             moment(this.state.user.personalDetails.dateOfBirth)
-               .fromNow()
-               .split(' ')[0]
-           }
-           {` `}
-           {
-             moment(this.state.user.personalDetails.dateOfBirth)
-               .fromNow()
-               .split(' ')[1]
-           }
-           {`\n`}
-         </Text>         
-) : (
-  <Text
-  style={[
-    CommonStyles.textColorWhite,
-    CommonStyles.fontRegular,
-    CommonStyles.textSizeAverage,
-  ]}>
-
-
-  {`Doctor Code: `} {this.state.user.doctorCode}
-   {`\n`}
-  {`\nCall: `} {this.state.user.personalDetails.mobile}{' '}
-  {`\n`}
-  {`\nAge: `}{' '}
-  {
-    moment(this.state.user.personalDetails.dateOfBirth)
-      .fromNow()
-      .split(' ')[0]
-  }
-  {` `}
-  {
-    moment(this.state.user.personalDetails.dateOfBirth)
-      .fromNow()
-      .split(' ')[1]
-  }
-  {`\n`}
-</Text>
-)}
-
+                    {this.state.role == Roles.patient ? (
+                      <Text
+                        style={[
+                          CommonStyles.textColorWhite,
+                          CommonStyles.fontRegular,
+                          CommonStyles.textSizeAverage,
+                        ]}>
+                        {`\nCall: `} {this.state.user.personalDetails.mobile}{' '}
+                        {`\n`}
+                        {`\nAge: `}{' '}
+                        {
+                          moment(this.state.user.personalDetails.dateOfBirth)
+                            .fromNow()
+                            .split(' ')[0]
+                        }
+                        {` `}
+                        {
+                          moment(this.state.user.personalDetails.dateOfBirth)
+                            .fromNow()
+                            .split(' ')[1]
+                        }
+                        {`\n`}
+                      </Text>
+                    ) : (
+                      <Text
+                        style={[
+                          CommonStyles.textColorWhite,
+                          CommonStyles.fontRegular,
+                          CommonStyles.textSizeAverage,
+                        ]}>
+                        {`Doctor Code: `} {this.state.user.doctorCode}
+                        {`\n`}
+                        {`\nCall: `} {this.state.user.personalDetails.mobile}{' '}
+                        {`\n`}
+                        {`\nAge: `}{' '}
+                        {
+                          moment(this.state.user.personalDetails.dateOfBirth)
+                            .fromNow()
+                            .split(' ')[0]
+                        }
+                        {` `}
+                        {
+                          moment(this.state.user.personalDetails.dateOfBirth)
+                            .fromNow()
+                            .split(' ')[1]
+                        }
+                        {`\n`}
+                      </Text>
+                    )}
 
                     {/* <TouchableOpacity onPress={()=> this.shareToWhatsApp()}>
                       <Text>
@@ -261,36 +268,40 @@ export default class PatientProfile extends React.Component {
                       </Text>
                     </TouchableOpacity> */}
 
-{this.state.role == Roles.doctor && (
-                    <TouchableOpacity
-                      style={[
-                        CommonStyles.container,
-                        CommonStyles.br5,
-                        {
-                          backgroundColor: '#333333',
-                          marginTop: 5,
-                          marginHorizontal: 50,
-                        },
-                      ]}
-                      onPress={()=>this.shareToWhatsApp(this.state.user.doctorCode)}
-                      
-                      >
-                      <Text
-                        style={[
-                          CommonStyles.fontRegular,
-                          CommonStyles.padding,
-                          CommonStyles.margin,
-                          CommonStyles.centerText,
-                          CommonStyles.textColorWhite,
-                        ]}>
-                          
-                        SHARE DOCTOR CODE
-                      </Text>
-                    </TouchableOpacity>
-)}
+                    
+                   
                   </View>
                 </View>
               </ImageBackground>
+              {this.state.role == Roles.doctor && (
+                      <TouchableOpacity
+                        style={[
+                          CommonStyles.container,
+                          CommonStyles.br5,
+                          {
+                            backgroundColor: '#333333',
+                            marginTop: 5,
+                            borderRadius: 30,
+                            marginTop: -30,
+                            marginHorizontal: 20,
+                          },
+                        ]}
+                        onPress={() =>
+                          this.shareToWhatsApp(this.state.user.doctorCode)
+                        }>
+                        <Text
+                          style={[
+                            CommonStyles.fontRegular,
+                            CommonStyles.padding,
+                            CommonStyles.margin,
+                            CommonStyles.centerText,
+                            CommonStyles.textColorWhite,
+                          ]}>
+                          SHARE DOCTOR CODE
+                        </Text>
+                      </TouchableOpacity>
+                    )}
+
             </View>
 
             {/* <TouchableOpacity
