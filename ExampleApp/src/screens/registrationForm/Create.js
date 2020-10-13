@@ -798,7 +798,7 @@ export default Create;
 //           style={[
 //             CommonStyles.fitToBottom,
 //             CommonStyles.horizontalContainer,
-//             {
+        //    {
 //               backgroundColor: '#eee',
 //               borderTopRightRadius: 5,
 //               borderTopStartRadius: 5,

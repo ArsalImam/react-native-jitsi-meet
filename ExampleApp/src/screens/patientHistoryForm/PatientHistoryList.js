@@ -447,7 +447,6 @@ export default class PatientHistoryList extends Component {
                                            <Input
                                            placeholder="Answer.."
                                            onChangeText={this._handleMultiInput('description')}
-                                           
                                             //  placeholder="Answer.."
                                             //  value={
                                             //    this.state
@@ -496,6 +495,7 @@ export default class PatientHistoryList extends Component {
                                            this.updateAnswer(
                                              item.id,
                                            );
+                                           
                                          }}
                                        />
                                      )}
