@@ -170,7 +170,7 @@ export default class PatientProfile extends React.Component {
                           justifyContent: 'flex-end',
                           marginLeft: 10,
                           marginBottom: -7,
-                        },
+                        }, 
                       ]}>
                       <Text>
                         <Text
