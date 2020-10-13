@@ -465,7 +465,7 @@ export default class UploadIllustrations extends React.Component {
                       return (
                         <Picker.Item
                           label={item.value.trim()}
-                          value={item.viewValue.trim()}
+                          value={item.value.trim()}
                           key={index}
                         />
                       );

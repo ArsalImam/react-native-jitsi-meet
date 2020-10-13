@@ -76,7 +76,7 @@ export default class Patients extends Component {
             <FlatGrid
               itemDimension={320}
               items={this.state.patients}
-              style={[CommonStyles.container, { marginTop: '9%' }]}
+              style={[CommonStyles.container, { marginTop: '11%' }]}
               spacing={15}
               renderItem={({ item }) => (
                 <TouchableOpacity

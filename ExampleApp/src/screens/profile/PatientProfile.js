@@ -40,14 +40,8 @@ export default class PatientProfile extends React.Component {
   }
 
   componentWillMount() {
-    // Api.instance()
-    // ._user()
-    // .then(token => {
-    //   console.warn("token", token)
-    //   this.props.navigation.replace('MyDrawer')
-    // })
     AsyncStorage.getItem('@user').then(token => {
-      console.log('token', token);
+      console.warn('token', token);
       console.warn('token in willmount', token);
     });
   }
@@ -112,7 +106,7 @@ export default class PatientProfile extends React.Component {
                     {
                       paddingHorizontal: 16,
                       paddingTop: 67,
-                      paddingBottom: 40
+                      paddingBottom: 40,
                     },
                   ]}>
                   <View
@@ -269,41 +263,46 @@ export default class PatientProfile extends React.Component {
                         Share Doctor Code
                       </Text>
                     </TouchableOpacity> */}
-
-                    
-                   
                   </View>
                 </View>
               </ImageBackground>
               {this.state.role == Roles.doctor && (
-                      <TouchableOpacity
-                        style={[
-                          CommonStyles.container,
-                          CommonStyles.br5,
-                          {
-                            backgroundColor: '#333333',
-                            marginTop: 5,
-                            borderRadius: 30,
-                            marginTop: -30,
-                            marginHorizontal: 20,
-                          },
-                        ]}
-                        onPress={() =>
-                          this.shareToWhatsApp(this.state.user.doctorCode)
-                        }>
-                        <Text
-                          style={[
-                            CommonStyles.fontRegular,
-                            CommonStyles.padding,
-                            CommonStyles.margin,
-                            CommonStyles.centerText,
-                            CommonStyles.textColorWhite,
-                          ]}>
-                          SHARE DOCTOR CODE
-                        </Text>
-                      </TouchableOpacity>
-                    )}
+                <TouchableOpacity
+                  style={[
+                    
+                    CommonStyles.container,
+                    CommonStyles.br5,
+                    {
+                      flexDirection: 'row', 
+                      justifyContent: 'center',
+                      backgroundColor: '#333333',
+                      marginTop: 5,
+                      borderRadius: 25, 
+                      marginTop: -30,
+                      marginHorizontal: 25,
+                    },
+                  ]}
+                  onPress={() =>
+                    this.shareToWhatsApp(this.state.user.doctorCode)
+                  }>
+                  <Icon
+                    name="whatsapp"
+                    type="FontAwesome"
+                    style={{fontSize: 28, color: '#ece5dd', paddingVertical: 12, alignSelf: 'center'}}
+                  />
+                  <Text
+                    style={[
+                      CommonStyles.fontRegular,
+                      CommonStyles.padding,
 
+                      CommonStyles.centerText,
+                      CommonStyles.textColorWhite,
+                      {margin: 7},
+                    ]}>
+                    SHARE DOCTOR CODE
+                  </Text>
+                </TouchableOpacity>
+              )}
             </View>
 
             {/* <TouchableOpacity
