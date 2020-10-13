@@ -94,7 +94,7 @@ export default class TherapyList extends Component {
                         }>
                             <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Therapy List\n`}</Text>
-                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Therapies </Text>
+                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of all your Therapies </Text>
                             </Text>
                         </View>
 
@@ -224,7 +224,7 @@ export default class TherapyList extends Component {
                         }>
                             <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Therapy List\n`}</Text>
-                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Therapies</Text>
+                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of all your Therapies</Text>
                             </Text>
                         </View>
 

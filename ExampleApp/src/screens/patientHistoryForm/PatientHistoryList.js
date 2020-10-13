@@ -34,11 +34,18 @@ export default class PatientHistoryList extends Component {
                        role:''
                      };
                    }
+
                  }
 
 
                  componentDidMount(){
-                  Api.instance().getUserRole().then(role => this.setState({role}));
+                   console.warn("did mount")
+                  Api.instance().getUserRole().then(role =>
+                    {
+                      console.warn("role ::: ",role)
+                       this.setState({role})
+                    }
+                  );
 
                    this._getPatientHistoryList();
 
@@ -58,9 +65,9 @@ export default class PatientHistoryList extends Component {
                  }
 
 
-                 componentDidMount(){
-                   this._getPatientHistoryList()
-                 }
+                //  componentDidMount(){
+                //    this._getPatientHistoryList()
+                //  }
 
 
                  addToConsultation(item) {
@@ -88,14 +95,16 @@ export default class PatientHistoryList extends Component {
                 }
 
                  updateAnswer = id => {
+                   console.warn("update")
                  let data = {
-                      "setupType": "patientHistoryForm",
+                      "setup-type": "patientHistoryForm",
                        "description": this.state.description,
                       }
                  
                    Api.instance()
                      .updatePatientHistoryList(id, data)
                      .then(res => {
+                       console.warn("success")
                        console.warn(res);
                      })
                      .catch(err => {
@@ -108,7 +117,7 @@ export default class PatientHistoryList extends Component {
                       this.setState({ [name]:text })
                   }
               }
-
+              
                  render() {
                    if (this.state.appointmentId != null) {
                      return (
@@ -313,6 +322,7 @@ export default class PatientHistoryList extends Component {
                        </View>
                      );
                    } else {
+                     console.warn("ooooo")
                      return (
                        <View style={[CommonStyles.container]}>
                          <ImageBackground

@@ -67,7 +67,7 @@ export default class BookingList extends Component {
                   CommonStyles.fontRegular,
                   CommonStyles.textSizeAverage,
                 ]}>
-                It is a list of your all available bookings{' '}
+                It is a list of all your available bookings{' '}
               </Text>
             </Text>
           </View>

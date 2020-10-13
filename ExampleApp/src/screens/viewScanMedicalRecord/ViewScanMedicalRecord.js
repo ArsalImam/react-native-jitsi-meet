@@ -74,7 +74,7 @@ export default class ViewScanMedicalRecord extends Component {
                 CommonStyles.fontRegular,
                 CommonStyles.textSizeSmall,
               ]}>
-              It is a list of your all Scanned Medical Records{' '}
+              It is a list of all your Scanned Medical Records{' '}
             </Text>
           </Text>
         </View>

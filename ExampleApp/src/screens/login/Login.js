@@ -24,6 +24,7 @@ import { ViewUtils } from '../../Utils';
 import Loader from '../../components/Loader';
 //  import AsyncStorage from '@react-native-community/async-storage';
 
+
 class Login extends Component {
   state = { email: '', password: '', showLoader: false, hidePassword: true };
 
@@ -126,9 +127,8 @@ class Login extends Component {
                 </Text>
                 <View
                   style={[
-                    CommonStyles.container,
                     CommonStyles.horizontalContainer,
-                    {  justifyContent: 'flex-start' },
+                    
                   ]}>
                   <Text
                     style={[
@@ -158,6 +158,8 @@ class Login extends Component {
                     ]}>TeleClinic
                   </Text>
                 </View>
+       
+           
               </View>
               <View style={{marginTop: 145}}>
                 <View>
@@ -221,10 +223,7 @@ class Login extends Component {
                     ]}
                     source={require('../../assets/img/etiblogo.png')}
                   />
-                </View>
-             
-
-             
+                </View>             
               </View>
             </View>
             </View>

@@ -18,7 +18,7 @@ import {ViewUtils} from '../../Utils';
 import Api from '../../Api';
 import Loader from '../../components/Loader';
 
-import { Roles } from '../.././Configs';
+import { Roles } from '../.././Configs';            
 import {cos} from 'react-native-reanimated';
 import {Button} from 'react-native-paper';
 

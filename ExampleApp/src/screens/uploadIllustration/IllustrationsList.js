@@ -88,7 +88,7 @@ export default class PatientHistoryList extends Component {
                     }>
                             <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Anatomical Illustrations\n`}</Text>
-                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Illustrations </Text>
+                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of all your Illustrations </Text>
                             </Text>
                         </View>
 
@@ -216,7 +216,7 @@ export default class PatientHistoryList extends Component {
                         }>
                             <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Anatomical Illustrations\n`}</Text>
-                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Illustrations </Text>
+                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of all your Illustrations </Text>
                             </Text>
                         </View>
 

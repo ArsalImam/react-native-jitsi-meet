@@ -425,7 +425,7 @@ class Dashboard extends React.Component {
                     CommonStyles.fontMedium,
                     {fontSize: 14, marginTop: 10},
                   ]}>
-                  Past Appointment
+                  Past Appointments
                 </Text>
               </TouchableOpacity>
 
@@ -519,7 +519,7 @@ class Dashboard extends React.Component {
                       CommonStyles.fontMedium,
                       {fontSize: 14, marginTop: 10},
                     ]}>
-                    Total Prescription
+                    Total Prescriptions
                   </Text>
                 </TouchableOpacity>
               ) : (
@@ -564,7 +564,7 @@ class Dashboard extends React.Component {
                       CommonStyles.fontMedium,
                       {fontSize: 14, marginTop: 10},
                     ]}>
-                    TOTAL PATIENTS
+                    Total Patients
                   </Text>
                 </TouchableOpacity>
               )}

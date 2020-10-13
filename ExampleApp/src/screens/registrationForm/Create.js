@@ -159,7 +159,7 @@ class Create extends Component {
       <View style={[CommonStyles.container]}>
         <ImageBackground
           style={[CommonStyles.container, CommonStyles.backgroundImage]}
-          source={require('../../assets/img/loginbg.png')}>
+          source={require('../../assets/img/loginbg(2).png')}>
           <KeyboardAwareScrollView style={CommonStyles.container}>
             <View
               style={[

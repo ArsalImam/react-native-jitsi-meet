@@ -94,7 +94,7 @@ export default class MedicalRecordList extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Medical Records{' '}
+                  It is a list of all your Medical Records{' '}
                 </Text>
               </Text>
             </View>
@@ -278,7 +278,7 @@ export default class MedicalRecordList extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Medical Records{' '}
+                  It is a list of all your Medical Records{' '}
                 </Text>
               </Text>
             </View>

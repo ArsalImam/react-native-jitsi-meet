@@ -82,6 +82,7 @@ export default class VitalList extends Component {
     render() {
 
         if (this.state.appointmentId != null) {
+            console.warn("ssss")
             return (
                 <View style={{ height: '75%' }}>
                     <ImageBackground style={[
@@ -94,7 +95,7 @@ export default class VitalList extends Component {
                         }>
                             <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Vital List\n`}</Text>
-                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>It is a list of your all Vitals </Text>
+                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>It is a list of all your Vitals </Text>
                             </Text>
                         </View>
 
@@ -266,7 +267,7 @@ export default class VitalList extends Component {
                 </View>
             )
         } else {
-
+            console.warn("nnnnn")
             return (
                 <View style={[CommonStyles.container]}>
                     <ImageBackground style={[
@@ -279,7 +280,7 @@ export default class VitalList extends Component {
                         }>
                             <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Vital List\n`}</Text>
-                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>It is a list of your all Vitals </Text>
+                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>It is a list of all your Vitals </Text>
                             </Text>
                         </View>
 

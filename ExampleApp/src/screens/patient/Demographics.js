@@ -16,7 +16,7 @@ export default class AddReport extends Component {
                         <View style={styles.View1}>
                             <Text style={{ marginHorizontal: '7%', marginBottom: 12, }}>
                                 <Text style={[CommonStyles.DINAltBold, CommonStyles.textSizeLarge, { color: '#FFf', lineHeight: 28 }]} >{`Demographics\n`}</Text>
-                                <Text style={[CommonStyles.SFProLight, CommonStyles.textSizeSmall, { color: '#fff', lineHeight: 16 }]}>It is a list of your all Demographics</Text>
+                                <Text style={[CommonStyles.SFProLight, CommonStyles.textSizeSmall, { color: '#fff', lineHeight: 16 }]}>It is a list of all your Demographics</Text>
                             </Text>
                         </View>
 

@@ -69,7 +69,7 @@ export default class Patients extends Component {
                   CommonStyles.fontRegular,
                   CommonStyles.textSizeAverage,
                 ]}>
-                It is a list of your all booking patients{' '}
+                It is a list of all your booking patients{' '}
               </Text>
             </Text>
 

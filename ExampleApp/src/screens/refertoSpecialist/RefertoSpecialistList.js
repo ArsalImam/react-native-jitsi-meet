@@ -107,7 +107,7 @@ export default class RefertoSpecialistList extends Component {
                             <Text
                                 style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Refer to Specialist\n`}</Text>
-                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Referred Specialists </Text>
+                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of all your Referred Specialists </Text>
                             </Text>
                         </View>
 
@@ -236,7 +236,7 @@ export default class RefertoSpecialistList extends Component {
                         }>
                             <Text style={{ color: '#FFFFFF', paddingLeft: 17, marginTop: 65 }}>
                                 <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Diagnosis List\n`}</Text>
-                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of your all Referred Specialists </Text>
+                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of all your Referred Specialists </Text>
                             </Text>
                         </View>
 
