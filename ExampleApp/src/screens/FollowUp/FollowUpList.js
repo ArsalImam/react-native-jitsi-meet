@@ -25,6 +25,7 @@ export default class FollowUpList extends Component {
       this.state = {
         isLoading: true,
         followUpList: [],
+        disabled: false, 
         appointmentId: this.props.route.params.appointmentId,
         patientId: this.props.route.params.patientId,
       };
@@ -83,6 +84,10 @@ export default class FollowUpList extends Component {
   // }
 
   addFollowUp(item) {
+    this.setState({
+      disabled: true,
+    });
+    
     item.setupType = 'followUp';
     Api.instance()
       .addReport(item, this.state.appointmentId, this.state.patientId)
@@ -92,6 +97,14 @@ export default class FollowUpList extends Component {
       })
       .catch(err => {})
       .finally(() => {});
+
+      
+      // enable after 5 second
+      setTimeout(() => {
+        this.setState({
+          disabled: false,
+        });
+      }, 5000);
   }
   render() {
 
@@ -122,9 +135,9 @@ export default class FollowUpList extends Component {
 
             <View style={{flex: 8}}>
               <FlatGrid
-                itemDimension={350}
+                itemDimension={320}
                 items={this.state.followUpList}
-                spacing={15}
+                spacing={20}
                 style={[CommonStyles.container, {marginTop: 5}]}
                 renderItem={({item}) => (
                   <View
@@ -147,7 +160,9 @@ export default class FollowUpList extends Component {
                         ]}
                         onPress={() => {
                           this.addFollowUp(item);
-                        }}>
+                        }}
+                        disabled={this.state.disabled}
+                        >
                         <View
                           style={[
                             CommonStyles.container,
@@ -294,7 +309,7 @@ export default class FollowUpList extends Component {
               <FlatGrid
                 itemDimension={350}
                 items={this.state.followUpList}
-                spacing={15}
+                spacing={20}
                 style={[CommonStyles.container, {marginTop: 5}]}
                 renderItem={({item}) => (
                   <View

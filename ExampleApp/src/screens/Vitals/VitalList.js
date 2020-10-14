@@ -19,6 +19,7 @@ export default class VitalList extends Component {
             this.state = {
                 isLoading: false,
                 vitalList: [],
+                disabled: false, 
                 appointmentId: this.props.route.params.appointmentId,
                 patientId: this.props.route.params.patientId,
             }
@@ -76,6 +77,17 @@ export default class VitalList extends Component {
             .finally(() => {
 
             });
+
+            this.setState({
+                disabled: true,
+              });
+              
+              // enable after 5 second
+              setTimeout(() => {
+                this.setState({
+                  disabled: false,
+                });
+              }, 5000);
     }
 
 
@@ -110,6 +122,7 @@ export default class VitalList extends Component {
 
                                     <TouchableOpacity style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5, CommonStyles.bgColor]}
                                         onPress={() => { this.addToConsultation(item) }}
+                                        disabled={this.state.disabled}
                                     >
 
                                         <ImageBackground
