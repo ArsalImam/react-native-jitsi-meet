@@ -346,7 +346,7 @@ export default class PatientHistoryList extends Component {
                 itemDimension={350}
                 items={this.state.patientHistoryList}
                 spacing={20}
-                style={[CommonStyles.container, {marginTop: 5, marginBottom: 30}]}
+                style={[CommonStyles.container, {marginTop: 5, marginBottom: 30 }]}
                 renderItem={({item}) => (
                   <View
                     style={[
