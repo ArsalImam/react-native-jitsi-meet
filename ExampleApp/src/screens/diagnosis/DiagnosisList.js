@@ -25,6 +25,7 @@ export default class DiagnosisList extends Component {
       this.state = {
         isLoading: true,
         diagnosisList: [],
+        disabled: false,
         appointmentId: this.props.route.params.appointmentId,
         patientId: this.props.route.params.patientId,
       };
@@ -40,7 +41,7 @@ export default class DiagnosisList extends Component {
     if (this.state.appointmentId != null) {
       this.setState({isLoading: true});
       Api.instance()
-        .getListDuringConsultation('diagnosis',this.state.patientId)
+        .getListDuringConsultation('diagnosis', this.state.patientId)
         .then(data => {
           console.warn('=====>', data['Diagnosis']);
           this.setState({diagnosisList: data});
@@ -82,6 +83,10 @@ export default class DiagnosisList extends Component {
   // }
 
   addDiagnosis(item) {
+    this.setState({
+      disabled: true,
+    });
+
     item.setupType = 'diagnosis';
     Api.instance()
       .addReport(item, this.state.appointmentId, this.state.patientId)
@@ -91,11 +96,16 @@ export default class DiagnosisList extends Component {
       })
       .catch(err => {})
       .finally(() => {});
+
+    // enable after 5 second
+    setTimeout(() => {
+      this.setState({
+        disabled: false,
+      });
+    }, 5000);
   }
   render() {
-
-
-      console.warn("diagnosisList === ",this.state.diagnosisList)
+    console.warn('diagnosisList === ', this.state.diagnosisList);
 
     if (this.state.appointmentId != null) {
       return (
@@ -147,7 +157,8 @@ export default class DiagnosisList extends Component {
                         ]}
                         onPress={() => {
                           this.addDiagnosis(item);
-                        }}>
+                        }}
+                        disabled={this.state.disabled}>
                         <View
                           style={[
                             CommonStyles.container,

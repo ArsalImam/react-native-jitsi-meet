@@ -35,9 +35,10 @@ export default class RefertoSpecialistAdd extends Component {
         isLoading: false,
         name: '',
         description: '',
-        specialists:[],
-        doctorEmail:'',
+        specialists: [],
+        doctorEmail: '',
         data: [],
+        email: '',  
         appointmentId: this.props.route.params.appointmentId,
         patientId: this.props.route.params.patientId,
       };
@@ -47,45 +48,57 @@ export default class RefertoSpecialistAdd extends Component {
         name: '',
         description: '',
         data: [],
+        email: '', 
       };
     }
   }
 
-  _getSpecialists(){
-    this.setState({ isLoading: true });
-    Api.instance().getSpecialists()
-    .then((data) => {          
-        this.setState({ specialists: data, doctorEmail: data[0].email });
-    }
-    ).catch(err => console.log(err))
-    .finally(() => {
-        this.setState({ isLoading: false });
-    })
+  _getUser() {
+    Api.instance()
+      ._user()
+      .then(user => {
+        this.setState({email: user.email})
+      })
+      .catch(err => {
+        console.warn('error', err)
+      })
+  }
+  _getSpecialists() {
+    this.setState({isLoading: true});
+    Api.instance()
+      .getSpecialists()
+      .then(data => {
+
+      
+        console.warn('specialist data>>>', data);
+        this.setState({specialists: data, doctorEmail: data[0].email});
+      })
+      .catch(err => console.log(err))
+      .finally(() => {
+        this.setState({isLoading: false});
+      });
   }
 
-
-  componentDidMount(){
-      this._getSpecialists();
+  componentDidMount() {
+    this._getSpecialists();
+    this._getUser()
+  
   }
-
 
   _addReferredSpecialist = () => {
-    
-
-    if(this.state.appointmentId != null){
-      
+    if (this.state.appointmentId != null) {
       let data = {
         // date: this.state.startDate,
-         // "setupId": "",
-         // "doctorId": "5f01d90dffd17912ce896c56",
-         // "assistantId": "",
-         patientId: this.state.patientId,
-         answer: this.state.doctorEmail,
-         notes:this.state.description,
+        // "setupId": "",
+        // "doctorId": "5f01d90dffd17912ce896c56",
+        // "assistantId": "",
+        patientId: this.state.patientId,
+        answer: this.state.doctorEmail,
+        notes: this.state.description,
         // endDate: this.state.endDate,
-         'setup-type': 'referToSpecialist',
-         active: false,
-       };
+        'setup-type': 'referToSpecialist',
+        active: false,
+      };
 
       if (this.state.doctorEmail.trim() != '') {
         this.setState({isLoading: true});
@@ -106,9 +119,7 @@ export default class RefertoSpecialistAdd extends Component {
       } else {
         ViewUtils.showAlert('Please Provide Specialist Email');
       }
-    
-    }else{
-
+    } else {
       let data = {
         setupType: 'referToSpecialist',
         name: this.state.doctorEmail,
@@ -134,10 +145,7 @@ export default class RefertoSpecialistAdd extends Component {
         ViewUtils.showAlert('Please Provide Specialist Email');
       }
     }
-
-   
   };
-
 
   addToConsultation(item) {
     Api.instance()
@@ -149,27 +157,22 @@ export default class RefertoSpecialistAdd extends Component {
 
       .then(response => {
         console.warn('response', response);
-        
       })
       .catch(err => {})
       .finally(() => {});
   }
 
-  _setSpecialists(){
-      
-    let doctorEmail = this.state.specialists.map((x) => x.email)
-    
-    return(
-        doctorEmail.map((x) => {
-            return(
-                <Picker.Item label={x} value={x} />
-            )
-        })
-    )
-    
+  _setSpecialists() {
+    //someArray = someArray.filter(person => person.name != 'John');
+    let doctorEmail = this.state.specialists.map(x => x.email);
+    let doctorEmails = doctorEmail.filter(x => x != `${this.state.email}`) 
+    return doctorEmails.map(x => {
+      return <Picker.Item label={x} value={x} />;
+    });
   }
 
   render() {
+    
     if (this.state.appointmentId != null) {
       return (
         <View style={{height: '75%'}}>
@@ -214,10 +217,10 @@ export default class RefertoSpecialistAdd extends Component {
                     placeholderStyle={{color: '#bfc6ea'}}
                     placeholderIconColor="#007aff"
                     selectedValue={this.state.doctorEmail}
-                    onValueChange={val => { this.setState({ doctorEmail: val }) }}
-                  >
-                      {this._setSpecialists()}
-                 
+                    onValueChange={val => {
+                      this.setState({doctorEmail: val});
+                    }}>
+                    {this._setSpecialists()}
                   </Picker>
                 </Item>
 
@@ -330,7 +333,6 @@ export default class RefertoSpecialistAdd extends Component {
               </Text>
             </View>
 
-           
             <View style={{flex: 8, paddingHorizontal: 18, marginTop: 33}}>
               <KeyboardAwareScrollView
                 style={[{backgroundColor: '#fff', borderRadius: 5}]}>
@@ -348,10 +350,10 @@ export default class RefertoSpecialistAdd extends Component {
                     placeholderStyle={{color: '#bfc6ea'}}
                     placeholderIconColor="#007aff"
                     selectedValue={this.state.doctorEmail}
-                    onValueChange={val => { this.setState({ doctorEmail: val }) }}
-                  >
-                      {this._setSpecialists()}
-                  
+                    onValueChange={val => {
+                      this.setState({doctorEmail: val});
+                    }}>
+                    {this._setSpecialists()}
                   </Picker>
                 </Item>
 

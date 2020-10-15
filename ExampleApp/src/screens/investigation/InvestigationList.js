@@ -25,6 +25,7 @@ export default class InvestigationList extends Component {
       this.state = {
         isLoading: true,
         diagnosisList: [],
+        disabled: false, 
         appointmentId: this.props.route.params.appointmentId,
         patientId: this.props.route.params.patientId,
       };
@@ -74,6 +75,11 @@ export default class InvestigationList extends Component {
   }
 
   addDiagnosis(item) {
+    
+    this.setState({
+      disabled: true,
+    });
+    
     item.setupType = 'investigation';
     Api.instance()
       .addReport(item, this.state.appointmentId, this.state.patientId)
@@ -83,6 +89,14 @@ export default class InvestigationList extends Component {
       })
       .catch(err => {})
       .finally(() => {});
+
+      
+      // enable after 5 second
+      setTimeout(() => {
+        this.setState({
+          disabled: false,
+        });
+      }, 5000);
   }
   render() {
     if (this.state.appointmentId != null) {
@@ -156,7 +170,9 @@ export default class InvestigationList extends Component {
                         ]}
                         onPress={() => {
                           this.addDiagnosis(item);
-                        }}>
+                        }}
+                        disabled={this.state.disabled}
+                        >
                         <View
                           style={[
                             CommonStyles.container,

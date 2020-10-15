@@ -25,6 +25,7 @@ export default class ProcedureList extends Component {
       this.state = {
         isLoading: true,
         procedureList: [],
+        disabled: false, 
         appointmentId: this.props.route.params.appointmentId,
         patientId: this.props.route.params.patientId,
       };
@@ -72,6 +73,10 @@ export default class ProcedureList extends Component {
   }
 
   addToConsultation(item) {
+    this.setState({
+      disabled: true,
+    });
+    
     item.setupType = 'surgicalProcedure';
     Api.instance()
       .addReport(item, this.state.appointmentId, this.state.patientId)
@@ -81,6 +86,14 @@ export default class ProcedureList extends Component {
       })
       .catch(err => {})
       .finally(() => {});
+
+      
+      // enable after 5 second
+      setTimeout(() => {
+        this.setState({
+          disabled: false,
+        });
+      }, 5000);
   }
 
   render() {
@@ -155,7 +168,9 @@ export default class ProcedureList extends Component {
                         ]}
                         onPress={() => {
                           this.addToConsultation(item);
-                        }}>
+                        }}
+                        disabled={this.state.disabled}
+                        >
                         <View
                           style={[
                             CommonStyles.container,
