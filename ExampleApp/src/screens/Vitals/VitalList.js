@@ -57,7 +57,7 @@ export default class VitalList extends Component {
         .getVitalList()
         .then(data => {
           console.warn('=====>', data['Vitals']);
-          this.setState({vitalList: data['Vitals']});
+          this.setState({vitalList: data['Vitals'].reverse()});
         })
         .catch(err => console.log(err))
         .finally(() => {
@@ -67,7 +67,9 @@ export default class VitalList extends Component {
   }
 
   componentDidMount() {
+    this.props.navigation.addListener('focus', payLoad => {
     this._getVitalList();
+    })
   }
 
   addToConsultation(item) {
@@ -392,7 +394,7 @@ export default class VitalList extends Component {
                   this.props.navigation.navigate('Vital', {
                     appointmentId: this.state.appointmentId,
                     patientId: this.props.route.params.patientId,
-                    onVitalAdd: () => this._getVitalList(),
+                    
                   });
                 }}
                 style={[
@@ -724,9 +726,7 @@ export default class VitalList extends Component {
               ]}>
               <TouchableOpacity
                 onPress={() => {
-                  this.props.navigation.navigate('Vital', {
-                    onVitalAdd: () => this._getVitalList(),
-                  });
+                  this.props.navigation.navigate('Vital');
                 }}
                 style={[
                   CommonStyles.container,
