@@ -46,6 +46,7 @@ class Create extends Component {
   }
 
   _validateField() {
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,9})+$/;
     if (this.state.firstName == '') {
       ViewUtils.showToast('First Name Field');
       return false;
@@ -58,7 +59,11 @@ class Create extends Component {
     } else if (this.state.email == '') {
       ViewUtils.showToast('Email Field');
       return false;
-    } else if (this.state.password == '') {
+    }  else if(reg.test(this.state.email) === false){
+      ViewUtils.showToast('Email is not correct');
+      return false;
+    }    
+    else if (this.state.password == '') {
       ViewUtils.showToast('Password Field');
       return false;
     } else if (this.state.confirmPasword == '') {

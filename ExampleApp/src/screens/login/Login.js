@@ -64,7 +64,7 @@ class Login extends Component {
     });
   }
   _submitForm = () => {
-    
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,9})+$/;
     if(this.state.email == '' && this.state.password == ''){
       ViewUtils.showAlert(
         'Please Provide Email and Password',       
@@ -75,7 +75,11 @@ class Login extends Component {
         'Please Provide Email',       
     );
     return;
-    }else if(this.state.password == ''){
+    }else if(reg.test(this.state.email) === false){
+      ViewUtils.showToast('Email is not correct');
+      return false;
+    }  
+    else if(this.state.password == ''){
       ViewUtils.showAlert(
         'Please Provide Password',       
     );
