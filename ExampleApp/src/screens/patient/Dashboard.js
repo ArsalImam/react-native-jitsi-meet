@@ -452,7 +452,8 @@ class Dashboard extends React.Component {
                 <Text
                   style={[
                     CommonStyles.fontMedium,
-                    {fontSize: 14, marginTop: 10},
+                    
+                    {fontSize: 15, marginTop: 10}
                   ]}>
                   Past Appointments
                 </Text>
@@ -546,7 +547,8 @@ class Dashboard extends React.Component {
                   <Text
                     style={[
                       CommonStyles.fontMedium,
-                      {fontSize: 14, marginTop: 10},
+                      
+                      {fontSize: 15, marginTop: 10}
                     ]}>
                     Total Prescriptions
                   </Text>
@@ -591,7 +593,8 @@ class Dashboard extends React.Component {
                   <Text
                     style={[
                       CommonStyles.fontMedium,
-                      {fontSize: 14, marginTop: 10},
+                      
+                      {fontSize: 15, marginTop: 10}
                     ]}>
                     Total Patients
                   </Text>
