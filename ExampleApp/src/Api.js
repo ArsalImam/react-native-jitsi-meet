@@ -457,7 +457,6 @@ export default class Api {
 
   // Patient History List
   async getPatientHistoryList() {
-    console.warn('a');
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
