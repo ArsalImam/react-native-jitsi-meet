@@ -59,6 +59,7 @@ import SideBar from './components/drawer/SideBar';
 import MyPresciption from './screens/patient/MyPrescription';
 import ViewResultsofLabTest from './screens/viewResultsofLabTest/ViewResultsofLabTest';
 import ChatLogs from './screens/chatLogs/ChatLogs';
+import Foree from './screens/web-view/Foree'
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -826,6 +827,15 @@ export default class Routes extends React.Component {
           options={{
             title: '',
             headerShown: true,
+          }}
+        />
+
+        <Stack.Screen
+          name="Foree"
+          component={Foree}
+          options={{
+            title: '',
+          headerShown: false,
           }}
         />
 

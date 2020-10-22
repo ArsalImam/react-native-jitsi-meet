@@ -293,24 +293,25 @@ export default class BookingList extends Component {
           ViewUtils.showAlert(
             'Do you want to create appointment?',
             () => {
-              this.setState({isLoading: true});
-              Api.instance()
-                ._user()
-                .then(user => {
-                  Api.instance()
-                    .updateAppointment(appointmentId, user.id)
-                    .then(() => {
-                      console.warn('user.id ::: ', user.id);
-                      ViewUtils.showToast(
-                        'Appointment has been booked successfully',
-                      );
-                      this.refreshList();
-                    })
-                    .catch(err => {
-                      ViewUtils.showToast(err);
-                    })
-                    .finally(() => that.setState({isLoading: false}));
-                });
+              that.props.navigation.navigate('Foree')
+              // this.setState({isLoading: true});
+              // Api.instance()
+              //   ._user()
+              //   .then(user => {
+              //     Api.instance()
+              //       .updateAppointment(appointmentId, user.id)
+              //       .then(() => {
+              //         console.warn('user.id ::: ', user.id);
+              //         ViewUtils.showToast(
+              //           'Appointment has been booked successfully',
+              //         );
+              //         this.refreshList();
+              //       })
+              //       .catch(err => {
+              //         ViewUtils.showToast(err);
+              //       })
+              //       .finally(() => that.setState({isLoading: false}));
+              //   });
             },
             () => {},
           );
