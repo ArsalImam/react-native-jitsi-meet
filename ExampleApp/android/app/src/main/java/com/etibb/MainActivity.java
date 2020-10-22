@@ -1,4 +1,4 @@
-package com.etibb;
+package com.amir;
 
 import com.facebook.react.ReactActivity;
 

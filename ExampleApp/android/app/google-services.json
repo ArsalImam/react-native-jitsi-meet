@@ -8,6 +8,59 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:719997437676:android:1991ad32497573362307c9",
+        "android_client_info": {
+          "package_name": "com.amir"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "719997437676-tbjuveratslcv8u0kll5rio64eu23n2s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amir",
+            "certificate_hash": "abe916cf106debe9c48ca576af3a62cac8b01c3f"
+          }
+        },
+        {
+          "client_id": "719997437676-hjloubo77n4c6b4udrjfrftraprikeu6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amir",
+            "certificate_hash": "68e0c1d3e38451547ab664427562051c36ae889f"
+          }
+        },
+        {
+          "client_id": "719997437676-udrvjishmm27d49odp47fm54cqk3cgmt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBb2vgJJgYr5uUzvpPJWQKE4RgGPDtI3FM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "719997437676-udrvjishmm27d49odp47fm54cqk3cgmt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "719997437676-6oklme9d82b51v97l10t0cbsvf2ptsdn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "sa.digitrends.etibb",
+                "app_store_id": "1536638395"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:719997437676:android:f345c99e6bff43d72307c9",
         "android_client_info": {
           "package_name": "com.digitrends.telemedicine"
@@ -40,10 +93,11 @@
               "client_type": 3
             },
             {
-              "client_id": "719997437676-40b0upk5lltkvuv0hchhts9tid7b6432.apps.googleusercontent.com",
+              "client_id": "719997437676-6oklme9d82b51v97l10t0cbsvf2ptsdn.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.digitrends.telemedicine"
+                "bundle_id": "sa.digitrends.etibb",
+                "app_store_id": "1536638395"
               }
             }
           ]
@@ -58,6 +112,70 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "719997437676-fqadhr9g6861oivjh0cjhvggktmsigi8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.etibb",
+            "certificate_hash": "cce0571561f3a2ac29679a69807a98e3ab0365f6"
+          }
+        },
+        {
+          "client_id": "719997437676-u6a8qv74aqdsbkget0d5kc0tt10v2qvt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.etibb",
+            "certificate_hash": "abe916cf106debe9c48ca576af3a62cac8b01c3f"
+          }
+        },
+        {
+          "client_id": "719997437676-227ha27sh7o60iit0gupntpplu6v8l10.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.etibb",
+            "certificate_hash": "68e0c1d3e38451547ab664427562051c36ae889f"
+          }
+        },
+        {
+          "client_id": "719997437676-g8st7bm81g9cfhesjenep371blbet3ui.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.etibb",
+            "certificate_hash": "8596e70e86d91f96e873117b3b4683bee7621fd2"
+          }
+        },
+        {
+          "client_id": "719997437676-vd7b4m77cvm4bi2vhq6fdld10kn1ur6m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.etibb",
+            "certificate_hash": "970780324be2826ebb68ac6e2f12f69f8b4dcf83"
+          }
+        },
+        {
+          "client_id": "719997437676-el483urfo1gs2torsm0dahd76uqe35hs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.etibb",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "719997437676-jgh6n14unrbe6v8rv3e6i7h6q4ddu3nh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.etibb",
+            "certificate_hash": "e0ed1718130790062a663c93a3ed18fe5ba51d90"
+          }
+        },
+        {
+          "client_id": "719997437676-4shv4k7ffuo65mi6kdv5lr28jm5juh36.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.etibb",
+            "certificate_hash": "90d2ff41c9bbc7022de30191b035ed00c4b97d30"
+          }
+        },
         {
           "client_id": "719997437676-udrvjishmm27d49odp47fm54cqk3cgmt.apps.googleusercontent.com",
           "client_type": 3
@@ -76,10 +194,11 @@
               "client_type": 3
             },
             {
-              "client_id": "719997437676-40b0upk5lltkvuv0hchhts9tid7b6432.apps.googleusercontent.com",
+              "client_id": "719997437676-6oklme9d82b51v97l10t0cbsvf2ptsdn.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.digitrends.telemedicine"
+                "bundle_id": "sa.digitrends.etibb",
+                "app_store_id": "1536638395"
               }
             }
           ]
@@ -112,10 +231,11 @@
               "client_type": 3
             },
             {
-              "client_id": "719997437676-40b0upk5lltkvuv0hchhts9tid7b6432.apps.googleusercontent.com",
+              "client_id": "719997437676-6oklme9d82b51v97l10t0cbsvf2ptsdn.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.digitrends.telemedicine"
+                "bundle_id": "sa.digitrends.etibb",
+                "app_store_id": "1536638395"
               }
             }
           ]
@@ -130,6 +250,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "719997437676-6nf9dhtf0qqvo9revtvnpp86u873oi9j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.telemedicine",
+            "certificate_hash": "cce0571561f3a2ac29679a69807a98e3ab0365f6"
+          }
+        },
         {
           "client_id": "719997437676-nlhhnl6bt8g7jojuc9k6cufcclccpfvd.apps.googleusercontent.com",
           "client_type": 1,
@@ -204,10 +332,48 @@
               "client_type": 3
             },
             {
-              "client_id": "719997437676-40b0upk5lltkvuv0hchhts9tid7b6432.apps.googleusercontent.com",
+              "client_id": "719997437676-6oklme9d82b51v97l10t0cbsvf2ptsdn.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.digitrends.telemedicine"
+                "bundle_id": "sa.digitrends.etibb",
+                "app_store_id": "1536638395"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:719997437676:android:f22f46c732b945092307c9",
+        "android_client_info": {
+          "package_name": "etibb.amir"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "719997437676-udrvjishmm27d49odp47fm54cqk3cgmt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBb2vgJJgYr5uUzvpPJWQKE4RgGPDtI3FM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "719997437676-udrvjishmm27d49odp47fm54cqk3cgmt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "719997437676-6oklme9d82b51v97l10t0cbsvf2ptsdn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "sa.digitrends.etibb",
+                "app_store_id": "1536638395"
               }
             }
           ]
@@ -240,10 +406,11 @@
               "client_type": 3
             },
             {
-              "client_id": "719997437676-40b0upk5lltkvuv0hchhts9tid7b6432.apps.googleusercontent.com",
+              "client_id": "719997437676-6oklme9d82b51v97l10t0cbsvf2ptsdn.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.digitrends.telemedicine"
+                "bundle_id": "sa.digitrends.etibb",
+                "app_store_id": "1536638395"
               }
             }
           ]
@@ -276,10 +443,11 @@
               "client_type": 3
             },
             {
-              "client_id": "719997437676-40b0upk5lltkvuv0hchhts9tid7b6432.apps.googleusercontent.com",
+              "client_id": "719997437676-6oklme9d82b51v97l10t0cbsvf2ptsdn.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.digitrends.telemedicine"
+                "bundle_id": "sa.digitrends.etibb",
+                "app_store_id": "1536638395"
               }
             }
           ]
