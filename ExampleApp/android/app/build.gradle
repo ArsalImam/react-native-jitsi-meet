@@ -132,7 +132,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.amir"
+        applicationId "com.etibb.aamir"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 4
