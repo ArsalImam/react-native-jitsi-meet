@@ -1,0 +1,72 @@
+{
+  "name": "telmed",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "android": "./node_modules/.bin/react-native run-android",
+    "link": "react-native link",
+    "android:build:dev": "node_modules/.bin/react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/app.bundle --assets-dest android/app/src/main/res/ && cd android && gradlew assembleDebug",
+    "android:build:release": "node_modules/.bin/react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/app.bundle --assets-dest android/app/src/main/res/ && rm -rf android/app/src/main/res/drawable-* && rm -rf android/app/src/main/res/raw/* &&  cd android && gradlew assembleRelease",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@react-native-community/datetimepicker": "^2.4.3",
+    "@react-native-community/masked-view": "^0.1.10",
+    "@react-native-firebase/app": "^8.4.1",
+    "@react-native-firebase/database": "^7.4.1",
+    "@react-native-firebase/messaging": "^7.8.4",
+    "@react-navigation/bottom-tabs": "^5.6.1",
+    "@react-navigation/drawer": "^5.8.2",
+    "@react-navigation/native": "^5.5.1",
+    "@react-navigation/stack": "^5.5.1",
+    "@terrylinla/react-native-sketch-canvas": "^0.8.0",
+    "axios": "^0.19.2",
+    "https": "^1.0.0",
+    "moment": "^2.27.0",
+    "native-base": "^2.13.12",
+    "react": "16.11.0",
+    "react-moment": "^0.9.7",
+    "react-native": "0.62.2",
+    "react-native-elements": "^2.0.2",
+    "react-native-fast-image": "^8.1.5",
+    "react-native-gesture-handler": "^1.6.1",
+    "react-native-image-picker": "^2.3.2",
+    "react-native-jitsi-meet": "^2.1.1",
+    "react-native-keyboard-aware-scrollview": "^2.1.0",
+    "react-native-material-dropdown-v2": "^0.11.1",
+    "react-native-paper": "^3.8.0",
+    "react-native-propel-kit": "^0.8.9",
+    "react-native-reanimated": "^1.13.0",
+    "react-native-responsive-screen": "^1.4.1",
+    "react-native-safe-area-context": "^0.7.3",
+    "react-native-screens": "^2.5.0",
+    "react-native-snap-carousel": "^4.0.0-beta.6",
+    "react-native-sound": "^0.11.0",
+    "react-native-sound-player": "^0.10.4",
+    "react-native-splash-screen": "^3.2.0",
+    "react-native-super-grid": "^3.2.0",
+    "react-native-webview": "^10.8.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.2",
+    "@babel/runtime": "^7.10.3",
+    "@react-native-community/eslint-config": "^0.0.5",
+    "axios-logger": "^2.3.1",
+    "babel-jest": "^24.9.0",
+    "eslint": "^6.5.1",
+    "jest": "^24.9.0",
+    "metro-react-native-babel-preset": "^0.58.0",
+    "react-test-renderer": "16.11.0"
+  },
+  "rnpm": {
+    "assets": [
+      "./src/assets/fonts"
+    ]
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
