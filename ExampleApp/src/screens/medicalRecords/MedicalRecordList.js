@@ -28,6 +28,7 @@ export default class MedicalRecordList extends Component {
       this.state = {
         isLoading: true,
         medicalRecordList: [],
+        disabled: false,
         appointmentId: this.props.route.params.appointmentId,
         patientId: this.props.route.params.patientId,
       };
@@ -39,17 +40,17 @@ export default class MedicalRecordList extends Component {
     }
   }
 
-  _getMedicalRecordList(){
+  _getMedicalRecordList() {
     Api.instance()
-    .getMedicalRecordList()
-    .then(data => {
-      console.warn('=====>', data);
-      this.setState({medicalRecordList: data});
-    })
-    .catch(err => console.log(err))
-    .finally(() => {
-      this.setState({isLoading: false});
-    });
+      .getMedicalRecordList()
+      .then(data => {
+        console.warn('=====>', data);
+        this.setState({medicalRecordList: data});
+      })
+      .catch(err => console.log(err))
+      .finally(() => {
+        this.setState({isLoading: false});
+      });
   }
 
   componentDidMount() {
@@ -57,6 +58,10 @@ export default class MedicalRecordList extends Component {
   }
 
   addToConsultation(item) {
+    this.setState({
+      disabled: true,
+    });
+
     Api.instance()
       .addReport(item, this.state.appointmentId)
       .then(response => {
@@ -65,6 +70,13 @@ export default class MedicalRecordList extends Component {
       })
       .catch(err => {})
       .finally(() => {});
+
+    // enable after 5 second
+    setTimeout(() => {
+      this.setState({
+        disabled: false,
+      });
+    }, 5000);
   }
 
   getImage(image) {
@@ -75,7 +87,10 @@ export default class MedicalRecordList extends Component {
     }
   }
   render() {
-    console.warn("this.state.medicalRecordList === ",this.state.medicalRecordList)
+    console.warn(
+      'this.state.medicalRecordList === ',
+      this.state.medicalRecordList,
+    );
     if (this.state.appointmentId != null) {
       return (
         <View style={{height: '75%'}}>
@@ -94,7 +109,7 @@ export default class MedicalRecordList extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Medical Records{' '}
+                  It is a list of all your Medical Records{' '}
                 </Text>
               </Text>
             </View>
@@ -123,6 +138,7 @@ export default class MedicalRecordList extends Component {
                         onPress={() => {
                           this.addToConsultation(item);
                         }}
+                        disabled={this.state.disabled}
                         style={[
                           CommonStyles.container,
                           {padding: 12, flexDirection: 'row'},
@@ -278,7 +294,7 @@ export default class MedicalRecordList extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Medical Records{' '}
+                  It is a list of all your Medical Records{' '}
                 </Text>
               </Text>
             </View>

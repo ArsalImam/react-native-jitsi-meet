@@ -23,7 +23,7 @@ export default class MedicalCondition extends React.Component {
                             <View style={styles.View1}>
                         <Text style={{marginHorizontal: '7%', marginBottom: 12,}}>
                             <Text style={[CommonStyles.DINAltBold, CommonStyles.textSizeLarge, {color: '#FFf', lineHeight: 28}]} >{`Medical Condition\n`}</Text>
-                            <Text style={[CommonStyles.SFProLight, CommonStyles.textSizeSmall, {color: '#fff', lineHeight: 16}]}>It is a list of your all Medical Conditions </Text>
+                            <Text style={[CommonStyles.SFProLight, CommonStyles.textSizeSmall, {color: '#fff', lineHeight: 16}]}>It is a list of all your Medical Conditions </Text>
                         </Text>
                     </View>
 

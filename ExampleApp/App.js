@@ -36,7 +36,7 @@ class App extends React.Component {
         console.warn("agae call")
         const currentRouteName = that.navigationRef.getCurrentRoute().name
   
-        debugger;
+      
         console.warn('currentRouteName',JSON.stringify(currentRouteName) , 'mesage',message.data['type'])
           console.warn("message ::: ",message)
         if (currentRouteName != 'AppointmentRoom' && message.data['type'] == 'appointment') {

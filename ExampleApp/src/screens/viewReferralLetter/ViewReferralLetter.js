@@ -73,7 +73,7 @@ export default class ViewReferralLetter extends Component {
                 CommonStyles.fontRegular,
                 CommonStyles.textSizeSmall,
               ]}>
-              It is a list of your all Referrel Letters{' '}
+              It is a list of all your Referrel Letters{' '}
             </Text>
           </Text>
         </View>

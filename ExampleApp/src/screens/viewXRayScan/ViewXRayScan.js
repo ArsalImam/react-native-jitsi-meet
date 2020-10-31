@@ -73,7 +73,7 @@ export default class ViewXRayScan extends Component {
                 CommonStyles.fontRegular,
                 CommonStyles.textSizeSmall,
               ]}>
-              It is a list of your all Xray Scans{' '}
+              It is a list of all your Xray Scans{' '}
             </Text>
           </Text>
         </View>

@@ -182,10 +182,13 @@ export default class UploadIllustrations extends React.Component {
       .catch(err => {
         //ViewUtils.showToast(err)
       });
+<<<<<<< HEAD
+=======
 
     Api.instance()
       .getUserRole()
       .then(role => this.setState({role}));
+>>>>>>> e1a7792eb4f9595aa522080dd2bbeda36707e3a3
   }
 
   render() {

@@ -54,7 +54,7 @@ export default class ClinicList extends Component {
                         
                         <Text style={{ color: '#FFFFFF', paddingLeft: 16}}>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Clinic List\n`}</Text>
-                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>It is a list of your all Clinics </Text>
+                            <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>it is a list of all your Clinics </Text>
                         </Text>
                     </View>
 

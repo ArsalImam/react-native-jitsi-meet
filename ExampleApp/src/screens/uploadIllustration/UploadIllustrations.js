@@ -158,7 +158,7 @@ console.warn('uriiiii' , this.state.imageUri)
                     CommonStyles.textSizeSmall,
                     CommonStyles.textColorWhite,
                   ]}>
-                  It is a list of your all Upload Illustrations{' '}
+                  It is a list of all your Upload Illustrations{' '}
                 </Text>
               </Text>
             </View>
@@ -278,7 +278,7 @@ console.warn('uriiiii' , this.state.imageUri)
                     CommonStyles.textSizeSmall,
                     CommonStyles.textColorWhite,
                   ]}>
-                  It is a list of your all Upload Illustrations{' '}
+                  It is a list of all your Upload Illustrations{' '}
                 </Text>
               </Text>
             </View>

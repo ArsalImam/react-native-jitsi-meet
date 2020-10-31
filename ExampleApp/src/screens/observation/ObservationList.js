@@ -25,6 +25,7 @@ export default class ObservationList extends Component {
       this.state = {
         isLoading: true,
         observationList: [],
+        disabled: false, 
         appointmentId: this.props.route.params.appointmentId,
         patientId: this.props.route.params.patientId,
       };
@@ -37,16 +38,16 @@ export default class ObservationList extends Component {
   }
 
   _getObservationList() {
-      this.setState({isLoading: true});
-      Api.instance()
-        .getListDuringConsultation('observation',this.state.patientId)
-        .then(data => {
-          this.setState({observationList: data});
-        })
-        .catch(err => console.log(err))
-        .finally(() => {
-          this.setState({isLoading: false});
-        });
+    this.setState({isLoading: true});
+    Api.instance()
+      .getListDuringConsultation('observation', this.state.patientId)
+      .then(data => {
+        this.setState({observationList: data});
+      })
+      .catch(err => console.log(err))
+      .finally(() => {
+        this.setState({isLoading: false});
+      });
   }
 
   componentDidMount() {
@@ -54,6 +55,9 @@ export default class ObservationList extends Component {
   }
 
   addObservation(item) {
+    this.setState({
+      disabled: true,
+    });
     item.setupType = 'observation';
     Api.instance()
       .addReport(item, this.state.appointmentId, this.state.patientId)
@@ -63,10 +67,15 @@ export default class ObservationList extends Component {
       })
       .catch(err => {})
       .finally(() => {});
+        // enable after 5 second
+    setTimeout(() => {
+      this.setState({
+        disabled: false,
+      });
+    }, 5000);
   }
 
   render() {
-
     if (this.state.appointmentId != null) {
       return (
         <View style={{height: '75%'}}>
@@ -85,7 +94,7 @@ export default class ObservationList extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Observations {' '}
+                  It is a list of all your Observations{' '}
                 </Text>
               </Text>
             </View>
@@ -117,7 +126,9 @@ export default class ObservationList extends Component {
                         ]}
                         onPress={() => {
                           this.addObservation(item);
-                        }}>
+                        }}
+                        disabled={this.state.disabled}
+                        >
                         <View
                           style={[
                             CommonStyles.container,
@@ -139,7 +150,6 @@ export default class ObservationList extends Component {
                               {item.answer}
                             </Text>
                           </Text>
-       
                         </View>
 
                         <View
@@ -246,7 +256,7 @@ export default class ObservationList extends Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
-                  It is a list of your all Observations{' '}
+                  It is a list of all your Observations{' '}
                 </Text>
               </Text>
             </View>
@@ -297,7 +307,6 @@ export default class ObservationList extends Component {
                               {item.name}
                             </Text>
                           </Text>
-                     
                         </View>
 
                         <View

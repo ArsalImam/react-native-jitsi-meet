@@ -10,7 +10,7 @@ import {
   StatusBar,
   Button,
   ActivityIndicator,
-  AsyncStorage
+  AsyncStorage,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {Container, Header, Content, Tab, Tabs, TabHeading} from 'native-base';
@@ -46,8 +46,6 @@ class Dashboard extends React.Component {
     Api.instance()
       .getMyAppointments()
       .then(appointments => {
-        console.warn('bisma bisma', appointments.length);
-
         let schAppointment = appointments.filter(x => x.status == 'Scheduled');
         console.warn('Schedule', schAppointment.length);
         this.setState({
@@ -57,8 +55,6 @@ class Dashboard extends React.Component {
         let completedAppointment = appointments.filter(
           x => x.status == 'Completed',
         );
-        console.warn('Completed', completedAppointment);
-        console.warn('Completed', completedAppointment.length);
 
         if (schAppointment.length > 0) {
           let lastAppointment = schAppointment.reverse()[0];
@@ -245,7 +241,12 @@ class Dashboard extends React.Component {
                         marginTop: 5,
                       },
                     ]}>
-                    <Icon name="user" type="FontAwesome5" size={30} color="black" />
+                    <Icon
+                      name="user"
+                      type="FontAwesome5"
+                      size={30}
+                      color="black"
+                    />
                   </View>
                 )}
               </View>
@@ -256,14 +257,14 @@ class Dashboard extends React.Component {
                 <Text
                   style={[CommonStyles.fontMedium, CommonStyles.textSizeSmall]}>
                   <Text>Welcome to your </Text>
-                 <Text
+                  <Text
                     style={[
                       CommonStyles.fontMedium,
                       CommonStyles.textSizeSmall,
                       {color: '#5698FF'},
                     ]}>
                     Health Dashboard{' '}
-                  </Text> 
+                  </Text>
                 </Text>
               </View>
             </View>
@@ -356,26 +357,54 @@ class Dashboard extends React.Component {
                           CommonStyles.textSizeSmall,
                           {color: '#335a07'})
                         }>{`Next Appointment\n        `}</Text>
-                      <Text
-                        style={
-                          (CommonStyles.fontMedium,
-                          {fontSize: 17, color: '#000'})
-                        }>
-                        is {this.state.lastestAppointment.timeLeft}
-                      </Text>
+
+                      {this.state.upComingCount != 0 ? (
+                        <Text
+                          style={
+                            (CommonStyles.fontMedium,
+                            {fontSize: 17, color: '#000'})
+                          }>
+                          is {this.state.lastestAppointment.timeLeft}
+                        </Text>
+                      ) : (
+                        <Text
+                          style={
+                            (CommonStyles.fontMedium,
+                            {
+                              fontSize: 17,
+                              color: '#000',
+                              textAlign: 'right',
+                              alignSelf: 'flex-end',
+                            })
+                          }>
+                          is 0 min
+                        </Text>
+                      )}
                       <Text
                         style={
                           (CommonStyles.fontRegular,
                           CommonStyles.textSizeSmall,
                           {color: '#335a07'})
-                        }>{`\nAppointment Time\n             `}</Text>
-                      <Text
-                        style={
-                          (CommonStyles.fontMedium,
-                          {fontSize: 17, color: '#000'})
                         }>
-                        {this.state.lastestAppointment.time}
+                        {`\nAppointment Time\n             `}
                       </Text>
+                      {this.state.upComingCount != 0 ? (
+                        <Text
+                          style={
+                            (CommonStyles.fontMedium,
+                            {fontSize: 17, color: '#000'})
+                          }>
+                          {this.state.lastestAppointment.time}
+                        </Text>
+                      ) : (
+                        <Text
+                          style={
+                            (CommonStyles.fontMedium,
+                            {fontSize: 17, color: '#000'})
+                          }>
+                          00:00 am
+                        </Text>
+                      )}
                     </Text>
                   </View>
                 </View>
@@ -423,9 +452,10 @@ class Dashboard extends React.Component {
                 <Text
                   style={[
                     CommonStyles.fontMedium,
-                    {fontSize: 14, marginTop: 10},
+                    
+                    {fontSize: 15, marginTop: 10}
                   ]}>
-                  Past Appointment
+                  Past Appointments
                 </Text>
               </TouchableOpacity>
 
@@ -517,9 +547,10 @@ class Dashboard extends React.Component {
                   <Text
                     style={[
                       CommonStyles.fontMedium,
-                      {fontSize: 14, marginTop: 10},
+                      
+                      {fontSize: 15, marginTop: 10}
                     ]}>
-                    Total Prescription
+                    Total Prescriptions
                   </Text>
                 </TouchableOpacity>
               ) : (
@@ -562,9 +593,10 @@ class Dashboard extends React.Component {
                   <Text
                     style={[
                       CommonStyles.fontMedium,
-                      {fontSize: 14, marginTop: 10},
+                      
+                      {fontSize: 15, marginTop: 10}
                     ]}>
-                    TOTAL PATIENTS
+                    Total Patients
                   </Text>
                 </TouchableOpacity>
               )}
