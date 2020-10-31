@@ -291,13 +291,9 @@ class Create extends Component {
                       selected={false}
                       label="Gender"
                       value=""
-<<<<<<< HEAD
                       
                     />
 
-=======
-                    />s
->>>>>>> e1a7792eb4f9595aa522080dd2bbeda36707e3a3
                     <Picker.Item label="Male" value="Male" />
                     <Picker.Item label="Female" value="Female" />
                   </Picker>
