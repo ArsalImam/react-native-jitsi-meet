@@ -3,7 +3,8 @@
  * @format
  * @flow
  */
-import 'react-native-gesture-handler';
+
+ import 'react-native-gesture-handler';
 import SplashScreen from 'react-native-splash-screen';
 import React, { Component } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
