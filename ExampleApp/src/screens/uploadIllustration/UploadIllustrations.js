@@ -11,7 +11,6 @@ import {
   Container,
   Header,
   Content,
-  DatePicker,
   Text,
   Item,
   Label,
@@ -22,6 +21,8 @@ import {
   Form,
   
 } from 'native-base';
+
+import {DatePicker} from 'react-native-propel-kit';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import CommonStyles from '../../CommonStyles';
 import Api from '../../Api';
@@ -129,7 +130,7 @@ console.warn('uriiiii' , this.state.imageUri)
           this.setState({isLoading: false});
         });
     } else {
-      ViewUtils.showAlert('All Fields Required');
+      ViewUtils.showToast('All Fields Required');
     }
   };
   render() {

@@ -172,7 +172,9 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="MyDrawer"
           component={this._getDrawerComponent}
-          options={{headerShown: false}}
+          options={
+            {headerShown: false,
+            title: ''}}
         />
 
         <Stack.Screen

@@ -302,9 +302,9 @@ userId=data.id;
     .getScheduledAppointments()
     .then(res => {
       console.warn("res sss ::: ",res)
-      // if(res.length > 0){
-        ViewUtils.showAlert('Cannot create more than one appointment in a day.')
-      // }else{
+      if(res.length > 0){
+        ViewUtils.showToast('Cannot create more than one appointment in a day.')
+      }else{
           let that = this;
           ViewUtils.showAlert(
             'Do you want to create appointment?',
@@ -331,7 +331,7 @@ userId=data.id;
             },
             () => {},
           );
-      // }
+      }
       //console.warn("res ::: ",res)
     })
     .catch(err => {

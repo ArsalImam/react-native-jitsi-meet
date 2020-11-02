@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.imagepicker.ImagePickerPackage;
 // import io.invertase.firebase.RNFirebasePackage;
 // import io.invertase.firebase.messaging.ReactNativeFirebaseMessagingPackage;
 // import io.invertase.firebase.database.ReactNativeFirebaseDatabasePackage;

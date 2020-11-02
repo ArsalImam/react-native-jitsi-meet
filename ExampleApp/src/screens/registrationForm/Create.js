@@ -18,10 +18,11 @@ import {
   Input,
   Container,
   Picker,
-  DatePicker,
   Icon,
   Label,
 } from 'native-base';
+
+import {DatePicker, TimePicker} from 'react-native-propel-kit';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import Api from '../../Api';
 import {ViewUtils} from '../../Utils';
@@ -39,7 +40,7 @@ class Create extends Component {
       password: '',
       confirmPasword: '',
       drCode: '',
-      dateOfBirth: '',
+      dateOfBirth: new Date(),
       mobile: '',
       personalDetails: {},
     };
@@ -225,20 +226,18 @@ class Create extends Component {
                 </View>
 
                 <Item
-                  regular
-                  style={[CommonStyles.loginItemStyle, CommonStyles.mt10]}>
-                  <Label
-                    style={[
-                      {marginTop: 3, alignSelf: 'center', fontSize: 15},
-                      CommonStyles.fontRegular,
-                      CommonStyles.fontMedium,
-                      CommonStyles.textColorWhite,
-                      CommonStyles.container,
-                    ]}>
-                    {' '}
-                    Date of Birth
-                  </Label>
+                 style={[
+                    CommonStyles.mt10,
+                    CommonStyles.container,
+                    CommonStyles.fontRegular,
+                    CommonStyles.fontMedium,
+                    CommonStyles.loginItemStyle23,
+                  ]}
+                  
+                  >
+                  
                   <DatePicker
+                    placeholder="Date of Birth"
                     textStyle={{color: '#fff'}}
                     itemTextStyle={{color: 'red'}}
                     style={{color: '#fff'}}
@@ -250,20 +249,25 @@ class Create extends Component {
                       CommonStyles.textSizeNormal,
                       CommonStyles.mt10,
                     ]}
-                    value={moment(this.state.dateOfBirth).format('L')}
-                    onDateChange={val => this.setState({dateOfBirth: val})}
-                    disabled={false}
+                    // initialValue={this.state.startDate}
+                    initialValue={this.state.dateOfBirth}
+                    onChange={date => this.setState({dateOfBirth: date})}
+                    // disabled={false}
                   />
-                  <Icon active name="calendar" style={{color: '#fff'}} />
+                  <Icon
+                  name="calendar"
+                    style={{color: '#fff', position: 'absolute', right: 5}}/>
                 </Item>
 
                 <Item
                   regular
                   picker
                   style={[
-                    CommonStyles.container,
-                    CommonStyles.loginItemStyle,
                     CommonStyles.mt10,
+                    CommonStyles.container,
+                    CommonStyles.fontRegular,
+                    CommonStyles.fontMedium,
+                    CommonStyles.loginItemStyle23,
                   ]}>
                   <Picker
                     textStyle={{color: '#fff'}}
@@ -274,13 +278,22 @@ class Create extends Component {
                     placeholderStyle={{color: '#FFF'}}
                     placeholderIconColor="#fff"
                     selectedValue={this.state.gender}
-                    onValueChange={txt => this.setState({gender: txt})}>
+                    onValueChange={txt => this.setState({gender: txt})}
+                    style={[
+                      CommonStyles.fontMedium,
+                      CommonStyles.textColorWhite,
+                      CommonStyles.textSizeNormal,
+                    ]}
+                    >
+                      
                     <Picker.Item
                       color="grey"
                       selected={false}
                       label="Gender"
                       value=""
-                    />s
+                      
+                    />
+
                     <Picker.Item label="Male" value="Male" />
                     <Picker.Item label="Female" value="Female" />
                   </Picker>
@@ -326,7 +339,6 @@ class Create extends Component {
                     name="password"
                     placeholder={'Password'}
                     placeholderTextColor="#FFF"
-                    passwordRules
                     style={[
                       CommonStyles.fontMedium,
                       CommonStyles.textColorWhite,
@@ -350,7 +362,6 @@ class Create extends Component {
                     name="password"
                     placeholder={'Confirm Password'}
                     placeholderTextColor="#FFF"
-                    passwordRules
                     style={[
                       CommonStyles.fontMedium,
                       CommonStyles.textColorWhite,
@@ -417,7 +428,6 @@ class Create extends Component {
                     name="password"
                     placeholder={'Enter Doctor Code'}
                     placeholderTextColor="#FFF"
-                    passwordRules
                     style={[
                       CommonStyles.fontMedium,
                       CommonStyles.textColorWhite,
