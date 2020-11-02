@@ -9,6 +9,7 @@ import Loader from '../../components/Loader';
 import {AppointmentStatus, Roles} from '../../Configs';
 import moment from 'moment';
 import {ViewUtils} from '../../Utils';
+import {AsyncStorage} from 'react-native';
 
 export default class BookingList extends Component {
   state = {
@@ -16,6 +17,7 @@ export default class BookingList extends Component {
     isLoading: false,
     todaysAppointments: [],
     isScheduled: false,
+    
   };
 
   constructor(props) {
@@ -24,7 +26,17 @@ export default class BookingList extends Component {
 
   componentDidMount() {
     this.refreshList();
+    
   }
+ 
+
+async _user() {
+  try {
+    return JSON.parse(await AsyncStorage.getItem('@user'));
+  } catch (e) {
+    console.warn(e);
+  }
+}
 
   refreshList() {
     this.setState({isLoading: true});
@@ -282,6 +294,10 @@ export default class BookingList extends Component {
   // }
 
   _getScheduledAppointments(appointmentId){
+    let userId;
+    this._user().then((data)=>{
+userId=data.id;
+    })
     Api.instance()
     .getScheduledAppointments()
     .then(res => {
@@ -293,7 +309,7 @@ export default class BookingList extends Component {
           ViewUtils.showAlert(
             'Do you want to create appointment?',
             () => {
-              that.props.navigation.navigate('Foree')
+              that.props.navigation.navigate('Foree',{clinicId:res[0].clinicId,user:userId,appointmentId:appointmentId})
               // this.setState({isLoading: true});
               // Api.instance()
               //   ._user()
