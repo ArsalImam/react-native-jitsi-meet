@@ -64,11 +64,11 @@ export default class Foree extends Component {
     const endPoint = 'TransactionLogs/getForeePage';
    //const endPoint = 'https://github.com/react-native-community/react-native-webview';
    
-    const runFirst = `
-      document.body.style.backgroundColor = 'red';
-      setTimeout(function() { window.alert('hi') }, 5000);
-      true; // note: this is required, or you'll sometimes get silent failures
-    `;
+    // const runFirst = `
+    //   document.body.style.backgroundColor = 'red';
+    //   setTimeout(function() { window.alert('hi') }, 5000);
+    //   true; // note: this is required, or you'll sometimes get silent failures
+    // `;
     return (
       <Container style={{flex: 1, backgroundColor: '#000'}}>
         <Header style={{height: 70, backgroundColor: '#297dec'}}>
@@ -91,7 +91,7 @@ export default class Foree extends Component {
             uri: `${Configs.baseUrl}${endPoint}`,
           }}
         //  onMessage={event => {}}
-          injectedJavaScript={runFirst}
+          // injectedJavaScript={runFirst}
         />
       </Container>
     );

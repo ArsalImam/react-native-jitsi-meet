@@ -203,11 +203,7 @@ class MenuSlider extends React.Component {
                                     .removeUser()
                                     .then(response => {
                                         this.props.navigation.replace('Login')
-<<<<<<< HEAD
-                                        ViewUtils.showToast('You have been  sign out successfully!');
-=======
                                         ViewUtils.showToast('You have signed out successfully!');
->>>>>>> e1a7792eb4f9595aa522080dd2bbeda36707e3a3
                                     })
                                     .catch(err => {
                                         //ViewUtils.showToast(err);

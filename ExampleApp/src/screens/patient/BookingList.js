@@ -286,9 +286,9 @@ export default class BookingList extends Component {
     .getScheduledAppointments()
     .then(res => {
       console.warn("res sss ::: ",res)
-      if(res.length > 0){
+      // if(res.length > 0){
         ViewUtils.showToast('Cannot create more than one appointment in a day.')
-      }else{
+      // }else{
           let that = this;
           ViewUtils.showAlert(
             'Do you want to create appointment?',
@@ -315,7 +315,7 @@ export default class BookingList extends Component {
             },
             () => {},
           );
-      }
+      // }
       //console.warn("res ::: ",res)
     })
     .catch(err => {
