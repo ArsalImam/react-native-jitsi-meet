@@ -303,7 +303,7 @@ userId=data.id;
     .then(res => {
       console.warn("res sss ::: ",res)
       // if(res.length > 0){
-        ViewUtils.showToast('Cannot create more than one appointment in a day.')
+        // ViewUtils.showToast('Cannot create more than one appointment in a day.')
       // }else{
           let that = this;
           ViewUtils.showAlert(
