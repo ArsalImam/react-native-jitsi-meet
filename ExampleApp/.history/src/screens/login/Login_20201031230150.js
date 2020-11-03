@@ -64,19 +64,19 @@ class Login extends Component {
     });
   }
   _submitForm = () => {
-    
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,9})+$/;
     if(this.state.email == '' && this.state.password == ''){
-      ViewUtils.showAlert(
+      ViewUtils.showToast(
         'Please Provide Email and Password',       
     );
     return;
     }else if(this.state.email == ''){
-      ViewUtils.showAlert(
+      ViewUtils.showToast(
         'Please Provide Email',       
     );
     return;
     }else if(this.state.password == ''){
-      ViewUtils.showAlert(
+      ViewUtils.showToast(
         'Please Provide Password',       
     );
     return;
@@ -91,7 +91,7 @@ class Login extends Component {
       })
       .catch(err => {
         //ViewUtils.showToast(err);
-        ViewUtils.showAlert(
+        ViewUtils.showToast(
           'Invalid Credentials.',       
       );
       })
@@ -104,49 +104,17 @@ class Login extends Component {
   render() {
     return (
       <View style={[CommonStyles.container]}>
-        <ImageBackground
-          style={[CommonStyles.container, CommonStyles.backgroundImage]}
-          source={require('../../assets/img/loginbg.png')}>
-          <KeyboardAwareScrollView style={CommonStyles.container}>
-            <View style={[CommonStyles.margin, { margin: 30 }]}>
-              <View
-                style={[
-                  CommonStyles.container,
-                  { marginTop: 50, marginBottom: 40, justifyContent: 'center' },
-                ]}>
-                <Text
+             <View
                   style={[
-                    CommonStyles.fontMedium,
-                    {
-                      fontSize: 32,
-                      color: '#FFF',
-                    },
-                  ]}>
-                  Welcome
-                </Text>
-                <View
-                  style={[
-                    CommonStyles.container,
                     CommonStyles.horizontalContainer,
-                    {  justifyContent: 'flex-start' },
+                    {  justifyContent: 'center',
+                    backgroundColor: '#fff' },
                   ]}>
-                  <Text
-                    style={[
-                      CommonStyles.fontMedium,
-                      {
-                        fontSize: 32,
-                        color: '#FFF',
-                        marginRight: 15,
-                        
-                      },
-                    ]}>to
-                  </Text>
-
                   <View
                     style={{
                       width: 203,
                       height: 75,
-                      marginTop: -20,
+                      marginTop: 20,
                       marginHorizontal: 5,
                     }}>
                     <Image
@@ -160,6 +128,18 @@ class Login extends Component {
                     />
                   </View>
                 </View>
+        <ImageBackground
+          style={[CommonStyles.container, CommonStyles.backgroundImage]}
+          source={require('../../assets/img/loginbg.png')}>
+          <KeyboardAwareScrollView style={CommonStyles.container}>
+            <View style={[CommonStyles.margin, { margin: 30 }]}>
+              <View
+                style={[
+                  CommonStyles.container,
+                  { marginTop: 50, marginBottom: 40, justifyContent: 'center' },
+                ]}>
+
+           
               </View>
               <View style={{marginTop: 145}}>
                 <View>
@@ -197,7 +177,6 @@ class Login extends Component {
                     name="password"
                     placeholder={'Password'}
                     placeholderTextColor="#FFF"
-                    passwordRules
                     style={[
                       CommonStyles.fontMedium,
                       CommonStyles.textColorWhite,
@@ -309,30 +288,30 @@ class Login extends Component {
     );
   }
 
-  handleBackButton = () => {
-    Alert.alert(
-        'Exit App',
-        'Exiting the application?', [{
-            text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel'
-        }, {
-            text: 'OK',
-            onPress: () => BackHandler.exitApp()
-        }, ], {
-            cancelable: false
-        }
-     )
-     return true;
-   } 
+  // handleBackButton = () => {
+  //   Alert.alert(
+  //       'Exit App',
+  //       'Exiting the application?', [{
+  //           text: 'Cancel',
+  //           onPress: () => console.log('Cancel Pressed'),
+  //           style: 'cancel'
+  //       }, {
+  //           text: 'OK',
+  //           onPress: () => BackHandler.exitApp()
+  //       }, ], {
+  //           cancelable: false
+  //       }
+  //    )
+  //    return true;
+  //  } 
 
-  componentDidMount() {
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-  }
+  // componentDidMount() {
+  //   BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+  // }
   
-  componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-  }
+  // componentWillUnmount() {
+  //   BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+  // }
 
 }
 

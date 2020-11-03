@@ -56,7 +56,7 @@ class Login extends Component {
       if (token) {
         console.log('token', token);
         this.props.navigation.replace('MyDrawer');
-        // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
 
       } else {
         console.log('error', error);
@@ -288,30 +288,30 @@ class Login extends Component {
     );
   }
 
-  // handleBackButton = () => {
-  //   Alert.alert(
-  //       'Exit App',
-  //       'Exiting the application?', [{
-  //           text: 'Cancel',
-  //           onPress: () => console.log('Cancel Pressed'),
-  //           style: 'cancel'
-  //       }, {
-  //           text: 'OK',
-  //           onPress: () => BackHandler.exitApp()
-  //       }, ], {
-  //           cancelable: false
-  //       }
-  //    )
-  //    return true;
-  //  } 
+  handleBackButton = () => {
+    Alert.alert(
+        'Exit App',
+        'Exiting the application?', [{
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel'
+        }, {
+            text: 'OK',
+            onPress: () => BackHandler.exitApp()
+        }, ], {
+            cancelable: false
+        }
+     )
+     return true;
+   } 
 
-  // componentDidMount() {
-  //   BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-  // }
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+  }
   
-  // componentWillUnmount() {
-  //   BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-  // }
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+  }
 
 }
 

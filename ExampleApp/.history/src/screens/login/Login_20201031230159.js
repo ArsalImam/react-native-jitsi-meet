@@ -56,7 +56,7 @@ class Login extends Component {
       if (token) {
         console.log('token', token);
         this.props.navigation.replace('MyDrawer');
-        // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
 
       } else {
         console.log('error', error);

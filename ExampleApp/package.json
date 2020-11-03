@@ -11,7 +11,8 @@
     "start": "react-native start",
     "ammad": "react-native run-ios --udid \"d2c960b23d57bacd8d62f00039481a7711811ab7\"",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "build:ios": "react-native bundle --entry-file='index.ios.js' --bundle-output='./ios/YourAppName/main.jsbundle' --dev=false --platform='ios' --assets-dest='./ios'"
   },
   "dependencies": {
     "@react-native-community/datetimepicker": "^2.4.3",
