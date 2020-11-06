@@ -699,10 +699,10 @@ export default class CreateClinic extends Component {
                      is24Hour={true}
                     display="clock"
 
-                    // onChange={date => {
-                    //   this.setState({attendAt: date});
-                    // }}
-                     onChange={this.SelectattendAt}
+                    onChange={date => {
+                      this.setState({attendAt: date});
+                    }}
+                    //  onChange={this.SelectattendAt}
                   />
                 )}
               </Item>
@@ -725,17 +725,17 @@ export default class CreateClinic extends Component {
                   {this.state.endTimeText}
                 </Text>
                 {this.state.showEndTimePicker && (
-                  <RNDateTimePicker
+                  <TimePicker
                   placeholder="00:00"
                     testID="ToTime"
-                    value={this.state.leftAt}
-                    mode="time"
-                    is24Hour={true}
-                    display="clock"
-                    // onChange={date => {
-                    //   this.setState({leftAt: date});
-                    // }}
-                    onChange={this.SelectleftAt}
+                    initialValue={this.state.leftAt}
+                    // mode="time"
+                    // is24Hour={true}
+                    // display="clock"
+                    onChange={date => {
+                      this.setState({leftAt: date});
+                    }}
+                    // onChange={this.SelectleftAt}
                   />
                 )}
               </Item>

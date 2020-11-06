@@ -699,10 +699,10 @@ export default class CreateClinic extends Component {
                      is24Hour={true}
                     display="clock"
 
-                    // onChange={date => {
-                    //   this.setState({attendAt: date});
-                    // }}
-                     onChange={this.SelectattendAt}
+                    onChange={date => {
+                      this.setState({attendAt: date});
+                    }}
+                    //  onChange={this.SelectattendAt}
                   />
                 )}
               </Item>
