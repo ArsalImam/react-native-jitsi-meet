@@ -50,7 +50,7 @@ export default class Foree extends Component {
   };
 
   BackButton = () => {
-    ViewUtils.showToast(
+    Alert.alert(
       'E-tibb',
       'Are you sure, You want to cancel the payment process?',
       [
