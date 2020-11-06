@@ -90,6 +90,7 @@ class Login extends Component {
         this.props.navigation.replace('MyDrawer', { user: data.user });
       })
       .catch(err => {
+        console.warn('er' ,err)
         //ViewUtils.showToast(err);
         ViewUtils.showToast(
           'Invalid Credentials.',       
