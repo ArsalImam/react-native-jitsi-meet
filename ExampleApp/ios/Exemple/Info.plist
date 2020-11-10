@@ -10,19 +10,23 @@
 	<string>LaunchScreen</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>The calendar is required to set the date of birth, create clinic in profile and to see the available slots for appointment booking with the doctor</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>https://checkout-sandbox.riteidentity.com/</string>
+		<string>https://checkout.foree.co/checkout.js</string>
+		<string>https://checkout.foree.co</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
-	<key>NSCameraUsageDescription</key>
-	<string>The camera is required for teleconsultation and to upload the profile picture, etc.</string>
-	<key>LSApplicationQueriesSchemes</key>
-	<array/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
 		<string>remote-notification</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>The camera is required for teleconsultation and to upload the profile picture, etc.</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>NSMicrophoneUsageDescription</key>
