@@ -66,165 +66,137 @@ export default class Vital extends Component {
 
         date: new Date(),
         //          vitalType: this.state.vitalType,
-                 notes: this.state.notes,
-                 patientId: this.props.route.params.patientId,
-                 value: this.state.multipleValues[0],
-                 multipleValues: this.state.multipleValues,
+        notes: this.state.notes,
+        patientId: this.props.route.params.patientId,
+        value: this.state.multipleValues[0],
+        multipleValues: this.state.multipleValues,
 
-                //  patientId: this.state.patientId,
-                //  answer: this.state.vitalType,
-                //  notes:this.state.notes,
-                // endDate: this.state.endDate,
-                //  'setup-type': 'vital',
-                //  active: false,
-               };
-        }
+        //  patientId: this.state.patientId,
+        //  answer: this.state.vitalType,
+        //  notes:this.state.notes,
+        // endDate: this.state.endDate,
+        //  'setup-type': 'vital',
+        //  active: false,
+      };
+    }
 
-             
-        let childComponentData = null;
-        switch (this.state.vitalType) {
-            case 'Blood Glucose':
-                childComponentData = this.glucoseComponent._onSave();
-                console.warn("childComponentData === ",childComponentData)
-                Object.assign(data, {
-                    "multipleValues": [
-                        parseInt(childComponentData.value),
-                        childComponentData.selectedMeal,
-                        childComponentData.selectedMedicine
-                    ],
+    let childComponentData = null;
+    switch (this.state.vitalType) {
+      case 'Blood Glucose':
+        childComponentData = this.glucoseComponent._onSave();
+        console.warn('childComponentData === ', childComponentData);
+        Object.assign(data, {
+          multipleValues: [
+            parseInt(childComponentData.value),
+            childComponentData.selectedMeal,
+            childComponentData.selectedMedicine,
+          ],
 
-                    "vitalType": "BloodGlucose",
-                    "value": childComponentData.value,
+          vitalType: 'BloodGlucose',
+          value: childComponentData.value,
+        });
+        break;
+      case 'Blood Pressure':
+        childComponentData = this.pressureComponent._onSave();
 
-                    
-                });
-                break;
-            case 'Blood Pressure':
-                childComponentData = this.pressureComponent._onSave();
+        console.warn('childComponentData === ', childComponentData);
+        Object.assign(data, {
+          multipleValues: [
+            parseInt(childComponentData.systolic),
+            childComponentData.diastolic,
+            childComponentData.pulse,
+          ],
+          vitalType: 'BloodPressure',
+          value: childComponentData.systolic,
+        });
+        break;
+      case 'Blood Oxygen':
+        childComponentData = this.oxygenComponent._onSave();
 
-                console.warn("childComponentData === ",childComponentData)
-                Object.assign(data, {
-                    "multipleValues": [
-                        parseInt(childComponentData.systolic),
-                        childComponentData.diastolic,
-                        childComponentData.pulse
-                    ],
-                    "vitalType": "BloodPressure",
-                    "value": childComponentData.systolic
-                });
-                break
-            case 'Blood Oxygen':
-                childComponentData = this.oxygenComponent._onSave();
+        console.warn('childComponentData === ', childComponentData);
 
-                console.warn("childComponentData === ",childComponentData)
+        Object.assign(data, {
+          multipleValues: [parseInt(childComponentData.value)],
+          vitalType: 'BloodOxygen',
+          value: childComponentData.value,
+        });
+        break;
+      default:
+    }
 
-                Object.assign(data, {
-                    "multipleValues": [
-                        parseInt(childComponentData.value)
-                    ],
-                    "vitalType": "BloodOxygen",
-                    "value": childComponentData.value,
-                });
-                break
-            default:
+    console.warn(
+      'multipleValues === ',
+      JSON.stringify(this.state.multipleValues),
+    );
 
-        }
-        
-        console.warn("multipleValues === ",JSON.stringify(this.state.multipleValues))
+    if (this.state.appointmentId != null) {
+      if (this.state.vitalType.trim() != '') {
+        this.setState({isLoading: true});
+        Api.instance()
+          .createVitals(data)
+          .then(response => {
+            this.addToConsultation(data);
+            this.props.navigation.goBack();
+            ViewUtils.showToast('Vital has been saved successfully!');
+          })
+          .catch(err => {
+            //ViewUtils.showToast(err);
+            ViewUtils.showToast('Unable to Perform this Action');
+          })
+          .finally(() => {
+            this.setState({isLoading: false});
+          });
+      } else {
+        ViewUtils.showToast('Please Provide Vital Type');
+      }
+    } else {
+      if (this.state.vitalType.trim() != '') {
+        this.setState({isLoading: true});
+        Api.instance()
+          .createVital(data)
+          .then(response => {
+            this.props.navigation.goBack();
+            ViewUtils.showToast('Vital has been saved successfully!');
+          })
+          .catch(err => {
+            //ViewUtils.showToast(err);
+            ViewUtils.showAlert('Unable to Perform this Action');
+          })
+          .finally(() => {
+            this.setState({isLoading: false});
+          });
+      } else {
+        ViewUtils.showToast('Please Provide Vital Type');
+      }
 
-        if(this.state.appointmentId != null){
-        
-            if(this.state.vitalType.trim() !=  ""){
-                this.setState({ isLoading: true });
-                Api.instance()
-                    .createVitals(data)
-                    .then(response => {
-                        this.addToConsultation(data);
-                        this.props.route.params.onVitalAdd();
-                        this.props.navigation.goBack();
-                        ViewUtils.showToast('Vital has been saved successfully!');
-                    })
-                    .catch(err => {
-                        //ViewUtils.showToast(err);
-                        ViewUtils.showToast(
-                            'Unable to Perform this Action',       
-                        );
-                    })
-                    .finally(() => {
-                        this.setState({ isLoading: false });
-                    });
-            }else{
-                ViewUtils.showToast(
-                    'Please Provide Vital Type',       
-                );
-            }
+      switch (this.state.vitalType) {
+        case 'Blood Glucose':
+          childComponentData = this.glucoseComponent._onSave();
+          if (childComponentData.value === '') {
+            ViewUtils.showToast('Please add Blood Glucose');
+            return;
+          }
 
+          break;
+        case 'Blood Pressure':
+          childComponentData = this.pressureComponent._onSave();
+          if (childComponentData.systolic === '') {
+            ViewUtils.showToast('Please add Blood Pressure');
+            return;
+          }
 
-        }else {
+          break;
+        case 'Blood Oxygen':
+          childComponentData = this.oxygenComponent._onSave();
 
-            if(this.state.vitalType.trim() != ""){
-                this.setState({ isLoading: true });
-                Api.instance()
-                    .createVital(data)
-                    .then(response => {
-                        this.props.route.params.onVitalAdd();
-                        this.props.navigation.goBack();
-                        ViewUtils.showToast('Vital has been saved successfully!');
-                    })
-                    .catch(err => {
-                        //ViewUtils.showToast(err);
-                        ViewUtils.showAlert(
-                            'Unable to Perform this Action',       
-                        );
-                    })
-                    .finally(() => {
-                        this.setState({ isLoading: false });
-                    });
-            }else{
-                ViewUtils.showToast(
-                    'Please Provide Vital Type',
-
-                );
-            }
-
-            switch (this.state.vitalType) {
-                case 'Blood Glucose':
-                    childComponentData = this.glucoseComponent._onSave();
-                    if (childComponentData.value === ''){
-                        ViewUtils.showToast(
-                            "Please add Blood Glucose",
-                        );
-                        return;
-                    }
-
-
-
-                    break;
-                case 'Blood Pressure':
-                    childComponentData = this.pressureComponent._onSave();
-                    if (childComponentData.systolic === ''){
-                        ViewUtils.showToast(
-                            "Please add Blood Pressure",
-                        );
-                        return;
-                    }
-                    
-                    
-                    break
-                case 'Blood Oxygen':
-                    childComponentData = this.oxygenComponent._onSave();
-    
-                    if (childComponentData.value === ''){
-                        ViewUtils.showToast(
-                            "Please add Blood Oxygen",
-                        );
-                        return;
-                    }
-                    break
-                default:
-    
-            }
-        }
+          if (childComponentData.value === '') {
+            ViewUtils.showToast('Please add Blood Oxygen');
+            return;
+          }
+          break;
+        default:
+      }
+    }
 
     console.warn(
       'multipleValues === ',
@@ -258,7 +230,7 @@ export default class Vital extends Component {
         Api.instance()
           .createVital(data)
           .then(response => {
-            this.props.navigation.goBack();
+            this.props.navigation.navigate('VitalList')
             ViewUtils.showToast('Vital has been saved successfully!');
           })
           .catch(err => {
