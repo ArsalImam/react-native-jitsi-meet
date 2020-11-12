@@ -309,7 +309,7 @@ userId=data.id;
           ViewUtils.showAlert(
             'Do you want to create appointment?',
             () => {
-              that.props.navigation.navigate('Foree',{clinicId:res[0].clinicId,user:userId,appointmentId:appointmentId})
+              that.props.navigation.navigate('Foree',{user:userId,appointmentId:appointmentId})
               // this.setState({isLoading: true});
               // Api.instance()
               //   ._user()

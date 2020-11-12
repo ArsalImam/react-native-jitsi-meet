@@ -80,7 +80,6 @@ export default class Foree extends Component {
     // })
     console.warn('roue params', this.props.route.params.user);
     this.setState({
-      clinicId: this.props.route.params.clinicId,
       userId: this.props.route.params.user,
       appointmentId: this.props.route.params.appointmentId,
     });
@@ -105,11 +104,13 @@ export default class Foree extends Component {
 
     return (
       <Container style={{flex: 1, backgroundColor: '#000'}}>
-        <Header style={{height: 70, backgroundColor: '#297dec'}}>
+        <Header 
+        androidStatusBarColor="#00000000"
+        style={{height: 70, backgroundColor: '#297dec',}}>
           <Left style={{}}>
             <Button
               transparent
-              style={{margin: 20}}
+              style={{margin: 20, marginTop: 30}}
               onPress={() => this.handleBackButton()}>
               <Icon name="arrow-back" />
             </Button>
