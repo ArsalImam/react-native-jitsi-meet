@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 // import {} from 'react-native';
 import {
-  
   Text,
   View,
   StyleSheet,
@@ -67,7 +66,7 @@ class Login extends Component {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,9})+$/;
     if(this.state.email == '' && this.state.password == ''){
       ViewUtils.showToast(
-        'Please Provide Email and Password',       
+        'Please Provide Email and Password',
     );
     return;
     }else if(this.state.email == ''){
