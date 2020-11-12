@@ -196,55 +196,8 @@ export default class Vital extends Component {
           break;
         default:
       }
-    }
-
-    console.warn(
-      'multipleValues === ',
-      JSON.stringify(this.state.multipleValues),
-    );
-
-    if (this.state.appointmentId != null) {
-      if (this.state.vitalType.trim() != '') {
-        this.setState({isLoading: true});
-        Api.instance()
-          .createVitals(data)
-          .then(response => {
-            this.addToConsultation(data);
-            this.props.navigation.goBack();
-            ViewUtils.showToast('Vital has been saved successfully!');
-          })
-          .catch(err => {
-            //ViewUtils.showToast(err);
-            ViewUtils.showAlert('Unable to Perform this Action');
-          })
-          .finally(() => {
-            this.setState({isLoading: false});
-          });
-      } else {
-        ViewUtils.showAlert('Please Provide Vital Type');
-      }
-    } else {
-      console.warn('sssss');
-      if (this.state.vitalType.trim() != '') {
-        this.setState({isLoading: true});
-        Api.instance()
-          .createVital(data)
-          .then(response => {
-            this.props.navigation.navigate('VitalList')
-            ViewUtils.showToast('Vital has been saved successfully!');
-          })
-          .catch(err => {
-            console.warn('error ::: ', err);
-            ViewUtils.showToast(err);
-            ViewUtils.showAlert('Unable to Perform this Action');
-          })
-          .finally(() => {
-            this.setState({isLoading: false});
-          });
-      } else {
-        ViewUtils.showAlert('Please Provide Vital Type');
-      }
-    }
+    }     
+    
   };
 
   addToConsultation(item) {

@@ -61,7 +61,7 @@ class Create extends Component {
       ViewUtils.showToast('Email Field');
       return false;
     } else if (reg.test(this.state.email) === false) {
-      ViewUtils.showToast('Please enter valid emial.');
+      ViewUtils.showToast('Please enter valid email.');
       return false;
     } else if (this.state.password == '') {
       ViewUtils.showToast('Password Field');
@@ -122,7 +122,7 @@ class Create extends Component {
       Api.instance()
         .patientRegister(data, this.state.drCode)
         .then(response => {
-          ViewUtils.showToast('Registeration Successfully!');
+          ViewUtils.showToast('Registration Successfully!');
           console.warn(data);
           this.props.navigation.goBack();
         })
