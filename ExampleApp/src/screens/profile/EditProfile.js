@@ -154,7 +154,8 @@ export default class UploadIllustrations extends React.Component {
         console.warn('dataaaaaaaaaa ===>', data);
       })
       .catch(err => {
-        //ViewUtils.showToast(err);
+        ViewUtils.showToast(err);
+        console.warn('ammad ali =====>', err);
       })
       .finally(() => {
         this.setState({isLoading: false});

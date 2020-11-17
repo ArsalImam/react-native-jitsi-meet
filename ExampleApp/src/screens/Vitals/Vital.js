@@ -141,7 +141,7 @@ export default class Vital extends Component {
           })
           .catch(err => {
             //ViewUtils.showToast(err);
-            ViewUtils.showToast('Unable to Perform this Action');
+            ViewUtils.showToast('Please Provide Vital Type');
           })
           .finally(() => {
             this.setState({isLoading: false});
@@ -160,7 +160,7 @@ export default class Vital extends Component {
           })
           .catch(err => {
             //ViewUtils.showToast(err);
-            ViewUtils.showAlert('Unable to Perform this Action');
+            ViewUtils.showAlert('Please Provide Vital Type');
           })
           .finally(() => {
             this.setState({isLoading: false});

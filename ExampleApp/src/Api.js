@@ -564,7 +564,7 @@ export default class Api {
 
     let response = await this.client.post(
       this.getUrl(
-        `Clients/upsertWithWhere?where={%22email%22:%22${_user.email}%22}`,
+        `Clients/upsertWithWhere?where={"email":"${_user.email}"}`
       ),
       data,
       this.getHeaders(),
@@ -788,13 +788,12 @@ export default class Api {
     todaysDate = '',
     lastDate = '',
   ) {
-
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
 
     let id_param = this._relationalParamByRole(_user.role);
     let userId = _user.id;
-
+     console.warn('user--->',_user)
     if (_user.role == Roles.patient && status == AppointmentStatus.available) {
       id_param = 'doctorId';
       userId = _user.doctorId;

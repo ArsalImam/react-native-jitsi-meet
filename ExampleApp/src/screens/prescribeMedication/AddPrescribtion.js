@@ -81,22 +81,22 @@ export default class AddPrescribtion extends Component {
     console.warn('data', data);
     
     if (this.state.medicine.trim() == '') {
-      ViewUtils.showAlert('Please Provide Medicine');
+      ViewUtils.showToast('Please Provide Medicine');
       return;
     } else if (this.state.strength.trim() == '') {
-      ViewUtils.showAlert('Please Provide Strength');
+      ViewUtils.showToast('Please Provide Strength');
       return;
     }else if (this.state.dose.trim() == '') {
-      ViewUtils.showAlert('Please Provide Dose');
+      ViewUtils.showToast('Please Provide Dose');
       return;
     }else if (this.state.frequency.trim() == '') {
-      ViewUtils.showAlert('Please Provide Frequency');
+      ViewUtils.showToast('Please Provide Frequency');
       return;
     }else if (this.state.route.trim() == '') {
-      ViewUtils.showAlert(' Please Provide Route');
+      ViewUtils.showToast(' Please Provide Route');
       return;
     }else if (this.state.reason.trim() == '') {
-      ViewUtils.showAlert('Please Provide Reason');
+      ViewUtils.showToast('Please Provide Reason');
       return;
     }
     // else if (this.state.startDate == null) {
@@ -104,7 +104,7 @@ export default class AddPrescribtion extends Component {
     //   return;
     // }
     else if (this.state.notes.trim() == '') {
-      ViewUtils.showAlert('Please Provide Notes');
+      ViewUtils.showToast('Please Provide Notes');
       return;
     }
     
@@ -119,7 +119,7 @@ export default class AddPrescribtion extends Component {
       })
       .catch(err => {
         console.warn('err === ', err);
-        ViewUtils.showAlert('Please Fill Fields');
+        ViewUtils.showToast('Please Fill Fields');
       })
       .finally(() => {
         this.setState({isLoading: false});
