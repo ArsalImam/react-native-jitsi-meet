@@ -1,22 +1,21 @@
-import React, { Component } from 'react';
-import { Text, View, ImageBackground,TouchableOpacity } from 'react-native';
-import { FlatGrid } from 'react-native-super-grid';
-import { CheckBox } from 'react-native-elements';
+import React, {Component} from 'react';
+import {Text, View, ImageBackground, TouchableOpacity} from 'react-native';
+import {FlatGrid} from 'react-native-super-grid';
+import {CheckBox} from 'react-native-elements';
 import CommonStyles from '../../CommonStyles';
-import { Icon, Item, Picker } from 'native-base';
+import {Icon, Item, Picker} from 'native-base';
 import Api from '../../Api';
-import { AppointmentStatus } from '../../Configs';
+import {AppointmentStatus} from '../../Configs';
 import moment from 'moment';
 import Loader from '../../components/Loader';
-import { ViewUtils } from '../../Utils';
+import {ViewUtils} from '../../Utils';
 
 export default class ScheduledBooking extends Component {
   state = {
     appointments: [],
     isLoading: true,
-    selected: "UpcomingAppointments",
-    now: new Date()
-
+    selected: 'UpcomingAppointments',
+    now: new Date(),
   };
 
   constructor(props) {
@@ -24,15 +23,19 @@ export default class ScheduledBooking extends Component {
   }
 
   componentDidMount() {
-    this.props.navigation.addListener(
-      'focus' , payload => {
-        this.setState({isLoading : true})
+    this.props.navigation.addListener('focus', payload => {
+      this.setState({isLoading: true});
 
-        this.upcomingAppointments();
-      }
-    )
-    this.onTabsChange(this.state.selected)
-    console.warn('===date===' , moment().format('YYYY-MM-DD'), moment().add(15, 'days').format('YYYY-MM-DD'))
+      this.upcomingAppointments();
+    });
+    this.onTabsChange(this.state.selected);
+    console.warn(
+      '===date===',
+      moment().format('YYYY-MM-DD'),
+      moment()
+        .add(15, 'days')
+        .format('YYYY-MM-DD'),
+    );
     // Api.instance()
     //   .getMyAppointments(AppointmentStatus.scheduled, true)
     //   .then(appointments => {
@@ -49,104 +52,104 @@ export default class ScheduledBooking extends Component {
 
   onValueChange(value) {
     this.setState({
-      selected: value
+      selected: value,
     });
   }
 
-  onTabsChange =selected =>{
-this.eventData(selected)
-this.setState({selected})
+  onTabsChange = selected => {
+    this.eventData(selected);
+    this.setState({selected});
+  };
+
+  eventData(param) {
+    switch (param) {
+      case 'Coming7days':
+        this.coming7days();
+        break;
+      case 'Coming15days':
+        this.coming15days();
+        break;
+      case 'UpcomingAppointments':
+        this.upcomingAppointments();
+    }
   }
 
+  coming7days() {
+    this.setState({isLoading: true});
+    Api.instance()
+      .getMyAppointmentsComing15Days(
+        AppointmentStatus.scheduled,
+        true,
+        moment().format('YYYY-MM-DD'),
+        moment()
+          .add(7, 'days')
+          .format('YYYY-MM-DD'),
+      )
 
+      .then(appointments => {
+        this.setState({appointments});
+        console.warn('aaa', appointments);
+      })
+      .catch(err => {
+        //ViewUtils.showToast(err);
+      })
+      .finally(() => {
+        this.setState({isLoading: false});
+      });
+  }
 
-eventData(param){
-  switch (param) {
-    case 'Coming7days':
-    this.coming7days()
-      break;
-  case 'Coming15days':
-    this.coming15days()
-      break;
-  case 'UpcomingAppointments':
-  this.upcomingAppointments()
-    }
-}
+  coming15days() {
+    this.setState({isLoading: true});
+    Api.instance()
+      .getMyAppointmentsComing15Days(
+        AppointmentStatus.scheduled,
+        true,
+        moment().format('YYYY-MM-DD'),
+        moment()
+          .add(15, 'days')
+          .format('YYYY-MM-DD'),
+      )
 
-coming7days(){
+      .then(appointments => {
+        this.setState({appointments});
+        console.warn('aaa', appointments);
+      })
+      .catch(err => {
+        // ViewUtils.showToast(err);
+      })
+      .finally(() => {
+        this.setState({isLoading: false});
+      });
+  }
 
-  this.setState({ isLoading: true})
-  Api.instance()
-  .getMyAppointmentsComing15Days(AppointmentStatus.scheduled, true,moment().format('YYYY-MM-DD') ,moment().add(7, 'days').format('YYYY-MM-DD') 
-     )
-
-  .then(appointments => {
-    this.setState({ appointments });
-    console.warn('aaa' , appointments) 
-  })
-  .catch(err => {
-    //ViewUtils.showToast(err);  
-  })
-  .finally(() => {
-    this.setState({ isLoading: false })
-  });
-}
-
-coming15days(){
-  this.setState({ isLoading: true})
-  Api.instance()
-   .getMyAppointmentsComing15Days(AppointmentStatus.scheduled, true, moment().format('YYYY-MM-DD') ,moment().add(15, 'days').format('YYYY-MM-DD') 
-     )
-
-  .then(appointments => {
-    this.setState({ appointments });
-    console.warn('aaa' , appointments) 
-  })
-  .catch(err => {
-   // ViewUtils.showToast(err);  
-  })
-  .finally(() => {
-    this.setState({ isLoading: false })
-  });
-}
-
-upcomingAppointments(){
-  return(
-    // console.warn('Upcoming?Appointments')
- Api.instance()
- .getMyAppointments(AppointmentStatus.scheduled , true)
- .then(appointments => {
-  this.setState({appointments});
-  console.warn('upcomingAppointments' , appointments)
-  
-})
-  .catch(err => {
-    //ViewUtils.showToast(err)
-  })
-  .finally(() => {
-    this.setState({isLoading :false})
-  })  
- )
-  
-}
-
-  
+  upcomingAppointments() {
+    return (
+      // console.warn('Upcoming?Appointments')
+      Api.instance()
+        .getMyAppointments(AppointmentStatus.scheduled, true)
+        .then(appointments => {
+          this.setState({appointments});
+          console.warn('upcomingAppointments', appointments);
+        })
+        .catch(err => {
+          //ViewUtils.showToast(err)
+        })
+        .finally(() => {
+          this.setState({isLoading: false});
+        })
+    );
+  }
 
   render() {
-    const { navigate } = this.props.navigation;
+    const {navigate} = this.props.navigation;
     return (
       <View style={[CommonStyles.container]}>
         <ImageBackground
           style={[CommonStyles.container, CommonStyles.backgroundImage]}
           source={require('../../assets/img/bwback.png')}>
           <View
-            style={[
-              CommonStyles.container,
-              CommonStyles.padding,
-              { flex: 2, }
-            ]}>
-
-            <Text style={{ color: '#FFFFFF', paddingLeft: 12, marginTop: '15%' }}>
+            style={[CommonStyles.container, CommonStyles.padding, {flex: 2}]}>
+            <Text style={{color: '#FFFFFF', paddingLeft: 12, marginTop: '15%'}}>
               <Text
                 style={[
                   CommonStyles.DINAltBold,
@@ -166,14 +169,13 @@ upcomingAppointments(){
             style={[
               CommonStyles.container,
               CommonStyles.itemStyle,
-              { marginVertical: 10, paddingTop: 10 },
+              {marginVertical: 10, paddingTop: 10},
             ]}>
             <Picker
               mode="dropdown"
               iosIcon={<Icon name="arrow-down" />}
-
               placeholder="Choose Frequency"
-              placeholderStyle={{ color: '#bfc6ea' }}
+              placeholderStyle={{color: '#bfc6ea'}}
               placeholderIconColor="#007aff"
               selectedValue={this.state.selected}
               onValueChange={this.onTabsChange.bind(this)}>
@@ -183,33 +185,44 @@ upcomingAppointments(){
                                             label="Select Vital Type"
                                             value=""
                                         /> */}
-              <Picker.Item  label="Coming 7 days" value="Coming7days" />
+              <Picker.Item label="Coming 7 days" value="Coming7days" />
               <Picker.Item label="Coming 15 days" value="Coming15days" />
-              <Picker.Item label="Upcoming Appointments" value="UpcomingAppointments" />
+              <Picker.Item
+                label="Upcoming Appointments"
+                value="UpcomingAppointments"
+              />
             </Picker>
           </Item>
-          <View style={{ flex: 8, paddingHorizontal: 2, paddingBottom: 55 }}>
+          <View style={{flex: 8, paddingHorizontal: 2, paddingBottom: 55}}>
             <FlatGrid
               itemDimension={320}
               spacing={15}
               items={this.state.appointments.slice().reverse()}
               style={[CommonStyles.container]}
-              renderItem={({ item }) => (
+              renderItem={({item}) => (
                 <TouchableOpacity
                   onPress={() => {
-                    console.warn("item.id == ",item.id)
+                    console.warn('item.id == ', item.id);
                     ViewUtils.showAlert(
                       'Are you sure, you want to open consultation room?',
                       () => {
-                        Api.instance().notifyAppointment(item.id).then().catch();
+                        Api.instance()
+                          .notifyAppointment(item.id)
+                          .then()
+                          .catch();
                         navigate('AppointmentRoom', {
                           appointmentId: item.id,
                         });
                       },
-                      () => { },
+                      () => {},
                     );
                   }}
-                  style={[CommonStyles.container, CommonStyles.shadow, CommonStyles.br5, CommonStyles.bgColor]}>
+                  style={[
+                    CommonStyles.container,
+                    CommonStyles.shadow,
+                    CommonStyles.br5,
+                    CommonStyles.bgColor,
+                  ]}>
                   <ImageBackground
                     style={[
                       CommonStyles.container,
@@ -219,25 +232,32 @@ upcomingAppointments(){
                     <View
                       style={[
                         CommonStyles.container,
-                        { flexDirection: 'row', paddingHorizontal: 16 },
+                        {
+                          flexDirection: 'row',
+                          paddingHorizontal: 12,
+                          paddingVertical: 5
+                        },
                       ]}>
                       <View
                         style={[
                           CommonStyles.container,
-                          { justifyContent: 'space-between', paddingVertical: 12 },
+                          {
+                            justifyContent: 'space-between',
+                            paddingVertical: 12,
+                          },
                         ]}>
                         <Text>
                           <Text
                             style={[
                               CommonStyles.fontRegular,
                               CommonStyles.textSizeSmall,
-                              { color: '#333333' },
+                              {color: '#333333'},
                             ]}>{`Patient Name\n`}</Text>
                           <Text
                             style={[
                               CommonStyles.fontMedium,
                               CommonStyles.textSizeAverage,
-                              { color: '#333333' },
+                              {color: '#333333'},
                             ]}>
                             {item.patient.firstName.concat(
                               ' ' + item.patient.lastName,
@@ -248,7 +268,7 @@ upcomingAppointments(){
                         <Text
                           style={[
                             CommonStyles.textSizeAverage,
-                            { color: '#333333' },
+                            {color: '#333333'},
                           ]}>
                           <Text
                             style={[
@@ -263,7 +283,7 @@ upcomingAppointments(){
                       <View
                         style={[
                           CommonStyles.container,
-                          { justifyContent: 'space-between' },
+                          {justifyContent: 'space-between'},
                         ]}>
                         <View
                           style={[
@@ -271,7 +291,7 @@ upcomingAppointments(){
                             {
                               justifyContent: 'space-between',
                               alignItems: 'flex-end',
-                              marginBottom: 8,
+                              marginBottom: 7,
                             },
                           ]}>
                           <CheckBox
@@ -296,18 +316,18 @@ upcomingAppointments(){
                             title={item.status}
                             checked={true}
                           />
-                          <Text>
+                          <Text style={{marginBottom: 6}}>
                             <Text
                               style={[
                                 CommonStyles.textSizeSmall,
                                 CommonStyles.fontRegular,
-                                { color: '#333333' },
+                                {color: '#333333'},
                               ]}>{`Date: `}</Text>
                             <Text
                               style={[
                                 CommonStyles.fontMedium,
                                 CommonStyles.textSizeAverage,
-                                { color: '#333333' },
+                                {color: '#333333'},
                               ]}>
                               {moment(item.date).format('DD-MM-yyyy')}
                             </Text>
@@ -316,19 +336,38 @@ upcomingAppointments(){
                       </View>
                     </View>
                   </ImageBackground>
-                  <View style={[CommonStyles.container, { justifyContent: 'center', backgroundColor: '#297DEC', marginTop: 5, borderBottomEndRadius: 5, borderBottomStartRadius: 5 }]}>
-                    <View style={[CommonStyles.container, CommonStyles.centerElement, { flexDirection: 'row' }]}>
-                              
-                    <Icon
+                  <View
+                    style={[
+                      CommonStyles.container,
+                      {
+                        justifyContent: 'center',
+                        backgroundColor: '#297DEC',
+                        marginTop: 5,
+                        borderBottomEndRadius: 5,
+                        borderBottomStartRadius: 5,
+                      },
+                    ]}>
+                    <View
+                      style={[
+                        CommonStyles.container,
+                        CommonStyles.centerElement,
+                        {flexDirection: 'row'},
+                      ]}>
+                      <Icon
                         name="phone"
-                        type='Fontisto'
-                        style={{ fontSize: 20, color: '#FFF', margin: 10 }}
+                        type="Fontisto"
+                        style={{fontSize: 20, color: '#FFF', margin: 10}}
                       />
-                      <Text style={[CommonStyles.textColorWhite, CommonStyles.centerText, CommonStyles.padding]}>CALL</Text>
-
+                      <Text
+                        style={[
+                          CommonStyles.textColorWhite,
+                          CommonStyles.centerText,
+                          CommonStyles.padding,
+                        ]}>
+                        CALL
+                      </Text>
                     </View>
-                    
-                    
+
                     {/* <TouchableOpacity
                       onPress={() => { }}
                       style={[CommonStyles.container, CommonStyles.centerElement, { flexDirection: 'row' }]}
@@ -348,8 +387,7 @@ upcomingAppointments(){
             />
           </View>
 
-          <Loader
-            loading={this.state.isLoading} />
+          <Loader loading={this.state.isLoading} />
         </ImageBackground>
       </View>
     );

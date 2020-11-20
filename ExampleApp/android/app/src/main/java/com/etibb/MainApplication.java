@@ -5,6 +5,8 @@ import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.imagepicker.ImagePickerPackage;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
+
 // import io.invertase.firebase.RNFirebasePackage;
 // import io.invertase.firebase.messaging.ReactNativeFirebaseMessagingPackage;
 // import io.invertase.firebase.database.ReactNativeFirebaseDatabasePackage;
@@ -38,6 +40,7 @@ public class MainApplication extends Application implements ReactApplication {
           // packages.add(new RNFirebaseNotificationsPackage());
             // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
+          new SplashScreenReactPackage();
           return packages;
         }
 

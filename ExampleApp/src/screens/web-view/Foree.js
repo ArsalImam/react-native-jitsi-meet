@@ -101,8 +101,8 @@ export default class Foree extends Component {
     }`;
     //  console.warn(`${Configs.foreeUrl}?amount=1000&userId=${this.state.userId}&createdBy=${this.state.userId}&isProd=true&type=patient&slots=1&transactionCode=${Code}&paymentType=foree&url=${Configs.baseUrlForee}`);
     //  const endPoint = 'https://github.com/react-native-community/react-native-webview';
-
     return (
+      
       <Container style={{flex: 1, backgroundColor: '#000'}}>
         <Header 
         androidStatusBarColor="#00000000"

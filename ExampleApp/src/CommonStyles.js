@@ -99,6 +99,10 @@ const CommonStyles = StyleSheet.create({
   padding: {
     padding: 10,
   },
+  padding13: {
+    paddingVertical: 13,
+    paddingLeft: 5
+  },
   buttonStyle: {
     shadowOffset: { height: 0, width: 0 },
     shadowOpacity: 0,

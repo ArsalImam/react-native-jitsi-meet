@@ -96,9 +96,11 @@ class App extends React.Component {
   componentDidMount() {
     // do stuff while splash screen is shown
     // After having done stuff (such as async tasks) hide the splash screen
-    SplashScreen.hide();
     FCM.instance().appInit();
     RealtimeDatabase.instance().appInit();
+    setTimeout(() => {
+      SplashScreen.hide();
+  }, 2000);
   }
 
   componentWillUnmount() {

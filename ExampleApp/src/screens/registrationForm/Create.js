@@ -225,38 +225,33 @@ class Create extends Component {
                   </Item>
                 </View>
 
-                <Item
+                <Item regular
                  style={[
                     CommonStyles.mt10,
                     CommonStyles.container,
                     CommonStyles.fontRegular,
                     CommonStyles.fontMedium,
                     CommonStyles.loginItemStyle23,
-                  ]}
-                  
-                  >
+                  ]}>
                   
                   <DatePicker
+              
                     placeholder="Date of Birth"
-                    textStyle={{color: '#fff'}}
-                    itemTextStyle={{color: 'red'}}
-                    style={{color: '#fff'}}
-                    itemStyle={{backgroundColor: '#fff'}}
                     placeholderTextColor="#FFF"
                     style={[
                       CommonStyles.fontMedium,
                       CommonStyles.textColorWhite,
                       CommonStyles.textSizeNormal,
-                      CommonStyles.mt10,
+                      CommonStyles.padding13
+                      
                     ]}
+                  
                     // initialValue={this.state.startDate}
                     initialValue={this.state.dateOfBirth}
                     onChange={date => this.setState({dateOfBirth: date})}
                     // disabled={false}
                   />
-                  <Icon
-                  name="calendar"
-                    style={{color: '#fff', position: 'absolute', right: 5}}/>
+                  <Icon name="calendar" style={{color: '#fff', position: 'absolute', right: 5}}/>
                 </Item>
 
                 <Item

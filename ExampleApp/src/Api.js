@@ -913,7 +913,8 @@ export default class Api {
   }
 
   getMediaUrl(container, file) {
-    return `${Configs.baseUrl}Contents/${container}/download/${file}`;
+    
+    return `${Configs.baseUrlForee}Contents/${container}/download/${file}`;
   }
 
   getHeaders() {

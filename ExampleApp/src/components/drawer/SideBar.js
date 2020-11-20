@@ -180,7 +180,7 @@ export default class Sidebar extends Component {
           this.props.closeDrawer();
           this.props.changeScreenHandler.navigate('TherapyList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) }} >
           <Left>
-            <Icon active name="ios-flower" type='Ionicons' style={[CommonStyles.textSizeMedium]} />
+            <Icon active name="comment-medical" type='FontAwesome5' style={[CommonStyles.textSizeMedium]} />
             <Text style={[CommonStyles.textSizeAverage, { marginLeft: 10 }]} >Suggested Therapy</Text>
           </Left>
         </ListItem>
