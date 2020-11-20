@@ -97,7 +97,7 @@ eventData(param) {
     this.setState({ appointments }); 
   })
   .catch(err => {
-    //ViewUtils.showToast(err);  
+    ViewUtils.showToast(err);  
   })
   .finally(() => {
     this.setState({ isLoading: false })
@@ -109,10 +109,11 @@ eventData(param) {
   Api.instance()
   .getMyAppointmentsPast15Days(AppointmentStatus.completed, true, moment().format('YYYY-MM-DD'), moment().subtract(15, 'days').format('YYYY-MM-DD'))
   .then(appointments => {
+    console.warn('15 daya',appointments)
     this.setState({ appointments }); 
   })
   .catch(err => {
-    //ViewUtils.showToast(err);  
+    ViewUtils.showToast(err);  
   })
   .finally(() => {
     this.setState({ isLoading: false })
@@ -122,6 +123,7 @@ eventData(param) {
  last7Days() {
    console.warn("past 7 days :: ", moment().format('YYYY-MM-DD'), moment().subtract(7, 'days').format('YYYY-MM-DD'))
   this.setState({ isLoading: true})
+
   Api.instance()
   .getMyAppointmentsPast15Days(AppointmentStatus.completed, true, moment().format('YYYY-MM-DD'), moment().subtract(7, 'days').format('YYYY-MM-DD'))
   .then(appointments => {
@@ -129,7 +131,7 @@ eventData(param) {
     this.setState({ appointments }); 
   })
   .catch(err => {
-    //ViewUtils.showToast(err);  
+    ViewUtils.showToast(err);  
   })
   .finally(() => {
     this.setState({ isLoading: false })
