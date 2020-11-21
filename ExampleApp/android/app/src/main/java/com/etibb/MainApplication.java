@@ -5,7 +5,6 @@ import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.imagepicker.ImagePickerPackage;
-import org.devio.rn.splashscreen.SplashScreenReactPackage;
 
 // import io.invertase.firebase.RNFirebasePackage;
 // import io.invertase.firebase.messaging.ReactNativeFirebaseMessagingPackage;
@@ -18,6 +17,8 @@ import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import androidx.annotation.Nullable;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
+
 // import io.invertase.firebase.RNFirebasePackage;
 // import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;                       
 // import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
