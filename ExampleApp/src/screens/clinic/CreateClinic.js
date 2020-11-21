@@ -34,7 +34,7 @@
 //         <ImageBackground
 //           style={[CommonStyles.container, CommonStyles.backgroundImage]}
 //           source={require('../../assets/img/bwback.png')}>
-          
+
 //           <View style={{ flex: 2}}>
 //             <Text style={{ paddingLeft: 18, marginTop: 65 }}>
 //               <Text
@@ -264,21 +264,9 @@
 //   }
 // }
 
-
-
-
-
-
-
-
-
-
-
-
-
 ////old/////
-import React, { Component } from 'react';
-import { CommonActions } from '@react-navigation/native';
+import React, {Component} from 'react';
+import {CommonActions} from '@react-navigation/native';
 import {
   ImageBackground,
   ScrollView,
@@ -286,16 +274,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {  Icon, Input, Item, Label, Picker, Text } from 'native-base';
+import {Icon, Input, Item, Label, Picker, Text} from 'native-base';
 import {DatePicker, TimePicker} from 'react-native-propel-kit';
-// import RNDateTimePicker from '@react-native-community/datetimepicker';
+//import RNDateTimePicker from '@react-native-community/datetimepicker';
 import Api from '../../Api';
 import CommonStyles from '../../CommonStyles';
 import Loader from '../../components/Loader';
 import moment from 'moment';
-// import DateTimePicker from '@react-native-community/datetimepicker';
-import { ViewUtils } from '../../Utils'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import {ViewUtils} from '../../Utils';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 export default class CreateClinic extends Component {
   constructor(props) {
     super(props);
@@ -352,13 +340,13 @@ export default class CreateClinic extends Component {
     Api.instance()
       ._user()
       .then(data => {
-        this.setState({ userObj: data });
+        this.setState({userObj: data});
       })
       .catch(err => console.log(err));
   }
 
   setDate(newDate) {
-    this.setState({ chosenDate: newDate });
+    this.setState({chosenDate: newDate});
   }
 
   SelectattendAt = event => {
@@ -397,8 +385,8 @@ export default class CreateClinic extends Component {
 
   showTimepicker = time => {
     time === 'start'
-      ? this.setState({ showStartTimePicker: true })
-      : this.setState({ showEndTimePicker: true });
+      ? this.setState({showStartTimePicker: true})
+      : this.setState({showEndTimePicker: true});
   };
 
   onValueChange(value) {
@@ -408,20 +396,27 @@ export default class CreateClinic extends Component {
   }
 
   formatAMPM(dateToConvert) {
+    let startTime =
+      moment
+        .utc(
+          `01-01-1970 ${moment(dateToConvert).format('HH:mm:ss')}`,
+          'dd-MM-YYYY HH:mm:ss',
+        )
+        .unix() *
+        1000 -
+      18000000;
+    // let endTime = moment.utc(`01-01-1970 ${moment(this.state.endTime).format('HH:mm:ss')}`, "dd-MM-YYYY HH:mm:ss").unix();
+    //   console.warn('adas', startTime)
+    //   var hours = dateToConvert.getHours();
+    //   var minutes = dateToConvert.getMinutes();
+    //   var ampm = hours >= 12 ? 'PM' : 'AM';
+    //   hours = hours % 12;
+    //   hours = hours ? hours : 12; // the hour '0' should be '12'
+    //   minutes = minutes < 10 ? '0' + minutes : minutes;
+    //   var strTime = hours + ':' + minutes + ' ' + ampm;
+    //   console.warn("strTime", strTime)
 
-    let startTime = moment.utc(`01-01-1970 ${moment(dateToConvert).format('HH:mm:ss')}`, "dd-MM-YYYY HH:mm:ss").unix() * 1000 - 18000000
-   // let endTime = moment.utc(`01-01-1970 ${moment(this.state.endTime).format('HH:mm:ss')}`, "dd-MM-YYYY HH:mm:ss").unix();
-  //   console.warn('adas', startTime)
-  //   var hours = dateToConvert.getHours();
-  //   var minutes = dateToConvert.getMinutes();
-  //   var ampm = hours >= 12 ? 'PM' : 'AM';
-  //   hours = hours % 12;
-  //   hours = hours ? hours : 12; // the hour '0' should be '12'
-  //   minutes = minutes < 10 ? '0' + minutes : minutes;
-  //   var strTime = hours + ':' + minutes + ' ' + ampm;
-  //   console.warn("strTime", strTime)
-
-  // var formattedDate = new Date("1970-01-01T05:00:00")
+    // var formattedDate = new Date("1970-01-01T05:00:00")
 
     //console.warn('dateobj', formattedDate.getTime())
     return startTime;
@@ -447,7 +442,6 @@ export default class CreateClinic extends Component {
   };
 
   createClinic() {
-
     let appSlot = parseInt(this.state.appointmentSlots);
     switch (appSlot) {
       case 300000:
@@ -495,28 +489,24 @@ export default class CreateClinic extends Component {
 
     var attendedAtDate = this.formatAMPM(this.state.attendAt);
 
-
-
-    console.warn('attendedAtDate', attendedAtDate)
-    this.state.attendAt = attendedAtDate
-
+    console.warn('attendedAtDate', attendedAtDate);
+    this.state.attendAt = attendedAtDate;
 
     var leftAtDate = this.formatAMPM(this.state.leftAt);
 
-    this.state.leftAt = leftAtDate
+    this.state.leftAt = leftAtDate;
 
-    console.warn('left6Date', leftAtDate)
+    console.warn('left6Date', leftAtDate);
 
-    var selectedDate = moment.utc(this.state.chosenDate)
-   // selectedDate.setMonth(selectedDate.getMonth());
+    var selectedDate = moment.utc(this.state.chosenDate);
+    // selectedDate.setMonth(selectedDate.getMonth());
 
-   
-   //console.warn('asdasdf',selectedDate)
+    //console.warn('asdasdf',selectedDate)
 
     this.state.clinicObj.doctorId = this.state.userObj.id;
     this.state.clinicObj.joinedDate = selectedDate;
-    this.state.clinicObj.attendAt = attendedAtDate
-    this.state.clinicObj.leftAt = leftAtDate
+    this.state.clinicObj.attendAt = attendedAtDate;
+    this.state.clinicObj.leftAt = leftAtDate;
     this.state.clinicObj.frequency = parseInt(this.state.clinicFrequency);
     this.state.clinicObj.numOfClinics = this.state.numberOfClinics;
     this.state.clinicObj.appointmentSlots = parseInt(
@@ -525,61 +515,46 @@ export default class CreateClinic extends Component {
     this.state.clinicObj.name = this.state.clinicTitle;
     this.state.clinicObj.frequencyText = this.state.clinicFrequencyText;
     this.state.clinicObj.appointmentSlotsText = this.state.appointmentSlotsText;
-  
 
-    if(this.state.attendedAtDate == ""){
-      ViewUtils.showToast(
-        'Please select Start Time',       
-    );
-    return;
-    }
-    
-    if(this.state.leftAtDate == ""){
-          ViewUtils.showToast(
-        'Please select End Time',       
-    );
-    return;
+    if (this.state.attendedAtDate == '') {
+      ViewUtils.showToast('Please select Start Time');
+      return;
     }
 
-    if(this.state.numberOfClinics == 0){
-          ViewUtils.showToast(
-        'Please Provide Number of Clinics',       
-    );
-    return;
+    if (this.state.leftAtDate == '') {
+      ViewUtils.showToast('Please select End Time');
+      return;
     }
 
-    if(this.state.clinicTitle == ""){
-          ViewUtils.showToast(
-        'Please Provide Title',       
-    );
-    return;
+    if (this.state.numberOfClinics == 0) {
+      ViewUtils.showToast('Please Provide Number of Clinics');
+      return;
     }
 
-    if(this.state.clinicFrequencyText == ""){
-          ViewUtils.showToast(
-        'Please select Frequency',       
-    );
-    return;
+    if (this.state.clinicTitle == '') {
+      ViewUtils.showToast('Please Provide Title');
+      return;
     }
 
-    if(this.state.appointmentSlotsText == ""){
-      ViewUtils.showToast(
-        'Please select Appointment Slot',       
-      );
-    return;
-      }
+    if (this.state.clinicFrequencyText == '') {
+      ViewUtils.showToast('Please select Frequency');
+      return;
+    }
 
+    if (this.state.appointmentSlotsText == '') {
+      ViewUtils.showToast('Please select Appointment Slot');
+      return;
+    }
 
-
-   this.setState({ isLoading: true });
+    this.setState({isLoading: true});
     Api.instance()
-      .createClinic(this.state.clinicObj) 
+      .createClinic(this.state.clinicObj)
       .then(res => {
         ViewUtils.showToast('Clinic has been created successfully!');
         this.props.navigation.dispatch(
           CommonActions.reset({
             index: 1,
-            routes: [{ name: 'MyDrawer' }],
+            routes: [{name: 'MyDrawer'}],
           }),
         );
       })
@@ -587,9 +562,9 @@ export default class CreateClinic extends Component {
         //ViewUtils.showToast(err);
       })
       .finally(() => {
-        this.setState({ isLoading: false });
+        this.setState({isLoading: false});
 
-       //  this.props.navigation.replace('ClinicList');
+        //  this.props.navigation.replace('ClinicList');
       });
   }
 
@@ -599,9 +574,7 @@ export default class CreateClinic extends Component {
         <ImageBackground
           style={[CommonStyles.container, CommonStyles.backgroundImage]}
           source={require('../../assets/img/bwback.png')}>
-
-          <View style={{ flex: 2  ,justifyContent:'flex-start' ,paddingTop:50}}>
-            
+          <View style={{flex: 2, justifyContent: 'flex-start', paddingTop: 50}}>
             <TouchableOpacity
               onPress={() => {
                 this.props.navigation.goBack();
@@ -609,10 +582,10 @@ export default class CreateClinic extends Component {
               <Icon
                 name="arrow-back"
                 type="MaterialIcons"
-                style={{ fontSize: 26, color: '#FFF' ,marginLeft:10 }}
+                style={{fontSize: 26, color: '#FFF', marginLeft: 10}}
               />
             </TouchableOpacity>
-            <Text style={{ paddingLeft: 18}}>
+            <Text style={{paddingLeft: 18}}>
               <Text
                 style={[
                   CommonStyles.fontRegular,
@@ -623,14 +596,14 @@ export default class CreateClinic extends Component {
                 style={[
                   CommonStyles.fontRegular,
                   CommonStyles.textSizeAverage,
-                  CommonStyles.textColorWhite
+                  CommonStyles.textColorWhite,
                 ]}>
                 to create clinic{' '}
               </Text>
             </Text>
           </View>
 
-          <View style={{ flex: 8 }}>
+          <View style={{flex: 8}}>
             <KeyboardAwareScrollView
               style={[
                 {
@@ -645,7 +618,7 @@ export default class CreateClinic extends Component {
                 style={[
                   CommonStyles.container,
                   CommonStyles.itemStyle,
-                  { paddingTop: 25 },
+                  {paddingTop: 25},
                 ]}>
                 <DatePicker
                   defaultDate={new Date()}
@@ -657,7 +630,10 @@ export default class CreateClinic extends Component {
                   androidMode={'default'}
                   placeholder="Select Date"
                   placeholderTextColor="black"
-                  textStyle={[CommonStyles.fontRegular, { paddingLeft: -7, color: '#000'}]}
+                  textStyle={[
+                    CommonStyles.fontRegular,
+                    {paddingLeft: -7, color: '#000'},
+                  ]}
                   placeHolderTextStyle={[
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeAverage,
@@ -666,12 +642,16 @@ export default class CreateClinic extends Component {
                     },
                   ]}
                   onChange={this.setDate}
-                 // disabled={false}
+                  // disabled={false}
                 />
-                <Icon active name="calendar" style={{ marginLeft: 20, marginTop: -25, }} />
+                <Icon
+                  active
+                  name="calendar"
+                  style={{marginLeft: 20, marginTop: -25}}
+                />
               </Item>
 
-              <Item
+              {/* <Item
                 stackedLabel
                 onPress={() => { this.showTimepicker('start'); }}
                 style={[CommonStyles.container, CommonStyles.itemStyle]}
@@ -692,17 +672,17 @@ export default class CreateClinic extends Component {
                 {this.state.showStartTimePicker && (
                   <TimePicker
                    
-                    testID="FromTime"
-                    placeholder="00:00"
-                    initialValue={this.state.attendAt}
-                    //  mode="time"
-                    //  is24Hour={true}
-                    // display="clock"
+                    // testID="FromTime"
+                    // placeholder="00:00"
+                    value={this.state.attendAt}
+                     mode="time"
+                     is24Hour={true}
+                    display="clock"
 
-                    onChange={date => {
-                      this.setState({attendAt: date});
-                    }}
-                    // onChange={this.SelectattendAt}
+                    // onChange={date => {
+                    //   this.setState({attendAt: date});
+                    // }}
+                     onChange={this.SelectattendAt}
                   />
                 )}
               </Item>
@@ -738,35 +718,99 @@ export default class CreateClinic extends Component {
                     //onChange={this.SelectleftAt}
                   />
                 )}
+              </Item> */}
+
+              <Item
+                stackedLabel
+                onPress={() => {
+                  this.showTimepicker('start');
+                }}
+                style={[CommonStyles.container, CommonStyles.itemStyle]}>
+                <Text
+                  style={[
+                    CommonStyles.fontRegular,
+                    CommonStyles.textSizeAverage,
+                    {
+                      paddingTop: 20,
+                      textAlign: 'left',
+                      alignSelf: 'flex-start',
+                    },
+                  ]}>
+                  {this.state.startTimeText}
+                </Text>
+                {this.state.showStartTimePicker && (
+                  <DateTimePicker
+                    testID="FromTime"
+                    value={this.state.attendAt}
+                    mode="time"
+                    is24Hour={true}
+                    display="clock"
+                    onChange={this.SelectattendAt}
+                  />
+                )}
               </Item>
 
-              <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle]}>
+              <Item
+                stackedLabel
+                onPress={() => {
+                  this.showTimepicker('end');
+                }}
+                style={[CommonStyles.container, CommonStyles.itemStyle]}>
+                <Text
+                  style={[
+                    CommonStyles.fontRegular,
+                    CommonStyles.textSizeAverage,
+                    {
+                      paddingTop: 20,
+                      textAlign: 'left',
+                      alignSelf: 'flex-start',
+                    },
+                  ]}>
+                  {this.state.endTimeText}
+                </Text>
+                {this.state.showEndTimePicker && (
+                  <DateTimePicker
+                    testID="ToTime"
+                    value={this.state.leftAt}
+                    mode="time"
+                    is24Hour={true}
+                    display="clock"
+                    onChange={this.SelectleftAt}
+                  />
+                )}
+              </Item>
+
+              <Item
+                stackedLabel
+                style={[CommonStyles.container, CommonStyles.itemStyle]}>
                 <Label
                   style={[
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeAverage,
                   ]}>
                   Days/Weeks
-                  </Label>
+                </Label>
                 <Input
                   name="clinics"
                   value={this.state.numberOfClinics}
-                  onChangeText={val => this.setState({ numberOfClinics: val })}
+                  onChangeText={val => this.setState({numberOfClinics: val})}
                   keyboardType="number-pad"
                 />
               </Item>
 
-              <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle]}>
+              <Item
+                stackedLabel
+                style={[CommonStyles.container, CommonStyles.itemStyle]}>
                 <Label
                   style={[
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeAverage,
                   ]}>
                   Title
-                  </Label>
+                </Label>
                 <Input
                   value={this.state.clinicTitle}
-                  onChangeText={val => this.setState({ clinicTitle: val })}
+                  onChangeText={val => this.setState({clinicTitle: val})}
                 />
               </Item>
 
@@ -775,14 +819,14 @@ export default class CreateClinic extends Component {
                 style={[
                   CommonStyles.container,
                   CommonStyles.itemStyle,
-                  { paddingTop: 10 },
+                  {paddingTop: 10},
                 ]}>
                 <Picker
                   mode="dropdown"
                   iosIcon={<Icon name="arrow-down" />}
-                  style={{ width: '92%' }}
+                  style={{width: '92%'}}
                   placeholder="Choose Frequency"
-                  placeholderStyle={{ color: '#bfc6ea' }}
+                  placeholderStyle={{color: '#bfc6ea'}}
                   placeholderIconColor="#007aff"
                   selectedValue={this.state.clinicFrequency}
                   onValueChange={this.onValueChange.bind(this)}>
@@ -805,14 +849,14 @@ export default class CreateClinic extends Component {
                 style={[
                   CommonStyles.container,
                   CommonStyles.itemStyle,
-                  { paddingTop: 10 },
+                  {paddingTop: 10},
                 ]}>
                 <Picker
                   mode="dropdown"
                   iosIcon={<Icon name="arrow-down" />}
-                  style={{ width: '92%' }}
+                  style={{width: '92%'}}
                   placeholder="Choose Frequency"
-                  placeholderStyle={{ color: '#bfc6ea' }}
+                  placeholderStyle={{color: '#bfc6ea'}}
                   placeholderIconColor="#007aff"
                   selectedValue={this.state.appointmentSlots}
                   onValueChange={this.handleInputChangeSlots.bind(this)}>
@@ -841,30 +885,29 @@ export default class CreateClinic extends Component {
                 borderTopRightRadius: 5,
                 borderTopStartRadius: 5,
                 borderTopWidth: 3,
-                borderColor: '#FFF'
+                borderColor: '#FFF',
               },
             ]}>
             <TouchableOpacity
               style={[
                 CommonStyles.container,
                 CommonStyles.centerText,
-                { borderRightWidth: 0.5, borderColor: '#cfd2d6' },
+                {borderRightWidth: 0.5, borderColor: '#cfd2d6'},
               ]}
               onPress={() => {
                 this.createClinic();
               }}>
               <Text
-
                 style={[
                   CommonStyles.fontRegular,
                   CommonStyles.textSizeNormal,
                   CommonStyles.centerText,
                   CommonStyles.margin,
                   CommonStyles.padding,
-                  { opacity: 0.5 },
+                  {opacity: 0.5},
                 ]}>
                 CREATE
-            </Text>
+              </Text>
             </TouchableOpacity>
           </View>
           <Loader loading={this.state.isLoading} />
