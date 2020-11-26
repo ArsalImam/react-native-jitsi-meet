@@ -35,26 +35,38 @@ class App extends React.Component {
     try{
       FCM.instance().notifyUser = (title, message) => {
         console.warn("agae call")
-        const currentRouteName = that.navigationRef.getCurrentRoute().name
-  
+        
+
+        // var message = message_key;
+        // setTimeout(() => {
+          const currentRouteName = that.navigationRef.getCurrentRoute().name
+          
+          // console.log("kjabsjkndkasjnkjdnaskjdnaskjsndjkan" + JSON.stringify(message_key));
+          if (!message.data) {
+            message.data = message
+          }
+          console.warn('currentRouteName',JSON.stringify(currentRouteName) , 'mesage',message.data['type'])
+
+            console.warn("message ::: ",message)
+          if (currentRouteName != 'AppointmentRoom' && message.data['type'] == 'appointment') {
+              console.warn("andr aya")
+              let appointmentId = message.data['id'];
+    
+              //playing audio
+              //that._playAudio();
+    
+              //showing toast with accept button
+              that.navigationRef.navigate('IncomingCall', {appointmentId});
+              
+              // ViewUtils.showToast('You have an appointment call', 'Answer', 10 * 1000, () => {
+              //   that.whoosh.stop();
+              //   console.warn("APPP)))) appointmentId --- ",appointmentId)
+              //   that.navigationRef.navigate('AppointmentRoom', {appointmentId});
+              // });
+          } 
+        // }, 3 * 1000);
       
-        console.warn('currentRouteName',JSON.stringify(currentRouteName) , 'mesage',message.data['type'])
-          console.warn("message ::: ",message)
-        if (currentRouteName != 'AppointmentRoom' && message.data['type'] == 'appointment') {
-            console.warn("andr aya")
-            let appointmentId = message.data['id'];
-  
-            //playing audio
-            //that._playAudio();
-  
-            //showing toast with accept button
-            that.navigationRef.navigate('IncomingCall', {appointmentId});
-            // ViewUtils.showToast('You have an appointment call', 'Answer', 10 * 1000, () => {
-            //   that.whoosh.stop();
-            //   console.warn("APPP)))) appointmentId --- ",appointmentId)
-            //   that.navigationRef.navigate('AppointmentRoom', {appointmentId});
-            // });
-        } 
+      
       }
     }catch(e){
       console.warn("error at fcm ::: ",e)

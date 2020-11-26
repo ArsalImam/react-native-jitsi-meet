@@ -80,6 +80,8 @@ export default class FCM {
      * */
     this.notificationOpenedListener = messaging().onNotificationOpenedApp(
       notificationOpen => {
+
+        console.warn('Test >>>>', notificationOpen)
         this.onMessage(null, notificationOpen.notification._data);
       },
     );
@@ -90,7 +92,7 @@ export default class FCM {
     const notificationOpen = await messaging()
       .getInitialNotification();
     if (notificationOpen) {
-      this.onMessage(null, notificationOpen.notification._data);
+      this.onMessage(null, notificationOpen.data);
     }
 
     messaging().setBackgroundMessageHandler(async remoteMessage => {
@@ -106,9 +108,14 @@ export default class FCM {
     });
   }
 
+
+
   onMessage(title, body) {
+    console.log("onMessage");
+    console.log("<><><><><><><><><><><><><><><><><><><body" + (JSON.stringify(body)));
     if (this.notifyUser) {
-      this.notifyUser(title, body);
+      console.log("notifyUser");
+        this.notifyUser(title, body);
     }
   }
 }

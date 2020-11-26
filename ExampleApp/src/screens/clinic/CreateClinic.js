@@ -269,6 +269,7 @@ import React, {Component} from 'react';
 import {CommonActions} from '@react-navigation/native';
 import {
   ImageBackground,
+  Platform,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
@@ -651,7 +652,7 @@ export default class CreateClinic extends Component {
                 />
               </Item>
 
-              {/* <Item
+              <Item
                 stackedLabel
                 onPress={() => { this.showTimepicker('start'); }}
                 style={[CommonStyles.container, CommonStyles.itemStyle]}
@@ -718,67 +719,71 @@ export default class CreateClinic extends Component {
                     //onChange={this.SelectleftAt}
                   />
                 )}
-              </Item> */}
-
-              <Item
-                stackedLabel
-                onPress={() => {
-                  this.showTimepicker('start');
-                }}
-                style={[CommonStyles.container, CommonStyles.itemStyle]}>
-                <Text
-                  style={[
-                    CommonStyles.fontRegular,
-                    CommonStyles.textSizeAverage,
-                    {
-                      paddingTop: 20,
-                      textAlign: 'left',
-                      alignSelf: 'flex-start',
-                    },
-                  ]}>
-                  {this.state.startTimeText}
-                </Text>
-                {this.state.showStartTimePicker && (
-                  <DateTimePicker
-                    testID="FromTime"
-                    value={this.state.attendAt}
-                    mode="time"
-                    is24Hour={true}
-                    display="clock"
-                    onChange={this.SelectattendAt}
-                  />
-                )}
               </Item>
 
-              <Item
-                stackedLabel
-                onPress={() => {
-                  this.showTimepicker('end');
-                }}
-                style={[CommonStyles.container, CommonStyles.itemStyle]}>
-                <Text
-                  style={[
-                    CommonStyles.fontRegular,
-                    CommonStyles.textSizeAverage,
-                    {
-                      paddingTop: 20,
-                      textAlign: 'left',
-                      alignSelf: 'flex-start',
-                    },
-                  ]}>
-                  {this.state.endTimeText}
-                </Text>
-                {this.state.showEndTimePicker && (
-                  <DateTimePicker
-                    testID="ToTime"
-                    value={this.state.leftAt}
-                    mode="time"
-                    is24Hour={true}
-                    display="clock"
-                    onChange={this.SelectleftAt}
-                  />
-                )}
-              </Item>
+              {Platform.OS === 'android' && (
+                <Item
+                  stackedLabel
+                  onPress={() => {
+                    this.showTimepicker('start');
+                  }}
+                  style={[CommonStyles.container, CommonStyles.itemStyle]}>
+                  <Text
+                    style={[
+                      CommonStyles.fontRegular,
+                      CommonStyles.textSizeAverage,
+                      {
+                        paddingTop: 20,
+                        textAlign: 'left',
+                        alignSelf: 'flex-start',
+                      },
+                    ]}>
+                    {this.state.startTimeText}
+                  </Text>
+                  {this.state.showStartTimePicker && (
+                    <DateTimePicker
+                      testID="FromTime"
+                      value={this.state.attendAt}
+                      mode="time"
+                      is24Hour={true}
+                      display="clock"
+                      onChange={this.SelectattendAt}
+                    />
+                  )}
+                </Item>
+              )}
+
+              {Platform.OS === 'android' && (
+                <Item
+                  stackedLabel
+                  onPress={() => {
+                    this.showTimepicker('end');
+                  }}
+                  style={[CommonStyles.container, CommonStyles.itemStyle]}>
+                  <Text
+                    style={[
+                      CommonStyles.fontRegular,
+                      CommonStyles.textSizeAverage,
+                      {
+                        paddingTop: 20,
+                        textAlign: 'left',
+                        alignSelf: 'flex-start',
+                      },
+                    ]}>
+                    {this.state.endTimeText}
+                  </Text>
+                  {this.state.showEndTimePicker && (
+                    <DateTimePicker
+                      testID="ToTime"
+                      value={this.state.leftAt}
+                      mode="time"
+                      is24Hour={true}
+                      display="clock"
+                      onChange={this.SelectleftAt}
+                    />
+                  )}
+                </Item>
+              )}
 
               <Item
                 stackedLabel
