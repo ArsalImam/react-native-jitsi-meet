@@ -914,7 +914,8 @@ export default class CreateClinic extends Component {
                 marginLeft: -7,
               },
             ]}
-            onChange={this.setDate}
+            
+            onDateChange={this.setDate}
             // disabled={false}
           />
           <Icon
