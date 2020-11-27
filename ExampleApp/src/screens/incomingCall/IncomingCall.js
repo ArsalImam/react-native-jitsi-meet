@@ -1,8 +1,8 @@
 import React, {useCallback} from 'react';
-import {View, Image, ImageBackground, Text} from 'react-native';
+import {View, Image, ImageBackground, Text, TouchableOpacity} from 'react-native';
 import CommonStyles from '../../CommonStyles';
 import Api from '../../Api';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import Methods from '../../Methods';
 
 var Sound = require('react-native-sound');
 
@@ -22,8 +22,6 @@ export default class IncomingCall extends React.Component {
 
     this._initSound();
     let that = this;
-
-    
   }
 
   componentDidMount() {
@@ -31,29 +29,38 @@ export default class IncomingCall extends React.Component {
     const {appointmentId} = this.props.route.params;
     this.setState({appointmentId: appointmentId});
     this._getUser();
+
+    // if (Methods.instance()._pushIncomingCall(false)) {
+      Methods.instance()._pushIncomingCall(true);
+    // }
+   
+   // console.warn('Methods.instance()._pushIncomingCall(true)', Methods.instance()._pushIncomingCall(true))
+     
   }
 
+  componentWillUnmount() {
+    // if (Methods.instance()._pushIncomingCall(true)) {
+      Methods.instance()._pushIncomingCall(false);
+    // }
+  }
 
-  _getUser(){
+  _getUser() {
     Api.instance()
-    ._user()
-    .then(user => {
-      if (user == null) return;
-      this.setState(
-        {
+      ._user()
+      .then(user => {
+        if (user == null) return;
+        this.setState({
           user,
-        },
-      );
-      console.warn('user user ===>', this.state.user); 
-    })
-    .catch(err => {
-     // ViewUtils.showToast(err)
-    });
+        });
+        console.warn('user user ===>', this.state.user);
+      })
+      .catch(err => {
+        // ViewUtils.showToast(err)
+      });
   }
-
 
   render() {
-    console.warn("firstName :: ",this.state.user.firstName)
+    console.warn('firstName :: ', this.state.user.firstName);
     return (
       <View style={[CommonStyles.container, {backgroundColor: '#222222'}]}>
         <ImageBackground
@@ -65,9 +72,13 @@ export default class IncomingCall extends React.Component {
               source={require('../../assets/img/person-icon.png')}
             />
             {this.state.user.role == 'ROLE_PATIENT' ? (
-              <Text style={{marginTop: 15, fontSize: 22, color: 'white'}}>Doctor is Calling</Text>
+              <Text style={{marginTop: 15, fontSize: 22, color: 'white'}}>
+                Doctor is Calling
+              </Text>
             ) : (
-              <Text style={{marginTop: 15, fontSize: 22, color: 'white'}}>Patient is Calling</Text>
+              <Text style={{marginTop: 15, fontSize: 22, color: 'white'}}>
+                Patient is Calling
+              </Text>
             )}
           </View>
 
@@ -77,7 +88,7 @@ export default class IncomingCall extends React.Component {
               flexDirection: 'row',
               justifyContent: 'space-evenly',
               alignItems: 'center',
-            }}> 
+            }}>
             <TouchableOpacity
               onPress={() => {
                 this.whoosh.stop();
@@ -91,9 +102,11 @@ export default class IncomingCall extends React.Component {
                 source={require('../../assets/img/call1.png')}
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => {
+            <TouchableOpacity
+              onPress={() => {
                 this.whoosh.stop();
-                this.props.navigation.goBack();}}>
+                this.props.navigation.goBack();
+              }}>
               <Image
                 style={{width: 70, height: 70}}
                 source={require('../../assets/img/call2.png')}
@@ -104,37 +117,40 @@ export default class IncomingCall extends React.Component {
       </View>
     );
   }
-  
 
   _initSound() {
-
     // Load the sound file 'whoosh.mp3' from the app bundle
     // See notes below about preloading sounds within initialization code below.
-   let ringtone = Api.instance().getMediaUrl('images','ringtone.mp3');
-    console.warn("ringtone :: ",ringtone)
-    this.whoosh = new Sound(ringtone, Sound.MAIN_BUNDLE, (error) => {
+    let ringtone = Api.instance().getMediaUrl('images', 'ringtone.mp3');
+    console.warn('ringtone :: ', ringtone);
+    this.whoosh = new Sound(ringtone, Sound.MAIN_BUNDLE, error => {
       if (error) {
         console.warn('failed to load the sound', error);
         return;
-      }else{
+      } else {
         this._playAudio();
       }
       // loaded successfully
-      console.warn('duration in seconds: ' + this.whoosh.getDuration() + 'number of channels: ' + this.whoosh.getNumberOfChannels());
+      console.warn(
+        'duration in seconds: ' +
+          this.whoosh.getDuration() +
+          'number of channels: ' +
+          this.whoosh.getNumberOfChannels(),
+      );
     });
   }
   _playAudio() {
-    console.warn('_playAudio')
+    console.warn('_playAudio');
     // Play the sound with an onEnd callback
-      this.whoosh.play((success) => {
-        console.warn("success === ",success)
-        if (success) {
-          console.warn('successfully finished playing');
-        } else {
-          console.warn('playback failed due to audio decoding errors');
-        }
-      });
+    this.whoosh.play(success => {
+      console.warn('success === ', success);
+      if (success) {
+        console.warn('successfully finished playing');
+      } else {
+        console.warn('playback failed due to audio decoding errors');
+      }
+    });
 
-      this.whoosh.setNumberOfLoops(3);
+    this.whoosh.setNumberOfLoops(3);
   }
 }

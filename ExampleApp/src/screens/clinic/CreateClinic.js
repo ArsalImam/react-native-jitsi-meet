@@ -276,15 +276,16 @@ import {
   View,
 } from 'react-native';
 import {Icon, Input, Item, Label, Picker, Text} from 'native-base';
-import {DatePicker, TimePicker} from 'react-native-propel-kit';
-//import RNDateTimePicker from '@react-native-community/datetimepicker';
+import {DatePicker} from 'native-base';
 import Api from '../../Api';
 import CommonStyles from '../../CommonStyles';
 import Loader from '../../components/Loader';
 import moment from 'moment';
+//import {DatePicker, TimePicker} from 'react-native-propel-kit';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {ViewUtils} from '../../Utils';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+
 export default class CreateClinic extends Component {
   constructor(props) {
     super(props);
@@ -471,7 +472,7 @@ export default class CreateClinic extends Component {
 
     switch (freq) {
       case 172799000:
-        this.state.clinicFrequencyText = 'One Off';
+        this.state.clinicFrequencyText = 'Alternate Days';
         break;
 
       case 604799000:
@@ -615,176 +616,15 @@ export default class CreateClinic extends Component {
                   borderRadius: 5,
                 },
               ]}>
-              <Item
-                style={[
-                  CommonStyles.container,
-                  CommonStyles.itemStyle,
-                  {paddingTop: 25},
-                ]}>
-                <DatePicker
-                  defaultDate={new Date()}
-                  minimumDate={new Date()}
-                  locale={'en'}
-                  timeZoneOffsetInMinutes={undefined}
-                  modalTransparent={false}
-                  animationType={'fade'}
-                  androidMode={'default'}
-                  placeholder="Select Date"
-                  placeholderTextColor="black"
-                  textStyle={[
-                    CommonStyles.fontRegular,
-                    {paddingLeft: -7, color: '#000'},
-                  ]}
-                  placeHolderTextStyle={[
-                    CommonStyles.fontRegular,
-                    CommonStyles.textSizeAverage,
-                    {
-                      marginLeft: -7,
-                    },
-                  ]}
-                  onChange={this.setDate}
-                  // disabled={false}
-                />
-                <Icon
-                  active
-                  name="calendar"
-                  style={{marginLeft: 20, marginTop: -25}}
-                />
-              </Item>
-
-              <Item
-                stackedLabel
-                onPress={() => { this.showTimepicker('start'); }}
-                style={[CommonStyles.container, CommonStyles.itemStyle]}
-              >
-                <Text
-                  style={[
-                    CommonStyles.fontRegular,
-                    CommonStyles.textSizeAverage,
-                    {
-                      paddingTop: 20,
-                      textAlign: 'left',
-                      alignSelf: 'flex-start'
-                    },
-                  ]}>
-                  {this.state.startTimeText}
-                </Text>
-                
-                {this.state.showStartTimePicker && (
-                  <TimePicker
-                   
-                    // testID="FromTime"
-                    // placeholder="00:00"
-                    value={this.state.attendAt}
-                     mode="time"
-                     is24Hour={true}
-                    display="clock"
-
-                    // onChange={date => {
-                    //   this.setState({attendAt: date});
-                    // }}
-                     onChange={this.SelectattendAt}
-                  />
-                )}
-              </Item>
-
-              <Item
-                stackedLabel
-                onPress={() => { this.showTimepicker('end'); }}
-                style={[CommonStyles.container, CommonStyles.itemStyle]}
-              >
-                <Text
-                  style={[
-                    CommonStyles.fontRegular,
-                    CommonStyles.textSizeAverage,
-                    {
-                      paddingTop: 20,
-                      textAlign: 'left',
-                      alignSelf: 'flex-start',
-                    },
-                  ]}>
-                  {this.state.endTimeText}
-                </Text>
-                {this.state.showEndTimePicker && (
-                  <TimePicker
-                  placeholder="00:00"
-                    testID="ToTime"
-                    initialValue={this.state.leftAt}
-                    // mode="time"
-                    // is24Hour={true}
-                    // display="clock"
-                    onChange={date => {
-                      this.setState({leftAt: date});
-                    }}
-                    //onChange={this.SelectleftAt}
-                  />
-                )}
-              </Item>
-
               {Platform.OS === 'android' && (
-                <Item
-                  stackedLabel
-                  onPress={() => {
-                    this.showTimepicker('start');
-                  }}
-                  style={[CommonStyles.container, CommonStyles.itemStyle]}>
-                  <Text
-                    style={[
-                      CommonStyles.fontRegular,
-                      CommonStyles.textSizeAverage,
-                      {
-                        paddingTop: 20,
-                        textAlign: 'left',
-                        alignSelf: 'flex-start',
-                      },
-                    ]}>
-                    {this.state.startTimeText}
-                  </Text>
-                  {this.state.showStartTimePicker && (
-                    <DateTimePicker
-                      testID="FromTime"
-                      value={this.state.attendAt}
-                      mode="time"
-                      is24Hour={true}
-                      display="clock"
-                      onChange={this.SelectattendAt}
-                    />
-                  )}
-                </Item>
+                <View>{this._renderDateAndTimeForAndroid()}</View>
               )}
 
-              {Platform.OS === 'android' && (
-                <Item
-                  stackedLabel
-                  onPress={() => {
-                    this.showTimepicker('end');
-                  }}
-                  style={[CommonStyles.container, CommonStyles.itemStyle]}>
-                  <Text
-                    style={[
-                      CommonStyles.fontRegular,
-                      CommonStyles.textSizeAverage,
-                      {
-                        paddingTop: 20,
-                        textAlign: 'left',
-                        alignSelf: 'flex-start',
-                      },
-                    ]}>
-                    {this.state.endTimeText}
-                  </Text>
-                  {this.state.showEndTimePicker && (
-                    <DateTimePicker
-                      testID="ToTime"
-                      value={this.state.leftAt}
-                      mode="time"
-                      is24Hour={true}
-                      display="clock"
-                      onChange={this.SelectleftAt}
-                    />
-                  )}
-                </Item>
-              )}
+              {/* {Platform.OS === 'ios' && (
+                 <View>{this._renderDateAndTimeForAndiOS()}</View>
+              )} */}
 
+              
               <Item
                 stackedLabel
                 style={[CommonStyles.container, CommonStyles.itemStyle]}>
@@ -938,6 +778,219 @@ export default class CreateClinic extends Component {
             </TouchableOpacity>
           </View> */}
         </ImageBackground>
+      </View>
+    );
+  }
+
+  _renderDateAndTimeForAndroid() {
+    return (
+      <View>
+        <Item
+          style={[
+            CommonStyles.container,
+            CommonStyles.itemStyle,
+            {paddingTop: 25},
+          ]}>
+          <DatePicker
+            defaultDate={new Date()}
+            minimumDate={new Date()}
+            locale={'en'}
+            timeZoneOffsetInMinutes={undefined}
+            modalTransparent={false}
+            animationType={'fade'}
+            androidMode={'default'}
+            placeholder="Select Date"
+            placeholderTextColor="black"
+            textStyle={[
+              CommonStyles.fontRegular,
+              {paddingLeft: -7, color: '#000'},
+            ]}
+            placeHolderTextStyle={[
+              CommonStyles.fontRegular,
+              CommonStyles.textSizeAverage,
+              {
+                marginLeft: -7,
+              },
+            ]}
+            onDateChange={this.setDate}
+            // disabled={false}
+          />
+          <Icon
+            active
+            name="calendar"
+            style={{marginLeft: 20, marginTop: -25}}
+          />
+        </Item>
+
+        <Item
+          stackedLabel
+          onPress={() => {
+            this.showTimepicker('start');
+          }}
+          style={[CommonStyles.container, CommonStyles.itemStyle]}>
+          <Text
+            style={[
+              CommonStyles.fontRegular,
+              CommonStyles.textSizeAverage,
+              {
+                paddingTop: 20,
+                textAlign: 'left',
+                alignSelf: 'flex-start',
+              },
+            ]}>
+            {this.state.startTimeText}
+          </Text>
+          {this.state.showStartTimePicker && (
+            <DateTimePicker
+              testID="FromTime"
+              value={this.state.attendAt}
+              mode="time"
+              is24Hour={true}
+              display="clock"
+              onChange={this.SelectattendAt}
+            />
+          )}
+        </Item>
+
+        <Item
+          stackedLabel
+          onPress={() => {
+            this.showTimepicker('end');
+          }}
+          style={[CommonStyles.container, CommonStyles.itemStyle]}>
+          <Text
+            style={[
+              CommonStyles.fontRegular,
+              CommonStyles.textSizeAverage,
+              {
+                paddingTop: 20,
+                textAlign: 'left',
+                alignSelf: 'flex-start',
+              },
+            ]}>
+            {this.state.endTimeText}
+          </Text>
+          {this.state.showEndTimePicker && (
+            <DateTimePicker
+              testID="ToTime"
+              value={this.state.leftAt}
+              mode="time"
+              is24Hour={true}
+              display="clock"
+              onChange={this.SelectleftAt}
+            />
+          )}
+        </Item>
+      </View>
+    );
+  }
+  _renderDateAndTimeForiOS() {
+    return (
+      <View>
+        <Item
+          style={[
+            CommonStyles.container,
+            CommonStyles.itemStyle,
+            {paddingTop: 25},
+          ]}>
+          <DatePicker
+            defaultDate={new Date()}
+            minimumDate={new Date()}
+            locale={'en'}
+            timeZoneOffsetInMinutes={undefined}
+            modalTransparent={false}
+            animationType={'fade'}
+            androidMode={'default'}
+            placeholder="Select Date"
+            placeholderTextColor="black"
+            textStyle={[
+              CommonStyles.fontRegular,
+              {paddingLeft: -7, color: '#000'},
+            ]}
+            placeHolderTextStyle={[
+              CommonStyles.fontRegular,
+              CommonStyles.textSizeAverage,
+              {
+                marginLeft: -7,
+              },
+            ]}
+            onChange={this.setDate}
+            // disabled={false}
+          />
+          <Icon
+            active
+            name="calendar"
+            style={{marginLeft: 20, marginTop: -25}}
+          />
+        </Item>
+        <Item
+          stackedLabel
+          onPress={() => {
+            this.showTimepicker('start');
+          }}
+          style={[CommonStyles.container, CommonStyles.itemStyle]}>
+          <Text
+            style={[
+              CommonStyles.fontRegular,
+              CommonStyles.textSizeAverage,
+              {
+                paddingTop: 10,
+                textAlign: 'left',
+                alignSelf: 'flex-start',
+              },
+            ]}>
+            {this.state.startTimeText}
+          </Text>
+
+          {this.state.showStartTimePicker && (
+            <TimePicker
+              // testID="FromTime"
+              placeholder="00:00"
+              value={this.state.attendAt}
+              mode="time"
+              is24Hour={true}
+              display="clock"
+              // onChange={date => {
+              //   this.setState({attendAt: date});
+              // }}
+              onChange={this.SelectattendAt}
+            />
+          )}
+        </Item>
+
+        <Item
+          stackedLabel
+          onPress={() => {
+            this.showTimepicker('end');
+          }}
+          style={[CommonStyles.container, CommonStyles.itemStyle]}>
+          <Text
+            style={[
+              CommonStyles.fontRegular,
+              CommonStyles.textSizeAverage,
+              {
+                paddingTop: 10,
+                textAlign: 'left',
+                alignSelf: 'flex-start',
+              },
+            ]}>
+            {this.state.endTimeText}
+          </Text>
+          {this.state.showEndTimePicker && (
+            <TimePicker
+              placeholder="00:00"
+              testID="ToTime"
+              initialValue={this.state.leftAt}
+              // mode="time"
+              // is24Hour={true}
+              // display="clock"
+              onChange={date => {
+                this.setState({leftAt: date});
+              }}
+              //onChange={this.SelectleftAt}
+            />
+          )}
+        </Item>
       </View>
     );
   }
