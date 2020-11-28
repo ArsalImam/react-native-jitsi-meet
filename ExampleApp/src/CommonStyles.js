@@ -233,7 +233,26 @@ const CommonStyles = StyleSheet.create({
   imageStyle:{
     width:30,
     height:20,
-  }
+  },
+  modalBackground: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    backgroundColor: '#00000040',
+  },
+  activityIndicatorWrapper: {
+    backgroundColor: '#fff',
+    width: '88%',
+    padding: 25,
+    borderRadius: 5,
+    
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+
+    
+  },
 })
 
 export default CommonStyles;

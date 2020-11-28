@@ -624,7 +624,7 @@ export default class CreateClinic extends Component {
                  <View>{this._renderDateAndTimeForAndiOS()}</View>
               )} */}
 
-              
+              P
               <Item
                 stackedLabel
                 style={[CommonStyles.container, CommonStyles.itemStyle]}>

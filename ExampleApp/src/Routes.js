@@ -47,6 +47,7 @@ import EditProfile from './screens/profile/EditProfile';
 import {Button} from 'react-native';
 import AddPrescribtion from './screens/prescribeMedication/AddPrescribtion';
 import WebViewReport from './screens/web-view/WebViewReport';
+import PaymentAlert from './screens/patient/PaymentAlert';
 
 import Scheduled from './screens/patient/ScheduledBooking';
 import IncomingCall from './screens/incomingCall/IncomingCall';
@@ -899,6 +900,16 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="IncomingCall"
           component={IncomingCall}
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent',
+            },
+          }}
+        />
+        <Stack.Screen
+          name="PaymentAlert"
+          component={PaymentAlert}
           options={{
             headerShown: false,
             cardStyle: {

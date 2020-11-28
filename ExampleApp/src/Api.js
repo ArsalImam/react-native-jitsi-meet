@@ -625,6 +625,28 @@ export default class Api {
     return data;
   }
 
+ // https://api.etibb.online/api/TransactionLogs/RequestTransaction
+
+ async createPayments(data) {
+
+  let user = await this._user();
+  let _user = JSON.parse(JSON.stringify(user));
+  console.warn('data --  >>>>> ', data);
+  data.userId = _user.id;
+
+  let response = await this.client.psost(
+    this.getMediaUrl('TransactionLogs/RequestTransaction'),
+    data,
+    this.getHeaders(),
+  );
+
+  console.warn('response ----- >>>>>', JSON.stringify(response));
+
+  return response.data;
+}
+
+ 
+
   async getTodaysAppointments(patientId) {
     console.warn("patientId ::: ",patientId)
 
