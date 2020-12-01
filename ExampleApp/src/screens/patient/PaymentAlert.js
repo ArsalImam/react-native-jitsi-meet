@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { CommonActions } from '@react-navigation/native';
+import {CommonActions} from '@react-navigation/native';
 import {
   StyleSheet,
   View,
@@ -17,26 +17,30 @@ import {ViewUtils} from '../../Utils';
 import Api from '../../Api';
 import {Configs} from '../../Configs';
 import ImagePicker from 'react-native-image-picker';
+import Loader from '../../components/Loader';
 
 class PaymentAlert extends Component {
+  _appointmentId = '';
+  _patientId = '';
+  _clinicId = '';
+  state = {
+    patients: [],
+    generatedCode: Math.floor(100000 + Math.random() * 900000),
+    isLoading: false,
+    amount: '1000',
+    slots: 1,
+    image: null,
+    imageUrl: '',
+    check: false,
+    user: {
+      personalDetails: {},
+    },
+  };
+  constructor(props) {
+    super(props);
+  }
 
-    _appointmentId = '';
-    _patientId = '';
-    state = {
-      patients: [],
-      generatedCode: Math.floor(100000 + Math.random() * 900000),
-      isLoading: false,
-      amount: 1000,
-      slots: 1,
-      image: null,
-      imageUrl: '',
-      check: false, 
-    };
-    constructor(props) {
-      super(props);
-    }
-
-handleBackButton = () => {
+  handleBackButton = () => {
     Alert.alert(
       'E-tibb',
       'Are you sure, You want to cancel the payment process?',
@@ -58,49 +62,78 @@ handleBackButton = () => {
     return true;
   };
 
+  componentDidMount() {
+    this._patientId = this.props.route.params.patientId;
+    this._appointmentId = this.props.route.params.appointmentId;
+    this._clinicId = this.props.route.params.clinicId;
 
-  addCredit() {
-    var data = {};
-
-    data = {
-        amount: this.state.amount,
-        type: "patient",
-        slots: this.state.slots,
-        transactionCode: this.state.generatedCode,
-        isVerified: this.state.check,
-        PaymentVerifiedCheck: this.state.check,
-    }
     Api.instance()
-    .createPayments(data)
-    .then(res => {
-        console.warn("res >>>>>", res)
-        this._createAppointment(this._patientId)
-    })
-    // this.generatedCode = Math.floor(100000 + Math.random() * 900000);
-    // var transaction = {
-    //   data: {
-    //     amount: this.state.amount,
-    //     type: patient,
-    //     slots: this.state.slots,
-    //     transactionCode: this.generatedCode,
-    //     isVerified: this.state.check,
-    //     PaymentVerifiedCheck: this.state.check,
-    //   },
-    // };
+      ._user()
+      .then(user => {
+        if (user == null) return;
+        this.setState({
+          amount: user.appointmentFees,
+        });
+      })
+      .catch(err => {
+        //ViewUtils.showToast(err)
+      });
   }
-componentDidMount() {
-    this._patientId = this.props.route.params.patientId,
-     this._appointmentId = this.props.route.params.appointmentId
 
-}
-
-
-  
-  _createAppointment(patientId) {
-
-
+  addCredit(patientId) {
     let that = this;
-   
+    var data = {};
+    data = {
+      amount: this.state.amount,
+      userId: patientId,
+      clinicId: this._clinicId,
+      type: 'patient',
+      receipt: this.state.imageUrl,
+      slots: this.state.slots,
+      transactionCode: this.state.generatedCode,
+      isVerified: this.state.check,
+      PaymentVerifiedCheck: this.state.check,
+    };
+    if (this.state.check) {
+      Api.instance()
+        .createPayments(data)
+        .then(res => {
+          console.warn('create payment res', res.result.transaction.id);
+
+          Api.instance()
+            .postPatientUtilizedSlots(res.result.transaction.id)
+            .then(res => {
+              console.warn('postPatientUtilizedSlots', res);
+              ViewUtils.showToast('Successfully Added');
+              that.props.navigation.dispatch(
+                CommonActions.reset({
+                  index: 1,
+                  routes: [{name: 'MyDrawer'}],
+                }),
+              );
+            });
+        });
+    } else {
+      Api.instance()
+        .createPayments(data)
+        .then(res => {
+          console.warn('create payment res', res.result.transaction.id);
+          ViewUtils.showToast('Successfully Added');
+          that.props.navigation.dispatch(
+            CommonActions.reset({
+              index: 1,
+              routes: [{name: 'MyDrawer'}],
+            }),
+          );
+        });
+      
+    }
+  }
+
+  _createAppointment(patientId) {
+    let that = this;
+    this.setState({isLoading: true});
+
     Api.instance()
       .updateAppointment(this._appointmentId, patientId)
       .then(() => {
@@ -117,7 +150,9 @@ componentDidMount() {
       .catch(err => {
         //ViewUtils.showToast(err);
       })
-     
+      .finally(() => {
+        this.setState({isLoading: false});
+      });
   }
   handleChoosePhoto = () => {
     if (this.state.imageUrl != '') {
@@ -214,7 +249,7 @@ componentDidMount() {
               alignSelf: 'flex-start',
             }}>
             <Text style={[CommonStyles.fontMedium, {fontSize: 14}]}>
-              Payment
+              Payment Sent
             </Text>
             <CheckBox
               style={{marginRight: 12}}
@@ -243,16 +278,16 @@ componentDidMount() {
               <Input
                 disabled={true}
                 value={this.state.amount}
-                onChangeText={val => this.setState({amount: val})}
-                name="amount"
-                placeholder={'1000'}
-                placeholderTextColor="gray"
-                returnKeyType="next"
-                autoCapitalize="none"
-                selectionColor="#fff"
+                // onChangeText={val => this.setState({amount: val})}
+                // name="amount"
+                // placeholder={'1000'}
+                // placeholderTextColor="gray"
+                // returnKeyType="next"
+                // autoCapitalize="none"
+                // selectionColor="#fff"
                 style={[
                   CommonStyles.fontMedium,
-                  CommonStyles.textColorWhite,
+                  //  CommonStyles.textColorWhite,
                   CommonStyles.textSizeNormal,
                 ]}
               />
@@ -343,7 +378,9 @@ componentDidMount() {
                 CommonStyles.centerText,
                 {backgroundColor: '#00bcd0', marginRight: 3, borderRadius: 3},
               ]}
-              onPress={() => {this._createAppointment(this._patientId)}}>
+              onPress={() => {
+                this.addCredit(this._patientId);
+              }}>
               <Text
                 style={[
                   CommonStyles.fontRegular,
@@ -365,8 +402,7 @@ componentDidMount() {
                 CommonStyles.centerText,
                 {backgroundColor: '#1565a0', marginLeft: 3, borderRadius: 3},
               ]}
-              onPress={() => this.handleBackButton()}
-              >
+              onPress={() => this.handleBackButton()}>
               <Text
                 style={[
                   CommonStyles.fontRegular,
@@ -382,6 +418,7 @@ componentDidMount() {
             </TouchableOpacity>
           </View>
         </View>
+        <Loader loading={this.state.isLoading} />
       </View>
     );
   }
