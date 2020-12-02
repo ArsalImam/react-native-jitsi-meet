@@ -67,7 +67,7 @@ class PaymentAlert extends Component {
     this._patientId = this.props.route.params.patientId;
     this._appointmentId = this.props.route.params.appointmentId;
     this._clinicId = this.props.route.params.clinicId;
-  this.setState({ amount: this.props.route.params.amount})  
+ 
   }
 
   addCredit(patientId) {
@@ -210,7 +210,7 @@ class PaymentAlert extends Component {
     this.setState({check: !this.state.check});
   }
   render() {
-    let amount = this._amount; 
+  
     return (
       <View style={[CommonStyles.modalBackground]}>
         <View style={[CommonStyles.activityIndicatorWrapper]}>
@@ -265,23 +265,10 @@ class PaymentAlert extends Component {
                 style={[CommonStyles.textSizeSmall, CommonStyles.fontRegular]}>
                 Amount*
               </Label>
-
-            
-               <Input
-                disabled={true}
-                value={this.state.amount}
-                name="amount"
-                placeholder={'1000'}
-                placeholderTextColor="gray"
-                // returnKeyType="next"
-                // autoCapitalize="none"
-                // selectionColor="#fff"
-                style={[
-                  CommonStyles.fontMedium,
-                  //  CommonStyles.textColorWhite,
-                  CommonStyles.textSizeNormal,
-                ]}
-              />
+              <Label
+                style={[CommonStyles.textSizeNormal, CommonStyles.fontBold, {marginTop: 8, color: 'gray'}]}>
+                {this.props.route.params.amount}
+              </Label>
             </Item>
 
             <Item
