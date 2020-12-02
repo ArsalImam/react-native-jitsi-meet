@@ -5,7 +5,7 @@ import { CheckBox } from 'react-native-elements';
 import { Icon ,Item ,Picker} from 'native-base';
 import CommonStyles from '../../CommonStyles';
 import Api from '../../Api';
-import { AppointmentStatus } from '../../Configs';
+import { AppointmentStatus, Roles } from '../../Configs';
 import moment from 'moment';
 import Loader from '../../components/Loader';
 import { ViewUtils } from '../../Utils';
@@ -15,7 +15,8 @@ export default class CompleteBookings extends Component {
     appointments:[],
     isloading: false,
     statusCode: "last7Days",
-    now: new Date()
+    now: new Date(),
+    role: '',
   };
 
   constructor(props) {
@@ -47,9 +48,10 @@ export default class CompleteBookings extends Component {
   }
 
   componentDidMount() {
-
     this.tabsChange(this.state.statusCode);
-    
+    Api.instance()
+      .getUserRole()
+      .then(role => this.setState({role}));
  }
 
 
@@ -79,6 +81,7 @@ eventData(param) {
   Api.instance()
   .getMyAppointmentsPast15Days(AppointmentStatus.completed, true, moment().format('YYYY-MM-DD'), moment().subtract(15, 'days').format('YYYY-MM-DD'))
   .then(appointments => {
+    console.warn('past appointments ::: ', appointments)
     this.setState({ appointments }); 
   })
   .catch(err => {
@@ -92,8 +95,9 @@ eventData(param) {
  allAppointments() {
    this.setState({ isLoading: true})
   Api.instance()
-  .getMyAppointments(AppointmentStatus.completed, true)
+  .getMyAppointments(AppointmentStatus.completed, true, false)
   .then(appointments => {
+  console.warn('completed appointments', appointments)
     this.setState({ appointments }); 
   })
   .catch(err => {
@@ -227,25 +231,43 @@ eventData(param) {
                           CommonStyles.container,
                           { justifyContent: 'space-between', paddingVertical: 12 },
                         ]}>
-                        <Text>
-                          <Text  
-                            style={[
-                              CommonStyles.fontRegular,
-                              CommonStyles.textSizeSmall,
-                              { color: '#333333' },
-                            ]}>{`Patient Name\n`}</Text>
-                          <Text
-                            style={[
-                              CommonStyles.fontMedium,
-                              CommonStyles.textSizeAverage,
-                              { color: '#333333' },
-                            ]}>
-                            {( item.patient && item.patient.firstName) ? item.patient.firstName.concat(
-                              ' ' + item.patient.lastName,
-                            ) : 'NA'}
+                          {this.state.role === Roles.doctor ? (
+                          <Text>
+                            <Text
+                              style={[
+                                CommonStyles.fontRegular,
+                                CommonStyles.textSizeSmall,
+                                {color: '#333333'},
+                              ]}>{`Patient Name\n`}</Text>
+                            <Text
+                              style={[
+                                CommonStyles.fontMedium,
+                                CommonStyles.textSizeAverage,
+                                {color: '#333333'},
+                              ]}>
+                              {item.patient.firstName.concat(
+                                ' ' + item.patient.lastName,
+                              )}
+                            </Text>
                           </Text>
-                        </Text>
-
+                        ) : (
+                          <Text>
+                            <Text
+                              style={[
+                                CommonStyles.fontRegular,
+                                CommonStyles.textSizeSmall,
+                                {color: '#333333'},
+                              ]}>{`Clinic Name\n`}</Text>
+                            <Text
+                              style={[
+                                CommonStyles.fontMedium,
+                                CommonStyles.textSizeAverage,
+                                {color: '#333333'},
+                              ]}>
+                              {item.clinic == undefined ? '' : item.clinic.name}
+                            </Text>
+                          </Text>
+                        )}
                         <Text
                           style={[
                             CommonStyles.textSizeAverage,

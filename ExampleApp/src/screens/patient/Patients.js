@@ -21,6 +21,7 @@ export default class Patients extends Component {
   _clinicId = '';
   state = {
     patients: [],
+    amount: '',
   };
   constructor(props) {
     super(props);
@@ -39,6 +40,20 @@ export default class Patients extends Component {
       })
       .finally(() => {
         this.setState({isLoading: false});
+      });
+
+      Api.instance()
+      ._user()
+      .then(user => {
+        if (user == null) return;
+        console.warn('')
+        this.setState({
+          
+          amount: user.appointmentFees,
+        });
+      })
+      .catch(err => {
+        //ViewUtils.showToast(err)
       });
   }
 
@@ -194,6 +209,8 @@ export default class Patients extends Component {
                 appointmentId: this._appointmentId,
                 patientId,
                 clinicId: this._clinicId,
+                amount: this.state.amount,
+
               });
             } else {
               this.setState({isLoading: true});

@@ -38,7 +38,7 @@ export default class BookingList extends Component {
   refreshList() {
     this.setState({isLoading: true});
     Api.instance()
-      .getMyAppointments(AppointmentStatus.available, true)
+      .getMyAppointments(AppointmentStatus.available, true, true)
       .then(appointments => {
         console.warn('appointments :: ', appointments.slice().reverse());
         // let data = appointments.reverse()
@@ -138,14 +138,14 @@ export default class BookingList extends Component {
                               CommonStyles.fontRegular,
                               CommonStyles.textSizeSmall,
                               {color: '#333333'},
-                            ]}>{`Patient Name\n`}</Text>
+                            ]}>{`Clinic Name\n`}</Text>
                           <Text
                             style={[
                               CommonStyles.fontMedium,
                               CommonStyles.textSizeAverage,
                               {color: '#333333'},
                             ]}>
-                            {'-'}
+                            {item.clinic.name}
                           </Text>
                         </Text>
 

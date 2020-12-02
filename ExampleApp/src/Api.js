@@ -745,7 +745,9 @@ export default class Api {
       this.getUrl(
         `Appointments?filter[where][doctorId]=${
           _user.doctorId
-        }&filter[where][patientId]=${_user.id}&filter[where][status]=Scheduled`,
+        }&filter[where][patientId]=${
+          _user.id
+        }&filter[where][status]=Scheduledfilter[include]=clinic`,
       ),
     );
 
@@ -754,7 +756,7 @@ export default class Api {
     return data;
   }
 
-  async getMyAppointments(status = '', requirePatient = false) {
+  async getMyAppointments(status = '', requirePatient = false, requireClinic = false) {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
 
@@ -767,19 +769,24 @@ export default class Api {
       id_param = 'doctorId';
       userId = _user.doctorId;
     }
+    let clinic = '';
     let includes = '';
     let wheres = '';
     if (requirePatient) {
       includes = `&filter[include]=patient`;
     }
-
+    if(requireClinic) {
+      clinic = `&filter[include]=clinic`
+     }
+     
+    
     if (status != '') {
       wheres = `&filter[where][status]=${status}`;
     }
 
     let response = await this.client.get(
       this.getUrl(
-        `Appointments?filter[where][${id_param}]=${userId}${includes}${wheres}&filter[order]=id%20DESC`,
+        `Appointments?filter[where][${id_param}]=${userId}${includes}${clinic}${wheres}&filter[order]=id%20DESC`,
       ),
     );
     let data = response.data;
@@ -792,7 +799,7 @@ export default class Api {
     status = '',
     requirePatient = false,
     todaysDate = '',
-    lastDate = '',
+    lastDate = '',    
   ) {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
@@ -807,8 +814,10 @@ export default class Api {
     let includes = '';
     let wheres = '';
     if (requirePatient) {
-      includes = `&filter[include]=patient`;
+      includes = `&filter[include]=patient&filter[include]=clinic`;
     }
+
+    
 
     if (status != '') {
       wheres = `&filter[where][status]=${status}`;
@@ -825,8 +834,6 @@ export default class Api {
     let response = await this.client.get(
       this.getUrl(
         `Appointments?filter[where][${id_param}]=${userId}${includes}${wheres}&filter[order]=id%20DESC${todaysDate}${lastDate}`,
-
-        //   &filter[where][and][0][date][lt]=${moment().format('YYYY-MM-DD')}&filter[where][and][1][date][gt]=${moment().subtract(7, 'days').format('YYYY-MM-DD')}`,
       ),
     );
     let data = response.data;
@@ -854,7 +861,7 @@ export default class Api {
     let includes = '';
     let wheres = '';
     if (requirePatient) {
-      includes = `&filter[include]=patient`;
+      includes = `&filter[include]=patient&filter[include]=clinic`;
     }
 
     if (status != '') {
@@ -878,8 +885,6 @@ export default class Api {
     let response = await this.client.get(
       this.getUrl(
         `Appointments?filter[where][${id_param}]=${userId}${includes}${wheres}&filter[order]=id%20DESC${todaysDate}${lastDate}`,
-
-        //   &filter[where][and][0][date][lt]=${moment().format('YYYY-MM-DD')}&filter[where][and][1][date][gt]=${moment().subtract(7, 'days').format('YYYY-MM-DD')}`,
       ),
     );
     let data = response.data;

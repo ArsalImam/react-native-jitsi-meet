@@ -5,21 +5,22 @@ import {CheckBox} from 'react-native-elements';
 import CommonStyles from '../../CommonStyles';
 import {Icon, Item, Picker} from 'native-base';
 import Api from '../../Api';
-import {AppointmentStatus} from '../../Configs';
+import {AppointmentStatus, Roles} from '../../Configs';
 import moment from 'moment';
 import Loader from '../../components/Loader';
 import {ViewUtils} from '../../Utils';
 
 export default class ScheduledBooking extends Component {
-  state = {
-    appointments: [],
-    isLoading: true,
-    selected: 'UpcomingAppointments',
-    now: new Date(),
-  };
-
   constructor(props) {
     super(props);
+    this.state = {
+      appointments: [],
+      isLoading: true,
+      selected: 'UpcomingAppointments',
+      now: new Date(),
+      role: '',
+      clinic: false
+    };
   }
 
   componentDidMount() {
@@ -36,6 +37,11 @@ export default class ScheduledBooking extends Component {
         .add(15, 'days')
         .format('YYYY-MM-DD'),
     );
+
+    Api.instance()
+      .getUserRole()
+      .then(role => this.setState({role}));
+
     // Api.instance()
     //   .getMyAppointments(AppointmentStatus.scheduled, true)
     //   .then(appointments => {
@@ -50,6 +56,7 @@ export default class ScheduledBooking extends Component {
     //   ;
   }
 
+  
   onValueChange(value) {
     this.setState({
       selected: value,
@@ -126,7 +133,7 @@ export default class ScheduledBooking extends Component {
     return (
       // console.warn('Upcoming?Appointments')
       Api.instance()
-        .getMyAppointments(AppointmentStatus.scheduled, true)
+        .getMyAppointments(AppointmentStatus.scheduled, true, true)
         .then(appointments => {
           this.setState({appointments});
           console.warn('upcomingAppointments', appointments);
@@ -235,7 +242,7 @@ export default class ScheduledBooking extends Component {
                         {
                           flexDirection: 'row',
                           paddingHorizontal: 12,
-                          paddingVertical: 5
+                          paddingVertical: 5,
                         },
                       ]}>
                       <View
@@ -246,24 +253,43 @@ export default class ScheduledBooking extends Component {
                             paddingVertical: 12,
                           },
                         ]}>
-                        <Text>
-                          <Text
-                            style={[
-                              CommonStyles.fontRegular,
-                              CommonStyles.textSizeSmall,
-                              {color: '#333333'},
-                            ]}>{`Patient Name\n`}</Text>
-                          <Text
-                            style={[
-                              CommonStyles.fontMedium,
-                              CommonStyles.textSizeAverage,
-                              {color: '#333333'},
-                            ]}>
-                            {item.patient.firstName.concat(
-                              ' ' + item.patient.lastName,
-                            )}
+                        {this.state.role === Roles.doctor ? (
+                          <Text>
+                            <Text
+                              style={[
+                                CommonStyles.fontRegular,
+                                CommonStyles.textSizeSmall,
+                                {color: '#333333'},
+                              ]}>{`Patient Name\n`}</Text>
+                            <Text
+                              style={[
+                                CommonStyles.fontMedium,
+                                CommonStyles.textSizeAverage,
+                                {color: '#333333'},
+                              ]}>
+                              {item.patient.firstName.concat(
+                                ' ' + item.patient.lastName,
+                              )}
+                            </Text>
                           </Text>
-                        </Text>
+                        ) : (
+                          <Text>
+                            <Text
+                              style={[
+                                CommonStyles.fontRegular,
+                                CommonStyles.textSizeSmall,
+                                {color: '#333333'},
+                              ]}>{`Clinic Name\n`}</Text>
+                            <Text
+                              style={[
+                                CommonStyles.fontMedium,
+                                CommonStyles.textSizeAverage,
+                                {color: '#333333'},
+                              ]}>
+                              {item.clinic.name}
+                            </Text>
+                          </Text>
+                        )}
 
                         <Text
                           style={[

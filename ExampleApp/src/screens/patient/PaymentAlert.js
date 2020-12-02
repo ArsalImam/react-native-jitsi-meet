@@ -23,11 +23,12 @@ class PaymentAlert extends Component {
   _appointmentId = '';
   _patientId = '';
   _clinicId = '';
+  _amount = '';
   state = {
     patients: [],
     generatedCode: Math.floor(100000 + Math.random() * 900000),
     isLoading: false,
-    amount: '1000',
+    amount: '',
     slots: 1,
     image: null,
     imageUrl: '',
@@ -66,18 +67,7 @@ class PaymentAlert extends Component {
     this._patientId = this.props.route.params.patientId;
     this._appointmentId = this.props.route.params.appointmentId;
     this._clinicId = this.props.route.params.clinicId;
-
-    Api.instance()
-      ._user()
-      .then(user => {
-        if (user == null) return;
-        this.setState({
-          amount: user.appointmentFees,
-        });
-      })
-      .catch(err => {
-        //ViewUtils.showToast(err)
-      });
+  this.setState({ amount: this.props.route.params.amount})  
   }
 
   addCredit(patientId) {
@@ -220,6 +210,7 @@ class PaymentAlert extends Component {
     this.setState({check: !this.state.check});
   }
   render() {
+    let amount = this._amount; 
     return (
       <View style={[CommonStyles.modalBackground]}>
         <View style={[CommonStyles.activityIndicatorWrapper]}>
@@ -275,13 +266,13 @@ class PaymentAlert extends Component {
                 Amount*
               </Label>
 
-              <Input
+            
+               <Input
                 disabled={true}
                 value={this.state.amount}
-                // onChangeText={val => this.setState({amount: val})}
-                // name="amount"
-                // placeholder={'1000'}
-                // placeholderTextColor="gray"
+                name="amount"
+                placeholder={'1000'}
+                placeholderTextColor="gray"
                 // returnKeyType="next"
                 // autoCapitalize="none"
                 // selectionColor="#fff"
