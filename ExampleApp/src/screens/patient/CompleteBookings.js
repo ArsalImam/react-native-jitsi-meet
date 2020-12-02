@@ -95,7 +95,7 @@ eventData(param) {
  allAppointments() {
    this.setState({ isLoading: true})
   Api.instance()
-  .getMyAppointments(AppointmentStatus.completed, true, false)
+  .getMyAppointments(AppointmentStatus.completed, true, true)
   .then(appointments => {
   console.warn('completed appointments', appointments)
     this.setState({ appointments }); 
@@ -264,7 +264,7 @@ eventData(param) {
                                 CommonStyles.textSizeAverage,
                                 {color: '#333333'},
                               ]}>
-                              {item.clinic == undefined ? '' : item.clinic.name}
+                              {!item.clinic ? '' : item.clinic.name}
                             </Text>
                           </Text>
                         )}

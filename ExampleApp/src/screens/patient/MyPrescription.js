@@ -45,8 +45,6 @@ export default class MyPresciption extends Component {
     .getUserRole()
     .then(role => this.setState({role}));
     
-
-    
     Api.instance()
       .getMyAppointments(AppointmentStatus.completed, true, true)
       .then(appointments => {
