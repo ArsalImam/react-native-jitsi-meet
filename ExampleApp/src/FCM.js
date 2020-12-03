@@ -80,6 +80,7 @@ export default class FCM {
      * */
     this.notificationOpenedListener = messaging().onNotificationOpenedApp(
       notificationOpen => {
+        console.warn('notificationOpen >>>>', notificationOpen);
         this.onMessage(null, notificationOpen.notification._data);
       },
     );
@@ -87,14 +88,15 @@ export default class FCM {
     /*
      * If your app is closed, you can check if it was opened by a notification being clicked / tapped / opened as follows:
      * */
-    const notificationOpen = await messaging()
-      .getInitialNotification();
+    const notificationOpen = await messaging().getInitialNotification();
     if (notificationOpen) {
-      this.onMessage(null, notificationOpen.notification._data);
+      console.warn("notificationOpen >>>>s", notificationOpen )
+      this.onMessage(null, notificationOpen.data);
     }
 
     messaging().setBackgroundMessageHandler(async remoteMessage => {
-      this.onMessage(null, remoteMessage.notification._data);
+      //console.warn('remoteMessage >>>>', remoteMessage.data.id)
+      this.onMessage(null, remoteMessage.data);
     });
 
     /*
@@ -107,7 +109,12 @@ export default class FCM {
   }
 
   onMessage(title, body) {
+    console.log('onMessage');
+    console.log(
+      '<><><><><><><><><><><><><><><><><><><body>>>>' + JSON.stringify(body),
+    );
     if (this.notifyUser) {
+      console.log('notifyUser');
       this.notifyUser(title, body);
     }
   }

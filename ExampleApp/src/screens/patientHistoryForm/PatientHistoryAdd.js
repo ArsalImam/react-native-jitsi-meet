@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TouchableOpacity, ImageBackground, ScrollView, StatusBar } from 'react-native';
-import { Container, Header, Content, DatePicker, Text, Item, Label, Input, ScrollableTab, Icon, Picker, Form } from 'native-base';
+import { Container, Header, Content,  Text, Item, Label, Input, ScrollableTab, Icon, Picker, Form } from 'native-base';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import CommonStyles from '../../CommonStyles'
 import Api from '../../Api';
@@ -62,7 +62,7 @@ export default class PatientHistoryAdd extends Component {
                 this.setState({ isLoading: false });
             });
         }else{
-            ViewUtils.showAlert(
+            ViewUtils.showToast(
                 'Please Write a Question',       
             );
         }

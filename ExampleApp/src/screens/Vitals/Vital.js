@@ -85,45 +85,76 @@ export default class Vital extends Component {
       case 'Blood Glucose':
         childComponentData = this.glucoseComponent._onSave();
         console.warn('childComponentData === ', childComponentData);
-        Object.assign(data, {
-          multipleValues: [
-            parseInt(childComponentData.value),
-            childComponentData.selectedMeal,
-            childComponentData.selectedMedicine,
-          ],
+        if (childComponentData.value == '') {
+          ViewUtils.showToast('Please enter Blood Glucose Value');
+        }
+        else if (childComponentData.selectedMeal == '') {
+          ViewUtils.showToast('Please select Meal');
+        }
+        else if (childComponentData.selectedMedicine == '') {
+          ViewUtils.showToast('Please select Medicine');
+        }
 
-          vitalType: 'BloodGlucose',
-          value: childComponentData.value,
-        });
+        else {
+          Object.assign(data, {
+            multipleValues: [
+              parseInt(childComponentData.value),
+              childComponentData.selectedMeal,
+              childComponentData.selectedMedicine,
+            ],
+
+            vitalType: 'BloodGlucose',
+            value: childComponentData.value,
+          });
+        }
         break;
       case 'Blood Pressure':
         childComponentData = this.pressureComponent._onSave();
-
-        console.warn('childComponentData === ', childComponentData);
-        Object.assign(data, {
-          multipleValues: [
-            parseInt(childComponentData.systolic),
-            childComponentData.diastolic,
-            childComponentData.pulse,
-          ],
-          vitalType: 'BloodPressure',
-          value: childComponentData.systolic,
-        });
+        if (childComponentData.systolic == '') {
+          ViewUtils.showToast('Please enter systolic');
+          return;
+        }
+        else if (childComponentData.diastolic == '') {
+          ViewUtils.showToast('Please enter diastolic');
+          return;
+        }
+        else if (childComponentData.pulse == '') {
+          ViewUtils.showToast('Please enter pulse');
+          return;
+        }
+        else {
+          console.warn('childComponentData === ', childComponentData);
+          Object.assign(data, {
+            multipleValues: [
+              parseInt(childComponentData.systolic),
+              childComponentData.diastolic,
+              childComponentData.pulse,
+            ],
+            vitalType: 'BloodPressure',
+            value: childComponentData.systolic,
+          });
+        }
         break;
       case 'Blood Oxygen':
         childComponentData = this.oxygenComponent._onSave();
 
         console.warn('childComponentData === ', childComponentData);
-
-        Object.assign(data, {
-          multipleValues: [parseInt(childComponentData.value)],
-          vitalType: 'BloodOxygen',
-          value: childComponentData.value,
-        });
+        if (childComponentData.value == '') {
+          ViewUtils.showToast('Please enter value');
+          return;
+        }
+        else {
+          Object.assign(data, {
+            multipleValues: [parseInt(childComponentData.value)],
+            vitalType: 'BloodOxygen',
+            value: childComponentData.value,
+          });
+        }
         break;
+
       default:
     }
-
+    
     console.warn(
       'multipleValues === ',
       JSON.stringify(this.state.multipleValues),
@@ -141,16 +172,15 @@ export default class Vital extends Component {
           })
           .catch(err => {
             //ViewUtils.showToast(err);
-            ViewUtils.showAlert('Unable to Perform this Action');
+          //  ViewUtils.showToast('Unable to Perform this Action');
           })
           .finally(() => {
             this.setState({isLoading: false});
           });
       } else {
-        ViewUtils.showAlert('Please Provide Vital Type');
+        ViewUtils.showToast('Please Provide Vital Type');
       }
     } else {
-      console.warn('sssss');
       if (this.state.vitalType.trim() != '') {
         this.setState({isLoading: true});
         Api.instance()
@@ -160,17 +190,45 @@ export default class Vital extends Component {
             ViewUtils.showToast('Vital has been saved successfully!');
           })
           .catch(err => {
-            console.warn('error ::: ', err);
-            ViewUtils.showToast(err);
-            ViewUtils.showAlert('Unable to Perform this Action');
+            //ViewUtils.showToast(err);
+            //ViewUtils.showAlert('Unable to Perform this Action');
           })
           .finally(() => {
             this.setState({isLoading: false});
           });
       } else {
-        ViewUtils.showAlert('Please Provide Vital Type');
+        ViewUtils.showToast('Please Provide Vital Type');
       }
-    }
+
+      switch (this.state.vitalType) {
+        case 'Blood Glucose':
+          childComponentData = this.glucoseComponent._onSave();
+          if (childComponentData.value === '') {
+            ViewUtils.showToast('Please add Blood Glucose');
+            return;
+          }
+
+          break;
+        case 'Blood Pressure':
+          childComponentData = this.pressureComponent._onSave();
+          if (childComponentData.systolic === '') {
+            ViewUtils.showToast('Please add Blood Pressure');
+            return;
+          }
+
+          break;
+        case 'Blood Oxygen':
+          childComponentData = this.oxygenComponent._onSave();
+
+          if (childComponentData.value === '') {
+            ViewUtils.showToast('Please add Blood Oxygen');
+            return;
+          }
+          break;
+        default:
+      }
+    }     
+    
   };
 
   addToConsultation(item) {

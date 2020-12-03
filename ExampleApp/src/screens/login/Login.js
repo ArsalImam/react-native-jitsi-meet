@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 // import {} from 'react-native';
 import {
-  
   Text,
   View,
   StyleSheet,
@@ -57,7 +56,7 @@ class Login extends Component {
       if (token) {
         console.log('token', token);
         this.props.navigation.replace('MyDrawer');
-        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+        // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
 
       } else {
         console.log('error', error);
@@ -65,19 +64,19 @@ class Login extends Component {
     });
   }
   _submitForm = () => {
-    
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,9})+$/;
     if(this.state.email == '' && this.state.password == ''){
-      ViewUtils.showAlert(
-        'Please Provide Email and Password',       
+      ViewUtils.showToast(
+        'Please Provide Email and Password',
     );
     return;
     }else if(this.state.email == ''){
-      ViewUtils.showAlert(
+      ViewUtils.showToast(
         'Please Provide Email',       
     );
     return;
     }else if(this.state.password == ''){
-      ViewUtils.showAlert(
+      ViewUtils.showToast(
         'Please Provide Password',       
     );
     return;
@@ -91,8 +90,9 @@ class Login extends Component {
         this.props.navigation.replace('MyDrawer', { user: data.user });
       })
       .catch(err => {
+        console.warn('er' ,err)
         //ViewUtils.showToast(err);
-        ViewUtils.showAlert(
+        ViewUtils.showToast(
           'Invalid Credentials.',       
       );
       })
@@ -197,7 +197,6 @@ class Login extends Component {
                     name="password"
                     placeholder={'Password'}
                     placeholderTextColor="#FFF"
-                    passwordRules
                     style={[
                       CommonStyles.fontMedium,
                       CommonStyles.textColorWhite,
@@ -283,30 +282,30 @@ class Login extends Component {
     );
   }
 
-  handleBackButton = () => {
-    Alert.alert(
-        'Exit App',
-        'Exiting the application?', [{
-            text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel'
-        }, {
-            text: 'OK',
-            onPress: () => BackHandler.exitApp()
-        }, ], {
-            cancelable: false
-        }
-     )
-     return true;
-   } 
+  // handleBackButton = () => {
+  //   Alert.alert(
+  //       'Exit App',
+  //       'Exiting the application?', [{
+  //           text: 'Cancel',
+  //           onPress: () => console.log('Cancel Pressed'),
+  //           style: 'cancel'
+  //       }, {
+  //           text: 'OK',
+  //           onPress: () => BackHandler.exitApp()
+  //       }, ], {
+  //           cancelable: false
+  //       }
+  //    )
+  //    return true;
+  //  } 
 
-  componentDidMount() {
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-  }
+  // componentDidMount() {
+  //   BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+  // }
   
-  componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-  }
+  // componentWillUnmount() {
+  //   BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+  // }
 
 }
 

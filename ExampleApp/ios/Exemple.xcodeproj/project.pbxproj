@@ -41,6 +41,7 @@
 		C518F234790E4AA6B2D102C9 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0A64197DCD6400DA3C6A86F /* MaterialIcons.ttf */; };
 		C9738132A4D34A82A196F8F6 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 68EB69A013734BB5986021D7 /* Octicons.ttf */; };
 		CE8AB953F8674F8CAF3CB4C7 /* DINPro-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = E16CAE6BC89D46FF90F8CEFD /* DINPro-Medium.otf */; };
+		D070FB13252CC747000BC3F9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D070FB12252CC747000BC3F9 /* GoogleService-Info.plist */; };
 		D8750AD04133491AA1234581 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5C78A263289B4C9598FB8354 /* FontAwesome5_Regular.ttf */; };
 		D913AFDB6EA44B83A170DE28 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 69562A2A87E74322B46188F3 /* Foundation.ttf */; };
 		E4431F016FF08BB7823CA1A8 /* libPods-Exemple.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF98C84FB00F9CE097E54171 /* libPods-Exemple.a */; };
@@ -72,7 +73,7 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* ExempleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExempleTests.m; sourceTree = "<group>"; };
 		0FD25ED678924D43A87BC075 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* Exemple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Exemple.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* Etibb.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Etibb.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Exemple/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Exemple/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -111,6 +112,8 @@
 		B5EA49F192584EC4ABDF4DBE /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/native-base/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		BCB3729B735449009137E1AD /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		CAFC91E35F98422993D2891D /* Roboto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto.ttf; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; };
+		D070FB11252CB27B000BC3F9 /* Exemple.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Exemple.entitlements; path = Exemple/Exemple.entitlements; sourceTree = "<group>"; };
+		D070FB12252CC747000BC3F9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Desktop/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D7602CEA7F5648BB9ACDEE43 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/native-base/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		D9B5BCFD0B864E0F92CACE4B /* DINPro-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DINPro-Regular.otf"; path = "../src/assets/fonts/DINPro-Regular.otf"; sourceTree = "<group>"; };
 		E16CAE6BC89D46FF90F8CEFD /* DINPro-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DINPro-Medium.otf"; path = "../src/assets/fonts/DINPro-Medium.otf"; sourceTree = "<group>"; };
@@ -179,6 +182,7 @@
 		13B07FAE1A68108700A75B9A /* Exemple */ = {
 			isa = PBXGroup;
 			children = (
+				D070FB11252CB27B000BC3F9 /* Exemple.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -230,6 +234,7 @@
 			children = (
 				13B07FAE1A68108700A75B9A /* Exemple */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
+				D070FB12252CC747000BC3F9 /* GoogleService-Info.plist */,
 				00E356EF1AD99517003FC87E /* ExempleTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
@@ -244,7 +249,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* Exemple.app */,
+				13B07F961A680F5B00A75B9A /* Etibb.app */,
 				00E356EE1AD99517003FC87E /* ExempleTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* Exemple-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* Exemple-tvOSTests.xctest */,
@@ -328,7 +333,7 @@
 			);
 			name = Exemple;
 			productName = Exemple;
-			productReference = 13B07F961A680F5B00A75B9A /* Exemple.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* Etibb.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2D02E47A1E0B4A5D006451C7 /* Exemple-tvOS */ = {
@@ -383,7 +388,9 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = DQ28U54ND9;
 						LastSwiftMigration = 1120;
+						ProvisioningStyle = Manual;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -436,6 +443,7 @@
 				818EB739DB954A88AAEAB3E3 /* DINPro-Light.otf in Resources */,
 				CE8AB953F8674F8CAF3CB4C7 /* DINPro-Medium.otf in Resources */,
 				16D12CF3F032425A9642B56F /* DINPro-Regular.otf in Resources */,
+				D070FB13252CC747000BC3F9 /* GoogleService-Info.plist in Resources */,
 				C17D6B9FBC8B41288077F1A2 /* SFProText-Bold.ttf in Resources */,
 				C32245BA0974447FA0F83B93 /* SFProText-Light.ttf in Resources */,
 				8485B14F3589473DAE436563 /* SFProText-Semibold.ttf in Resources */,
@@ -797,22 +805,27 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_ENTITLEMENTS = Exemple/Exemple.entitlements;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 8;
+				DEVELOPMENT_TEAM = DQ28U54ND9;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"FB_SONARKIT_ENABLED=1",
 				);
 				INFOPLIST_FILE = Exemple/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = Exemple;
+				PRODUCT_BUNDLE_IDENTIFIER = sa.digitrends.etibb;
+				PRODUCT_NAME = Etibb;
+				PROVISIONING_PROFILE_SPECIFIER = "dev-etibb";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -825,17 +838,24 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_ENTITLEMENTS = Exemple/Exemple.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 8;
+				DEVELOPMENT_TEAM = DQ28U54ND9;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Exemple/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = Exemple;
+				PRODUCT_BUNDLE_IDENTIFIER = sa.digitrends.etibb;
+				PRODUCT_NAME = Etibb;
+				PROVISIONING_PROFILE_SPECIFIER = "dist-etibb";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

@@ -339,7 +339,7 @@ export default class PatientHistoryList extends Component {
                   It is a list of Patient History{' '}
                 </Text>
               </Text>
-            </View>
+            </View>  
 
             <View style={{flex: 8}}>
               <FlatGrid

@@ -11,7 +11,6 @@ import {
   Container,
   Header,
   Content,
-  DatePicker,
   Text,
   Item,
   Label,
@@ -175,7 +174,7 @@ export default class UploadMedicalRecord extends Component {
                 response.result.files.uploadFile[0].name,
               ),
             });
-            console.warn('imageURIIRIRIRIRR' , imageUri)
+            console.warn('imageURIIRIRIRIRR' , this.state.imageUri)
           })
           .catch(err => console.log(err))
           .finally(() => {
@@ -224,6 +223,8 @@ export default class UploadMedicalRecord extends Component {
   };
 
   _savePatientHistory = () => {
+
+    
     if (this.state.imageUri != '' && this.state.name.trim() != '' && this.state.vitalType.trim() != '') {
       // console.warn('Image URl', this.state.imageUri);
       // let imageData = new FormData();
@@ -232,6 +233,10 @@ export default class UploadMedicalRecord extends Component {
       //   name: this.state.imageFilename,
 
       // });
+
+      // ammad
+
+      
 
       let data = {
         title: this.state.name,
@@ -263,7 +268,7 @@ export default class UploadMedicalRecord extends Component {
           this.setState({isLoading: false});
         });
     } else {
-      ViewUtils.showAlert('All Fields Required');
+      ViewUtils.showToast('All Fields Required');
     }
   };
   render() {
@@ -352,7 +357,7 @@ export default class UploadMedicalRecord extends Component {
                       CommonStyles.fontRegular,
                       CommonStyles.textSizeAverage,
                     ]}>
-                    Title*
+                    Title* 
                   </Label>
                   <Input
                     // value={this.state.name}
@@ -538,7 +543,7 @@ export default class UploadMedicalRecord extends Component {
                       CommonStyles.fontRegular,
                       CommonStyles.textSizeAverage,
                     ]}>
-                    Title*
+                    Title* 
                   </Label>
                   <Input
                     // value={this.state.notes}
@@ -555,7 +560,7 @@ export default class UploadMedicalRecord extends Component {
                   style={[
                     CommonStyles.container,
                     CommonStyles.itemStyle,
-                    {paddingTop: 10},
+                    {paddingTop: 10,},
                   ]}>
                   <Picker
                     mode="dropdown"
@@ -563,7 +568,7 @@ export default class UploadMedicalRecord extends Component {
                     focusable
                     iosIcon={<Icon name="arrow-down" />}
                     placeholder="Select Vital Type"
-                    placeholderStyle={{color: '#bfc6ea'}}
+                    placeholderStyle={{color: '#bfc6ea',}}
                     placeholderIconColor="#007aff"
                     selectedValue={this.state.vitalType}
                     onValueChange={val => {

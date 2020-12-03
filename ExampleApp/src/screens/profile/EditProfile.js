@@ -13,7 +13,6 @@ import {
   Container,
   Header,
   Content,
-  DatePicker,
   Text,
   Item,
   Label,
@@ -31,6 +30,7 @@ import Loader from '../../components/Loader';
 import {ViewUtils} from '../../Utils';
 import ImagePicker from 'react-native-image-picker';
 import {Configs} from '../../Configs';
+import {DatePicker} from 'react-native-propel-kit';
 import {Roles} from '../.././Configs';
 
 export default class UploadIllustrations extends React.Component {
@@ -77,11 +77,15 @@ export default class UploadIllustrations extends React.Component {
         storageOption: {
           skipBackup: true,
           path: 'images',
+          waitUntilSaved: true,
+          cameraRoll: true,
         },
       };
     }
 
     ImagePicker.showImagePicker(options, response => {
+
+      
       console.warn('Response = ', response);
 
       if (response.didCancel) {
@@ -111,7 +115,11 @@ export default class UploadIllustrations extends React.Component {
                   response.result.files.uploadFile[0].name,
                 ),
               });
-            });
+            })
+            .catch(err => {
+              console.warn('Error', err)
+            }) 
+            
       }
     });
   };
@@ -146,7 +154,8 @@ export default class UploadIllustrations extends React.Component {
         console.warn('dataaaaaaaaaa ===>', data);
       })
       .catch(err => {
-        //ViewUtils.showToast(err);
+        ViewUtils.showToast(err);
+        console.warn('ammad ali =====>', err);
       })
       .finally(() => {
         this.setState({isLoading: false});
@@ -354,7 +363,6 @@ export default class UploadIllustrations extends React.Component {
                       style={{
                         width: '100%',
                         height: '100%',
-                        borderRadius: 60,
                         resizeMode: 'cover',
                       }}
                     />
@@ -550,36 +558,12 @@ export default class UploadIllustrations extends React.Component {
                 />
               </Item>
 
-              <Label
-                style={[
-                  {marginTop: 10, alignSelf: 'center', width: '88%'},
-                  CommonStyles.fontRegular,
-                  CommonStyles.textSizeSmall,
-                ]}>
-                {' '}
-                Date of Birth
-              </Label>
               <Item style={[CommonStyles.container, CommonStyles.itemStyle]}>
                 <DatePicker
-                  minimumDate={new Date(1930, 1, 1)}
-                  locale={'en'}
-                  timeZoneOffsetInMinutes={undefined}
-                  modalTransparent={false}
-                  animationType={'slide'}
-                  androidMode={'spinner'}
-                  textStyle={[CommonStyles.fontRegular]}
-                  placeHolderTextStyle={[
-                    CommonStyles.fontRegular,
-                    CommonStyles.textSizeAverage,
-
-                    {
-                      paddingBottom: 12,
-                      marginLeft: -5,
-                    },
-                  ]}
-                  value={moment(this.state.dateOfBirth).format('L')}
-                  onDateChange={val => this.setState({dateOfBirth: val})}
-                  disabled={false}
+                  placeholder="Date of Birth"
+                  placeholderTextColor="#000000"
+                  intialValue={moment(this.state.dateOfBirth).format('L')}
+                  onChange={val => this.setState({dateOfBirth: val})}
                 />
                 <Icon active name="calendar" style={{marginLeft: 20}} />
               </Item>

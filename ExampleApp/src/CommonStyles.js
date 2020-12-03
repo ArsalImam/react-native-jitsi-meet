@@ -99,6 +99,10 @@ const CommonStyles = StyleSheet.create({
   padding: {
     padding: 10,
   },
+  padding13: {
+    paddingVertical: 13,
+    paddingLeft: 5
+  },
   buttonStyle: {
     shadowOffset: { height: 0, width: 0 },
     shadowOpacity: 0,
@@ -166,6 +170,16 @@ const CommonStyles = StyleSheet.create({
       height: 1,
     },
   },
+  loginItemStyle23: {
+    borderColor: '#C5D4E8',
+    borderRadius: 6,
+    borderWidth: 1,
+    shadowColor: '#8BB3E9',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+  },
   itemStyle: {
     marginTop: 10,
     alignSelf: 'center',
@@ -219,7 +233,26 @@ const CommonStyles = StyleSheet.create({
   imageStyle:{
     width:30,
     height:20,
-  }
+  },
+  modalBackground: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    backgroundColor: '#00000040',
+  },
+  activityIndicatorWrapper: {
+    backgroundColor: '#fff',
+    width: '88%',
+    padding: 25,
+    borderRadius: 5,
+    
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+
+    
+  },
 })
 
 export default CommonStyles;

@@ -11,7 +11,6 @@ import {
   Container,
   Header,
   Content,
-  DatePicker,
   Text,
   Item,
   Label,

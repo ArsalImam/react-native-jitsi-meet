@@ -9,6 +9,7 @@ import Loader from '../../components/Loader';
 import {AppointmentStatus, Roles} from '../../Configs';
 import moment from 'moment';
 import {ViewUtils} from '../../Utils';
+import {AsyncStorage} from 'react-native';
 
 export default class BookingList extends Component {
   state = {
@@ -26,18 +27,26 @@ export default class BookingList extends Component {
     this.refreshList();
   }
 
+  async _user() {
+    try {
+      return JSON.parse(await AsyncStorage.getItem('@user'));
+    } catch (e) {
+      console.warn(e);
+    }
+  }
+
   refreshList() {
     this.setState({isLoading: true});
     Api.instance()
-      .getMyAppointments(AppointmentStatus.available, true)
+      .getMyAppointments(AppointmentStatus.available, true, true)
       .then(appointments => {
-        console.warn("appointments :: ",appointments.slice().reverse())
+        console.warn('appointments :: ', appointments.slice().reverse());
         // let data = appointments.reverse()
         // console.warn("appointments :: ",data)
         this.setState({appointments});
       })
       .catch(err => {
-        console.warn("erororor  :: ",err)
+        console.warn('erororor  :: ', err);
         ViewUtils.showToast(err);
       })
       .finally(() => {
@@ -46,7 +55,6 @@ export default class BookingList extends Component {
   }
 
   render() {
-
     return (
       <View style={[CommonStyles.container]}>
         <ImageBackground
@@ -92,9 +100,11 @@ export default class BookingList extends Component {
                         if (role === Roles.patient) {
                           this._createAppointment(item.id);
                         } else {
+                          console.warn('item >>>>', item);
                           this.props.navigation.navigate(`Patients`, {
                             appointmentId: item.id,
                             moveTo: 'createAppointment',
+                            clinicId: item.clinicId,
                           });
                         }
                       });
@@ -128,14 +138,14 @@ export default class BookingList extends Component {
                               CommonStyles.fontRegular,
                               CommonStyles.textSizeSmall,
                               {color: '#333333'},
-                            ]}>{`Patient Name\n`}</Text>
+                            ]}>{`Clinic Name\n`}</Text>
                           <Text
                             style={[
                               CommonStyles.fontMedium,
                               CommonStyles.textSizeAverage,
                               {color: '#333333'},
                             ]}>
-                            {'-'}
+                            {item.clinic.name}
                           </Text>
                         </Text>
 
@@ -281,57 +291,70 @@ export default class BookingList extends Component {
   //     });
   // }
 
-  _getScheduledAppointments(appointmentId){
-    Api.instance()
-    .getScheduledAppointments()
-    .then(res => {
-      console.warn("res sss ::: ",res)
-      if(res.length > 0){
-        ViewUtils.showAlert('Cannot create more than one appointment in a day.')
-      }else{
-          let that = this;
-          ViewUtils.showAlert(
-            'Do you want to create appointment?',
-            () => {
-              this.setState({isLoading: true});
-              Api.instance()
-                ._user()
-                .then(user => {
-                  Api.instance()
-                    .updateAppointment(appointmentId, user.id)
-                    .then(() => {
-                      console.warn('user.id ::: ', user.id);
-                      ViewUtils.showToast(
-                        'Appointment has been booked successfully',
-                      );
-                      this.refreshList();
-                    })
-                    .catch(err => {
-                      ViewUtils.showToast(err);
-                    })
-                    .finally(() => that.setState({isLoading: false}));
-                });
-            },
-            () => {},
-          );
-      }
-      //console.warn("res ::: ",res)
-    })
-    .catch(err => {
-      console.warn("erororor  :: ",err)
-      ViewUtils.showToast(err);
-    })
-    .finally(() => {
-      this.setState({isLoading: false});
+  _getScheduledAppointments(appointmentId) {
+    let userId;
+    this._user().then(data => {
+      userId = data.id;
     });
+    Api.instance()
+      .getScheduledAppointments()
+      .then(res => {
+        console.warn('res sss ::: ', res);
+        // if(res.length > 0){
+        // ViewUtils.showToast('Cannot create more than one appointment in a day.')
+        // }else{
+        let that = this;
+        ViewUtils.showAlert(
+          'Do you want to create appointment?',
+          () => {
+            Api.instance()
+              .getPatientUtilizedSlots(userId)
+              .then(res => {
+                console.warn('res', res);
+                if (!res[0]) {
+                  that.props.navigation.navigate('Foree', {
+                    user: userId,
+                    appointmentId: appointmentId,
+                  });
+                } else {
+                  this.setState({isLoading: true});
+                  Api.instance()
+                    ._user()
+                    .then(user => {
+                      Api.instance()
+                        .updateAppointment(appointmentId, user.id)
+                        .then(() => {
+                          console.warn('user.id ::: ', user.id);
+                          ViewUtils.showToast(
+                            'Appointment has been booked successfully',
+                          );
+                          this.refreshList();
+                        })
+                        .catch(err => {
+                          ViewUtils.showToast(err);
+                        })
+                        .finally(() => that.setState({isLoading: false}));
+                    });
+                }
+              });
+          },
+          () => {},
+        );
+        // }
+        //console.warn("res ::: ",res)
+      })
+      .catch(err => {
+        console.warn('erororor  :: ', err);
+        ViewUtils.showToast(err);
+      })
+      .finally(() => {
+        this.setState({isLoading: false});
+      });
   }
 
-
   _createAppointment(appointmentId) {
-
     this._getScheduledAppointments(appointmentId);
 
-    console.warn("this.state.isScheduled === ",this.state.isScheduled)
-    
+    console.warn('this.state.isScheduled === ', this.state.isScheduled);
   }
 }

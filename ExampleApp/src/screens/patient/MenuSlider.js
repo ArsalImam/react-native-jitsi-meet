@@ -29,7 +29,7 @@ class MenuSlider extends React.Component {
     render() {
 
         const PersonalProfile = [
-            { name: 'Basic', iconName: 'clipboard-notes', iconFamily: 'Foundation', iconSize: '18', route: 'PatientProfile' },
+            { name: 'Basic', iconName: 'profile', iconFamily: 'AntDesign', iconSize: '16', route: 'PatientProfile' },
 
         ];
 
@@ -47,11 +47,11 @@ class MenuSlider extends React.Component {
 
         const medicalProfile = [
             { name: 'Medication', iconName: 'medicinebox', iconFamily: 'AntDesign', iconSize: '18', route: 'MedicationList' },
-            { name: 'Diagnosis', iconName: 'bed', iconFamily: 'FontAwesome', iconSize: '18', route: 'DiagnosisList' },
+            { name: 'Diagnosis', iconName: 'file-medical', iconFamily: 'FontAwesome5', iconSize: '18', route: 'DiagnosisList' },
             { name: 'Investigation', iconName: 'ios-flower', iconFamily: 'Ionicon', iconSize: '18', route: 'InvestigationList' },
             { name: 'Surgical Procedure', iconName: 'box-cutter', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: 'ProcedureList' },
-            { name: 'Suggested Therapy', iconName: 'tooth-outline', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: 'TherapyList' },
-            { name: 'Upload', iconName: 'tooth-outline', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: 'IllustrationsList' },
+            { name: 'Suggested Therapy', iconName: 'comment-medical', iconFamily: 'FontAwesome5', iconSize: '18', route: 'TherapyList' },
+            { name: 'Upload', iconName: 'upload', iconFamily: 'Feather', iconSize: '18', route: 'IllustrationsList' },
             { name: 'Patient History Form', iconName: 'notebook', iconFamily: 'SimpleLineIcons', iconSize: '18', route: 'PatientHistoryList' },
 
             //  { name: 'My Medical Records', iconName: 'ios-flower', iconFamily: 'Ionicon', iconSize: '18', route: 'MedicalRecordList' },

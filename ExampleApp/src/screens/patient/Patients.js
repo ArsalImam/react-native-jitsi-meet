@@ -1,5 +1,5 @@
-import { CommonActions } from '@react-navigation/native';
-import React, { Component } from 'react';
+import {CommonActions} from '@react-navigation/native';
+import React, {Component} from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,18 +8,20 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import { FlatGrid } from 'react-native-super-grid';
+import {FlatGrid} from 'react-native-super-grid';
 import CommonStyles from '../../CommonStyles';
-import { Icon } from 'native-base';
+import {Icon} from 'native-base';
 import Api from '../../Api';
 import Loader from '../../components/Loader';
-import { ViewUtils } from '../../Utils';
+import {ViewUtils} from '../../Utils';
 
 export default class Patients extends Component {
   _appointmentId = '';
   _moveTo = '';
+  _clinicId = '';
   state = {
     patients: [],
+    amount: '',
   };
   constructor(props) {
     super(props);
@@ -27,8 +29,9 @@ export default class Patients extends Component {
   componentDidMount() {
     this._appointmentId = this.props.route.params.appointmentId;
     this._moveTo = this.props.route.params.moveTo;
+    this._clinicId = this.props.route.params.clinicId;
 
-    this.setState({ isLoading: true });
+    this.setState({isLoading: true});
     Api.instance()
       .getMyPatients()
       .then(response => this._filterOnlyPatients(response))
@@ -36,13 +39,27 @@ export default class Patients extends Component {
         //ViewUtils.showToast(err);
       })
       .finally(() => {
-        this.setState({ isLoading: false });
+        this.setState({isLoading: false});
+      });
+
+      Api.instance()
+      ._user()
+      .then(user => {
+        if (user == null) return;
+        console.warn('')
+        this.setState({
+          
+          amount: user.appointmentFees,
+        });
+      })
+      .catch(err => {
+        //ViewUtils.showToast(err)
       });
   }
 
-  _filterOnlyPatients(response){
-    let patients = response.filter(x => x.role == "ROLE_PATIENT")
-    this.setState({patients})
+  _filterOnlyPatients(response) {
+    let patients = response.filter(x => x.role == 'ROLE_PATIENT');
+    this.setState({patients});
   }
 
   render() {
@@ -51,14 +68,13 @@ export default class Patients extends Component {
         <ImageBackground
           style={[CommonStyles.container, CommonStyles.backgroundImage]}
           source={require('../../assets/img/bwback.png')}>
-
           <View
             style={[
               CommonStyles.container,
               CommonStyles.padding,
-              { marginTop: '15%' },
+              {marginTop: '15%'},
             ]}>
-            <Text style={{ color: '#FFFFFF', paddingLeft: 15 }}>
+            <Text style={{color: '#FFFFFF', paddingLeft: 15}}>
               <Text
                 style={[
                   CommonStyles.DINAltBold,
@@ -76,11 +92,12 @@ export default class Patients extends Component {
             <FlatGrid
               itemDimension={320}
               items={this.state.patients}
-              style={[CommonStyles.container, { marginTop: '11%' }]}
+              style={[CommonStyles.container, {marginTop: '11%'}]}
               spacing={15}
-              renderItem={({ item }) => (
+              renderItem={({item}) => (
                 <TouchableOpacity
                   onPress={() => {
+                    console.warn('item >>>>', item);
                     if (this._moveTo === 'createAppointment') {
                       this._createAppointment(item.id);
                     } else {
@@ -94,7 +111,7 @@ export default class Patients extends Component {
                     CommonStyles.container,
                     CommonStyles.shadow,
                     CommonStyles.br5,
-                    { flexDirection: 'row', backgroundColor: '#FFF' },
+                    {flexDirection: 'row', backgroundColor: '#FFF'},
                   ]}>
                   <View
                     style={{
@@ -103,30 +120,25 @@ export default class Patients extends Component {
                       marginTop: -7,
                       marginBottom: 8,
                     }}>
-
-
-
-                      {item.imageUrl == '' ? (
-                        <Image
+                    {item.imageUrl == '' ? (
+                      <Image
                         style={[
                           CommonStyles.container,
                           CommonStyles.backgroundImage,
                         ]}
-                          source={require('../../assets/drawable-xxxhdpi/Rectangle.png')}
-                        />
-                      ) : (
-                       
-                        <Image
+                        source={require('../../assets/drawable-xxxhdpi/Rectangle.png')}
+                      />
+                    ) : (
+                      <Image
                         style={[
                           CommonStyles.container,
                           CommonStyles.backgroundImage,
                         ]}
-                          source={{
-                            uri: item.imageUrl,
-                          }}
-                        />
-                      )}    
-
+                        source={{
+                          uri: item.imageUrl,
+                        }}
+                      />
+                    )}
                   </View>
                   <View
                     style={[
@@ -141,16 +153,15 @@ export default class Patients extends Component {
                       ]}>
                       {item.firstName.concat(' ').concat(item.lastName)}
                     </Text>
-                   
                   </View>
 
-                  <View style={{justifyContent: 'center', marginRight: 10}}> 
-                      <Icon
-                        name="exclamationcircleo"
-                        type='AntDesign'
-                        style={{ fontSize: 24, color: '#000' }}
-                      />
-                    </View>
+                  <View style={{justifyContent: 'center', marginRight: 10}}>
+                    <Icon
+                      name="exclamationcircleo"
+                      type="AntDesign"
+                      style={{fontSize: 24, color: '#000'}}
+                    />
+                  </View>
                 </TouchableOpacity>
               )}
             />
@@ -173,11 +184,12 @@ export default class Patients extends Component {
               <Icon
                 name="arrow-back"
                 type="MaterialIcons"
-                style={{ fontSize: 26, color: '#FFF' }}
+                style={{fontSize: 26, color: '#FFF'}}
               />
             </TouchableOpacity>
           </View>
         </ImageBackground>
+
         <Loader loading={this.state.isLoading} />
       </View>
     );
@@ -188,27 +200,49 @@ export default class Patients extends Component {
     ViewUtils.showAlert(
       'Do you want to create appointment?',
       () => {
-        this.setState({ isLoading: true });
         Api.instance()
-          .updateAppointment(this._appointmentId, patientId)
-          
-          .then(() => {
-            console.warn('appointment Id',this._appointmentId ,'patient',patientId) 
-            ViewUtils.showToast('Appointment has been booked successfully');
-            // ViewUtils.showToast('Appointment' ,this._appointmentId ,'fkahfhd',this.patientId);
-            that.props.navigation.dispatch(
-              CommonActions.reset({
-                index: 1,
-                routes: [{ name: 'MyDrawer' }],
-              }),
-            );
-          })
-          .catch(err => {
-            //ViewUtils.showToast(err);
-          })
-          .finally(() => that.setState({ isLoading: false }));
+          .getPatientUtilizedSlots(patientId)
+          .then(res => {
+            console.warn('res >>>> getUtilized', res)
+            if (!res[0]) {
+              this.props.navigation.navigate('PaymentAlert', {
+                appointmentId: this._appointmentId,
+                patientId,
+                clinicId: this._clinicId,
+                amount: this.state.amount,
+
+              });
+            } else {
+              this.setState({isLoading: true});
+              Api.instance()
+                .updateAppointment(this._appointmentId, patientId)
+
+                .then(() => {
+                  console.warn(
+                    'appointment Id',
+                    this._appointmentId,
+                    'patient',
+                    patientId,
+                  );
+                  ViewUtils.showToast(
+                    'Appointment has been booked successfully',
+                  );
+                  // ViewUtils.showToast('Appointment' ,this._appointmentId ,'fkahfhd',this.patientId);
+                  that.props.navigation.dispatch(
+                    CommonActions.reset({
+                      index: 1,
+                      routes: [{name: 'MyDrawer'}],
+                    }),
+                  );
+                })
+                .catch(err => {
+                  //ViewUtils.showToast(err);
+                })
+                .finally(() => that.setState({isLoading: false}));
+            }
+          });
       },
-      () => { },
+      () => {},
     );
   }
 }

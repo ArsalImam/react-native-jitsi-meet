@@ -21,10 +21,10 @@ export default class Api {
         return response;
       },
       function(error) {
-        if(error.message == 'Network Error'){
-          ViewUtils.showAlert("Check your Internet Connectiviy.")
+        if (error.message == 'Network Error') {
+          ViewUtils.showAlert('Check your Internet Connectiviy.');
           //console.warn("internet is off")
-        }else{
+        } else {
           return Promise.reject();
         }
         // ViewUtils.showToast(error.response);
@@ -457,7 +457,6 @@ export default class Api {
 
   // Patient History List
   async getPatientHistoryList() {
-    console.warn('a');
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
@@ -564,9 +563,7 @@ export default class Api {
     let _user = JSON.parse(JSON.stringify(user));
 
     let response = await this.client.post(
-      this.getUrl(
-        `Clients/upsertWithWhere?where={%22email%22:%22${_user.email}%22}`,
-      ),
+      this.getUrl(`Clients/upsertWithWhere?where={"email":"${_user.email}"}`),
       data,
       this.getHeaders(),
     );
@@ -609,13 +606,12 @@ export default class Api {
   }
 
   async updateAppointment(appointmentId, patientId) {
-    
     let appointment = {
       patientId,
       status: AppointmentStatus.scheduled,
     };
 
-    console.warn("patientId ::: ",patientId)
+    console.warn('patientId ::: ', patientId);
 
     let response = await this.client.post(
       this.getUrl(`Appointments/upsertWithWhere?[where][id]=${appointmentId}`),
@@ -626,16 +622,73 @@ export default class Api {
     return data;
   }
 
+  // https://api.etibb.online/api/TransactionLogs/RequestTransaction
+
+  async createPayments(data) {
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+    console.warn('data --  >>>>> ', data);
+    data.createdBy = _user.id;
+    let response = await this.client
+      .post(
+        this.getUrl('TransactionLogs/RequestTransaction'),
+        {data},
+        this.getHeaders(),
+      )
+      .catch(err => {
+        console.warn(err);
+      });
+
+    console.warn('response ----- >>>>>', JSON.stringify(response));
+
+    return response.data;
+  }
+
+  // https://api.etibb.online/api/PatientSlots?filter[where][patientId]=5fc54dec79733c339f289252&filter[where][isUtilized]=false
+  async getPatientUtilizedSlots(patientId) {
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+    // let id_param = this._relationalParamByRole(_user.role);
+    let response = await this.client.get(
+      this.getUrl(
+        `PatientSlots?filter[where][patientId]=${patientId}&filter[where][isUtilized]=false`,
+      ),
+    );
+    let data = response.data;
+
+    if (data.error) throw data.error.message;
+    return data;
+  }
+
+  //https://api.etibb.online/api/PatientSlots/update?[where][transactionId]=5fc6490b79733c339f2892ae
+
+  async postPatientUtilizedSlots(transactionId) {
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+    // let id_param = this._relationalParamByRole(_user.role);
+    let response = await this.client.post(
+      this.getUrl(
+        `PatientSlots/update?[where][transactionId]=${transactionId}`,
+      ),
+      {isUtilized: false},
+      this.getHeaders(),
+    );
+    let data = response.data;
+
+    if (data.error) throw data.error.message;
+    return data;
+  }
+
   async getTodaysAppointments(patientId) {
-    console.warn("patientId ::: ",patientId)
+    console.warn('patientId ::: ', patientId);
 
     var today = moment(new Date()).format('YYYY-MM-DD');
     var tomorrow = moment(today)
       .add('day', 1)
       .format('YYYY-MM-DD');
 
-    console.warn("today :: ",today)
-    console.warn("tomorrow :: ",tomorrow)
+    console.warn('today :: ', today);
+    console.warn('tomorrow :: ', tomorrow);
 
     let response = await this.client.get(
       this.getUrl(
@@ -681,18 +734,20 @@ export default class Api {
     return data;
   }
 
-  
-  async getScheduledAppointments(){
+  async getScheduledAppointments() {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
 
-
-    console.warn("doctor id ::: ",_user.doctorId)
-    console.warn("patient id ::: ",_user.id)
+    console.warn('doctor id ::: ', _user.doctorId);
+    console.warn('patient id ::: ', _user.id);
 
     let response = await this.client.get(
       this.getUrl(
-        `Appointments?filter[where][doctorId]=${_user.doctorId}&filter[where][patientId]=${_user.id}&filter[where][status]=Scheduled`,
+        `Appointments?filter[where][doctorId]=${
+          _user.doctorId
+        }&filter[where][patientId]=${
+          _user.id
+        }&filter[where][status]=Scheduledfilter[include]=clinic`,
       ),
     );
 
@@ -701,12 +756,11 @@ export default class Api {
     return data;
   }
 
-
-  async getMyAppointments(status = '', requirePatient = false) {
+  async getMyAppointments(status = '', requirePatient = false, requireClinic = false) {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
 
-    console.warn("user sdsa ::: ",user)
+    console.warn('user sdsa ::: ', user);
 
     let id_param = this._relationalParamByRole(_user.role);
     let userId = _user.id;
@@ -715,19 +769,24 @@ export default class Api {
       id_param = 'doctorId';
       userId = _user.doctorId;
     }
+    let clinic = '';
     let includes = '';
     let wheres = '';
     if (requirePatient) {
       includes = `&filter[include]=patient`;
     }
-
+    if(requireClinic) {
+      clinic = `&filter[include]=clinic`
+     }
+     
+    
     if (status != '') {
       wheres = `&filter[where][status]=${status}`;
     }
 
     let response = await this.client.get(
       this.getUrl(
-        `Appointments?filter[where][${id_param}]=${userId}${includes}${wheres}&filter[order]=id%20DESC`,
+        `Appointments?filter[where][${id_param}]=${userId}${includes}${clinic}${wheres}&filter[order]=id%20DESC`,
       ),
     );
     let data = response.data;
@@ -740,7 +799,7 @@ export default class Api {
     status = '',
     requirePatient = false,
     todaysDate = '',
-    lastDate = '',
+    lastDate = '',    
   ) {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
@@ -755,8 +814,10 @@ export default class Api {
     let includes = '';
     let wheres = '';
     if (requirePatient) {
-      includes = `&filter[include]=patient`;
+      includes = `&filter[include]=patient&filter[include]=clinic`;
     }
+
+    
 
     if (status != '') {
       wheres = `&filter[where][status]=${status}`;
@@ -773,8 +834,6 @@ export default class Api {
     let response = await this.client.get(
       this.getUrl(
         `Appointments?filter[where][${id_param}]=${userId}${includes}${wheres}&filter[order]=id%20DESC${todaysDate}${lastDate}`,
-
-        //   &filter[where][and][0][date][lt]=${moment().format('YYYY-MM-DD')}&filter[where][and][1][date][gt]=${moment().subtract(7, 'days').format('YYYY-MM-DD')}`,
       ),
     );
     let data = response.data;
@@ -789,13 +848,12 @@ export default class Api {
     todaysDate = '',
     lastDate = '',
   ) {
-
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
 
     let id_param = this._relationalParamByRole(_user.role);
     let userId = _user.id;
-
+    console.warn('user--->', _user);
     if (_user.role == Roles.patient && status == AppointmentStatus.available) {
       id_param = 'doctorId';
       userId = _user.doctorId;
@@ -803,7 +861,7 @@ export default class Api {
     let includes = '';
     let wheres = '';
     if (requirePatient) {
-      includes = `&filter[include]=patient`;
+      includes = `&filter[include]=patient&filter[include]=clinic`;
     }
 
     if (status != '') {
@@ -818,14 +876,15 @@ export default class Api {
       lastDate = `&filter[where][and][1][date][gte]=${lastDate}`;
     }
 
-    console.warn("todaysDate :: ",todaysDate)
-    console.warn("lastDate :: ",lastDate)
-    console.warn("URL ::: ",`Appointments?filter[where][${id_param}]=${userId}${includes}${wheres}&filter[order]=id%20DESC${todaysDate}${lastDate}`)
+    console.warn('todaysDate :: ', todaysDate);
+    console.warn('lastDate :: ', lastDate);
+    console.warn(
+      'URL ::: ',
+      `Appointments?filter[where][${id_param}]=${userId}${includes}${wheres}&filter[order]=id%20DESC${todaysDate}${lastDate}`,
+    );
     let response = await this.client.get(
       this.getUrl(
         `Appointments?filter[where][${id_param}]=${userId}${includes}${wheres}&filter[order]=id%20DESC${todaysDate}${lastDate}`,
-
-        //   &filter[where][and][0][date][lt]=${moment().format('YYYY-MM-DD')}&filter[where][and][1][date][gt]=${moment().subtract(7, 'days').format('YYYY-MM-DD')}`,
       ),
     );
     let data = response.data;
@@ -914,7 +973,7 @@ export default class Api {
   }
 
   getMediaUrl(container, file) {
-    return `${Configs.baseUrl}Contents/${container}/download/${file}`;
+    return `${Configs.baseUrlForee}Contents/${container}/download/${file}`;
   }
 
   getHeaders() {

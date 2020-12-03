@@ -47,6 +47,7 @@ import EditProfile from './screens/profile/EditProfile';
 import {Button} from 'react-native';
 import AddPrescribtion from './screens/prescribeMedication/AddPrescribtion';
 import WebViewReport from './screens/web-view/WebViewReport';
+import PaymentAlert from './screens/patient/PaymentAlert';
 
 import Scheduled from './screens/patient/ScheduledBooking';
 import IncomingCall from './screens/incomingCall/IncomingCall';
@@ -59,6 +60,7 @@ import SideBar from './components/drawer/SideBar';
 import MyPresciption from './screens/patient/MyPrescription';
 import ViewResultsofLabTest from './screens/viewResultsofLabTest/ViewResultsofLabTest';
 import ChatLogs from './screens/chatLogs/ChatLogs';
+import Foree from './screens/web-view/Foree'
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -171,7 +173,9 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="MyDrawer"
           component={this._getDrawerComponent}
-          options={{headerShown: false}}
+          options={
+            {headerShown: false,
+            title: ''}}
         />
 
         <Stack.Screen
@@ -830,6 +834,15 @@ export default class Routes extends React.Component {
         />
 
         <Stack.Screen
+          name="Foree"
+          component={Foree}
+          options={{
+            title: '',
+          headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
           name="ViewResultsofLabTest"
           component={ViewResultsofLabTest}
           options={{
@@ -887,6 +900,16 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="IncomingCall"
           component={IncomingCall}
+          options={{
+            headerShown: false,
+            cardStyle: {
+              backgroundColor: 'transparent',
+            },
+          }}
+        />
+        <Stack.Screen
+          name="PaymentAlert"
+          component={PaymentAlert}
           options={{
             headerShown: false,
             cardStyle: {

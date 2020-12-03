@@ -135,9 +135,9 @@ android {
         applicationId "com.etibb.aamir"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 4
+        versionCode 10
         signingConfig signingConfigs.debug
-        versionName "4.0"
+        versionName "6.4"
     }
     splits {
         abi {
@@ -166,6 +166,7 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+                matchingFallbacks = ['release', 'debug']
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
@@ -174,6 +175,7 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            matchingFallbacks = ['release', 'debug']
         }
     }
 
@@ -218,7 +220,9 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     // implementation project(path: ":react-native-firebase")
-  implementation project(path: ":@react-native-firebase_database")
+    implementation project(path: ":@react-native-firebase_database")
+
+    implementation project(':react-native-splash-screen')
     implementation "com.facebook.react:react-native:+"  // From node_modules
     // compile(project(':react-native-firebase')) {   
     //     transitive = false
