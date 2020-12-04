@@ -50,6 +50,7 @@ export default class UploadIllustrations extends React.Component {
       city: '',
       country: '',
       mobile: '',
+      isPaymentEnabled: true,
       dateOfBirth: '',
       data: [],
       role: '',
@@ -84,8 +85,6 @@ export default class UploadIllustrations extends React.Component {
     }
 
     ImagePicker.showImagePicker(options, response => {
-
-      
       console.warn('Response = ', response);
 
       if (response.didCancel) {
@@ -117,9 +116,8 @@ export default class UploadIllustrations extends React.Component {
               });
             })
             .catch(err => {
-              console.warn('Error', err)
-            }) 
-            
+              console.warn('Error', err);
+            });
       }
     });
   };
@@ -132,6 +130,7 @@ export default class UploadIllustrations extends React.Component {
       email: this.state.user.email,
       speciality: this.state.speciality,
       imageUrl: this.state.imageUrl,
+      isPaymentEnabled: this.state.isPaymentEnabled,
       personalDetails: {
         city: this.state.city,
         country: this.state.country,
@@ -176,6 +175,7 @@ export default class UploadIllustrations extends React.Component {
           city: user.personalDetails.city,
           country: user.personalDetails.country,
           mobile: user.personalDetails.mobile,
+          isPaymentEnabled: user.isPaymentEnabled,
           dateOfBirth: user.personalDetails.dateOfBirth,
           imageUrl: user.imageUrl,
         });
@@ -206,7 +206,10 @@ export default class UploadIllustrations extends React.Component {
       {value: ' Cardiology', viewValue: '  Cardiology'},
       {value: '  Clinical', viewValue: '  Clinical'},
       {value: '   Pharmacology', viewValue: '   Pharmacology'},
-      {value: '  Dermatology', viewValue: '  Endocrinology and Diabetes'},
+      {
+        value: 'Endocrinology and Diabetes',
+        viewValue: '  Endocrinology and Diabetes',
+      },
       {value: '    Gastroenterology', viewValue: '   Gastroenterology'},
       {value: '   General Internal', viewValue: '  General Internal'},
       {value: '  Medicine', viewValue: ' Medicine'},
@@ -567,6 +570,38 @@ export default class UploadIllustrations extends React.Component {
                 />
                 <Icon active name="calendar" style={{marginLeft: 20}} />
               </Item>
+              {this.state.role == Roles.doctor && (
+                <Item
+                  picker
+                  style={[
+                    CommonStyles.container,
+                    CommonStyles.itemStyle,
+                    {marginTop: 30},
+                  ]}>
+                  <Picker
+                    mode="dropdown"
+                    textStyle={[
+                      CommonStyles.fontRegular,
+                      CommonStyles.textSizeMedium,
+                    ]}
+                    iosIcon={<Icon name="arrow-down" />}
+                    placeholderStyle={{color: '#bfc6ea'}}
+                    placeholderIconColor="#007aff"
+                    selectedValue={this.state.isPaymentEnabled}
+                    onValueChange={txt =>
+                      this.setState({isPaymentEnabled: txt})
+                    }>
+                    <Picker.Item
+                      color="gray"
+                      selected={true}
+                      label="Allow payment for Patients?"
+                      value=""
+                    />
+                    <Picker.Item label="Yes" value={true} />
+                    <Picker.Item label="No" value={false} />
+                  </Picker>
+                </Item>
+              )}
             </KeyboardAwareScrollView>
           </View>
 
