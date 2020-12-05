@@ -52,28 +52,6 @@ export default class Methods {
     this.activeCourse = activeCourse;
   }
 
-  // getTabInitialRoute() {
-  //   let screenName = '';
-  //   console.log('navigatePush =================================> ', this.navigatePush);
-  //   switch (this.navigatePush) {
-
-  //     case 0:
-  //       screenName = 'Event';
-  //     // this.props.navigation.replace('Tabs', {}, {screen: 'Event'});
-  //       break;
-  //     case 1:
-  //       // this.props.navigation.replace('Event', {type});
-  //       break;
-  //     case 2:
-  //       // this.props.navigation.replace('Event', {type});
-  //       break;
-
-  //       default:
-  //       screenName = 'Home';
-  //   }
-  //   return screenName;
-  // }
-
   _pushNavigation(screenTag) {
     this.navigatePush = screenTag;
   }
