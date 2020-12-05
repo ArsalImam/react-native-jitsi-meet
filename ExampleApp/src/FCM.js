@@ -109,10 +109,7 @@ export default class FCM {
   }
 
   onMessage(title, body) {
-    console.log('onMessage');
-    console.log(
-      '<><><><><><><><><><><><><><><><><><><body>>>>' + JSON.stringify(body),
-    );
+    console.log('<body>>>>' + JSON.stringify(body));
     if (this.notifyUser) {
       console.log('notifyUser');
       this.notifyUser(title, body);

@@ -98,6 +98,7 @@ export default class BookingList extends Component {
                       .getUserRole()
                       .then(role => {
                         if (role === Roles.patient) {
+                          console.warn('item >>>>', item);
                           this._createAppointment(item.id);
                         } else {
                           console.warn('item >>>>', item);
@@ -293,8 +294,10 @@ export default class BookingList extends Component {
 
   _getScheduledAppointments(appointmentId) {
     let userId;
+    let isPaymentEnabled;
     this._user().then(data => {
       userId = data.id;
+      isPaymentEnabled = data.isPaymentEnabled;
     });
     Api.instance()
       .getScheduledAppointments()
@@ -307,36 +310,57 @@ export default class BookingList extends Component {
         ViewUtils.showAlert(
           'Do you want to create appointment?',
           () => {
-            Api.instance()
-              .getPatientUtilizedSlots(userId)
-              .then(res => {
-                console.warn('res', res);
-                if (!res[0]) {
-                  that.props.navigation.navigate('Foree', {
-                    user: userId,
-                    appointmentId: appointmentId,
-                  });
-                } else {
-                  this.setState({isLoading: true});
-                  Api.instance()
-                    ._user()
-                    .then(user => {
-                      Api.instance()
-                        .updateAppointment(appointmentId, user.id)
-                        .then(() => {
-                          console.warn('user.id ::: ', user.id);
-                          ViewUtils.showToast(
-                            'Appointment has been booked successfully',
-                          );
-                          this.refreshList();
-                        })
-                        .catch(err => {
-                          ViewUtils.showToast(err);
-                        })
-                        .finally(() => that.setState({isLoading: false}));
+            if (! isPaymentEnabled) {
+              Api.instance()
+                .getPatientUtilizedSlots(userId)
+                .then(res => {
+                  console.warn('res', res);
+                  if (!res[0]) {
+                    that.props.navigation.navigate('Foree', {
+                      user: userId,
+                      appointmentId: appointmentId,
                     });
-                }
-              });
+                  } else {
+                    this.setState({isLoading: true});
+                    Api.instance()
+                      ._user()
+                      .then(user => {
+                        Api.instance()
+                          .updateAppointment(appointmentId, user.id)
+                          .then(() => {
+                            console.warn('user.id ::: ', user.id);
+                            ViewUtils.showToast(
+                              'Appointment has been booked successfully',
+                            );
+                            this.refreshList();
+                          })
+                          .catch(err => {
+                            ViewUtils.showToast(err);
+                          })
+                          .finally(() => that.setState({isLoading: false}));
+                      });
+                  }
+                });
+            } else {
+              this.setState({isLoading: true});
+              Api.instance()
+                ._user()
+                .then(user => {
+                  Api.instance()
+                    .updateAppointment(appointmentId, user.id)
+                    .then(() => {
+                      console.warn('user.id ::: ', user.id);
+                      ViewUtils.showToast(
+                        'Appointment has been booked successfully',
+                      );
+                      this.refreshList();
+                    })
+                    .catch(err => {
+                      ViewUtils.showToast(err);
+                    })
+                    .finally(() => that.setState({isLoading: false}));
+                });
+            }
           },
           () => {},
         );

@@ -240,6 +240,7 @@ export default class PatientProfile extends React.Component {
                         ]}>
                         {`Doctor Code: `} {this.state.user.doctorCode}
                         {`\n`}
+                        
                         {`\nCall: `} {this.state.user.personalDetails.mobile}{' '}
                         {`\n`}
                         {`\nAge: `}{' '}
@@ -255,6 +256,10 @@ export default class PatientProfile extends React.Component {
                             .split(' ')[1]
                         }
                         {`\n`}
+                        {'\n'}
+                        {`Allow payment for Patients?`} {this.state.user.isPaymentEnabled ? ' Yes' : ' No'}
+                        {`\n`}
+
                       </Text>
                     )}
 
@@ -375,7 +380,7 @@ export default class PatientProfile extends React.Component {
               {
                 position: 'absolute',
                 right: 17,
-                top: 40,
+                top: 30,
                 justifyContent: 'center',
                 alignItems: 'center',
               },

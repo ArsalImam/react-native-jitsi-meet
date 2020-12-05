@@ -52,18 +52,14 @@ export default class Api {
     let authData = response.data;
     if (authData.error) throw authData.error.message;
     await this.saveUser(authData.user);
-
-    //update fcm
     try {
       await this.updateFcmToken(await AsyncStorage.getItem('fcmToken'));
     } catch (error) {
-      //log error, to enable ease in debugging
       console.log(error);
     }
     return response.data;
   }
 
-  // Clinic
   // create clinic
   async createClinic(data) {
     console.warn('data', data);
@@ -79,13 +75,6 @@ export default class Api {
     }
   }
 
-  // setup-type,
-  // notes,
-  // date,
-  // doctorId,
-  // patientId,
-  // answer,
-  // active,
   async addReport(item, appointmentId, patientId) {
     try {
       let user = await this._user();
@@ -227,7 +216,7 @@ export default class Api {
   }
 
   // Vital List
-  async getVitalList() {
+    async getVitalList() {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
 
@@ -545,7 +534,6 @@ export default class Api {
     let _user = JSON.parse(JSON.stringify(user));
     console.warn('data -- ', data);
     // data.doctorId = _user.id;
-
     let response = await this.client.post(
       this.getUrl('vitals'),
       data,
@@ -567,8 +555,6 @@ export default class Api {
       data,
       this.getHeaders(),
     );
-
-    // console.warn(JSON.stringify(response));
     await this.saveUser(response.data);
     return response.data;
   }
@@ -621,9 +607,6 @@ export default class Api {
     if (data.error) throw data.error.message;
     return data;
   }
-
-  // https://api.etibb.online/api/TransactionLogs/RequestTransaction
-
   async createPayments(data) {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
@@ -644,7 +627,6 @@ export default class Api {
     return response.data;
   }
 
-  // https://api.etibb.online/api/PatientSlots?filter[where][patientId]=5fc54dec79733c339f289252&filter[where][isUtilized]=false
   async getPatientUtilizedSlots(patientId) {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
@@ -659,8 +641,6 @@ export default class Api {
     if (data.error) throw data.error.message;
     return data;
   }
-
-  //https://api.etibb.online/api/PatientSlots/update?[where][transactionId]=5fc6490b79733c339f2892ae
 
   async postPatientUtilizedSlots(transactionId) {
     let user = await this._user();
@@ -840,8 +820,6 @@ export default class Api {
     if (data.error) throw data.error.message;
     return data;
   }
-  //
-
   async getMyAppointmentsPast15Days(
     status = '',
     requirePatient = false,
@@ -891,7 +869,6 @@ export default class Api {
     if (data.error) throw data.error.message;
     return data;
   }
-  // https://api.etibb.online/api/Appointments?filter[where][doctorId]=5f3154e8039d6c7964019889&filter[where][and][0][date][lt]=2020-08-26&filter[where][and][1][date][gt]=2020-8-11
   async getMyPatients() {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
@@ -973,7 +950,7 @@ export default class Api {
   }
 
   getMediaUrl(container, file) {
-    return `${Configs.baseUrlForee}Contents/${container}/download/${file}`;
+    return `${Configs.mediaUrl}Contents/${container}/download/${file}`;
   }
 
   getHeaders() {
