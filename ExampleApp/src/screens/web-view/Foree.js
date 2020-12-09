@@ -125,7 +125,7 @@ export default class Foree extends Component {
           source={{
             uri: `${endPoint}`,
           }}
-          startInLoadingState
+          startInLoadingState={true}
           javaScriptEnabledAndroid={true}
           javaScriptEnabled={true}
           ref={webView => (this.webView = webView)}
@@ -153,7 +153,7 @@ export default class Foree extends Component {
                 });
             }
           }}
-          injectedJavaScript={this.injectedJavascript}
+          injectedJavaScript={this. injectedJavascript}
         />
       </Container>
     );

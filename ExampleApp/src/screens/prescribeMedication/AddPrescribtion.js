@@ -54,6 +54,14 @@ export default class AddPrescribtion extends Component {
     console.warn('this.props.route.params ======= ', this.props.route.params);
   }
 
+  componentDidMount() {
+    Api.instance()
+    .getDataCenterlizedListDuringConsultation('mediacation')
+    .then(res => {
+      console.warn('res >>>>>' , res)
+    })
+
+  }
   _savePrescribeMedication = () => {
     let data = {
       date: this.state.startDate,

@@ -42,7 +42,7 @@ export default class InvestigationList extends Component {
     if (this.state.appointmentId != null) {
       this.setState({isLoading: true});
       Api.instance()
-      .getListDuringConsultation('requestMedication',this.state.patientId)
+      .getDataCenterlizedListDuringConsultation('investigation')
         .then(data => {
           console.warn('=====>', data['Diagnosis']);
           console.warn('response data == ', data);
@@ -55,7 +55,7 @@ export default class InvestigationList extends Component {
     }else{
       this.setState({isLoading: true});
       Api.instance()
-        .getInvestigationList()
+      .getDataCenterlizedListDuringConsultation('investigation')
         .then(data => {
           console.warn('=====>', data['Diagnosis']);
           console.warn('response data == ', data);

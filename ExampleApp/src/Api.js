@@ -267,6 +267,21 @@ export default class Api {
     return data;
   }
 
+  async getDataCenterlizedListDuringConsultation(setupType) {
+    let user = await this._user();
+    let _user = JSON.parse(JSON.stringify(user));
+    let response = await this.client.get(
+      this.getUrl(
+        `Setups?filter[where][setupType]=${setupType}&filter[order]=createdAt%20DESC`,
+      ),
+    );
+    let data = response.data;
+    console.warn('data', data);
+    if (data.error) throw data.error.message;
+    return data;
+  }
+
+
   async getVitalListConsultation(patientId) {
     console.warn(patientId);
     let user = await this._user();

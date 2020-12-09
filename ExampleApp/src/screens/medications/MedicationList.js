@@ -40,7 +40,7 @@ export default class MedicationList extends Component {
   _getMedicationList() {
     this.setState({isLoading: true});
     Api.instance()
-      .getMedicationList()
+      .getDataCenterlizedListDuringConsultation('medication')
       .then(data => {
         this.setState({medicationList: data});
       })
