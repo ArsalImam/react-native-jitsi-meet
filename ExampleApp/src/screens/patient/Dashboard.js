@@ -140,6 +140,8 @@ class Dashboard extends React.Component {
       Api.instance()
         ._user()
         .then(user => {
+
+          console.warn('user >>>>', user)
           if (user == null) return;
           this.setState(
             {

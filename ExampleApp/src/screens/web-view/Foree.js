@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, TouchableOpacity, BackHandler, Alert} from 'react-native';
+import {View, TouchableOpacity, BackHandler, Alert, Text} from 'react-native';
 import {WebView} from 'react-native-webview';
 import {
   Header,
@@ -27,6 +27,11 @@ export default class Foree extends Component {
     this.webView = null;
   }
 
+  reloadWebView() {
+    this.setState({
+      forceReload: true,
+    });
+  }
   handleBackButton = () => {
     Alert.alert(
       'E-tibb',
@@ -82,6 +87,7 @@ export default class Foree extends Component {
     this.setState({
       userId: this.props.route.params.user,
       appointmentId: this.props.route.params.appointmentId,
+      appointmentFees: this.props.route.params.appointmentFees,
     });
   }
 
@@ -92,9 +98,9 @@ export default class Foree extends Component {
   render() {
     var Code = Math.floor(1000 + Math.random() * 9000);
 
-    const endPoint = `${Configs.foreeUrl}?amount=1000&userId=${
-      this.state.userId
-    }&createdBy=${
+    const endPoint = `${Configs.foreeUrl}?amount=${
+      this.state.appointmentFees
+    }&userId=${this.state.userId}&createdBy=${
       this.state.userId
     }&isProd=true&type=patient&slots=1&transactionCode=${Code}&paymentType=foree&url=${
       Configs.baseUrlForee
@@ -102,11 +108,10 @@ export default class Foree extends Component {
     //  console.warn(`${Configs.foreeUrl}?amount=1000&userId=${this.state.userId}&createdBy=${this.state.userId}&isProd=true&type=patient&slots=1&transactionCode=${Code}&paymentType=foree&url=${Configs.baseUrlForee}`);
     //  const endPoint = 'https://github.com/react-native-community/react-native-webview';
     return (
-      
       <Container style={{flex: 1, backgroundColor: '#000'}}>
-        <Header 
-        androidStatusBarColor="#00000000"
-        style={{height: 70, backgroundColor: '#297dec',}}>
+        <Header
+          androidStatusBarColor="#00000000"
+          style={{height: 70, backgroundColor: '#297dec'}}>
           <Left style={{}}>
             <Button
               transparent
@@ -124,6 +129,7 @@ export default class Foree extends Component {
         <WebView
           source={{
             uri: `${endPoint}`,
+            forceReload: true,
           }}
           startInLoadingState={true}
           javaScriptEnabledAndroid={true}
@@ -153,7 +159,7 @@ export default class Foree extends Component {
                 });
             }
           }}
-          injectedJavaScript={this. injectedJavascript}
+          injectedJavaScript={this.injectedJavascript}                                                                      
         />
       </Container>
     );

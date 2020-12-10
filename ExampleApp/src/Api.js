@@ -742,7 +742,7 @@ export default class Api {
           _user.doctorId
         }&filter[where][patientId]=${
           _user.id
-        }&filter[where][status]=Scheduledfilter[include]=clinic`,
+        }&filter[where][status]=Scheduled&filter[include]=clinic`,
       ),
     );
 
@@ -759,10 +759,11 @@ export default class Api {
 
     let id_param = this._relationalParamByRole(_user.role);
     let userId = _user.id;
-
+    let doctorObj = ''
     if (_user.role == Roles.patient && status == AppointmentStatus.available) {
       id_param = 'doctorId';
       userId = _user.doctorId;
+      doctorObj = '&filter[include]=doctor';
     }
     let clinic = '';
     let includes = '';
@@ -781,7 +782,7 @@ export default class Api {
 
     let response = await this.client.get(
       this.getUrl(
-        `Appointments?filter[where][${id_param}]=${userId}${includes}${clinic}${wheres}&filter[order]=id%20DESC`,
+        `Appointments?filter[where][${id_param}]=${userId}${includes}${clinic}${wheres}${doctorObj}&filter[order]=id%20DESC`,
       ),
     );
     let data = response.data;
