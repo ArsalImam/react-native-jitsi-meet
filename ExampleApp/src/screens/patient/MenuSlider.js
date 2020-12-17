@@ -53,21 +53,11 @@ class MenuSlider extends React.Component {
             { name: 'Suggested Therapy', iconName: 'comment-medical', iconFamily: 'FontAwesome5', iconSize: '18', route: 'TherapyList' },
             { name: 'Upload', iconName: 'upload', iconFamily: 'Feather', iconSize: '18', route: 'IllustrationsList' },
             { name: 'Patient History Form', iconName: 'notebook', iconFamily: 'SimpleLineIcons', iconSize: '18', route: 'PatientHistoryList' },
-
-            //  { name: 'My Medical Records', iconName: 'ios-flower', iconFamily: 'Ionicon', iconSize: '18', route: 'MedicalRecordList' },
-            // { name: 'Medication Prescribe', iconName: 'bed', iconFamily: 'FontAwesome', iconSize: '18', route: 'AddPrescribtion' },
-            //  { name: 'Allergies', iconName: 'ios-flower', iconFamily: 'Ionicon', iconSize: '18', route: 'PatientProfile'},
-            // // { name: 'Surgeries', iconName: 'box-cutter', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: '' },
-            // { name: 'Dental Issue', iconName: 'tooth-outline', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: '' },
-            // { name: 'Reports', iconName: 'notebook', iconFamily: 'SimpleLineIcons', iconSize: '20', route: 'AddReport' },
         ];
         
-        const medicalProfilePatient = [
-            // { name: 'Upload', iconName: 'tooth-outline', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: 'IllustrationsList' },
-            // { name: 'Patient History Form', iconName: 'notebook', iconFamily: 'SimpleLineIcons', iconSize: '18', route: 'PatientHistoryList' },
+        const medicalProfilePatient = [ 
             { name: 'Medical Records', iconName: 'ios-flower', iconFamily: 'Ionicon', iconSize: '18', route: 'MedicalRecordList' },
             { name: 'Patient History Form', iconName: 'notebook', iconFamily: 'SimpleLineIcons', iconSize: '18', route: 'PatientHistoryList' },
-         
         ];
 
         return (

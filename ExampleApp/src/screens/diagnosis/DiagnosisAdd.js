@@ -36,8 +36,6 @@ export default class DiagnosisAdd extends Component {
     }
 
     _saveDiagnosis = () => {
-
-    
         if(this.state.appointmentId != null){
 
             let data = {
@@ -110,11 +108,7 @@ export default class DiagnosisAdd extends Component {
                     'Please Provide Diagnosis Name',       
                 );    
             }
-        }
-        
-
-        
-        
+        } 
     };
 
     addToConsultation(item) {

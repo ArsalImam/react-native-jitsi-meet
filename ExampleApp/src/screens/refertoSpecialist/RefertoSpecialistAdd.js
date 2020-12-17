@@ -287,21 +287,6 @@ export default class RefertoSpecialistAdd extends Component {
 
             <Loader loading={this.state.isLoading} />
 
-            {/* <View
-                            style={[
-                                CommonStyles.backButtonStyle
-                            ]}>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    this.props.navigation.goBack();
-                                }}>
-                                <Icon
-                                    name="arrow-back"
-                                    type="MaterialIcons"
-                                    style={{ fontSize: 26, color: '#FFF' }}
-                                />
-                            </TouchableOpacity>
-                        </View> */}
           </ImageBackground>
         </View>
       );

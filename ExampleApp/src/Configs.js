@@ -13,9 +13,7 @@ const Configs = {
   // baseUrl: 'http://18.140.243.171:3001/api/',
   baseUrl: 'http://18.140.180.234:3001/api/',
   mediaUrl: 'https://api.etibb.online/api/',
-
   baseUrlForee: 'https://api.etibb.online/api/',
-
   foreeUrl: `https://www.etibb.online/assets/html/foree.html`,
   // baseUrl: 'https://api.etibb.online.live/api/',
 

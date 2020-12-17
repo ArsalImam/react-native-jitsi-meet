@@ -9,9 +9,7 @@ import {
   Icon,
   Container,
   Button,
-  Title,
 } from 'native-base';
-import CommonStyles from '../../CommonStyles';
 import {ViewUtils} from '../../Utils';
 import {Configs, Roles, AppointmentStatus} from '../../Configs';
 import Api from '../../Api';
@@ -78,12 +76,6 @@ export default class Foree extends Component {
 
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-    // Api.instance()
-    // .getUserRole()
-    // .then(role => {
-    //   this.setState({userRole:role})
-    // })
-    console.warn('roue params', this.props.route.params.user);
     this.setState({
       userId: this.props.route.params.user,
       appointmentId: this.props.route.params.appointmentId,
@@ -105,8 +97,6 @@ export default class Foree extends Component {
     }&isProd=true&type=patient&slots=1&transactionCode=${Code}&paymentType=foree&url=${
       Configs.baseUrlForee
     }`;
-    //  console.warn(`${Configs.foreeUrl}?amount=1000&userId=${this.state.userId}&createdBy=${this.state.userId}&isProd=true&type=patient&slots=1&transactionCode=${Code}&paymentType=foree&url=${Configs.baseUrlForee}`);
-    //  const endPoint = 'https://github.com/react-native-community/react-native-webview';
     return (
       <Container style={{flex: 1, backgroundColor: '#000'}}>
         <Header
