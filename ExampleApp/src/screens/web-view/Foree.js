@@ -127,7 +127,7 @@ export default class Foree extends Component {
           ref={webView => (this.webView = webView)}
           onMessage={event => {
             console.warn('event === ', event);
-            if (event.nativeEvent.data == 'success') {
+            if (event.nativeEvent.data == 'success' && event.nativeEvent.canGoBack ) {
               Api.instance()
                 ._user()
                 .then(user => {
