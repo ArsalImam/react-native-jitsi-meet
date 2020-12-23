@@ -315,7 +315,7 @@ export default class BookingList extends Component {
                 .then(res => {
                   console.warn('res', res);
                   if (!res[0]) {
-                    that.props.navigation.navigate('Foree', {
+                    that.props.navigation.navigate('PaymentAlert', {
                       user: userId,
                       appointmentId: appointmentId,
                       appointmentFees: appointmentFees
