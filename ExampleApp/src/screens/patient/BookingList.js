@@ -99,7 +99,11 @@ export default class BookingList extends Component {
                       .then(role => {
                         if (role === Roles.patient) {
                           console.warn('patient item >>>>', item);
-                          this._createAppointment(item.id, item.doctor.appointmentFees, item.doctor.isPaymentEnabled);
+                          this._createAppointment(
+                            item.id,
+                            item.doctor.appointmentFees,
+                            item.doctor.isPaymentEnabled,
+                          );
                         } else {
                           console.warn('item >>>>', item);
                           this.props.navigation.navigate(`Patients`, {
@@ -295,7 +299,7 @@ export default class BookingList extends Component {
   _getScheduledAppointments(appointmentId, appointmentFees, isPaymentEnabled) {
     let userId;
     this._user().then(data => {
-      console.warn('data >>>>', data)
+      console.warn('data >>>>', data);
       userId = data.id;
     });
     Api.instance()
@@ -310,37 +314,37 @@ export default class BookingList extends Component {
           'Do you want to create appointment?',
           () => {
             if (isPaymentEnabled) {
-              // Api.instance()
-              //   .getPatientUtilizedSlots(userId)
-              //   .then(res => {
-              //     console.warn('res', res);
-              //     if (!res[0]) {
+              Api.instance()
+                .getPatientUtilizedSlots(userId)
+                .then(res => {
+                  console.warn('res', res);
+                  if (!res[0]) {
                     that.props.navigation.navigate('Foree', {
                       user: userId,
                       appointmentId: appointmentId,
-                      appointmentFees: appointmentFees
+                      appointmentFees: appointmentFees,
                     });
-                //   } else {
-                //     this.setState({isLoading: true});
-                //     Api.instance()
-                //       ._user()
-                //       .then(user => {
-                //         Api.instance()
-                //           .updateAppointment(appointmentId, user.id)
-                //           .then(() => {
-                //             console.warn('user.id ::: ', user.id);
-                //             ViewUtils.showToast(
-                //               'Appointment has been booked successfully',
-                //             );
-                //             this.refreshList();
-                //           })
-                //           .catch(err => {
-                //             ViewUtils.showToast(err);
-                //           })
-                //           .finally(() => that.setState({isLoading: false}));
-                //       });
-                //   }
-                // });
+                  } else {
+                    this.setState({isLoading: true});
+                    Api.instance()
+                      ._user()
+                      .then(user => {
+                        Api.instance()
+                          .updateAppointment(appointmentId, user.id)
+                          .then(() => {
+                            console.warn('user.id ::: ', user.id);
+                            ViewUtils.showToast(
+                              'Appointment has been booked successfully',
+                            );
+                            this.refreshList();
+                          })
+                          .catch(err => {
+                            ViewUtils.showToast(err);
+                          })
+                          .finally(() => that.setState({isLoading: false}));
+                      });
+                  }
+                });
             } else {
               this.setState({isLoading: true});
               Api.instance()
@@ -377,7 +381,11 @@ export default class BookingList extends Component {
   }
 
   _createAppointment(appointmentId, appointmentFees, isPaymentEnabled) {
-    this._getScheduledAppointments(appointmentId, appointmentFees, isPaymentEnabled);
+    this._getScheduledAppointments(
+      appointmentId,
+      appointmentFees,
+      isPaymentEnabled,
+    );
 
     console.warn('this.state.isScheduled === ', this.state.isScheduled);
   }
