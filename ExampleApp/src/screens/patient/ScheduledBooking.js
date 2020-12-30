@@ -19,7 +19,7 @@ export default class ScheduledBooking extends Component {
       selected: 'UpcomingAppointments',
       now: new Date(),
       role: '',
-      clinic: false
+      clinic: false,
     };
   }
 
@@ -56,7 +56,6 @@ export default class ScheduledBooking extends Component {
     //   ;
   }
 
-  
   onValueChange(value) {
     this.setState({
       selected: value,
@@ -136,7 +135,10 @@ export default class ScheduledBooking extends Component {
         .getMyAppointments(AppointmentStatus.scheduled, true, true)
         .then(appointments => {
           this.setState({appointments});
-          console.warn('upcomingAppointments', appointments);
+          console.warn(
+            'upcomingAppointments',
+            JSON.parse(JSON.stringify(this.state.appointments)),
+          );
         })
         .catch(err => {
           //ViewUtils.showToast(err)
@@ -207,194 +209,209 @@ export default class ScheduledBooking extends Component {
               items={this.state.appointments.slice().reverse()}
               style={[CommonStyles.container]}
               renderItem={({item}) => (
-                <TouchableOpacity
-                  onPress={() => {
-                    console.warn('item.id == ', item.id);
-                    ViewUtils.showAlert(
-                      'Are you sure, you want to open consultation room?',
-                      () => {
-                        Api.instance()
-                          .notifyAppointment(item.id)
-                          .then()
-                          .catch();
-                        navigate('AppointmentRoom', {
-                          appointmentId: item.id,
-                        });
-                      },
-                      () => {},
-                    );
-                  }}
-                  style={[
-                    CommonStyles.container,
-                    CommonStyles.shadow,
-                    CommonStyles.br5,
-                    CommonStyles.bgColor,
-                  ]}>
-                  <ImageBackground
+                console.warn('doctor abc'),
+                (
+                  <TouchableOpacity
+                    onPress={() => {
+                      console.warn('item.id == ', item.id);
+                      ViewUtils.showAlert(
+                        'Are you sure, you want to open consultation room?',
+                        () => {
+                          Api.instance()
+                            .notifyAppointment(item.id)
+                            .then()
+                            .catch();
+                          navigate('AppointmentRoom', {
+                            appointmentId: item.id,
+                          });
+                        },
+                        () => {},
+                      );
+                    }}
                     style={[
                       CommonStyles.container,
-                      CommonStyles.backgroundImage,
-                    ]}
-                    source={require('../../assets/img/bookingbg2x.png')}>
-                    <View
+                      CommonStyles.shadow,
+                      CommonStyles.br5,
+                      CommonStyles.bgColor,
+                    ]}>
+                    <ImageBackground
                       style={[
                         CommonStyles.container,
-                        {
-                          flexDirection: 'row',
-                          paddingHorizontal: 12,
-                          paddingVertical: 5,
-                        },
-                      ]}>
+                        CommonStyles.backgroundImage,
+                      ]}
+                      source={require('../../assets/img/bookingbg2x.png')}>
                       <View
                         style={[
                           CommonStyles.container,
                           {
-                            justifyContent: 'space-between',
-                            paddingVertical: 12,
+                            flexDirection: 'row',
+                            paddingHorizontal: 12,
+                            paddingVertical: 5,
                           },
-                        ]}>
-                        {this.state.role === Roles.doctor ? (
-                          <Text>
-                            <Text
-                              style={[
-                                CommonStyles.fontRegular,
-                                CommonStyles.textSizeSmall,
-                                {color: '#333333'},
-                              ]}>{`Patient Name\n`}</Text>
-                            <Text
-                              style={[
-                                CommonStyles.fontMedium,
-                                CommonStyles.textSizeAverage,
-                                {color: '#333333'},
-                              ]}>
-                              {item.patient.firstName.concat(
-                                ' ' + item.patient.lastName,
-                              )}
-                            </Text>
-                          </Text>
-                        ) : (
-                          <Text>
-                            <Text
-                              style={[
-                                CommonStyles.fontRegular,
-                                CommonStyles.textSizeSmall,
-                                {color: '#333333'},
-                              ]}>{`Clinic Name\n`}</Text>
-                            <Text
-                              style={[
-                                CommonStyles.fontMedium,
-                                CommonStyles.textSizeAverage,
-                                {color: '#333333'},
-                              ]}>
-                              {item.clinic.name}
-                            </Text>
-                          </Text>
-                        )}
-
-                        <Text
-                          style={[
-                            CommonStyles.textSizeAverage,
-                            {color: '#333333'},
-                          ]}>
-                          <Text
-                            style={[
-                              CommonStyles.fontRegular,
-                              CommonStyles.textSizeSmall,
-                            ]}>{`Time: `}</Text>
-                          <Text style={CommonStyles.fontMedium}>
-                            {moment(item.date).format('hh:mm A')}
-                          </Text>
-                        </Text>
-                      </View>
-                      <View
-                        style={[
-                          CommonStyles.container,
-                          {justifyContent: 'space-between'},
                         ]}>
                         <View
                           style={[
                             CommonStyles.container,
                             {
                               justifyContent: 'space-between',
-                              alignItems: 'flex-end',
-                              marginBottom: 7,
+                              paddingVertical: 12,
                             },
                           ]}>
-                          <CheckBox
-                            containerStyle={{
-                              backgroundColor: 'rgba(52, 52, 52, 0.0)',
-                              borderColor: 'rgba(52, 52, 52, 0.0)',
-                              marginRight: -12,
-                            }}
-                            textStyle={[
-                              CommonStyles.textSizeSmall,
-                              {
-                                color: this._getCheckboxColor(item.status),
-                                fontWeight: '600',
-                              },
-                            ]}
-                            iconRight
-                            iconType="material"
-                            checkedIcon="check-box"
-                            uncheckedIcon="add"
-                            checkedColor={this._getCheckboxColor(item.status)}
-                            uncheckedColor="#9CD85B"
-                            title={item.status}
-                            checked={true}
-                          />
-                          <Text style={{marginBottom: 6}}>
+                          {this.state.role === Roles.doctor ? (
+                            <Text>
+                              <Text
+                                style={[
+                                  CommonStyles.fontRegular,
+                                  CommonStyles.textSizeSmall,
+                                  {color: '#333333'},
+                                ]}>{`Patient Name\n`}</Text>
+                              <Text
+                                style={[
+                                  CommonStyles.fontMedium,
+                                  CommonStyles.textSizeAverage,
+                                  {color: '#333333'},
+                                ]}>
+                                {item.patient.firstName.concat(
+                                  ' ' + item.patient.lastName,
+                                )}
+                              </Text>
+                            </Text>
+                          ) : (
+                            <Text>
+                              <Text
+                                style={[
+                                  CommonStyles.fontRegular,
+                                  CommonStyles.textSizeSmall,
+                                  {color: '#333333'},
+                                ]}>{`Clinic Name\n`}</Text>
+
+                              {item.clinic == undefined ? (
+                                <Text
+                                  style={[
+                                    CommonStyles.fontMedium,
+                                    CommonStyles.textSizeAverage,
+                                    {color: '#333333'},
+                                  ]}> 
+                                    Live Appt.
+                                  {/* {item.clinic.name} */}
+                                </Text>
+                              ) : (
+                                <Text
+                                  style={[
+                                    CommonStyles.fontMedium,
+                                    CommonStyles.textSizeAverage,
+                                    {color: '#333333'},
+                                  ]}>
+                                  {item.clinic.name}
+                                </Text>
+                              )}
+                            </Text>
+                          )}
+
+                          <Text
+                            style={[
+                              CommonStyles.textSizeAverage,
+                              {color: '#333333'},
+                            ]}>
                             <Text
                               style={[
-                                CommonStyles.textSizeSmall,
                                 CommonStyles.fontRegular,
-                                {color: '#333333'},
-                              ]}>{`Date: `}</Text>
-                            <Text
-                              style={[
-                                CommonStyles.fontMedium,
-                                CommonStyles.textSizeAverage,
-                                {color: '#333333'},
-                              ]}>
-                              {moment(item.date).format('DD-MM-yyyy')}
+                                CommonStyles.textSizeSmall,
+                              ]}>{`Time: `}</Text>
+                            <Text style={CommonStyles.fontMedium}>
+                              {moment(item.date).format('hh:mm A')}
                             </Text>
                           </Text>
                         </View>
+                        <View
+                          style={[
+                            CommonStyles.container,
+                            {justifyContent: 'space-between'},
+                          ]}>
+                          <View
+                            style={[
+                              CommonStyles.container,
+                              {
+                                justifyContent: 'space-between',
+                                alignItems: 'flex-end',
+                                marginBottom: 7,
+                              },
+                            ]}>
+                            <CheckBox
+                              containerStyle={{
+                                backgroundColor: 'rgba(52, 52, 52, 0.0)',
+                                borderColor: 'rgba(52, 52, 52, 0.0)',
+                                marginRight: -12,
+                              }}
+                              textStyle={[
+                                CommonStyles.textSizeSmall,
+                                {
+                                  color: this._getCheckboxColor(item.status),
+                                  fontWeight: '600',
+                                },
+                              ]}
+                              iconRight
+                              iconType="material"
+                              checkedIcon="check-box"
+                              uncheckedIcon="add"
+                              checkedColor={this._getCheckboxColor(item.status)}
+                              uncheckedColor="#9CD85B"
+                              title={item.status}
+                              checked={true}
+                            />
+                            <Text style={{marginBottom: 6}}>
+                              <Text
+                                style={[
+                                  CommonStyles.textSizeSmall,
+                                  CommonStyles.fontRegular,
+                                  {color: '#333333'},
+                                ]}>{`Date: `}</Text>
+                              <Text
+                                style={[
+                                  CommonStyles.fontMedium,
+                                  CommonStyles.textSizeAverage,
+                                  {color: '#333333'},
+                                ]}>
+                                {moment(item.date).format('DD-MM-yyyy')}
+                              </Text>
+                            </Text>
+                          </View>
+                        </View>
                       </View>
-                    </View>
-                  </ImageBackground>
-                  <View
-                    style={[
-                      CommonStyles.container,
-                      {
-                        justifyContent: 'center',
-                        backgroundColor: '#297DEC',
-                        marginTop: 5,
-                        borderBottomEndRadius: 5,
-                        borderBottomStartRadius: 5,
-                      },
-                    ]}>
+                    </ImageBackground>
                     <View
                       style={[
                         CommonStyles.container,
-                        CommonStyles.centerElement,
-                        {flexDirection: 'row'},
+                        {
+                          justifyContent: 'center',
+                          backgroundColor: '#297DEC',
+                          marginTop: 5,
+                          borderBottomEndRadius: 5,
+                          borderBottomStartRadius: 5,
+                        },
                       ]}>
-                      <Icon
-                        name="phone"
-                        type="Fontisto"
-                        style={{fontSize: 20, color: '#FFF', margin: 10}}
-                      />
-                      <Text
+                      <View
                         style={[
-                          CommonStyles.textColorWhite,
-                          CommonStyles.centerText,
-                          CommonStyles.padding,
+                          CommonStyles.container,
+                          CommonStyles.centerElement,
+                          {flexDirection: 'row'},
                         ]}>
-                        CALL
-                      </Text>
-                    </View>
+                        <Icon
+                          name="phone"
+                          type="Fontisto"
+                          style={{fontSize: 20, color: '#FFF', margin: 10}}
+                        />
+                        <Text
+                          style={[
+                            CommonStyles.textColorWhite,
+                            CommonStyles.centerText,
+                            CommonStyles.padding,
+                          ]}>
+                          CALL
+                        </Text>
+                      </View>
 
-                    {/* <TouchableOpacity
+                      {/* <TouchableOpacity
                       onPress={() => { }}
                       style={[CommonStyles.container, CommonStyles.centerElement, { flexDirection: 'row' }]}
                     >
@@ -407,8 +424,9 @@ export default class ScheduledBooking extends Component {
                       <Text style={[CommonStyles.textColorWhite, CommonStyles.centerText, CommonStyles.padding]}>CALL</Text>
 
                     </TouchableOpacity> */}
-                  </View>
-                </TouchableOpacity>
+                    </View>
+                  </TouchableOpacity>
+                )
               )}
             />
           </View>

@@ -465,7 +465,7 @@ export default class Vital extends Component {
                       CommonStyles.textSizeMedium,
                       {marginLeft: 7},
                     ]}>
-                    Notes*
+                    Notes
                   </Label>
                   <Input
                     value={this.state.notes}

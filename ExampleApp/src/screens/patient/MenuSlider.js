@@ -182,7 +182,7 @@ class MenuSlider extends React.Component {
                     />
 
                 </Content>
-
+                
                 <TouchableOpacity
                     onPress={() => {
                         ViewUtils.showAlert(
@@ -201,7 +201,6 @@ class MenuSlider extends React.Component {
                                     .finally(() => {
                                         this.setState({ isLoading: false });
                                     });
-
                             },
                             () => { },
                         );

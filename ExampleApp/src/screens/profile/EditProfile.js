@@ -130,6 +130,7 @@ export default class UploadIllustrations extends React.Component {
       email: this.state.user.email,
       speciality: this.state.speciality,
       imageUrl: this.state.imageUrl,
+
       isPaymentEnabled: this.state.isPaymentEnabled,
       personalDetails: {
         city: this.state.city,
@@ -454,13 +455,19 @@ export default class UploadIllustrations extends React.Component {
                 />
               </Item>
               {this.state.role == Roles.doctor && (
+                <View>
+                <Label
+                  style={[
+                    {marginTop:10, marginBottom: -10, alignSelf: 'center', width: '88%'},
+                    CommonStyles.fontRegular,
+                    CommonStyles.textSizeSmall,
+                  ]}>
+                  Speciality
+                </Label>
                 <Item
                   picker
-                  style={[
-                    CommonStyles.container,
-                    CommonStyles.itemStyle,
-                    {marginTop: 30},
-                  ]}>
+                  style={[CommonStyles.container, CommonStyles.itemStyle]}>
+                
                   <Picker
                     mode="dropdown"
                     textStyle={[
@@ -483,6 +490,7 @@ export default class UploadIllustrations extends React.Component {
                     })}
                   </Picker>
                 </Item>
+                </View>
               )}
 
               <Item
@@ -571,36 +579,42 @@ export default class UploadIllustrations extends React.Component {
                 <Icon active name="calendar" style={{marginLeft: 20}} />
               </Item>
               {this.state.role == Roles.doctor && (
-                <Item
-                  picker
-                  style={[
-                    CommonStyles.container,
-                    CommonStyles.itemStyle,
-                    {marginTop: 30},
-                  ]}>
-                  <Picker
-                    mode="dropdown"
-                    textStyle={[
+                <View>
+                  <Label
+                    style={[
+                      {marginTop: 10,  marginBottom: -10,alignSelf: 'center', width: '88%'},
                       CommonStyles.fontRegular,
-                      CommonStyles.textSizeMedium,
-                    ]}
-                    iosIcon={<Icon name="arrow-down" />}
-                    placeholderStyle={{color: '#bfc6ea'}}
-                    placeholderIconColor="#007aff"
-                    selectedValue={this.state.isPaymentEnabled}
-                    onValueChange={txt =>
-                      this.setState({isPaymentEnabled: txt})
-                    }>
-                    <Picker.Item
-                      color="gray"
-                      selected={true}
-                      label="Allow payment for Patients?"
-                      value=""
-                    />
-                    <Picker.Item label="Yes" value={true} />
-                    <Picker.Item label="No" value={false} />
-                  </Picker>
-                </Item>
+                      CommonStyles.textSizeSmall,
+                    ]}>
+                    Allow payment for Patients?
+                  </Label>
+                  <Item
+                    picker
+                    style={[CommonStyles.container, CommonStyles.itemStyle]}>
+                    <Picker
+                      mode="dropdown"
+                      textStyle={[
+                        CommonStyles.fontRegular,
+                        CommonStyles.textSizeMedium,
+                      ]}
+                      iosIcon={<Icon name="arrow-down" />}
+                      placeholderStyle={{color: '#bfc6ea'}}
+                      placeholderIconColor="#007aff"
+                      selectedValue={this.state.isPaymentEnabled}
+                      onValueChange={txt =>
+                        this.setState({isPaymentEnabled: txt})
+                      }>
+                      <Picker.Item
+                        color="gray"
+                        selected={true}
+                        label="Allow payment for Patients?"
+                        value=""
+                      />
+                      <Picker.Item label="Yes" value={true} />
+                      <Picker.Item label="No" value={false} />
+                    </Picker>
+                  </Item>
+                </View>
               )}
             </KeyboardAwareScrollView>
           </View>

@@ -127,6 +127,15 @@ export default class Foree extends Component {
           ref={webView => (this.webView = webView)}
           onMessage={event => {
             console.warn('event === ', event);
+
+            if(!event.nativeEvent.canGoBack) {
+              
+              ViewUtils.showToast(
+                'You have cancelled Payment Process!',
+              );
+              this.props.navigation.goBack();
+              return
+            }
             if (event.nativeEvent.data == 'success' && event.nativeEvent.canGoBack ) {
               Api.instance()
                 ._user()
@@ -134,7 +143,6 @@ export default class Foree extends Component {
                   Api.instance()
                     .updateAppointment(this.state.appointmentId, user.id)
                     .then(() => {
-                      console.warn('user.id ::: ', user.id);
                       ViewUtils.showToast(
                         'Appointment has been booked successfully',
                       );
