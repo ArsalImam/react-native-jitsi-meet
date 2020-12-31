@@ -51,7 +51,7 @@ class MenuSlider extends React.Component {
             { name: 'Investigation', iconName: 'ios-flower', iconFamily: 'Ionicon', iconSize: '18', route: 'InvestigationList' },
             { name: 'Surgical Procedure', iconName: 'box-cutter', iconFamily: 'MaterialCommunityIcons', iconSize: '18', route: 'ProcedureList' },
             { name: 'Suggested Therapy', iconName: 'comment-medical', iconFamily: 'FontAwesome5', iconSize: '18', route: 'TherapyList' },
-            { name: 'Upload', iconName: 'upload', iconFamily: 'Feather', iconSize: '18', route: 'IllustrationsList' },
+            { name: 'Patient Education', iconName: 'upload', iconFamily: 'Feather', iconSize: '18', route: 'IllustrationsList' },
             { name: 'Patient History Form', iconName: 'notebook', iconFamily: 'SimpleLineIcons', iconSize: '18', route: 'PatientHistoryList' },
         ];
         

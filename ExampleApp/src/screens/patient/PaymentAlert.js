@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { CommonActions } from '@react-navigation/native';
+import React, {Component} from 'react';
+import {CommonActions} from '@react-navigation/native';
 import {
   StyleSheet,
   View,
@@ -12,10 +12,10 @@ import {
   Alert,
 } from 'react-native';
 import CommonStyles from '../../CommonStyles';
-import { CheckBox, Item, Input, Label, Icon } from 'native-base';
-import { ViewUtils } from '../../Utils';
+import {CheckBox, Item, Input, Label, Icon} from 'native-base';
+import {ViewUtils} from '../../Utils';
 import Api from '../../Api';
-import { Configs, Roles } from '../../Configs';
+import {Configs, Roles} from '../../Configs';
 import ImagePicker from 'react-native-image-picker';
 import Loader from '../../components/Loader';
 
@@ -33,7 +33,7 @@ class PaymentAlert extends Component {
     image: null,
     imageUrl: '',
     check: false,
-    role: "",
+    role: '',
     userParams: this.props.route.params.user,
     appointmentId: this.props.route.params.appointmentId,
     appointmentFees: this.props.route.params.appointmentFees,
@@ -74,22 +74,20 @@ class PaymentAlert extends Component {
     Api.instance()
       .getUserRole()
       .then(role => {
-        console.warn("Roleee", role)
-        this.setState({ role })
-        console.warn("Roleee2", this.state.role)
-
-      })
+        console.warn('Roleee', role);
+        this.setState({role});
+        console.warn('Roleee2', this.state.role);
+      });
   }
   componentDidMount() {
-    this.getUserRole()
+    this.getUserRole();
     this._patientId = this.props.route.params.patientId;
     this._appointmentId = this.props.route.params.appointmentId;
     this._clinicId = this.props.route.params.clinicId;
-    console.warn("userParams", this.state.userParams)
+    console.warn('userParams', this.state.userParams);
     // this.user = this.props.route.params.user,
 
     // this.appointmentFees= this.props.route.params.appointmentFees
-
   }
 
   addCredit(patientId) {
@@ -120,7 +118,7 @@ class PaymentAlert extends Component {
               that.props.navigation.dispatch(
                 CommonActions.reset({
                   index: 1,
-                  routes: [{ name: 'MyDrawer' }],
+                  routes: [{name: 'MyDrawer'}],
                 }),
               );
             });
@@ -134,21 +132,18 @@ class PaymentAlert extends Component {
           that.props.navigation.dispatch(
             CommonActions.reset({
               index: 1,
-              routes: [{ name: 'MyDrawer' }],
+              routes: [{name: 'MyDrawer'}],
             }),
           );
         });
-
     }
   }
-
 
   patientCreateBtn() {
     let that = this;
     if (this.state.imageUrl == '') {
-      ViewUtils.showToast("Please attach receipt")
-    }
-    else {
+      ViewUtils.showToast('Please attach receipt');
+    } else {
       // var data = {};
       let data = {
         PaymentVerifiedCheck: false,
@@ -158,10 +153,10 @@ class PaymentAlert extends Component {
         isVerified: false,
         slots: this.state.slots,
         transactionCode: this.state.generatedCode,
-        type: "patient",
-        userId: this.state.userParams
+        type: 'patient',
+        userId: this.state.userParams,
       };
-      console.warn("bisma", data)
+      console.warn('bisma', data);
       // if (this.state.check) {
       Api.instance()
         .createPayments(data)
@@ -175,7 +170,7 @@ class PaymentAlert extends Component {
               that.props.navigation.dispatch(
                 CommonActions.reset({
                   index: 1,
-                  routes: [{ name: 'MyDrawer' }],
+                  routes: [{name: 'MyDrawer'}],
                 }),
               );
             });
@@ -183,13 +178,9 @@ class PaymentAlert extends Component {
     }
   }
 
-
-
-
-
   _createAppointment(patientId) {
     let that = this;
-    this.setState({ isLoading: true });
+    this.setState({isLoading: true});
 
     Api.instance()
       .updateAppointment(this._appointmentId, patientId)
@@ -200,7 +191,7 @@ class PaymentAlert extends Component {
         that.props.navigation.dispatch(
           CommonActions.reset({
             index: 1,
-            routes: [{ name: 'MyDrawer' }],
+            routes: [{name: 'MyDrawer'}],
           }),
         );
       })
@@ -208,7 +199,7 @@ class PaymentAlert extends Component {
         //ViewUtils.showToast(err);
       })
       .finally(() => {
-        this.setState({ isLoading: false });
+        this.setState({isLoading: false});
       });
   }
   handleChoosePhoto = () => {
@@ -242,7 +233,7 @@ class PaymentAlert extends Component {
         console.warn('User Tapped cancel');
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
-        this.setState({ imageUrl: '' });
+        this.setState({imageUrl: ''});
       } else if (response.err) {
         console.warn('Image Picker Error ', err);
       } else {
@@ -274,10 +265,9 @@ class PaymentAlert extends Component {
   };
 
   checked() {
-    this.setState({ check: !this.state.check });
+    this.setState({check: !this.state.check});
   }
   render() {
-
     return (
       <View style={[CommonStyles.modalBackground]}>
         <View style={[CommonStyles.activityIndicatorWrapper]}>
@@ -290,16 +280,27 @@ class PaymentAlert extends Component {
               alignSelf: 'flex-start',
               borderBottomWidth: 1,
             }}>
-            <Text
-              style={[
-                CommonStyles.fontMedium,
-                CommonStyles.textSizeNormal,
-                { marginVertical: 10 },
-              ]}>
-              Add Slots To Patient
-            </Text>
+            {this.state.role == Roles.doctor ? (
+              <Text
+                style={[
+                  CommonStyles.fontMedium,
+                  CommonStyles.textSizeNormal,
+                  {marginVertical: 10},
+                ]}>
+                Add Slots To Patient
+              </Text>
+            ) : (
+              <Text
+                style={[
+                  CommonStyles.fontBold,
+                  CommonStyles.textSizeNormal,
+                  {marginBottom: 20},
+                ]}>
+                Manual Payment to A/C: 10028436
+              </Text>
+            )}
           </View>
-          {this.state.role == Roles.doctor &&
+          {this.state.role == Roles.doctor && (
             <View
               style={{
                 marginVertical: 20,
@@ -307,44 +308,47 @@ class PaymentAlert extends Component {
                 backgroundColor: '#fff',
                 alignSelf: 'flex-start',
               }}>
-              <Text style={[CommonStyles.fontMedium, { fontSize: 14 }]}>
+              <Text style={[CommonStyles.fontMedium, {fontSize: 14}]}>
                 Payment Sent
-            </Text>
+              </Text>
               <CheckBox
-                style={{ marginRight: 12 }}
+                style={{marginRight: 12}}
                 onPress={() => this.checked()}
                 checked={this.state.check}
               />
             </View>
-          }
+          )}
           <View
             style={{
               marginTop: this.state.role == Roles.patient ? 20 : 0,
               flexDirection: 'row',
               backgroundColor: '#fff',
               alignSelf: 'flex-start',
-            }}>
-
-          </View>
+            }}
+          />
           <View
             style={[
               CommonStyles.container,
               CommonStyles.horizontalContainer,
-              { marginVertical: 40 },
+              {marginVertical: 40},
             ]}>
             <Item
               stackedLabel
               style={[
                 CommonStyles.container,
                 CommonStyles.loginItemStyle,
-                { marginRight: 5 },
+                {marginRight: 5},
               ]}>
               <Label
                 style={[CommonStyles.textSizeSmall, CommonStyles.fontRegular]}>
                 Amount*
               </Label>
               <Label
-                style={[CommonStyles.textSizeNormal, CommonStyles.fontBold, { marginTop: 8, color: 'gray' }]}>
+                style={[
+                  CommonStyles.textSizeNormal,
+                  CommonStyles.fontBold,
+                  {marginTop: 8, color: 'gray'},
+                ]}>
                 {this.props.route.params.amount || this.state.appointmentFees}
               </Label>
             </Item>
@@ -354,7 +358,7 @@ class PaymentAlert extends Component {
               style={[
                 CommonStyles.container,
                 CommonStyles.loginItemStyle,
-                { marginLeft: 5 },
+                {marginLeft: 5},
               ]}>
               <Label
                 style={[CommonStyles.textSizeSmall, CommonStyles.fontRegular]}>
@@ -363,7 +367,7 @@ class PaymentAlert extends Component {
               <Input
                 disabled={true}
                 value={this.state.slots}
-                onChangeText={val => this.setState({ slots: val })}
+                onChangeText={val => this.setState({slots: val})}
                 name="slots"
                 placeholder={'1'}
                 placeholderTextColor="gray"
@@ -384,39 +388,39 @@ class PaymentAlert extends Component {
             onPress={() => {
               this.handleChoosePhoto();
             }}
-            style={{ marginTop: 80, marginBottom: 30, alignSelf: 'center' }}>
+            style={{marginTop: 80, marginBottom: 30, alignSelf: 'center'}}>
             {this.state.imageUrl == '' ? (
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{flexDirection: 'row'}}>
                 <Icon
                   name="attachment"
                   type="Entypo"
-                  style={{ fontSize: 26, transform: [{ rotate: '-45deg' }] }}
+                  style={{fontSize: 26, transform: [{rotate: '-45deg'}]}}
                 />
-                <Text style={{ marginHorizontal: 14, paddingVertical: 5 }}>
+                <Text style={{marginHorizontal: 14, paddingVertical: 5}}>
                   {' '}
                   Attach Receipt
                 </Text>
               </View>
             ) : (
-                <View
+              <View
+                style={{
+                  width: 120,
+                  height: 120,
+                  //backgroundColor: '#E3E3E3',
+                  borderRadius: 60,
+                }}>
+                <Image
+                  source={{
+                    uri: this.state.imageUrl,
+                  }}
                   style={{
-                    width: 120,
-                    height: 120,
-                    //backgroundColor: '#E3E3E3',
-                    borderRadius: 60,
-                  }}>
-                  <Image
-                    source={{
-                      uri: this.state.imageUrl,
-                    }}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      resizeMode: 'cover',
-                    }}
-                  />
-                </View>
-              )}
+                    width: '100%',
+                    height: '100%',
+                    resizeMode: 'cover',
+                  }}
+                />
+              </View>
+            )}
           </TouchableOpacity>
           <View
             style={[
@@ -433,7 +437,7 @@ class PaymentAlert extends Component {
                 style={[
                   CommonStyles.container,
                   CommonStyles.centerText,
-                  { backgroundColor: '#00bcd0', marginRight: 3, borderRadius: 3 },
+                  {backgroundColor: '#00bcd0', marginRight: 3, borderRadius: 3},
                 ]}
                 onPress={() => {
                   this.addCredit(this._patientId);
@@ -447,43 +451,42 @@ class PaymentAlert extends Component {
                     //CommonStyles.margin,
                     CommonStyles.padding,
 
-                    { margin: 3 },
+                    {margin: 3},
                   ]}>
                   Create
-   </Text>
+                </Text>
               </TouchableOpacity>
             ) : (
-                <TouchableOpacity
+              <TouchableOpacity
+                style={[
+                  CommonStyles.container,
+                  CommonStyles.centerText,
+                  {backgroundColor: '#00bcd0', marginRight: 3, borderRadius: 3},
+                ]}
+                onPress={() => {
+                  this.patientCreateBtn();
+                }}>
+                <Text
                   style={[
-                    CommonStyles.container,
+                    CommonStyles.fontRegular,
+                    CommonStyles.textColorWhite,
+                    CommonStyles.textSizeNormal,
                     CommonStyles.centerText,
-                    { backgroundColor: '#00bcd0', marginRight: 3, borderRadius: 3 },
-                  ]}
-                  onPress={() => {
-                    this.patientCreateBtn();
-                  }}>
-                  <Text
-                    style={[
-                      CommonStyles.fontRegular,
-                      CommonStyles.textColorWhite,
-                      CommonStyles.textSizeNormal,
-                      CommonStyles.centerText,
-                      //CommonStyles.margin,
-                      CommonStyles.padding,
+                    //CommonStyles.margin,
+                    CommonStyles.padding,
 
-                      { margin: 3 },
-                    ]}>
-                    Create
-              </Text>
-                </TouchableOpacity>
-              )}
-
+                    {margin: 3},
+                  ]}>
+                  Create
+                </Text>
+              </TouchableOpacity>
+            )}
 
             <TouchableOpacity
               style={[
                 CommonStyles.container,
                 CommonStyles.centerText,
-                { backgroundColor: '#1565a0', marginLeft: 3, borderRadius: 3 },
+                {backgroundColor: '#1565a0', marginLeft: 3, borderRadius: 3},
               ]}
               onPress={() => this.handleBackButton()}>
               <Text
@@ -494,25 +497,36 @@ class PaymentAlert extends Component {
                   CommonStyles.centerText,
                   // CommonStyles.margin,
                   CommonStyles.padding,
-                  { margin: 3 },
+                  {margin: 3},
                 ]}>
                 Cancel
               </Text>
             </TouchableOpacity>
           </View>
-          {this.state.role == "ROLE_PATIENT" &&
-            <View style={{ marginVertical: 10, alignItems: "center" }}>
-              <View style={{ justifyContent: 'space-between', flexDirection: 'row', width: '100%', marginVertical: 10 }} >
+          {this.state.role == 'ROLE_PATIENT' && (
+            <View style={{marginVertical: 10, alignItems: 'center'}}>
+              <View
+                style={{
+                  justifyContent: 'space-between',
+                  flexDirection: 'row',
+                  width: '100%',
+                  marginVertical: 10,
+                }}>
                 <View
                   style={{
-                    backgroundColor: '#818078', height: 1, width: '40%', justifyContent: 'center', alignSelf: 'center'
-
+                    backgroundColor: '#818078',
+                    height: 1,
+                    width: '40%',
+                    justifyContent: 'center',
+                    alignSelf: 'center',
                   }}
                 />
                 <View
                   style={{
-                    height: 10, width: '20%', justifyContent: 'center', alignItems: 'center'
-
+                    height: 10,
+                    width: '20%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
                   }}>
                   <Text
                     style={[
@@ -522,15 +536,18 @@ class PaymentAlert extends Component {
                       //CommonStyles.margin,
                       CommonStyles.padding,
 
-                      { margin: 3, color: '#818078' },
+                      {margin: 3, color: '#818078'},
                     ]}>
                     OR
-            </Text>
+                  </Text>
                 </View>
                 <View
                   style={{
-                    backgroundColor: '#818078', height: 1, width: '40%', justifyContent: 'center', alignSelf: 'center'
-
+                    backgroundColor: '#818078',
+                    height: 1,
+                    width: '40%',
+                    justifyContent: 'center',
+                    alignSelf: 'center',
                   }}
                 />
               </View>
@@ -562,17 +579,18 @@ class PaymentAlert extends Component {
 
               <TouchableOpacity
                 onPress={() => {
-                  console.warn("this.state.user", this.state.appointmentId)
-                  this.props.navigation.navigate("Foree", {
+                  console.warn('this.state.user', this.state.appointmentId);
+                  this.props.navigation.navigate('Foree', {
                     user: this.state.userParams,
                     appointmentFees: this.state.appointmentFees,
-                    appointmentId: this.state.appointmentId
-                  })
+                    appointmentId: this.state.appointmentId,
+                  });
                 }}
                 style={[
                   // CommonStyles.container,
-                  // CommonStyles.centerText,
-                  CommonStyles.br5,
+
+                  CommonStyles.centerText,
+                  
                   {
                     backgroundColor: 'rgb(34, 138, 127)',
                     marginTop: 10,
@@ -581,7 +599,9 @@ class PaymentAlert extends Component {
                     flexDirection: 'row',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    paddingHorizontal: 50,
+                    paddingHorizontal: 10,
+                    borderRadius: 3,
+                   
                   },
                 ]}>
                 {/* <View>
@@ -597,19 +617,14 @@ class PaymentAlert extends Component {
                 </View> */}
                 <Text
                   style={[
-                    CommonStyles.fontBold,
-                    CommonStyles.padding,
+                    CommonStyles.fontMedium,
+                    
                     CommonStyles.centerText,
-
-                    {
-                      color: 'white',
-                      fontSize: 15,
-                      marginVertical: 5,
-                    },
+                    CommonStyles.textColorWhite,
+                    {paddingVertical: 10, paddingHorizontal: 5, margin: 3}
                   ]}>
-                  Proceed with Foree
-
-                    </Text>
+                  Online Payment by Credit/Debit Card
+                </Text>
                 <View>
                   <Icon
                     name="location-arrow"
@@ -617,14 +632,13 @@ class PaymentAlert extends Component {
                     style={{
                       fontSize: 20,
                       color: 'white',
-                      transform: [{ rotate: '45deg' }],
+                      transform: [{rotate: '45deg'}],
                     }}
                   />
                 </View>
               </TouchableOpacity>
-
             </View>
-          }
+          )}
         </View>
         <Loader loading={this.state.isLoading} />
       </View>
@@ -633,7 +647,6 @@ class PaymentAlert extends Component {
 }
 
 export default PaymentAlert;
-
 
 // import React, { Component } from 'react';
 // import { CommonActions } from '@react-navigation/native';
@@ -1025,7 +1038,6 @@ export default PaymentAlert;
 //               </Text>
 //             </TouchableOpacity>
 
-
 //             <TouchableOpacity
 //               style={[
 //                 CommonStyles.container,
@@ -1053,7 +1065,7 @@ export default PaymentAlert;
 //               <Text>
 //                 OR
 //             </Text>
-//               <TouchableOpacity              
+//               <TouchableOpacity
 //                style={[
 //                 CommonStyles.centerText,
 //                 {marginVertical:10, backgroundColor: '#1565a0', marginLeft: 3, borderRadius: 3 , paddingHorizontal:30},

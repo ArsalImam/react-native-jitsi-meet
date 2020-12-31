@@ -111,7 +111,7 @@ export default class MedicationAdd extends Component {
                                         style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
                                 </Item>
                                 <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 10 }]}>
-                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Drug Brand*</Label>
+                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Drug Brand</Label>
                                     <Input
                                         value={this.state.notes}
                                         onChangeText={val => this.setState({ drugBrand: val })}
@@ -119,7 +119,7 @@ export default class MedicationAdd extends Component {
                                 </Item>
 
                                 <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 10 }]}>
-                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Drug SKU*</Label>
+                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Drug SKU</Label>
                                     <Input
                                         value={this.state.notes}
                                         onChangeText={val => this.setState({ drugSku: val })}
@@ -219,7 +219,7 @@ export default class MedicationAdd extends Component {
                                         style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
                                 </Item>
                                 <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 10 }]}>
-                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Drug Brand*</Label>
+                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Drug Brand</Label>
                                     <Input
                                         value={this.state.notes}
                                         onChangeText={val => this.setState({ drugBrand: val })}
@@ -227,7 +227,7 @@ export default class MedicationAdd extends Component {
                                 </Item>
 
                                 <Item stackedLabel style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 10 }]}>
-                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Drug SKU*</Label>
+                                    <Label style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>Drug SKU</Label>
                                     <Input
                                         value={this.state.notes}
                                         onChangeText={val => this.setState({ drugSku: val })}

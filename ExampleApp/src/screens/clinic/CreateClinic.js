@@ -518,13 +518,18 @@ export default class CreateClinic extends Component {
     this.state.clinicObj.frequencyText = this.state.clinicFrequencyText;
     this.state.clinicObj.appointmentSlotsText = this.state.appointmentSlotsText;
 
-    if (this.state.attendedAtDate == '') {
+    if (this.state.startTimeText == 'From') {
       ViewUtils.showToast('Please select Start Time');
       return;
     }
 
-    if (this.state.leftAtDate == '') {
+    if (this.state.endTimeText == 'To') {
       ViewUtils.showToast('Please select End Time');
+      return;
+    }
+
+    if (this.state.leftAt < this.state.attendAt) {
+      ViewUtils.showToast('End time must be greater than start time!');
       return;
     }
 
