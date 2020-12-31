@@ -99,11 +99,7 @@ export default class BookingList extends Component {
                       .then(role => {
                         if (role === Roles.patient) {
                           console.warn('patient item >>>>', item);
-                          this._createAppointment(
-                            item.id,
-                            item.doctor.appointmentFees,
-                            item.doctor.isPaymentEnabled,
-                          );
+                          this._createAppointment(item.id, item.doctor.appointmentFees, item.doctor.isPaymentEnabled);
                         } else {
                           console.warn('item >>>>', item);
                           this.props.navigation.navigate(`Patients`, {
@@ -299,7 +295,7 @@ export default class BookingList extends Component {
   _getScheduledAppointments(appointmentId, appointmentFees, isPaymentEnabled) {
     let userId;
     this._user().then(data => {
-      console.warn('data >>>>', data);
+      console.warn('data >>>>', data)
       userId = data.id;
     });
     Api.instance()
@@ -319,10 +315,10 @@ export default class BookingList extends Component {
                 .then(res => {
                   console.warn('res', res);
                   if (!res[0]) {
-                    that.props.navigation.navigate('Foree', {
+                    that.props.navigation.navigate('PaymentAlert', {
                       user: userId,
                       appointmentId: appointmentId,
-                      appointmentFees: appointmentFees,
+                      appointmentFees: appointmentFees
                     });
                   } else {
                     this.setState({isLoading: true});
@@ -381,11 +377,7 @@ export default class BookingList extends Component {
   }
 
   _createAppointment(appointmentId, appointmentFees, isPaymentEnabled) {
-    this._getScheduledAppointments(
-      appointmentId,
-      appointmentFees,
-      isPaymentEnabled,
-    );
+    this._getScheduledAppointments(appointmentId, appointmentFees, isPaymentEnabled);
 
     console.warn('this.state.isScheduled === ', this.state.isScheduled);
   }

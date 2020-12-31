@@ -85,7 +85,7 @@ class PaymentAlert extends Component {
     this._patientId = this.props.route.params.patientId;
     this._appointmentId = this.props.route.params.appointmentId;
     this._clinicId = this.props.route.params.clinicId;
-
+    console.warn("userParams", this.state.userParams)
     // this.user = this.props.route.params.user,
 
     // this.appointmentFees= this.props.route.params.appointmentFees
@@ -141,6 +141,51 @@ class PaymentAlert extends Component {
 
     }
   }
+
+
+  patientCreateBtn() {
+    let that = this;
+    if (this.state.imageUrl == '') {
+      ViewUtils.showToast("Please attach receipt")
+    }
+    else {
+      // var data = {};
+      let data = {
+        PaymentVerifiedCheck: false,
+        amount: this.state.appointmentFees,
+        receipt: this.state.imageUrl,
+        createdBy: this.state.userParams,
+        isVerified: false,
+        slots: this.state.slots,
+        transactionCode: this.state.generatedCode,
+        type: "patient",
+        userId: this.state.userParams
+      };
+      console.warn("bisma", data)
+      // if (this.state.check) {
+      Api.instance()
+        .createPayments(data)
+        .then(res => {
+          console.warn('create payment res', res.result.transaction.id);
+          Api.instance()
+            .postPatientUtilizedSlots(res.result.transaction.id)
+            .then(res => {
+              console.warn('postPatientUtilizedSlots', res);
+              ViewUtils.showToast('Successfully Added');
+              that.props.navigation.dispatch(
+                CommonActions.reset({
+                  index: 1,
+                  routes: [{ name: 'MyDrawer' }],
+                }),
+              );
+            });
+        });
+    }
+  }
+
+
+
+
 
   _createAppointment(patientId) {
     let that = this;
@@ -383,29 +428,56 @@ class PaymentAlert extends Component {
                 borderTopStartRadius: 5,
               },
             ]}>
-            <TouchableOpacity
-              style={[
-                CommonStyles.container,
-                CommonStyles.centerText,
-                { backgroundColor: '#00bcd0', marginRight: 3, borderRadius: 3 },
-              ]}
-              onPress={() => {
-                this.addCredit(this._patientId);
-              }}>
-              <Text
+            {this.state.role == Roles.doctor ? (
+              <TouchableOpacity
                 style={[
-                  CommonStyles.fontRegular,
-                  CommonStyles.textColorWhite,
-                  CommonStyles.textSizeNormal,
+                  CommonStyles.container,
                   CommonStyles.centerText,
-                  //CommonStyles.margin,
-                  CommonStyles.padding,
+                  { backgroundColor: '#00bcd0', marginRight: 3, borderRadius: 3 },
+                ]}
+                onPress={() => {
+                  this.addCredit(this._patientId);
+                }}>
+                <Text
+                  style={[
+                    CommonStyles.fontRegular,
+                    CommonStyles.textColorWhite,
+                    CommonStyles.textSizeNormal,
+                    CommonStyles.centerText,
+                    //CommonStyles.margin,
+                    CommonStyles.padding,
 
-                  { margin: 3 },
-                ]}>
-                Create
+                    { margin: 3 },
+                  ]}>
+                  Create
+   </Text>
+              </TouchableOpacity>
+            ) : (
+                <TouchableOpacity
+                  style={[
+                    CommonStyles.container,
+                    CommonStyles.centerText,
+                    { backgroundColor: '#00bcd0', marginRight: 3, borderRadius: 3 },
+                  ]}
+                  onPress={() => {
+                    this.patientCreateBtn();
+                  }}>
+                  <Text
+                    style={[
+                      CommonStyles.fontRegular,
+                      CommonStyles.textColorWhite,
+                      CommonStyles.textSizeNormal,
+                      CommonStyles.centerText,
+                      //CommonStyles.margin,
+                      CommonStyles.padding,
+
+                      { margin: 3 },
+                    ]}>
+                    Create
               </Text>
-            </TouchableOpacity>
+                </TouchableOpacity>
+              )}
+
 
             <TouchableOpacity
               style={[
