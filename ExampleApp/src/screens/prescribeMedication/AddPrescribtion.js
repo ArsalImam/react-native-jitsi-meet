@@ -29,7 +29,7 @@ import Api from '../../Api';
 import Loader from '../../components/Loader';
 import {ViewUtils} from '../../Utils';
 import ImagePicker from 'react-native-image-picker';
-import {FlatGrid} from 'react-native-super-grid'
+import {FlatGrid} from 'react-native-super-grid';
 
 export default class AddPrescribtion extends Component {
   constructor(props) {
@@ -147,8 +147,8 @@ export default class AddPrescribtion extends Component {
   setSearchText(text) {
     this.setState({isLoading: true});
     const searchText = text.toLowerCase();
-    const abc = this.arrayHolder.filter(l => {
-      let userName = l.name;
+    const abc = this.arrayHolder.filter(searchedText => {
+      let userName = searchedText.name;
       return userName.toLowerCase().match(searchText);
     });
     this.setState({
@@ -160,6 +160,7 @@ export default class AddPrescribtion extends Component {
   setData(text) {
     this.setState({
       medicine: text,
+      data: [],
     });
   }
 
@@ -226,7 +227,9 @@ export default class AddPrescribtion extends Component {
                   </Label>
                   <Input
                     value={this.state.medicine}
-                    onChangeText={val =>  this.setSearchText(val) ?? this.setState({medicine: val})}
+                    onChangeText={val =>
+                      this.setSearchText(val) ??  this.setState({medicine: val}) 
+                    }
                     style={[
                       CommonStyles.fontRegular,
                       CommonStyles.textSizeMedium,
@@ -234,27 +237,28 @@ export default class AddPrescribtion extends Component {
                   />
                 </Item>
 
-                <FlatGrid
-                  itemDimension={350}
-                  items={this.state.data}
-                  spacing={20}
-                  style={[CommonStyles.container, {marginTop: 5}]}
-                  renderItem={({item}) => (
-                    <TouchableOpacity
-                      onPress={() => this.setData(item.name)}
-                      style={[CommonStyles.container]}>
-                      <Text
-                        style={[
-                          CommonStyles.fontMedium,
-                          CommonStyles.textSizeAverage,
-                          {color: '#333333'},
-                        ]}>
-                        {item.name}
-                      </Text>
-                    </TouchableOpacity>
-                  )}
-                />
-
+                
+                  <FlatGrid
+                    itemDimension={350}
+                    items={this.state.data}
+                    spacing={20}
+                    style={[CommonStyles.container]}
+                    renderItem={({item}) => (
+                      <TouchableOpacity
+                        onPress={() => this.setData(item.name)}
+                        style={[CommonStyles.container]}>
+                        <Text
+                          style={[
+                            CommonStyles.fontMedium,
+                            CommonStyles.textSizeNormal,
+                            {color: '#333333'},
+                          ]}>
+                          {item.name}
+                        </Text>
+                      </TouchableOpacity>
+                    )}
+                  />
+                
                 <Item
                   stackedLabel
                   style={[CommonStyles.container, CommonStyles.itemStyle]}>
