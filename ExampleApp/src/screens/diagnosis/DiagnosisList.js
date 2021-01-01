@@ -41,7 +41,7 @@ export default class DiagnosisList extends Component {
     if (this.state.appointmentId != null) {
       this.setState({isLoading: true});
       Api.instance()
-        .getDataCenterlizedListDuringConsultation('diagnosis')
+      .getListDuringConsultation('diagnosis', this.state.patientId)
         .then(data => {
           console.warn('=====>', data['Diagnosis']);
           this.setState({diagnosisList: data});
