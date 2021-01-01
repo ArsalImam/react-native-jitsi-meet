@@ -1,15 +1,7 @@
 import React, {Component} from 'react';
 import {View, TouchableOpacity, BackHandler, Alert, Text} from 'react-native';
 import {WebView} from 'react-native-webview';
-import {
-  Header,
-  Left,
-  Right,
-  Body,
-  Icon,
-  Container,
-  Button,
-} from 'native-base';
+import {Header, Left, Right, Body, Icon, Container, Button} from 'native-base';
 import {ViewUtils} from '../../Utils';
 import {Configs, Roles, AppointmentStatus} from '../../Configs';
 import Api from '../../Api';
@@ -128,27 +120,36 @@ export default class Foree extends Component {
           onMessage={event => {
             console.warn('event === ', event);
 
-            if(!event.nativeEvent.canGoBack) {
-              
-              ViewUtils.showToast(
-                'You have cancelled Payment Process!',
-              );
+            if (!event.nativeEvent.canGoBack) {
+              ViewUtils.showToast('You have cancelled Payment Process!');
               this.props.navigation.goBack();
-              return
+              return;
             }
-            if (event.nativeEvent.data == 'success' && event.nativeEvent.canGoBack ) {
+            if (
+              event.nativeEvent.data == 'success' &&
+              event.nativeEvent.canGoBack
+            ) {
               Api.instance()
                 ._user()
                 .then(user => {
                   Api.instance()
                     .updateAppointment(this.state.appointmentId, user.id)
                     .then(() => {
-                      ViewUtils.showToast(
-                        'Appointment has been booked successfully',
-                      );
-                      this.props.navigation.replace('MyTabs', {
-                        screen: 'Scheduled',
-                      });
+                      Api.instance()
+                        ._user()
+                        .then(user => {
+                          Api.instance()
+                            .updatePatientSlots(user.id)
+                            .then(res => {
+                              console.warn('updatePatientSlots res', res)
+                              ViewUtils.showToast(
+                                'Appointment has been booked successfully',
+                              );
+                              this.props.navigation.replace('MyTabs', {
+                                screen: 'Scheduled',
+                              });
+                            });
+                        });
                     })
                     .catch(err => {
                       ViewUtils.showToast(err);
@@ -157,7 +158,7 @@ export default class Foree extends Component {
                 });
             }
           }}
-          injectedJavaScript={this.injectedJavascript}                                                                      
+          injectedJavaScript={this.injectedJavascript}
         />
       </Container>
     );

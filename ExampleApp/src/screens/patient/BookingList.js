@@ -328,11 +328,14 @@ export default class BookingList extends Component {
                         Api.instance()
                           .updateAppointment(appointmentId, user.id)
                           .then(() => {
-                            console.warn('user.id ::: ', user.id);
-                            ViewUtils.showToast(
-                              'Appointment has been booked successfully',
-                            );
-                            this.refreshList();
+                            Api.instance().updatePatientSlots(userId).then(res => {
+
+                              console.warn('updatePatientSlots res', res)
+                              ViewUtils.showToast(
+                                'Appointment has been booked successfully',
+                              );
+                              this.refreshList();
+                            })  
                           })
                           .catch(err => {
                             ViewUtils.showToast(err);

@@ -161,11 +161,11 @@ class PaymentAlert extends Component {
       Api.instance()
         .createPayments(data)
         .then(res => {
-          console.warn('create payment res', res.result.transaction.id);
-          Api.instance()
-            .postPatientUtilizedSlots(res.result.transaction.id)
-            .then(res => {
-              console.warn('postPatientUtilizedSlots', res);
+          // console.warn('create payment res', res.result.transaction.id);
+          // Api.instance()
+          //   .postPatientUtilizedSlots(res.result.transaction.id)
+          //   .then(res => {
+          //     console.warn('postPatientUtilizedSlots', res);
               ViewUtils.showToast('Successfully Added');
               that.props.navigation.dispatch(
                 CommonActions.reset({
@@ -174,7 +174,7 @@ class PaymentAlert extends Component {
                 }),
               );
             });
-        });
+       // });
     }
   }
 

@@ -216,7 +216,7 @@ export default class Api {
   }
 
   // Vital List
-    async getVitalList() {
+  async getVitalList() {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
 
@@ -280,7 +280,6 @@ export default class Api {
     if (data.error) throw data.error.message;
     return data;
   }
-
 
   async getVitalListConsultation(patientId) {
     console.warn(patientId);
@@ -642,6 +641,7 @@ export default class Api {
     return response.data;
   }
 
+//  https://api.etibb.online/api/PatientSlots?filter[where][patientId]=5fece18ca9c988122cd7b06a&filter[where][isUtilized]=false
   async getPatientUtilizedSlots(patientId) {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
@@ -656,6 +656,20 @@ export default class Api {
     if (data.error) throw data.error.message;
     return data;
   }
+
+  async updatePatientSlots(patientId) {
+
+    let response = await this.client.post(
+      this.getUrl(`PatientSlots/UpdatePatientSlot?`),
+      {patientId: patientId},
+    );
+    let data = response.data;
+
+    if (data.error) throw data.error.message;
+    return data;
+  }
+
+  //https://api.etibb.online/api/PatientSlots/UpdatePatientSlot?
 
   async postPatientUtilizedSlots(transactionId) {
     let user = await this._user();
@@ -751,7 +765,11 @@ export default class Api {
     return data;
   }
 
-  async getMyAppointments(status = '', requirePatient = false, requireClinic = false) {
+  async getMyAppointments(
+    status = '',
+    requirePatient = false,
+    requireClinic = false,
+  ) {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
 
@@ -759,7 +777,7 @@ export default class Api {
 
     let id_param = this._relationalParamByRole(_user.role);
     let userId = _user.id;
-    let doctorObj = ''
+    let doctorObj = '';
     if (_user.role == Roles.patient && status == AppointmentStatus.available) {
       id_param = 'doctorId';
       userId = _user.doctorId;
@@ -771,11 +789,10 @@ export default class Api {
     if (requirePatient) {
       includes = `&filter[include]=patient`;
     }
-    if(requireClinic) {
-      clinic = `&filter[include]=clinic`
-     }
-     
-    
+    if (requireClinic) {
+      clinic = `&filter[include]=clinic`;
+    }
+
     if (status != '') {
       wheres = `&filter[where][status]=${status}`;
     }
@@ -795,7 +812,7 @@ export default class Api {
     status = '',
     requirePatient = false,
     todaysDate = '',
-    lastDate = '',    
+    lastDate = '',
   ) {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
@@ -812,8 +829,6 @@ export default class Api {
     if (requirePatient) {
       includes = `&filter[include]=patient&filter[include]=clinic`;
     }
-
-    
 
     if (status != '') {
       wheres = `&filter[where][status]=${status}`;

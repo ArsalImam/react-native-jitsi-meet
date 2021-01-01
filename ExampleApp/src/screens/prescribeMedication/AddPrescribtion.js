@@ -29,6 +29,7 @@ import Api from '../../Api';
 import Loader from '../../components/Loader';
 import {ViewUtils} from '../../Utils';
 import ImagePicker from 'react-native-image-picker';
+import {FlatGrid} from 'react-native-super-grid'
 
 export default class AddPrescribtion extends Component {
   constructor(props) {
@@ -46,7 +47,7 @@ export default class AddPrescribtion extends Component {
       notes: '',
       appointmentId: this.props.route.params.appointmentId,
       patientId: this.props.route.params.patientId,
-
+      data: [],
       // patientId,
       // patientId,
     };
@@ -54,14 +55,6 @@ export default class AddPrescribtion extends Component {
     console.warn('this.props.route.params ======= ', this.props.route.params);
   }
 
-  componentDidMount() {
-    Api.instance()
-    .getDataCenterlizedListDuringConsultation('mediacation')
-    .then(res => {
-      console.warn('res >>>>>' , res)
-    })
-
-  }
   _savePrescribeMedication = () => {
     let data = {
       date: this.state.startDate,
@@ -87,23 +80,23 @@ export default class AddPrescribtion extends Component {
     };
 
     console.warn('data', data);
-    
+
     if (this.state.medicine.trim() == '') {
       ViewUtils.showToast('Please Provide Medicine');
       return;
     } else if (this.state.strength.trim() == '') {
       ViewUtils.showToast('Please Provide Strength');
       return;
-    }else if (this.state.dose.trim() == '') {
+    } else if (this.state.dose.trim() == '') {
       ViewUtils.showToast('Please Provide Dose');
       return;
-    }else if (this.state.frequency.trim() == '') {
+    } else if (this.state.frequency.trim() == '') {
       ViewUtils.showToast('Please Provide Frequency');
       return;
-    }else if (this.state.route.trim() == '') {
+    } else if (this.state.route.trim() == '') {
       ViewUtils.showToast(' Please Provide Route');
       return;
-    }else if (this.state.reason.trim() == '') {
+    } else if (this.state.reason.trim() == '') {
       ViewUtils.showToast('Please Provide Reason');
       return;
     }
@@ -115,7 +108,7 @@ export default class AddPrescribtion extends Component {
       ViewUtils.showToast('Please Provide Notes');
       return;
     }
-    
+
     this.setState({isLoading: true});
     Api.instance()
       .createPrescription(data)
@@ -134,6 +127,42 @@ export default class AddPrescribtion extends Component {
       });
   };
 
+  _getMedicationList() {
+    this.setState({isLoading: true});
+    Api.instance()
+      .getDataCenterlizedListDuringConsultation('medication')
+      .then(data => {
+        this.arrayHolder = data;
+      })
+      .catch(err => console.log(err))
+      .finally(() => {
+        this.setState({isLoading: false});
+      });
+  }
+
+  componentDidMount() {
+    this._getMedicationList();
+  }
+
+  setSearchText(text) {
+    this.setState({isLoading: true});
+    const searchText = text.toLowerCase();
+    const abc = this.arrayHolder.filter(l => {
+      let userName = l.name;
+      return userName.toLowerCase().match(searchText);
+    });
+    this.setState({
+      data: abc,
+      isLoading: false,
+    });
+  }
+
+  setData(text) {
+    this.setState({
+      medicine: text,
+    });
+  }
+
   addToConsultation(item) {
     Api.instance()
       .addPrescribeMedication(
@@ -150,7 +179,7 @@ export default class AddPrescribtion extends Component {
       .finally(() => {});
   }
   render() {
-    console.warn("ddd")
+    console.warn('ddd');
     if (this.state.appointmentId != null) {
       return (
         <View style={{height: '75%'}}>
@@ -197,13 +226,34 @@ export default class AddPrescribtion extends Component {
                   </Label>
                   <Input
                     value={this.state.medicine}
-                    onChangeText={val => this.setState({medicine: val})}
+                    onChangeText={val =>  this.setSearchText(val) ?? this.setState({medicine: val})}
                     style={[
                       CommonStyles.fontRegular,
                       CommonStyles.textSizeMedium,
                     ]}
                   />
                 </Item>
+
+                <FlatGrid
+                  itemDimension={350}
+                  items={this.state.data}
+                  spacing={20}
+                  style={[CommonStyles.container, {marginTop: 5}]}
+                  renderItem={({item}) => (
+                    <TouchableOpacity
+                      onPress={() => this.setData(item.name)}
+                      style={[CommonStyles.container]}>
+                      <Text
+                        style={[
+                          CommonStyles.fontMedium,
+                          CommonStyles.textSizeAverage,
+                          {color: '#333333'},
+                        ]}>
+                        {item.name}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                />
 
                 <Item
                   stackedLabel
