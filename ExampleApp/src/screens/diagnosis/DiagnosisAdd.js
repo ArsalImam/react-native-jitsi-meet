@@ -238,7 +238,7 @@ export default class DiagnosisAdd extends Component {
                         style={[
                           CommonStyles.fontMedium,
                           CommonStyles.textSizeNormal,
-                          {color: '#333333'},
+                          {color: '#333333', marginLeft: '4%'},
                         ]}>
                         {item.name}
                       </Text>
