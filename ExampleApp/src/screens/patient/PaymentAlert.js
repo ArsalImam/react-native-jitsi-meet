@@ -296,7 +296,7 @@ class PaymentAlert extends Component {
                   CommonStyles.textSizeNormal,
                   {marginBottom: 20},
                 ]}>
-                Manual Payment to A/C: 10028436
+                Manual Payment to A/C: 1XXXXXXXX
               </Text>
             )}
           </View>

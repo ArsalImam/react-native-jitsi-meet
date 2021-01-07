@@ -135,9 +135,9 @@ android {
         applicationId "com.etibb"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 12
+        versionCode 13
         signingConfig signingConfigs.debug
-        versionName "6.6"
+        versionName "6.7"
     }
     splits {
         abi {
