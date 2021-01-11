@@ -22,8 +22,6 @@ export default class Sidebar extends Component {
   }
 
   render() {
-    console.warn(this.state.role);
-  
     return (
       <Container style={{backgroundColor: '#F7FAFE', flex: 1}}>
         <Content>

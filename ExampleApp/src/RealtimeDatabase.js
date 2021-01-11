@@ -27,26 +27,4 @@ export default class RealtimeDatabase {
       });
   
   }
-  
-  async _getAppointment(appointmentId) {
-    // try {
-    //   const snapshot = await database().ref(`forms/${appointmentId}`).on('value', (snapshot) => {
-    //     console.warn(snapshot.val());
-    //         // this.handleChangeRealtime(appointmentId)
-
-    //   });
-    // } catch (error) {
-    //   console.log(error);
-    // }
-  }
-  // async initRealtimeDatabase() {
-  //   try {
-  //     const snapshot = await database().ref('forms/').once('value');
-  //     const realtimeData = snapshot.val();
-  //     console.log('realtimeData', realtimeData)
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
 }

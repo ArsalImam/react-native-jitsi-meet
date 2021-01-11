@@ -30,14 +30,6 @@ export default class ScheduledBooking extends Component {
       this.upcomingAppointments();
     });
     this.onTabsChange(this.state.selected);
-    console.warn(
-      '===date===',
-      moment().format('YYYY-MM-DD'),
-      moment()
-        .add(15, 'days')
-        .format('YYYY-MM-DD'),
-    );
-
     Api.instance()
       .getUserRole()
       .then(role => this.setState({role}));
@@ -94,7 +86,6 @@ export default class ScheduledBooking extends Component {
 
       .then(appointments => {
         this.setState({appointments});
-        console.warn('aaa', appointments);
       })
       .catch(err => {
         //ViewUtils.showToast(err);
@@ -118,7 +109,6 @@ export default class ScheduledBooking extends Component {
 
       .then(appointments => {
         this.setState({appointments});
-        console.warn('aaa', appointments);
       })
       .catch(err => {
         // ViewUtils.showToast(err);
@@ -129,24 +119,17 @@ export default class ScheduledBooking extends Component {
   }
 
   upcomingAppointments() {
-    return (
-      // console.warn('Upcoming?Appointments')
-      Api.instance()
-        .getMyAppointments(AppointmentStatus.scheduled, true, true)
-        .then(appointments => {
-          this.setState({appointments});
-          console.warn(
-            'upcomingAppointments',
-            JSON.parse(JSON.stringify(this.state.appointments)),
-          );
-        })
-        .catch(err => {
-          //ViewUtils.showToast(err)
-        })
-        .finally(() => {
-          this.setState({isLoading: false});
-        })
-    );
+    return Api.instance()
+      .getMyAppointments(AppointmentStatus.scheduled, true, true)
+      .then(appointments => {
+        this.setState({appointments});
+      })
+      .catch(err => {
+        console.log(err);
+      })
+      .finally(() => {
+        this.setState({isLoading: false});
+      });
   }
 
   render() {
@@ -188,12 +171,6 @@ export default class ScheduledBooking extends Component {
               placeholderIconColor="#007aff"
               selectedValue={this.state.selected}
               onValueChange={this.onTabsChange.bind(this)}>
-              {/* <Picker.Item
-                                            color="gray"
-                                            selected={false}
-                                            label="Select Vital Type"
-                                            value=""
-                                        /> */}
               <Picker.Item label="Coming 7 days" value="Coming7days" />
               <Picker.Item label="Coming 15 days" value="Coming15days" />
               <Picker.Item
@@ -209,11 +186,9 @@ export default class ScheduledBooking extends Component {
               items={this.state.appointments.slice().reverse()}
               style={[CommonStyles.container]}
               renderItem={({item}) => (
-                console.warn('doctor abc'),
                 (
                   <TouchableOpacity
                     onPress={() => {
-                      console.warn('item.id == ', item.id);
                       ViewUtils.showAlert(
                         'Are you sure, you want to open consultation room?',
                         () => {
@@ -291,9 +266,8 @@ export default class ScheduledBooking extends Component {
                                     CommonStyles.fontMedium,
                                     CommonStyles.textSizeAverage,
                                     {color: '#333333'},
-                                  ]}> 
-                                    Live Appt.
-                                  {/* {item.clinic.name} */}
+                                  ]}>
+                                  Live Appt.
                                 </Text>
                               ) : (
                                 <Text

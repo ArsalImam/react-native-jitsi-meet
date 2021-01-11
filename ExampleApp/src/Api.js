@@ -23,12 +23,9 @@ export default class Api {
       function(error) {
         if (error.message == 'Network Error') {
           ViewUtils.showAlert('Check your Internet Connectiviy.');
-          //console.warn("internet is off")
         } else {
           return Promise.reject();
         }
-        // ViewUtils.showToast(error.response);
-        //return Promise.reject(error);
       },
     );
   }
@@ -62,7 +59,6 @@ export default class Api {
 
   // create clinic
   async createClinic(data) {
-    console.warn('data', data);
     try {
       let response = await this.client.post(
         this.getUrl('Clinics/CreateClinic'),
@@ -111,13 +107,11 @@ export default class Api {
   }
 
   async patientRegister(item, drCode) {
-    console.warn(item);
     let response = await this.client.get(
       this.getUrl(`Clients?filter[where][doctorCode]=${drCode}`),
     );
     let data = response.data;
     if (data.length > 0) {
-      console.warn(('>', data[0].id));
       item.doctorId = data[0].id;
       let patientObj = await this.savePatient(item);
       await this.saveUser(patientObj);
@@ -136,7 +130,6 @@ export default class Api {
       item.patientId = item.patientId;
       let customProperties = [];
       customProperties.push(item);
-      console.warn('===>prescription', customProperties);
       let response = await this.client.post(
         this.getUrl(`consultation-reports/updateCustomProps`),
         {
@@ -148,7 +141,6 @@ export default class Api {
           },
         },
       );
-      console.warn('res', JSON.stringify(response.data));
       return response.data;
     } catch (error) {
       return error;
@@ -156,7 +148,6 @@ export default class Api {
   }
 
   async notifyAppointment(appointmentId) {
-    console.warn('inide appointmentId == ', appointmentId);
     try {
       let user = await this._user();
       let _user = JSON.parse(JSON.stringify(user));
@@ -198,7 +189,6 @@ export default class Api {
 
   // Create Vitals
   async createVital(data) {
-    console.warn('touqeer data', data);
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
 
@@ -208,10 +198,7 @@ export default class Api {
       this.getUrl('vitals'),
       data,
       this.getHeaders(),
-
-      console.warn('asdaff', data),
     );
-    console.warn('Vital Create data', response.data);
     return response.data;
   }
 
@@ -228,7 +215,6 @@ export default class Api {
       ),
     );
     let data = response.data;
-    console.warn('data', data);
     if (data.error) throw data.error.message;
     return data;
   }
@@ -245,9 +231,6 @@ export default class Api {
       data,
       this.getHeaders(),
     );
-
-    console.warn('response.data == ', response.data);
-
     return response.data;
   }
 
@@ -262,7 +245,6 @@ export default class Api {
       ),
     );
     let data = response.data;
-    console.warn('data', data);
     if (data.error) throw data.error.message;
     return data;
   }
@@ -276,13 +258,11 @@ export default class Api {
       ),
     );
     let data = response.data;
-    console.warn('data', data);
     if (data.error) throw data.error.message;
     return data;
   }
 
   async getVitalListConsultation(patientId) {
-    console.warn(patientId);
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
@@ -292,7 +272,6 @@ export default class Api {
     );
 
     let data = response.data;
-    console.warn('data', data);
     if (data.error) throw data.error.message;
     return data;
   }
@@ -309,7 +288,6 @@ export default class Api {
       ),
     );
     let data = response.data;
-    console.warn('data', data);
     if (data.error) throw data.error.message;
     return data;
   }
@@ -326,7 +304,6 @@ export default class Api {
       ),
     );
     let data = response.data;
-    console.warn('data', data);
     if (data.error) throw data.error.message;
     return data;
   }
@@ -342,7 +319,6 @@ export default class Api {
       ),
     );
     let data = response.data;
-    console.warn('data', data);
     if (data.error) throw data.error.message;
     return data;
   }
@@ -358,7 +334,6 @@ export default class Api {
       ),
     );
     let data = response.data;
-    console.warn('data', data);
     if (data.error) throw data.error.message;
     return data;
   }
@@ -370,7 +345,6 @@ export default class Api {
       ),
     );
     let data = response.data;
-    console.warn('data', data);
     if (data.error) throw data.error.message;
     return data;
   }
@@ -389,7 +363,6 @@ export default class Api {
     );
 
     let data = response.data;
-    console.warn('data', data);
     if (data.error) throw data.error.message;
     return data;
   }
@@ -406,20 +379,17 @@ export default class Api {
       ),
     );
     let data = response.data;
-    console.warn('data', data);
     if (data.error) throw data.error.message;
     return data;
   }
 
   async getMedicalRecordImages(patientId, type) {
-    console.warn('umer==', patientId, type);
     let response = await this.client.get(
       this.getUrl(
         `MedicalRecords?filter[where][patientId]=${patientId}&filter[where][type]=${type}`,
       ),
     );
     let data = response.data;
-    console.warn('data', data);
     if (data.error) throw data.error.message;
     return data;
   }
@@ -436,7 +406,6 @@ export default class Api {
       ),
     );
     let data = response.data;
-    console.warn('data', data);
     if (data.error) throw data.error.message;
     return data;
   }
@@ -453,7 +422,6 @@ export default class Api {
       ),
     );
     let data = response.data;
-    console.warn('data', data);
     if (data.error) throw data.error.message;
     return data;
   }
@@ -470,8 +438,6 @@ export default class Api {
       ),
     );
     let data = response.data;
-    console.warn('data === ', data);
-    console.warn('data', data);
     if (data.error) throw data.error.message;
     return data;
   }
@@ -486,7 +452,6 @@ export default class Api {
     );
 
     let data = response.data;
-    console.warn('data', data);
     if (data.error) throw data.error.message;
     return data;
   }
@@ -503,7 +468,6 @@ export default class Api {
       ),
     );
     let data = response.data;
-    console.warn('data', data);
     if (data.error) throw data.error.message;
     return data;
   }
@@ -520,7 +484,6 @@ export default class Api {
       ),
     );
     let data = response.data;
-    console.warn('data', data);
     if (data.error) throw data.error.message;
     return data;
   }
@@ -529,7 +492,6 @@ export default class Api {
   async createPrescription(data) {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
-    console.warn('data -- ', data);
     data.doctorId = _user.id;
 
     let response = await this.client.post(
@@ -537,25 +499,17 @@ export default class Api {
       data,
       this.getHeaders(),
     );
-
-    console.warn('response ----- ', JSON.stringify(response));
-
     return response.data;
   }
 
   async createVitals(data) {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
-    console.warn('data -- ', data);
-    // data.doctorId = _user.id;
     let response = await this.client.post(
       this.getUrl('vitals'),
       data,
       this.getHeaders(),
     );
-
-    console.warn('response ----- ', JSON.stringify(response));
-
     return response.data;
   }
 
@@ -574,7 +528,6 @@ export default class Api {
   }
 
   async updateAppointmentStatus(appointmentId) {
-    console.warn('appointmentId in updae ===', appointmentId);
     let appointment = {
       status: AppointmentStatus.completed,
     };
@@ -582,7 +535,6 @@ export default class Api {
       this.getUrl(`Appointments/upsertWithWhere?[where][id]=${appointmentId}`),
       appointment,
     );
-    console.warn('response == ', response);
     let data = response.data;
 
     if (data.error) throw data.error.message;
@@ -610,9 +562,6 @@ export default class Api {
       patientId,
       status: AppointmentStatus.scheduled,
     };
-
-    console.warn('patientId ::: ', patientId);
-
     let response = await this.client.post(
       this.getUrl(`Appointments/upsertWithWhere?[where][id]=${appointmentId}`),
       appointment,
@@ -624,7 +573,6 @@ export default class Api {
   async createPayments(data) {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
-    console.warn('data --  >>>>> ', data);
     data.createdBy = _user.id;
     let response = await this.client
       .post(
@@ -633,15 +581,11 @@ export default class Api {
         this.getHeaders(),
       )
       .catch(err => {
-        console.warn(err);
+        console.log(err);
       });
-
-    console.warn('response ----- >>>>>', JSON.stringify(response));
 
     return response.data;
   }
-
-//  https://api.etibb.online/api/PatientSlots?filter[where][patientId]=5fece18ca9c988122cd7b06a&filter[where][isUtilized]=false
   async getPatientUtilizedSlots(patientId) {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
@@ -652,13 +596,11 @@ export default class Api {
       ),
     );
     let data = response.data;
-
     if (data.error) throw data.error.message;
     return data;
   }
 
   async updatePatientSlots(patientId) {
-
     let response = await this.client.post(
       this.getUrl(`PatientSlots/UpdatePatientSlot?`),
       {patientId: patientId},
@@ -668,13 +610,9 @@ export default class Api {
     if (data.error) throw data.error.message;
     return data;
   }
-
-  //https://api.etibb.online/api/PatientSlots/UpdatePatientSlot?
-
   async postPatientUtilizedSlots(transactionId) {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
-    // let id_param = this._relationalParamByRole(_user.role);
     let response = await this.client.post(
       this.getUrl(
         `PatientSlots/update?[where][transactionId]=${transactionId}`,
@@ -689,15 +627,10 @@ export default class Api {
   }
 
   async getTodaysAppointments(patientId) {
-    console.warn('patientId ::: ', patientId);
-
     var today = moment(new Date()).format('YYYY-MM-DD');
     var tomorrow = moment(today)
       .add('day', 1)
       .format('YYYY-MM-DD');
-
-    console.warn('today :: ', today);
-    console.warn('tomorrow :: ', tomorrow);
 
     let response = await this.client.get(
       this.getUrl(
@@ -705,7 +638,6 @@ export default class Api {
       ),
     );
     let data = response.data;
-    console.warn('data res :: ', data);
     if (data.error) throw data.error.message;
     return data;
   }
@@ -714,14 +646,13 @@ export default class Api {
     if (!this._userRole) {
       let user = await this._user();
       let _user = JSON.parse(JSON.stringify(user));
-
       this._userRole = _user.role;
     }
     return this._userRole;
   }
 
   async updateFcmToken(fcmToken: string) {
-    console.warn('fcmToken fcm :: ', fcmToken);
+    console.log('fcmToken fcm :: ', fcmToken);
     if (!fcmToken) {
       throw 'token not token';
     }
@@ -736,20 +667,13 @@ export default class Api {
       fcmToken,
     });
     let data = response.data;
-    console.warn('data fcm :: ', data);
     if (data.error) throw data.error.message;
-    console.warn('fcm updated', fcmToken);
-    console.warn('fcm AsyncStorage has set');
     return data;
   }
 
   async getScheduledAppointments() {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
-
-    console.warn('doctor id ::: ', _user.doctorId);
-    console.warn('patient id ::: ', _user.id);
-
     let response = await this.client.get(
       this.getUrl(
         `Appointments?filter[where][doctorId]=${
@@ -772,9 +696,6 @@ export default class Api {
   ) {
     let user = await this._user();
     let _user = JSON.parse(JSON.stringify(user));
-
-    console.warn('user sdsa ::: ', user);
-
     let id_param = this._relationalParamByRole(_user.role);
     let userId = _user.id;
     let doctorObj = '';
@@ -806,8 +727,6 @@ export default class Api {
     if (data.error) throw data.error.message;
     return data;
   }
-
-  //
   async getMyAppointmentsComing15Days(
     status = '',
     requirePatient = false,
@@ -862,7 +781,6 @@ export default class Api {
 
     let id_param = this._relationalParamByRole(_user.role);
     let userId = _user.id;
-    console.warn('user--->', _user);
     if (_user.role == Roles.patient && status == AppointmentStatus.available) {
       id_param = 'doctorId';
       userId = _user.doctorId;
@@ -884,13 +802,6 @@ export default class Api {
     if (lastDate != '') {
       lastDate = `&filter[where][and][1][date][gte]=${lastDate}`;
     }
-
-    console.warn('todaysDate :: ', todaysDate);
-    console.warn('lastDate :: ', lastDate);
-    console.warn(
-      'URL ::: ',
-      `Appointments?filter[where][${id_param}]=${userId}${includes}${wheres}&filter[order]=id%20DESC${todaysDate}${lastDate}`,
-    );
     let response = await this.client.get(
       this.getUrl(
         `Appointments?filter[where][${id_param}]=${userId}${includes}${wheres}&filter[order]=id%20DESC${todaysDate}${lastDate}`,
@@ -921,7 +832,7 @@ export default class Api {
     try {
       await AsyncStorage.setItem('@user', JSON.stringify(user));
     } catch (e) {
-      console.warn(e);
+      console.log(e);
     }
   }
 
@@ -940,7 +851,6 @@ export default class Api {
   }
 
   async uploadImage(data) {
-    console.warn('image data ==>', JSON.stringify(data));
     let response = await this.client.post(
       this.getUrl(`Contents/${Configs.containers.images}/upload`),
       data,
@@ -964,7 +874,6 @@ export default class Api {
       data,
       this.getHeaders(),
     );
-    console.warn('response.data  === ', response.data);
     return response.data;
   }
 
@@ -972,7 +881,7 @@ export default class Api {
     try {
       return JSON.parse(await AsyncStorage.getItem('@user'));
     } catch (e) {
-      console.warn(e);
+      console.log(e);
     }
   }
 

@@ -45,8 +45,7 @@ export default class AppointmentRoom extends React.Component {
       .then(user => {
         let _user = JSON.parse(JSON.stringify(user));
         this.setState({role: _user.role});
-        console.warn('user appointment == ', _user);
-
+    
         console.log(`starting conference on url =====> ${appointmentId}`);
 
         const url = `https://conference.etibb.online/${appointmentId}`;
@@ -74,9 +73,7 @@ export default class AppointmentRoom extends React.Component {
     Api.instance()
       .getAppointmentById(appointmentId)
       .then(response => {
-        console.warn("status === ",response.status)
         if (response.status == 'Completed') {
-          console.warn("complete call")
           ViewUtils.showAlert(
             'Call ended.',       
         );

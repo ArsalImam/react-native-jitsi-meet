@@ -35,7 +35,7 @@ export default class PatientHistoryList extends Component {
       this.state = {
         isLoading: true,
         patientHistoryList: [],
-        disabled: false, 
+        disabled: false,
         appointmentId: this.props.route.params.appointmentId,
         patientId: this.props.route.params.patientId,
         description: '',
@@ -45,7 +45,7 @@ export default class PatientHistoryList extends Component {
         isLoading: true,
         patientHistoryList: [],
         role: '',
-        name: ''
+        name: '',
       };
     }
   }
@@ -53,19 +53,17 @@ export default class PatientHistoryList extends Component {
   componentDidMount() {
     this.props.navigation.addListener('focus', payLoad => {
       this.setState({isLoading: true});
-    Api.instance()
-      .getUserRole()
-      .then(role => {
-        console.warn('role ::: ', role);
-        this.setState({role});
-      });
+      Api.instance()
+        .getUserRole()
+        .then(role => {
+          this.setState({role});
+        });
 
-    this._getPatientHistoryList();
-    })
+      this._getPatientHistoryList();
+    });
   }
   _getPatientHistoryList() {
     this.setState({isLoading: true});
-    console.warn('kahin');
     Api.instance()
       .getPatientHistoryList()
       .then(data => {
@@ -77,10 +75,6 @@ export default class PatientHistoryList extends Component {
       });
   }
 
-  //  componentDidMount(){
-  //    this._getPatientHistoryList()
-  //  }
-
   addToConsultation(item) {
     this.setState({
       disabled: true,
@@ -90,7 +84,6 @@ export default class PatientHistoryList extends Component {
     Api.instance()
       .addReport(item, this.state.appointmentId, this.state.patientId)
       .then(response => {
-        console.warn(response);
         this.props.navigation.goBack();
       })
       .catch(err => {})
@@ -113,7 +106,6 @@ export default class PatientHistoryList extends Component {
   }
 
   updateAnswer = id => {
-    console.warn('update');
     let data = {
       'setup-type': 'patientHistoryForm',
       description: this.state.description,
@@ -123,8 +115,6 @@ export default class PatientHistoryList extends Component {
       .updatePatientHistoryList(id, data)
       .then(res => {
         this.props.navigation.goBack();
-        console.warn('success');
-        console.warn(res);
       })
       .catch(err => {
         ViewUtils.showAlert('Unable to Update');
@@ -175,7 +165,10 @@ export default class PatientHistoryList extends Component {
                 itemDimension={350}
                 items={this.state.patientHistoryList}
                 spacing={20}
-                style={[CommonStyles.container, {marginTop: 5, marginBottom: 30}]}
+                style={[
+                  CommonStyles.container,
+                  {marginTop: 5, marginBottom: 30},
+                ]}
                 renderItem={({item}) => (
                   <View
                     style={[
@@ -195,8 +188,7 @@ export default class PatientHistoryList extends Component {
                         onPress={() => {
                           this.addToConsultation(item);
                         }}
-                        disabled={this.state.disabled}
-                        >
+                        disabled={this.state.disabled}>
                         <View
                           style={[
                             CommonStyles.container,
@@ -313,7 +305,6 @@ export default class PatientHistoryList extends Component {
         </View>
       );
     } else {
-      console.warn('ooooo');
       return (
         <View style={[CommonStyles.container]}>
           <ImageBackground
@@ -339,14 +330,17 @@ export default class PatientHistoryList extends Component {
                   It is a list of Patient History{' '}
                 </Text>
               </Text>
-            </View>  
+            </View>
 
             <View style={{flex: 8}}>
               <FlatGrid
                 itemDimension={350}
                 items={this.state.patientHistoryList}
                 spacing={20}
-                style={[CommonStyles.container, {marginTop: 5, marginBottom: 30 }]}
+                style={[
+                  CommonStyles.container,
+                  {marginTop: 5, marginBottom: 30},
+                ]}
                 renderItem={({item}) => (
                   <View
                     style={[
@@ -422,17 +416,6 @@ export default class PatientHistoryList extends Component {
                               onChangeText={this._handleMultiInput(
                                 'description',
                               )}
-
-                              //  placeholder="Answer.."
-                              //  value={
-                              //    this.state
-                              //      .description
-                              //  }
-                              //  onChangeText={val =>
-                              //    this.setState({
-                              //      description: val,
-                              //    })
-                              //  }
                             />
                           )}
 
@@ -465,7 +448,7 @@ export default class PatientHistoryList extends Component {
                           onPress={() => {
                             this.updateAnswer(item.id);
                           }}
-                        ></Button>
+                        />
                       )}
                     </ImageBackground>
                   </View>

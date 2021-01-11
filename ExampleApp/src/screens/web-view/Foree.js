@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, TouchableOpacity, BackHandler, Alert, Text} from 'react-native';
+import {BackHandler, Alert} from 'react-native';
 import {WebView} from 'react-native-webview';
 import {Header, Left, Right, Body, Icon, Container, Button} from 'native-base';
 import {ViewUtils} from '../../Utils';
@@ -15,12 +15,6 @@ export default class Foree extends Component {
   constructor(props) {
     super(props);
     this.webView = null;
-  }
-
-  reloadWebView() {
-    this.setState({
-      forceReload: true,
-    });
   }
   handleBackButton = () => {
     Alert.alert(
@@ -109,53 +103,47 @@ export default class Foree extends Component {
         </Header>
 
         <WebView
-          source={{
-            uri: `${endPoint}`,
-            forceReload: true,
-          }}
+          source={{uri: `${endPoint}`}}
           startInLoadingState={true}
           javaScriptEnabledAndroid={true}
           javaScriptEnabled={true}
           ref={webView => (this.webView = webView)}
           onMessage={event => {
-            console.warn('event === ', event);
+            console.log('event === ', event);
 
             if (!event.nativeEvent.canGoBack) {
               ViewUtils.showToast('You have cancelled Payment Process!');
               this.props.navigation.goBack();
               return;
             }
+
             if (
               event.nativeEvent.data == 'success' &&
               event.nativeEvent.canGoBack
             ) {
+              console.log('userId:>>>', this.state.userId);
               Api.instance()
-                ._user()
-                .then(user => {
+                .updatePatientSlots(this.state.userId)
+                .then(res => {
+                  console.log('updatePatientSlots res', res);
                   Api.instance()
-                    .updateAppointment(this.state.appointmentId, user.id)
-                    .then(() => {
-                      Api.instance()
-                        ._user()
-                        .then(user => {
-                          Api.instance()
-                            .updatePatientSlots(user.id)
-                            .then(res => {
-                              console.warn('updatePatientSlots res', res)
-                              ViewUtils.showToast(
-                                'Appointment has been booked successfully',
-                              );
-                              this.props.navigation.replace('MyTabs', {
-                                screen: 'Scheduled',
-                              });
-                            });
-                        });
-                    })
-                    .catch(err => {
-                      ViewUtils.showToast(err);
-                    })
-                    .finally();
-                });
+                    .updateAppointment(
+                      this.state.appointmentId,
+                      this.state.userId,
+                    )
+                    .then(res => {
+                      ViewUtils.showToast(
+                        'Appointment has been booked successfully',
+                      );
+                      this.props.navigation.replace('MyTabs', {
+                        screen: 'Scheduled',
+                      });
+                    });
+                })
+                .catch(err => {
+                  ViewUtils.showToast(err);
+                })
+                .finally();
             }
           }}
           injectedJavaScript={this.injectedJavascript}

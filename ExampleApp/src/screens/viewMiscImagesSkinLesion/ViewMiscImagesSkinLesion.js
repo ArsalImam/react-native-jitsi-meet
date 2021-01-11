@@ -38,7 +38,6 @@ export default class ViewMiscImagesSkinLesion extends Component {
       .then(data => {
         let urls = data.map(x => x.url);
         this.setState({images: urls});
-        console.warn("this.state.images.length === ",this.state.images.length)
         if(this.state.images.length == 0){
           this.setState({noRecord:'No Record Found'})
         }

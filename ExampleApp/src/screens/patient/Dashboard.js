@@ -2,20 +2,14 @@ import React, {Component} from 'react';
 import {
   Text,
   View,
-  StyleSheet,
   TouchableOpacity,
   Image,
   ImageBackground,
-  ScrollView,
   StatusBar,
-  Button,
-  ActivityIndicator,
   AsyncStorage,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {Container, Header, Content, Tab, Tabs, TabHeading} from 'native-base';
 import CommonStyles from '../../CommonStyles';
-import {Configs} from '../../Configs';
 import {ViewUtils} from '../../Utils';
 import Api from '../../Api';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
@@ -42,12 +36,10 @@ class Dashboard extends React.Component {
     };
   }
   _getAllAppointments() {
-    //getting appointment data
     Api.instance()
       .getMyAppointments()
       .then(appointments => {
         let schAppointment = appointments.filter(x => x.status == 'Scheduled');
-        console.warn('Schedule', schAppointment.length);
         this.setState({
           upComingCount: schAppointment.length,
         });
@@ -74,9 +66,7 @@ class Dashboard extends React.Component {
             time: moment(lastAppointment.date).format('hh:mm a'),
             timeLeft: diff,
           };
-
           this.setState({
-            // upComingCount: schAppointment.length,
             lastestAppointment,
           });
         }
@@ -87,7 +77,6 @@ class Dashboard extends React.Component {
 
         this.setState({
           totalPrescription: completedAppointment.length,
-          // appointments,
         });
       })
 
@@ -119,15 +108,13 @@ class Dashboard extends React.Component {
       Api.instance()
         .getUserRole()
         .then(role => this.setState({role}));
-      //udpdating fcm
       try {
         AsyncStorage.getItem('fcmToken')
           .then(token => {
             return Api.instance().updateFcmToken(token);
           })
-          .catch(er => console.warn(er));
+          .catch(er => console.log(er));
       } catch (error) {
-        //log error, to enable ease in debugging
         console.log(error);
       }
       //updating appointments
@@ -140,8 +127,6 @@ class Dashboard extends React.Component {
       Api.instance()
         ._user()
         .then(user => {
-
-          console.warn('user >>>>', user)
           if (user == null) return;
           this.setState(
             {
@@ -152,17 +137,12 @@ class Dashboard extends React.Component {
               global.role = this.state.user.role;
             },
           );
-          console.warn('user user ===>', this.state.user);
-
           if (this.state.user.imageUrl) {
-            console.warn('image image', this.state.user.imageUrl);
-            console.warn('user user ===>', this.state.user);
             let imageData = new FormData();
             imageData.append('file', {
               url: this.state.user.imageUrl,
               name: this.state.user.imageUrl,
             });
-            console.warn(imageData);
           }
         })
         .catch(err => ViewUtils.showToast(err));
@@ -171,25 +151,9 @@ class Dashboard extends React.Component {
 
   goToPatientsRooms() {
     this.props.navigation.navigate('MyTabs', {screen: 'Available'});
-    // appointments
-    // var _navigateToRoom = appointments => {
-    //   if (appointments.length == 0) {
-    //     ViewUtils.showToast(
-    //       'No appointments has been scheduled for your patient',
-    //     );
-    //     return;
-    //   }
-    //   var appointmentId = appointments.reverse()[0].id;
-    //                     Api.instance().notifyAppointment(appointmentId).then().catch();
-
-    //   this.props.navigation.navigate('AppointmentRoom', {appointmentId});
-    // };
-
-    // _navigateToRoom(this.state.appointments);
   }
 
   render() {
-    console.warn(this.state.role);
     return (
       <View style={[CommonStyles.container]}>
         <StatusBar
@@ -219,20 +183,6 @@ class Dashboard extends React.Component {
                     source={{uri: this.state.user.imageUrl}}
                   />
                 ) : (
-                  //   <Image
-                  //   style={{height: '97%', width: '100%', resizeMode: 'contain'}}
-
-                  //   source={require('../../assets/drawable-xxxhdpi/Mask.png')}
-                  // />
-                  // <Icon
-                  // style={{
-                  //       width: '100%',
-                  //       height: 105,
-                  //       resizeMode: 'cover',
-                  //     }}
-                  // name="user" type="FontAwesome5"
-
-                  // />
                   <View
                     style={[
                       {
@@ -446,7 +396,6 @@ class Dashboard extends React.Component {
                         CommonStyles.centerText,
                         {fontSize: 32, color: '#297dec'},
                       ]}>
-                      {/* {this.state.totalConsultation} */}
                       {this.state.totalPrescription}
                     </Text>
                   </View>
@@ -454,64 +403,14 @@ class Dashboard extends React.Component {
                 <Text
                   style={[
                     CommonStyles.fontMedium,
-                    
-                    {fontSize: 15, marginTop: 10}
+
+                    {fontSize: 15, marginTop: 10},
                   ]}>
                   Past Appointments
                 </Text>
               </TouchableOpacity>
 
               {this.state.role == 'ROLE_PATIENT' ? (
-                //   <TouchableOpacity
-                //     onPress={() =>
-                //       this.props.navigation.navigate('MyPresciption')
-                //     }
-                //     style={[
-                //       CommonStyles.container,
-                //       CommonStyles.br5,
-                //       {
-                //         borderColor: '#C9D7EA',
-                //         borderWidth: 2,
-                //         padding: 15,
-                //         justifyContent: 'space-between',
-                //         marginLeft: 5,
-                //       },
-                //     ]}
-                //     // onPress={() => {
-                //     //   this.props.navigation.navigate(`Patients`, {
-                //     //     appointmentId: null,
-                //     //     moveTo: 'PatientDetail',
-                //     //   });
-                //     // }}
-                //   >
-                //     {/* <View style={[CommonStyles.horizontalContainer]}>
-                //   <Icon name="bars" size={18} color="#C9D7EA" />
-                //   <View
-                //     style={[
-                //       CommonStyles.centerText,
-                //       CommonStyles.padding,
-                //       CommonStyles.br5,
-                //       {backgroundColor: '#ebf2f9'},
-                //     ]}>
-                //     <Text
-                //       style={[
-                //         CommonStyles.fontMedium,
-                //         {fontSize: 32, color: '#297dec'},
-                //       ]}>
-                //       {this.state.totalPatients}
-                //     </Text>
-                //   </View>
-                // </View> */}
-                //     <Text
-                //       style={[
-                //         CommonStyles.fontMedium,
-                //         {fontSize: 14, marginTop: 10},
-                //       ]}>
-                //       TOTAL PRESCRIPIONS
-                //       {this.state.totalPrescription}
-                //     </Text>
-                //   </TouchableOpacity>
-
                 <TouchableOpacity
                   style={[
                     CommonStyles.container,
@@ -549,8 +448,8 @@ class Dashboard extends React.Component {
                   <Text
                     style={[
                       CommonStyles.fontMedium,
-                      
-                      {fontSize: 15, marginTop: 10}
+
+                      {fontSize: 15, marginTop: 10},
                     ]}>
                     Total Prescriptions
                   </Text>
@@ -595,8 +494,8 @@ class Dashboard extends React.Component {
                   <Text
                     style={[
                       CommonStyles.fontMedium,
-                      
-                      {fontSize: 15, marginTop: 10}
+
+                      {fontSize: 15, marginTop: 10},
                     ]}>
                     Total Patients
                   </Text>
