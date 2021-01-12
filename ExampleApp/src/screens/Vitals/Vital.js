@@ -155,8 +155,7 @@ export default class Vital extends Component {
             ViewUtils.showToast('Vital has been saved successfully!');
           })
           .catch(err => {
-            //ViewUtils.showToast(err);
-            //ViewUtils.showAlert('Unable to Perform this Action');
+           console.log(err)
           })
           .finally(() => {
             this.setState({isLoading: false});
@@ -203,8 +202,7 @@ export default class Vital extends Component {
         this.state.patientId,
       )
 
-      .then(response => {
-        console.warn('response', response);
+     .then(response => {
       })
       .catch(err => {})
       .finally(() => {});
