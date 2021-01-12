@@ -306,11 +306,12 @@ export default class BookingList extends Component {
           'Do you want to create appointment?',
           () => {
             if (isPaymentEnabled) {
+
               Api.instance()
                 .getPatientUtilizedSlots(userId)
                 .then(res => {
-                  console.log('res', res);
-                  if (!res[0]) {
+                  console.log('tetstststsres', res);
+                  if (!res[0] ) {
                     that.props.navigation.navigate('PaymentAlert', {
                       user: userId,
                       appointmentId: appointmentId,
@@ -330,7 +331,10 @@ export default class BookingList extends Component {
                                 ViewUtils.showToast(
                                   'Appointment has been booked successfully',
                                 );
-                                this.refreshList();
+                                // this.refreshList();
+                                this.props.navigation.replace('MyTabs', {
+                                  screen: 'Scheduled',
+                                });
                               });
                           })
                           .catch(err => {

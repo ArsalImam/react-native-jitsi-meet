@@ -132,12 +132,18 @@ export default class Foree extends Component {
                       this.state.userId,
                     )
                     .then(res => {
+                      Api.instance()
+                      .updatePatientSlots(this.state.userId)
+                      .then(res => {
+                        console.log('updatePatientSlots res', res);
+
                       ViewUtils.showToast(
                         'Appointment has been booked successfully',
                       );
                       this.props.navigation.replace('MyTabs', {
                         screen: 'Scheduled',
                       });
+                    });
                     });
                 })
                 .catch(err => {
