@@ -31,10 +31,6 @@ export default class Vital extends Component {
       };
     }
   }
-  componentDidMount() {
-    //    console.warn('aaaaaaaaaaaaa'  , this.props.route.params)
-  }
-
   _selectVitalComponenet = params => {
     switch (params) {
       case 'Blood Glucose':
@@ -59,24 +55,11 @@ export default class Vital extends Component {
       };
     } else {
       data = {
-        // date: this.state.startDate,
-        // "setupId": "",
-        // "doctorId": "5f01d90dffd17912ce896c56",
-        // "assistantId": "",
-
         date: new Date(),
-        //          vitalType: this.state.vitalType,
         notes: this.state.notes,
         patientId: this.props.route.params.patientId,
         value: this.state.multipleValues[0],
         multipleValues: this.state.multipleValues,
-
-        //  patientId: this.state.patientId,
-        //  answer: this.state.vitalType,
-        //  notes:this.state.notes,
-        // endDate: this.state.endDate,
-        //  'setup-type': 'vital',
-        //  active: false,
       };
     }
 
@@ -84,18 +67,13 @@ export default class Vital extends Component {
     switch (this.state.vitalType) {
       case 'Blood Glucose':
         childComponentData = this.glucoseComponent._onSave();
-        console.warn('childComponentData === ', childComponentData);
         if (childComponentData.value == '') {
           ViewUtils.showToast('Please enter Blood Glucose Value');
-        }
-        else if (childComponentData.selectedMeal == '') {
+        } else if (childComponentData.selectedMeal == '') {
           ViewUtils.showToast('Please select Meal');
-        }
-        else if (childComponentData.selectedMedicine == '') {
+        } else if (childComponentData.selectedMedicine == '') {
           ViewUtils.showToast('Please select Medicine');
-        }
-
-        else {
+        } else {
           Object.assign(data, {
             multipleValues: [
               parseInt(childComponentData.value),
@@ -113,17 +91,13 @@ export default class Vital extends Component {
         if (childComponentData.systolic == '') {
           ViewUtils.showToast('Please enter systolic');
           return;
-        }
-        else if (childComponentData.diastolic == '') {
+        } else if (childComponentData.diastolic == '') {
           ViewUtils.showToast('Please enter diastolic');
           return;
-        }
-        else if (childComponentData.pulse == '') {
+        } else if (childComponentData.pulse == '') {
           ViewUtils.showToast('Please enter pulse');
           return;
-        }
-        else {
-          console.warn('childComponentData === ', childComponentData);
+        } else {
           Object.assign(data, {
             multipleValues: [
               parseInt(childComponentData.systolic),
@@ -137,13 +111,10 @@ export default class Vital extends Component {
         break;
       case 'Blood Oxygen':
         childComponentData = this.oxygenComponent._onSave();
-
-        console.warn('childComponentData === ', childComponentData);
         if (childComponentData.value == '') {
           ViewUtils.showToast('Please enter value');
           return;
-        }
-        else {
+        } else {
           Object.assign(data, {
             multipleValues: [parseInt(childComponentData.value)],
             vitalType: 'BloodOxygen',
@@ -154,11 +125,6 @@ export default class Vital extends Component {
 
       default:
     }
-    
-    console.warn(
-      'multipleValues === ',
-      JSON.stringify(this.state.multipleValues),
-    );
 
     if (this.state.appointmentId != null) {
       if (this.state.vitalType.trim() != '') {
@@ -171,8 +137,7 @@ export default class Vital extends Component {
             ViewUtils.showToast('Vital has been saved successfully!');
           })
           .catch(err => {
-            //ViewUtils.showToast(err);
-          //  ViewUtils.showToast('Unable to Perform this Action');
+            console.log(err);
           })
           .finally(() => {
             this.setState({isLoading: false});
@@ -227,8 +192,7 @@ export default class Vital extends Component {
           break;
         default:
       }
-    }     
-    
+    }
   };
 
   addToConsultation(item) {

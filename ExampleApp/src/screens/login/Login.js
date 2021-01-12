@@ -42,21 +42,12 @@ class Login extends Component {
   componentDidMount() { }
 
   componentWillMount() {
-    // Api.instance()
-    // ._user()
-    // .then(token => {
-    //   console.warn("token", token)
-    //   this.props.navigation.replace('MyDrawer')
-
-    // })
     AsyncStorage.getItem('@user').then(token => {
       console.log('token', token);
-      console.warn('token in willmount', token);
       if (token) {
         console.log('token', token);
         this.props.navigation.replace('MyDrawer');
-        // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-
+   
       } else {
         console.log('error', error);
       }
@@ -89,7 +80,7 @@ class Login extends Component {
         this.props.navigation.replace('MyDrawer', { user: data.user });
       })
       .catch(err => {
-        console.warn('er' ,err)
+        console.log('er' ,err)
         //ViewUtils.showToast(err);
         ViewUtils.showToast(
           'Invalid Credentials.',       
@@ -220,9 +211,6 @@ class Login extends Component {
                 <View style={{width: 107, height: 50}}>
                   <Image
                     style={[
-                      // CommonStyles.mt10,
-                      // CommonStyles.container,
-                      // CommonStyles.backgroundImage,
                       { width: '100%', height: '100%' },
                     ]}
                     source={require('../../assets/img/logo.png')}
@@ -287,32 +275,6 @@ class Login extends Component {
       </View>
     );
   }
-
-  // handleBackButton = () => {
-  //   Alert.alert(
-  //       'Exit App',
-  //       'Exiting the application?', [{
-  //           text: 'Cancel',
-  //           onPress: () => console.log('Cancel Pressed'),
-  //           style: 'cancel'
-  //       }, {
-  //           text: 'OK',
-  //           onPress: () => BackHandler.exitApp()
-  //       }, ], {
-  //           cancelable: false
-  //       }
-  //    )
-  //    return true;
-  //  } 
-
-  // componentDidMount() {
-  //   BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-  // }
-  
-  // componentWillUnmount() {
-  //   BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-  // }
-
 }
 
 export default Login;

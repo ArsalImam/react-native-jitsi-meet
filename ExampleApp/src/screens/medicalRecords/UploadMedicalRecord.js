@@ -57,84 +57,10 @@ export default class UploadMedicalRecord extends Component {
     }
   }
 
-  // cancelAttachment = () => {
-  //     this.props.navigation.navigate('UploadIllustrations', this.props.route.params);
-
-  //     this.setState({ dialogVisible: false });
-  // };
-
-  // sendImage = () => {
-  //     this.props.navigation.navigate('IllustrationsList', this.props.route.params);
-  //     this.setState({ dialogVisible: false });
-  // };
-
-  // handleChoosePhoto = (mediaType) => {
-  //     const options = { noData: true, mediaType };
-  //     ImagePicker.showImagePicker(options, (response) => {
-
-  //         console.warn('Response = ', response);
-
-  //         if (response.didCancel) {
-  //             console.log('User cancelled image picker');
-  //         } else if (response.error) {
-  //             console.log('ImagePicker Error: ', response.error);
-  //         } else if (response.customButton) {
-  //             console.log('User tapped custom button: ', response.customButton);
-  //         } else {
-  //             const source = { uri: response.uri };
-
-  //             this.setState({
-  //                 image: source,
-  //             });
-  //         }
-  //     });
-  // }
-
-  // handleChoosePhoto = () => {
-
-  //     const options = {
-  //         title: '',
-  //         noData: true,
-  //         // customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
-  //         storageOptions: {
-  //             skipBackup: true,
-  //             path: 'images',
-  //         },
-  //     };
-
-  //     ImagePicker.showImagePicker(options, (response) => {
-  //         console.warn('Response = ', response);
-
-  //         if (response.didCancel) {
-  //             console.warn('User cancelled image picker');
-  //         } else if (response.error) {
-  //             console.warn('ImagePicker Error: ', response.error);
-  //         } else {
-  //             console.warn('else called')
-  //             // this.setState({
-  //             //     imageUri: response.uri,
-  //             //   });
-  //             // show loader
-  //             const fileData = new FormData();
-  //             this.setState({
-  //                 imageUri: response.uri,
-  //               });
-  //             // fileData.append('uploadFile', {
-
-  //             //     name: response.fileName,
-  //             //     type: response.type,
-  //             //     uri: Platform.OS === 'android' ? response.uri : response.uri.replace('file://', ''),
-
-  //             // });
-  //         }
-  //     });
-  //    }
-
   handleChoosePhoto = () => {
     const options = {
       title: '',
       noData: true,
-      // customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
       storageOptions: {
         skipBackup: true,
         path: 'images',
@@ -142,8 +68,6 @@ export default class UploadMedicalRecord extends Component {
     };
 
     ImagePicker.showImagePicker(options, response => {
-      console.warn('Response = ', response);
-
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -163,10 +87,6 @@ export default class UploadMedicalRecord extends Component {
         Api.instance()
           .uploadImage(fileData)
           .then(response => {
-            console.warn(JSON.stringify(response));
-            // this.state.imageUri = `https://api.etibb.online/api/Contents/${
-            //   Configs.containers.images
-            // }/download/${response.result.files.uploadFile[0].name}`;
             this.setState({isLoading: false});
             this.setState({
               imageUri: Api.instance().getMediaUrl(
@@ -174,14 +94,11 @@ export default class UploadMedicalRecord extends Component {
                 response.result.files.uploadFile[0].name,
               ),
             });
-            console.warn('imageURIIRIRIRIRR' , this.state.imageUri)
           })
           .catch(err => console.log(err))
           .finally(() => {
             this.setState({isLoading: false});
           });
-        // this.setState({uri : response.path})
-        //console.warn("response ======= ",response.path)
         const source = {uri: response.uri};
       }
     });
@@ -198,25 +115,17 @@ export default class UploadMedicalRecord extends Component {
     };
     ImagePicker.showImagePicker(options, response => {
       if (response.didCancel) {
-        console.warn('User cancelled image picker');
       } else if (response.error) {
-        console.warn('ImagePicker Error: ', response.error);
       } else {
-        //   this.setState({
-        //     imageUri: response.uri,
-        //     imageFilename : response.fileName
-        //   });
         let imageData = new FormData();
         imageData.append('file', {
           uri: response.uri,
           name: response.fileName,
         });
-        console.warn('imageeee Data', imageData);
         Api.instance()
           .uploadImage(imageData)
 
           .then(response => {
-            console.warn('tesssssssssssst', response.body);
           });
       }
     });
@@ -226,24 +135,10 @@ export default class UploadMedicalRecord extends Component {
 
     
     if (this.state.imageUri != '' && this.state.name.trim() != '' && this.state.vitalType.trim() != '') {
-      // console.warn('Image URl', this.state.imageUri);
-      // let imageData = new FormData();
-      // imageData.append('file', {
-      //   uri: this.state.imageUri,
-      //   name: this.state.imageFilename,
-
-      // });
-
-      // ammad
-
-      
-
       let data = {
         title: this.state.name,
         url: this.state.imageUri,
         type: this.state.vitalType,
-        // "filenmae":this.state.imageFilename,
-        // "vital Type" :this.state.vitalType
       };
 
       this.setState({isLoading: true});
@@ -252,17 +147,12 @@ export default class UploadMedicalRecord extends Component {
         .saveMedicalRecord(data)
 
         .then(response => {
-          console.warn('tesssssssssssst', response.body);
           this.props.route.params.onUploadMedicalRecord();
           this.props.navigation.goBack();
-
-          //this.props.navigation.replace('MedicalRecordList');
           ViewUtils.showToast('Saved successfully!');
-          //console.warn('=======response=======', response);
         })
         .catch(err => {
           ViewUtils.showAlert('Unable to Perform this Action');
-          //ViewUtils.showToast(err);
         })
         .finally(() => {
           this.setState({isLoading: false});
@@ -272,8 +162,6 @@ export default class UploadMedicalRecord extends Component {
     }
   };
   render() {
-    // const { image } = this.state;
-
     if (this.state.appointmentId != null) {
       return (
         <View style={{height: '75%'}}>
@@ -336,13 +224,6 @@ export default class UploadMedicalRecord extends Component {
                       }}
                     />
                   )}
-
-                  {/* {image && ( */}
-                  {/* {<Image
-                                            source={{ uri: this.state.imageUri }}
-                                            style={{ width: 300, height: 300 }}
-                                        />} */}
-                  {/* )} */}
                 </TouchableOpacity>
 
                 <Item
@@ -360,7 +241,6 @@ export default class UploadMedicalRecord extends Component {
                     Title* 
                   </Label>
                   <Input
-                    // value={this.state.name}
                     onChangeText={val => this.setState({name: val})}
                     style={[
                       CommonStyles.fontRegular,
@@ -546,7 +426,6 @@ export default class UploadMedicalRecord extends Component {
                     Title* 
                   </Label>
                   <Input
-                    // value={this.state.notes}
                     onChangeText={val => this.setState({name: val})}
                     style={[
                       CommonStyles.fontRegular,

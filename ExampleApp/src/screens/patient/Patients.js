@@ -1,7 +1,6 @@
 import {CommonActions} from '@react-navigation/native';
 import React, {Component} from 'react';
 import {
-  StyleSheet,
   Text,
   View,
   ImageBackground,
@@ -47,7 +46,6 @@ export default class Patients extends Component {
       ._user()
       .then(user => {
         if (user == null) return;
-        console.warn('');
         this.setState({
           isPaymentEnabled: user.isPaymentEnabled,
           amount: user.appointmentFees,
@@ -98,7 +96,6 @@ export default class Patients extends Component {
               renderItem={({item}) => (
                 <TouchableOpacity
                   onPress={() => {
-                    console.warn('item >>>>', item);
                     if (this._moveTo === 'createAppointment') {
                       this._createAppointment(item.id);
                     } else {
@@ -205,7 +202,6 @@ export default class Patients extends Component {
           Api.instance()
             .getPatientUtilizedSlots(patientId)
             .then(res => {
-              console.warn('res >>>> getUtilized', res);
               if (!res[0]) {
                 this.props.navigation.navigate('PaymentAlert', {
                   appointmentId: this._appointmentId,
@@ -246,14 +242,7 @@ export default class Patients extends Component {
             .updateAppointment(this._appointmentId, patientId)
 
             .then(() => {
-              console.warn(
-                'appointment Id',
-                this._appointmentId,
-                'patient',
-                patientId,
-              );
               ViewUtils.showToast('Appointment has been booked successfully');
-              // ViewUtils.showToast('Appointment' ,this._appointmentId ,'fkahfhd',this.patientId);
               that.props.navigation.dispatch(
                 CommonActions.reset({
                   index: 1,
@@ -262,7 +251,7 @@ export default class Patients extends Component {
               );
             })
             .catch(err => {
-              //ViewUtils.showToast(err);
+              ViewUtils.showToast(err);
             })
             .finally(() => that.setState({isLoading: false}));
         }

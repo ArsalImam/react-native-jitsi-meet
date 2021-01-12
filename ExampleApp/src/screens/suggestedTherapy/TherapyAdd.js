@@ -124,10 +124,7 @@ export default class TherapyAdd extends Component {
             this.state.appointmentId,
             this.state.patientId,
           )
-    
-          .then(response => {
-            console.warn('response', response);
-            
+          .then(response => {       
           })
           .catch(err => {})
           .finally(() => {});
