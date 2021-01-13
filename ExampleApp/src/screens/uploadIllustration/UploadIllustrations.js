@@ -69,8 +69,6 @@ export default class UploadIllustrations extends React.Component {
     };
 
     ImagePicker.showImagePicker(options, response => {
-      console.warn('Response = ', response);
-
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -90,13 +88,11 @@ export default class UploadIllustrations extends React.Component {
         Api.instance()
           .uploadImage(fileData)
           .then(response => {
-            console.warn('=====heyssssss===', JSON.stringify(response));
             this.setState({
               imageUri: Api.instance().getMediaUrl(
                 Configs.containers.images,
                 response.result.files.uploadFile[0].name,
               )});
-console.warn('uriiiii' , this.state.imageUri)
         });
 
         const source = {uri: response.uri};
@@ -118,7 +114,6 @@ console.warn('uriiiii' , this.state.imageUri)
       Api.instance()
         .createMedication(data)
         .then(response => {
-          console.warn('tesssssssssssst', response);
           this.props.route.params.onAddAnatomicalIllustration();
           this.props.navigation.goBack();
           ViewUtils.showToast('Question has been saved successfully!');

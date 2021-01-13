@@ -70,7 +70,6 @@ export default class InvestigationList extends Component {
     Api.instance()
       .addReport(item, this.state.appointmentId, this.state.patientId)
       .then(response => {
-        console.warn(response);
         this.props.navigation.goBack();
       })
       .catch(err => {})

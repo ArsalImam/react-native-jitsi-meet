@@ -47,9 +47,7 @@ export default class DiagnosisAdd extends Component {
         data: [],
       };
     }
-
-    console.warn('this.props.route.params ======= ', this.props.route.params);
-  }
+}
 
   _getMedicationList() {
     this.setState({isLoading: true});
@@ -91,14 +89,9 @@ export default class DiagnosisAdd extends Component {
   _saveDiagnosis = () => {
     if (this.state.appointmentId != null) {
       let data = {
-        // date: this.state.startDate,
-        // "setupId": "",
-        // "doctorId": "5f01d90dffd17912ce896c56",
-        // "assistantId": "",
         patientId: this.state.patientId,
         answer: this.state.name,
         notes: this.state.description,
-        // endDate: this.state.endDate,
         'setup-type': 'diagnosis',
         active: false,
       };
@@ -109,14 +102,12 @@ export default class DiagnosisAdd extends Component {
           .createPrescription(data)
           .then(response => {
             this.addToConsultation(data);
-            // this.props.navigation.replace('DiagnosisList');
             this.props.route.params.onDiagnosisAdd();
             this.props.navigation.goBack();
             ViewUtils.showToast('Diagnosis has been saved successfully!');
           })
           .catch(err => {
             ViewUtils.showAlert('Unable to Perform this Action');
-            // ViewUtils.showToast(err);
           })
           .finally(() => {
             this.setState({isLoading: false});
@@ -136,14 +127,12 @@ export default class DiagnosisAdd extends Component {
         Api.instance()
           .createMedication(data)
           .then(response => {
-            // this.props.navigation.replace('DiagnosisList');
             this.props.route.params.onDiagnosisAdd();
             this.props.navigation.goBack();
             ViewUtils.showToast('Diagnosis has been saved successfully!');
           })
           .catch(err => {
             ViewUtils.showAlert('Unable to Perform this Action');
-            // ViewUtils.showToast(err);
           })
           .finally(() => {
             this.setState({isLoading: false});
@@ -163,14 +152,12 @@ export default class DiagnosisAdd extends Component {
       )
 
       .then(response => {
-        console.warn('response', response);
       })
       .catch(err => {})
       .finally(() => {});
   }
 
   render() {
-    console.warn('this.state.appointmentId === ', this.state.appointmentId);
     if (this.state.appointmentId != null) {
       return (
         <View style={{height: '75%'}}>

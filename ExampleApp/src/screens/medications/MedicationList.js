@@ -59,7 +59,6 @@ export default class MedicationList extends Component {
     Api.instance()
       .addReport(item, this.state.appointmentId, this.state.patientId)
       .then(response => {
-        console.warn(response);
         this.props.navigation.goBack();
       })
       .catch(err => {})
@@ -246,21 +245,18 @@ export default class MedicationList extends Component {
               </TouchableOpacity>
             </View>
             <Loader loading={this.state.isLoading} />
-            <View
-                            style={[
-                                CommonStyles.backButtonStyle
-                            ]}>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    this.props.navigation.goBack();
-                                }}>
-                                <Icon
-                                    name="arrow-back"
-                                    type="MaterialIcons"
-                                    style={{ color: '#FFF' }}
-                                />
-                            </TouchableOpacity>
-                        </View>
+            <View style={[CommonStyles.backButtonStyle]}>
+              <TouchableOpacity
+                onPress={() => {
+                  this.props.navigation.goBack();
+                }}>
+                <Icon
+                  name="arrow-back"
+                  type="MaterialIcons"
+                  style={{color: '#FFF'}}
+                />
+              </TouchableOpacity>
+            </View>
           </ImageBackground>
         </View>
       );

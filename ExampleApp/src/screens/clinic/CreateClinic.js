@@ -490,21 +490,12 @@ export default class CreateClinic extends Component {
     }
 
     var attendedAtDate = this.formatAMPM(this.state.attendAt);
-
-    console.warn('attendedAtDate', attendedAtDate);
-    this.state.attendAt = attendedAtDate;
+   this.state.attendAt = attendedAtDate;
 
     var leftAtDate = this.formatAMPM(this.state.leftAt);
 
     this.state.leftAt = leftAtDate;
-
-    console.warn('left6Date', leftAtDate);
-
     var selectedDate = moment.utc(this.state.chosenDate);
-    // selectedDate.setMonth(selectedDate.getMonth());
-
-    //console.warn('asdasdf',selectedDate)
-
     this.state.clinicObj.doctorId = this.state.userObj.id;
     this.state.clinicObj.joinedDate = selectedDate;
     this.state.clinicObj.attendAt = attendedAtDate;
@@ -570,8 +561,6 @@ export default class CreateClinic extends Component {
       })
       .finally(() => {
         this.setState({isLoading: false});
-
-        //  this.props.navigation.replace('ClinicList');
       });
   }
 
@@ -624,12 +613,6 @@ export default class CreateClinic extends Component {
               {Platform.OS === 'android' && (
                 <View>{this._renderDateAndTimeForAndroid()}</View>
               )}
-
-              {/* {Platform.OS === 'ios' && (
-                 <View>{this._renderDateAndTimeForAndiOS()}</View>
-              )} */}
-
-              
               <Item
                 stackedLabel
                 style={[CommonStyles.container, CommonStyles.itemStyle]}>
@@ -950,15 +933,11 @@ export default class CreateClinic extends Component {
 
           {this.state.showStartTimePicker && (
             <TimePicker
-              // testID="FromTime"
               placeholder="00:00"
               value={this.state.attendAt}
               mode="time"
               is24Hour={true}
               display="clock"
-              // onChange={date => {
-              //   this.setState({attendAt: date});
-              // }}
               onChange={this.SelectattendAt}
             />
           )}
@@ -987,13 +966,9 @@ export default class CreateClinic extends Component {
               placeholder="00:00"
               testID="ToTime"
               initialValue={this.state.leftAt}
-              // mode="time"
-              // is24Hour={true}
-              // display="clock"
               onChange={date => {
                 this.setState({leftAt: date});
               }}
-              //onChange={this.SelectleftAt}
             />
           )}
         </Item>

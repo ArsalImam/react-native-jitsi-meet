@@ -66,20 +66,6 @@ export default class RefertoSpecialistList extends Component {
   componentDidMount() {
     this._getReferToSpecialistList();
   }
-
-  // componentWillMount() {
-  //     Api.instance().getDiagnosisList()
-  //         .then((data) => {
-  //             console.warn('=====>', data["Diagnosis"])
-  //             this.setState({ diagnosisList: data });
-  //         }
-  //         ).catch(err => console.log(err))
-  //         .finally(() => {
-  //             this.setState({ isLoading: false });
-  //         })
-
-  // }
-
   addDiagnosis(item) {
     this.setState({
       disabled: true,
@@ -89,7 +75,6 @@ export default class RefertoSpecialistList extends Component {
     Api.instance()
       .addReport(item, this.state.appointmentId, this.state.patientId)
       .then(response => {
-        console.warn(response);
         this.props.navigation.goBack();
       })
       .catch(err => {})

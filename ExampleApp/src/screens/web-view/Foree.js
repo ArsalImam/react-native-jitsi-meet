@@ -83,8 +83,10 @@ export default class Foree extends Component {
     }&isProd=true&type=patient&slots=1&transactionCode=${Code}&paymentType=foree&url=${
       Configs.baseUrlForee
     }`;
+
+    console.log('endPoint', endPoint)
     return (
-      <Container style={{flex: 1, backgroundColor: '#000'}}>
+            <Container style={{flex: 1, backgroundColor: '#000'}}>
         <Header
           androidStatusBarColor="#00000000"
           style={{height: 70, backgroundColor: '#297dec'}}>

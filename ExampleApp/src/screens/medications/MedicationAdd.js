@@ -35,11 +35,6 @@ export default class MedicationAdd extends Component {
             }
         }
     }
-
-    componentDidMount() {
-        console.warn('route')
-    }
-
     _saveMedication = () => {
 
         let data = {

@@ -25,7 +25,7 @@ export default class ObservationList extends Component {
       this.state = {
         isLoading: true,
         observationList: [],
-        disabled: false, 
+        disabled: false,
         appointmentId: this.props.route.params.appointmentId,
         patientId: this.props.route.params.patientId,
       };
@@ -62,12 +62,11 @@ export default class ObservationList extends Component {
     Api.instance()
       .addReport(item, this.state.appointmentId, this.state.patientId)
       .then(response => {
-        console.warn(response);
         this.props.navigation.goBack();
       })
       .catch(err => {})
       .finally(() => {});
-        // enable after 5 second
+    // enable after 5 second
     setTimeout(() => {
       this.setState({
         disabled: false,
@@ -127,8 +126,7 @@ export default class ObservationList extends Component {
                         onPress={() => {
                           this.addObservation(item);
                         }}
-                        disabled={this.state.disabled}
-                        >
+                        disabled={this.state.disabled}>
                         <View
                           style={[
                             CommonStyles.container,

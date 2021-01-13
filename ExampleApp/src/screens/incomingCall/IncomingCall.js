@@ -1,12 +1,17 @@
 import React, {useCallback} from 'react';
-import {View, Image, ImageBackground, Text, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Image,
+  ImageBackground,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import CommonStyles from '../../CommonStyles';
 import Api from '../../Api';
 import Methods from '../../Methods';
 
 var Sound = require('react-native-sound');
 
-// Enable playback in silence mode
 Sound.setCategory('Playback');
 export default class IncomingCall extends React.Component {
   whoosh: any;
@@ -25,23 +30,14 @@ export default class IncomingCall extends React.Component {
   }
 
   componentDidMount() {
-  
     const {appointmentId} = this.props.route.params;
     this.setState({appointmentId: appointmentId});
     this._getUser();
-
-    // if (Methods.instance()._pushIncomingCall(false)) {
-      Methods.instance()._pushIncomingCall(true);
-    // }
-   
-   // console.warn('Methods.instance()._pushIncomingCall(true)', Methods.instance()._pushIncomingCall(true))
-     
+    Methods.instance()._pushIncomingCall(true);
   }
 
   componentWillUnmount() {
-    // if (Methods.instance()._pushIncomingCall(true)) {
-      Methods.instance()._pushIncomingCall(false);
-    // }
+    Methods.instance()._pushIncomingCall(false);
   }
 
   _getUser() {
@@ -52,15 +48,13 @@ export default class IncomingCall extends React.Component {
         this.setState({
           user,
         });
-        console.warn('user user ===>', this.state.user);
       })
       .catch(err => {
-        // ViewUtils.showToast(err)
+        console.log(err);
       });
   }
 
   render() {
-    console.warn('firstName :: ', this.state.user.firstName);
     return (
       <View style={[CommonStyles.container, {backgroundColor: '#222222'}]}>
         <ImageBackground
@@ -92,7 +86,6 @@ export default class IncomingCall extends React.Component {
             <TouchableOpacity
               onPress={() => {
                 this.whoosh.stop();
-                // console.warn('APPP)))) appointmentId --- ', this.appointmentId);
                 this.props.navigation.replace('AppointmentRoom', {
                   appointmentId: this.state.appointmentId,
                 });
@@ -119,35 +112,19 @@ export default class IncomingCall extends React.Component {
   }
 
   _initSound() {
-    // Load the sound file 'whoosh.mp3' from the app bundle
-    // See notes below about preloading sounds within initialization code below.
     let ringtone = Api.instance().getMediaUrl('images', 'ringtone.mp3');
-    console.warn('ringtone :: ', ringtone);
     this.whoosh = new Sound(ringtone, Sound.MAIN_BUNDLE, error => {
       if (error) {
-        console.warn('failed to load the sound', error);
         return;
       } else {
         this._playAudio();
       }
-      // loaded successfully
-      console.warn(
-        'duration in seconds: ' +
-          this.whoosh.getDuration() +
-          'number of channels: ' +
-          this.whoosh.getNumberOfChannels(),
-      );
     });
   }
   _playAudio() {
-    console.warn('_playAudio');
-    // Play the sound with an onEnd callback
     this.whoosh.play(success => {
-      console.warn('success === ', success);
       if (success) {
-        console.warn('successfully finished playing');
       } else {
-        console.warn('playback failed due to audio decoding errors');
       }
     });
 

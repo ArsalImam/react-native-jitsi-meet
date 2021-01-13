@@ -1,18 +1,12 @@
 import React, {Component} from 'react';
 import Api from '../../Api';
 import CommonStyles from '../../CommonStyles';
-import {ListItem, CheckBox, Divider} from 'react-native-elements';
 import {Icon} from 'native-base';
 import {FlatGrid} from 'react-native-super-grid';
-import {CommonActions} from '@react-navigation/native';
 import {
-  StyleSheet,
   Text,
   View,
   ImageBackground,
-  StatusBar,
-  ActivityIndicator,
-  FlatList,
   TouchableOpacity,
 } from 'react-native';
 import moment from 'moment';
@@ -43,7 +37,6 @@ export default class DiagnosisList extends Component {
       Api.instance()
       .getListDuringConsultation('diagnosis', this.state.patientId)
         .then(data => {
-          console.warn('=====>', data['Diagnosis']);
           this.setState({diagnosisList: data});
         })
         .catch(err => console.log(err))
@@ -55,7 +48,6 @@ export default class DiagnosisList extends Component {
       Api.instance()
         .getDataCenterlizedListDuringConsultation('diagnosis')
         .then(data => {
-          console.warn('=====>', data['Diagnosis']);
           this.setState({diagnosisList: data});
         })
         .catch(err => console.log(err))
@@ -69,19 +61,6 @@ export default class DiagnosisList extends Component {
     this._getDiagnosisList();
   }
 
-  // componentWillMount() {
-  //     Api.instance().getDiagnosisList()
-  //         .then((data) => {
-  //             console.warn('=====>', data["Diagnosis"])
-  //             this.setState({ diagnosisList: data });
-  //         }
-  //         ).catch(err => console.log(err))
-  //         .finally(() => {
-  //             this.setState({ isLoading: false });
-  //         })
-
-  // }
-
   addDiagnosis(item) {
     this.setState({
       disabled: true,
@@ -91,7 +70,6 @@ export default class DiagnosisList extends Component {
     Api.instance()
       .addReport(item, this.state.appointmentId, this.state.patientId)
       .then(response => {
-        console.warn(response);
         this.props.navigation.goBack();
       })
       .catch(err => {})
@@ -105,8 +83,6 @@ export default class DiagnosisList extends Component {
     }, 5000);
   }
   render() {
-    console.warn('diagnosisList === ', this.state.diagnosisList);
-
     if (this.state.appointmentId != null) {
       return (
         <View style={{height: '75%'}}>

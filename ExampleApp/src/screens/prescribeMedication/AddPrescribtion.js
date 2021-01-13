@@ -48,19 +48,12 @@ export default class AddPrescribtion extends Component {
       appointmentId: this.props.route.params.appointmentId,
       patientId: this.props.route.params.patientId,
       data: [],
-      // patientId,
-      // patientId,
     };
-
-    console.warn('this.props.route.params ======= ', this.props.route.params);
   }
 
   _savePrescribeMedication = () => {
     let data = {
       date: this.state.startDate,
-      // "setupId": "",
-      // "doctorId": "5f01d90dffd17912ce896c56",
-      // "assistantId": "",
       patientId: this.state.patientId,
       appointmentId: this.state.appointmentId,
       answer: '',
@@ -78,8 +71,6 @@ export default class AddPrescribtion extends Component {
       // "updatedAt": "2020-07-06T05:32:13.265Z",
       description: this.state.notes,
     };
-
-    console.warn('data', data);
 
     if (this.state.medicine.trim() == '') {
       ViewUtils.showToast('Please Provide Medicine');
@@ -99,12 +90,7 @@ export default class AddPrescribtion extends Component {
     } else if (this.state.reason.trim() == '') {
       ViewUtils.showToast('Please Provide Reason');
       return;
-    }
-    // else if (this.state.startDate == null) {
-    //   ViewUtils.showAlert('Please Provide Start Date');
-    //   return;
-    // }
-    else if (this.state.notes.trim() == '') {
+    } else if (this.state.notes.trim() == '') {
       ViewUtils.showToast('Please Provide Notes');
       return;
     }
@@ -116,10 +102,8 @@ export default class AddPrescribtion extends Component {
         this.addToConsultation(data);
         this.props.navigation.goBack();
         ViewUtils.showToast('Medication has been saved successfully!');
-        console.warn(data);
       })
       .catch(err => {
-        console.warn('err === ', err);
         ViewUtils.showToast('Please Fill Fields');
       })
       .finally(() => {
@@ -173,14 +157,12 @@ export default class AddPrescribtion extends Component {
       )
 
       .then(response => {
-        console.warn('response', response);
         ViewUtils.showToast('Medication has been added to Prescription');
       })
       .catch(err => {})
       .finally(() => {});
   }
   render() {
-    console.warn('ddd');
     if (this.state.appointmentId != null) {
       return (
         <View style={{height: '75%'}}>
@@ -228,7 +210,7 @@ export default class AddPrescribtion extends Component {
                   <Input
                     value={this.state.medicine}
                     onChangeText={val =>
-                      this.setSearchText(val) ??  this.setState({medicine: val}) 
+                      this.setSearchText(val) ?? this.setState({medicine: val})
                     }
                     style={[
                       CommonStyles.fontRegular,
@@ -237,28 +219,27 @@ export default class AddPrescribtion extends Component {
                   />
                 </Item>
 
-                
-                  <FlatGrid
-                    itemDimension={350}
-                    items={this.state.data}
-                    spacing={20}
-                    style={[CommonStyles.container]}
-                    renderItem={({item}) => (
-                      <TouchableOpacity
-                        onPress={() => this.setData(item.name)}
-                        style={[CommonStyles.container]}>
-                        <Text
-                          style={[
-                            CommonStyles.fontMedium,
-                            CommonStyles.textSizeNormal,
-                            {color: '#333333', marginLeft: '4%'},
-                          ]}>
-                          {item.name}
-                        </Text>
-                      </TouchableOpacity>
-                    )}
-                  />
-                
+                <FlatGrid
+                  itemDimension={350}
+                  items={this.state.data}
+                  spacing={20}
+                  style={[CommonStyles.container]}
+                  renderItem={({item}) => (
+                    <TouchableOpacity
+                      onPress={() => this.setData(item.name)}
+                      style={[CommonStyles.container]}>
+                      <Text
+                        style={[
+                          CommonStyles.fontMedium,
+                          CommonStyles.textSizeNormal,
+                          {color: '#333333', marginLeft: '4%'},
+                        ]}>
+                        {item.name}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                />
+
                 <Item
                   stackedLabel
                   style={[CommonStyles.container, CommonStyles.itemStyle]}>
@@ -391,7 +372,6 @@ export default class AddPrescribtion extends Component {
                     ]}
                     intialValue={this.state.startDate}
                     onChange={val => this.setState({startDate: val})}
-                    // disabled={false}
                   />
                   <Icon active name="calendar" style={{marginLeft: 20}} />
                 </Item>
@@ -426,7 +406,6 @@ export default class AddPrescribtion extends Component {
                     ]}
                     intialValue={this.state.endDate}
                     onChange={val => this.setState({endDate: val})}
-                    // disabled={false}
                   />
                   <Icon active name="calendar" style={{marginLeft: 20}} />
                 </Item>

@@ -123,7 +123,6 @@ class Create extends Component {
         .patientRegister(data, this.state.drCode)
         .then(response => {
           ViewUtils.showToast('Registration Successfully!');
-          console.warn(data);
           this.props.navigation.goBack();
         })
         .catch(err => {

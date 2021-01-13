@@ -634,7 +634,7 @@ export default class Api {
 
     let response = await this.client.get(
       this.getUrl(
-        `Appointments?filter[where][and][0][date][lt]=${tomorrow}&filter[where][and][1][date][gt]=${today}&filter[where][status]=Scheduled&filter[where][patientId]=${patientId}`,
+        `Appointments?[where][and][0][date][lt]=${tomorrow}&filter[where][and][1][date][gt]=${today}&filter[where][status]=Scheduled&filter[where][patientId]=${patientId}`,
       ),
     );
     let data = response.data;

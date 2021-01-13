@@ -1,24 +1,13 @@
 import React, {Component} from 'react';
 import {
-  StyleSheet,
   View,
   TouchableOpacity,
   ImageBackground,
-  ScrollView,
-  StatusBar,
 } from 'react-native';
 import {
-  Container,
-  Header,
-  Content,
   Text,
   Item,
-  Label,
-  Input,
-  ScrollableTab,
   Icon,
-  Picker,
-  Form,
 } from 'native-base';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import CommonStyles from '../../CommonStyles';
@@ -49,19 +38,13 @@ export default class FollowUpAdd extends Component {
   }
 
   _saveFollowUp = () => {
-    console.warn('this.state.answer ===', this.state.answer);
 
     if (this.state.appointmentId != null) {
       let data = {
-        // date: this.state.startDate,
-        // "setupId": "",
-        // "doctorId": "5f01d90dffd17912ce896c56",
-        // "assistantId": "",
         date: new Date(),
         patientId: this.state.patientId,
         answer: this.state.answer,
         notes: '',
-        // endDate: this.state.endDate,
         'setup-type': 'followup',
         active: false,
       };
@@ -78,7 +61,6 @@ export default class FollowUpAdd extends Component {
           })
           .catch(err => {
             ViewUtils.showAlert('Unable to Perform this Action');
-            //ViewUtils.showToast(err);
           })
           .finally(() => {
             this.setState({isLoading: false});
@@ -98,14 +80,12 @@ export default class FollowUpAdd extends Component {
         Api.instance()
           .createMedication(data)
           .then(response => {
-            // this.props.navigation.replace('DiagnosisList');
             this.props.route.params.onFollowUpAdd();
             this.props.navigation.goBack();
             ViewUtils.showToast('FollowUp has been saved successfully!');
           })
           .catch(err => {
             ViewUtils.showAlert('Unable to Perform this Action');
-            //ViewUtils.showToast(err);
           })
           .finally(() => {
             this.setState({isLoading: false});
@@ -125,7 +105,6 @@ export default class FollowUpAdd extends Component {
       )
 
       .then(response => {
-        console.warn('response inisde addto  :: ', response);
       })
       .catch(err => {})
       .finally(() => {});

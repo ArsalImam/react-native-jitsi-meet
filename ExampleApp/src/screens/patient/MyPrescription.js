@@ -8,7 +8,6 @@ import Api from '../../Api';
 import {AppointmentStatus, Roles} from '../../Configs';
 import moment from 'moment';
 import Loader from '../../components/Loader';
-import {ViewUtils} from '../../Utils';
 
 export default class MyPresciption extends Component {
   state = {
@@ -34,7 +33,6 @@ export default class MyPresciption extends Component {
     const prescribtionUrl = Api.instance().getUrl(
       `consultation-reports/getReport?appointmentId=${appointmentId}&prescription=true`,
     );
-    console.warn('=========');
     this.props.navigation.navigate('WebViewReport', {
       prescribtionUrl,
     });
