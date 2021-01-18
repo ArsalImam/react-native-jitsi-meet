@@ -584,6 +584,9 @@ export default class Api {
         console.log(err);
       });
 
+
+      console.log("createPayments", response.data)
+
     return response.data;
   }
   async getPatientUtilizedSlots(patientId) {
@@ -597,6 +600,9 @@ export default class Api {
     );
     let data = response.data;
     if (data.error) throw data.error.message;
+    
+    console.log("getPatientUtilizedSlots", data)
+
     return data;
   }
 
@@ -608,6 +614,8 @@ export default class Api {
     let data = response.data;
 
     if (data.error) throw data.error.message;
+    console.log("updatePatientSlots", data)
+
     return data;
   }
   async postPatientUtilizedSlots(transactionId) {

@@ -1,27 +1,12 @@
 import React, {Component} from 'react';
 import {
-  StyleSheet,
   View,
   TouchableOpacity,
   ImageBackground,
-  ScrollView,
-  StatusBar,
   Platform,
   Image,
 } from 'react-native';
-import {
-  Container,
-  Header,
-  Content,
-  Text,
-  Item,
-  Label,
-  Input,
-  ScrollableTab,
-  Icon,
-  Picker,
-  Form,
-} from 'native-base';
+import {Text, Item, Label, Input, Icon, Picker} from 'native-base';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import CommonStyles from '../../CommonStyles';
 import Api from '../../Api';
@@ -85,15 +70,11 @@ export default class UploadIllustrations extends React.Component {
     }
 
     ImagePicker.showImagePicker(options, response => {
-      console.warn('Response = ', response);
-
       if (response.didCancel) {
-        console.warn('User Tapped cancel');
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
         this.setState({imageUrl: ''});
       } else if (response.err) {
-        console.warn('Image Picker Error ', err);
       } else {
         const fileData = new FormData();
         fileData.append('uploadFile', {
@@ -107,7 +88,6 @@ export default class UploadIllustrations extends React.Component {
           Api.instance()
             .uploadImage(fileData)
             .then(response => {
-              console.warn('reponse ==>', JSON.stringify(response));
               this.setState({
                 imageUrl: Api.instance().getMediaUrl(
                   Configs.containers.images,
@@ -116,7 +96,7 @@ export default class UploadIllustrations extends React.Component {
               });
             })
             .catch(err => {
-              console.warn('Error', err);
+              console.log('Error', err);
             });
       }
     });
@@ -130,7 +110,6 @@ export default class UploadIllustrations extends React.Component {
       email: this.state.user.email,
       speciality: this.state.speciality,
       imageUrl: this.state.imageUrl,
-
       isPaymentEnabled: this.state.isPaymentEnabled,
       personalDetails: {
         city: this.state.city,
@@ -146,16 +125,11 @@ export default class UploadIllustrations extends React.Component {
     Api.instance()
       .updateProfile(data)
       .then(response => {
-        console.warn('data =====>', response);
-        // this.props.navigation.navigate('PatientProfile')
         this.props.navigation.goBack();
-
         ViewUtils.showToast('Profile has been updated successfully!');
-        console.warn('dataaaaaaaaaa ===>', data);
       })
       .catch(err => {
         ViewUtils.showToast(err);
-        console.warn('ammad ali =====>', err);
       })
       .finally(() => {
         this.setState({isLoading: false});
@@ -367,6 +341,7 @@ export default class UploadIllustrations extends React.Component {
                       style={{
                         width: '100%',
                         height: '100%',
+                        borderRadius: 60,
                         resizeMode: 'cover',
                       }}
                     />
@@ -456,40 +431,44 @@ export default class UploadIllustrations extends React.Component {
               </Item>
               {this.state.role == Roles.doctor && (
                 <View>
-                <Label
-                  style={[
-                    {marginTop:10, marginBottom: -10, alignSelf: 'center', width: '88%'},
-                    CommonStyles.fontRegular,
-                    CommonStyles.textSizeSmall,
-                  ]}>
-                  Speciality
-                </Label>
-                <Item
-                  picker
-                  style={[CommonStyles.container, CommonStyles.itemStyle]}>
-                
-                  <Picker
-                    mode="dropdown"
-                    textStyle={[
+                  <Label
+                    style={[
+                      {
+                        marginTop: 10,
+                        marginBottom: -10,
+                        alignSelf: 'center',
+                        width: '88%',
+                      },
                       CommonStyles.fontRegular,
-                      CommonStyles.textSizeMedium,
-                    ]}
-                    iosIcon={<Icon name="arrow-down" />}
-                    placeholderStyle={{color: '#bfc6ea'}}
-                    placeholderIconColor="#007aff"
-                    selectedValue={this.state.speciality}
-                    onValueChange={txt => this.setState({speciality: txt})}>
-                    {speciality.map((item, index) => {
-                      return (
-                        <Picker.Item
-                          label={item.value.trim()}
-                          value={item.value.trim()}
-                          key={index}
-                        />
-                      );
-                    })}
-                  </Picker>
-                </Item>
+                      CommonStyles.textSizeSmall,
+                    ]}>
+                    Speciality
+                  </Label>
+                  <Item
+                    picker
+                    style={[CommonStyles.container, CommonStyles.itemStyle]}>
+                    <Picker
+                      mode="dropdown"
+                      textStyle={[
+                        CommonStyles.fontRegular,
+                        CommonStyles.textSizeMedium,
+                      ]}
+                      iosIcon={<Icon name="arrow-down" />}
+                      placeholderStyle={{color: '#bfc6ea'}}
+                      placeholderIconColor="#007aff"
+                      selectedValue={this.state.speciality}
+                      onValueChange={txt => this.setState({speciality: txt})}>
+                      {speciality.map((item, index) => {
+                        return (
+                          <Picker.Item
+                            label={item.value.trim()}
+                            value={item.value.trim()}
+                            key={index}
+                          />
+                        );
+                      })}
+                    </Picker>
+                  </Item>
                 </View>
               )}
 
@@ -582,7 +561,12 @@ export default class UploadIllustrations extends React.Component {
                 <View>
                   <Label
                     style={[
-                      {marginTop: 10,  marginBottom: -10,alignSelf: 'center', width: '88%'},
+                      {
+                        marginTop: 10,
+                        marginBottom: -10,
+                        alignSelf: 'center',
+                        width: '88%',
+                      },
                       CommonStyles.fontRegular,
                       CommonStyles.textSizeSmall,
                     ]}>

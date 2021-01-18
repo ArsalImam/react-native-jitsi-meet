@@ -3,7 +3,7 @@ import {BackHandler, Alert} from 'react-native';
 import {WebView} from 'react-native-webview';
 import {Header, Left, Right, Body, Icon, Container, Button} from 'native-base';
 import {ViewUtils} from '../../Utils';
-import {Configs, Roles, AppointmentStatus} from '../../Configs';
+import {Configs} from '../../Configs';
 import Api from '../../Api';
 export default class Foree extends Component {
   state = {};
@@ -120,14 +120,14 @@ export default class Foree extends Component {
             }
 
             if (
-              event.nativeEvent.data == 'success' &&
+              event.nativeEvent.data != undefined &&
               event.nativeEvent.canGoBack
             ) {
               console.log('userId:>>>', this.state.userId);
               Api.instance()
-                .updatePatientSlots(this.state.userId)
+                .postPatientUtilizedSlots(event.nativeEvent.data)
                 .then(res => {
-                  console.log('updatePatientSlots res', res);
+                  console.log('postPatientUtilizedSlots res', res);
                   Api.instance()
                     .updateAppointment(
                       this.state.appointmentId,

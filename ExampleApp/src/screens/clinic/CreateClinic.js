@@ -407,20 +407,6 @@ export default class CreateClinic extends Component {
         .unix() *
         1000 -
       18000000;
-    // let endTime = moment.utc(`01-01-1970 ${moment(this.state.endTime).format('HH:mm:ss')}`, "dd-MM-YYYY HH:mm:ss").unix();
-    //   console.warn('adas', startTime)
-    //   var hours = dateToConvert.getHours();
-    //   var minutes = dateToConvert.getMinutes();
-    //   var ampm = hours >= 12 ? 'PM' : 'AM';
-    //   hours = hours % 12;
-    //   hours = hours ? hours : 12; // the hour '0' should be '12'
-    //   minutes = minutes < 10 ? '0' + minutes : minutes;
-    //   var strTime = hours + ':' + minutes + ' ' + ampm;
-    //   console.warn("strTime", strTime)
-
-    // var formattedDate = new Date("1970-01-01T05:00:00")
-
-    //console.warn('dateobj', formattedDate.getTime())
     return startTime;
   }
 
@@ -490,7 +476,7 @@ export default class CreateClinic extends Component {
     }
 
     var attendedAtDate = this.formatAMPM(this.state.attendAt);
-   this.state.attendAt = attendedAtDate;
+    this.state.attendAt = attendedAtDate;
 
     var leftAtDate = this.formatAMPM(this.state.leftAt);
 
@@ -902,7 +888,6 @@ export default class CreateClinic extends Component {
                 marginLeft: -7,
               },
             ]}
-            
             onDateChange={this.setDate}
             // disabled={false}
           />
