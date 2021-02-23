@@ -54,7 +54,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:719997437676:android:12e482e4ecdf02742307c9",
         "android_client_info": {
-          "package_name": "com.etibb"
+          "package_name": "sa.digitrends.etibb"
         }
       },
       "oauth_client": [

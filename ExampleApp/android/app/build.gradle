@@ -132,12 +132,12 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.etibb"
+        applicationId "sa.digitrends.etibb"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 13
+        versionCode 2
         signingConfig signingConfigs.debug
-        versionName "6.7"
+        versionName "1.1"
     }
     splits {
         abi {

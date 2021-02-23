@@ -1,4 +1,4 @@
-package com.etibb;
+package sa.digitrends.etibb;
 import android.os.Bundle; // here
 import org.devio.rn.splashscreen.SplashScreen; 
 import com.facebook.react.ReactActivity;
