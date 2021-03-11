@@ -38,6 +38,7 @@ export default class AppointmentRoom extends React.Component {
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     const {appointmentId} = this.props.route.params;
+console.log("appointmentId" , appointmentId)
     this.appointmentId = appointmentId;
 
     Api.instance()
@@ -91,7 +92,7 @@ export default class AppointmentRoom extends React.Component {
   }
   onConferenceTerminated(nativeEvent) {
     const prescribtionUrl = Api.instance().getUrl(
-      `consultation-reports/getReport?appointmentId=${ this.appointmentId}&prescription=true&auth=1`,
+      `consultation-reports/getReport?appointmentId=${this.appointmentId}&prescription=true&auth=1`,
     );
     /* Conference terminated event */
 

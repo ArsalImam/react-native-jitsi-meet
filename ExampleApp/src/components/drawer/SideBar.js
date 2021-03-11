@@ -37,7 +37,13 @@ export default class Sidebar extends Component {
         <ListItem
           button={true} onPress={() => { 
             this.props.closeDrawer();
-            this.props.changeScreenHandler.navigate('PatientHistoryList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
+            this.props.changeScreenHandler.navigate('PatientHistoryList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;
+            RealtimeDatabase.instance()
+            try
+            {this._getAppointment(this.props.appointmentId,-1)}
+            catch (error) { console.log("error" , error);
+            }
+            }} >
           <Left>
             <Icon active name='history' type='FontAwesome' style={{ fontSize: 21}} />
             <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>History Form</Text>
@@ -47,7 +53,14 @@ export default class Sidebar extends Component {
         <ListItem
           button={true} onPress={() => { 
             this.props.closeDrawer();
-            this.props.changeScreenHandler.navigate('ViewReferralLetter', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
+            this.props.changeScreenHandler.navigate('ViewReferralLetter', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;
+            // RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)
+            RealtimeDatabase.instance()
+            try
+            {this._getAppointment(this.props.appointmentId,-1)}
+            catch (error) { console.log("error" , error);
+            }
+            }} >
           <Left>
             <Icon active name='newsletter' type='Entypo' style={{ fontSize: 21}} />
             <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>View Referral Letter</Text>
@@ -57,7 +70,15 @@ export default class Sidebar extends Component {
         <ListItem
           button={true} onPress={() => { 
             this.props.closeDrawer();
-            this.props.changeScreenHandler.navigate('ViewScanMedicalRecord', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
+            this.props.changeScreenHandler.navigate('ViewScanMedicalRecord', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;
+            // RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)
+            RealtimeDatabase.instance()
+            try
+            {this._getAppointment(this.props.appointmentId,-1)}
+            catch (error) { console.log("error" , error);
+            }
+            
+            }} >
           <Left>
             <Icon active name='file-medical' type='FontAwesome5' style={{ fontSize: 21}} />
             <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>View Scan Medical Records</Text>
@@ -67,7 +88,15 @@ export default class Sidebar extends Component {
         <ListItem
           button={true} onPress={() => { 
             this.props.closeDrawer();
-            this.props.changeScreenHandler.navigate('ViewResultsofLabTest', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
+            this.props.changeScreenHandler.navigate('ViewResultsofLabTest', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;
+            // RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)
+            RealtimeDatabase.instance()
+            try
+            {this._getAppointment(this.props.appointmentId,-1)}
+            catch (error) { console.log("error" , error);
+            }
+            
+            }} >
           <Left>
             <Icon active name='laboratory' type='Fontisto' style={{ fontSize: 21}} />
             <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>View Results of Lab Test</Text>
@@ -77,7 +106,14 @@ export default class Sidebar extends Component {
         <ListItem
           button={true} onPress={() => { 
             this.props.closeDrawer();
-            this.props.changeScreenHandler.navigate('ViewXRayScan', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
+            this.props.changeScreenHandler.navigate('ViewXRayScan', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;
+            // RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)
+            RealtimeDatabase.instance()
+            try
+            {this._getAppointment(this.props.appointmentId,-1)}
+            catch (error) { console.log("error" , error);
+            }
+            }} >
           <Left>
             <Icon active name='x-ray' type='FontAwesome5' style={{ fontSize: 21}} />
             <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>View X-Ray,MRI,CT,US Scans</Text>
@@ -87,7 +123,16 @@ export default class Sidebar extends Component {
         <ListItem
           button={true} onPress={() => { 
             this.props.closeDrawer();
-            this.props.changeScreenHandler.navigate('ViewMiscImagesSkinLesion', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
+            this.props.changeScreenHandler.navigate('ViewMiscImagesSkinLesion', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;
+            // RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)
+            RealtimeDatabase.instance()
+            try
+            {this._getAppointment(this.props.appointmentId,-1)}
+            catch (error) { console.log("error" , error);
+            }
+            
+            
+            }} >
           <Left>
             <Icon active name='folder-images' type='Entypo' style={{ fontSize: 21}} />
             <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>View Misc Images ECG,Skin Lesion</Text>
@@ -103,7 +148,18 @@ export default class Sidebar extends Component {
         <ListItem
           button={true} onPress={() => { 
             this.props.closeDrawer();
-            this.props.changeScreenHandler.navigate('VitalList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)}} >
+            this.props.changeScreenHandler.navigate('VitalList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;
+            // RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)
+            RealtimeDatabase.instance()
+            try
+            {this._getAppointment(this.props.appointmentId,-1)}
+            catch (error) { console.log("error" , error);
+            }
+          
+          
+          }} 
+            
+            >
           <Left>
             <Icon active name='map-signs' type='FontAwesome' style={{ fontSize: 21}} />
             <Text style={[CommonStyles.textSizeAverage, {marginLeft: 10}]}>Vital Signs</Text>
