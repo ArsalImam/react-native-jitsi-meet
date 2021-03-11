@@ -135,9 +135,9 @@ android {
         applicationId "sa.digitrends.etibb"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
+        versionCode 3
         signingConfig signingConfigs.debug
-        versionName "1.1"
+        versionName "1.2"
     }
     splits {
         abi {

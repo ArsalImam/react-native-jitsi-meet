@@ -81,7 +81,8 @@ class Dashboard extends React.Component {
       })
 
       .catch(err => {
-        ViewUtils.showToast(err);
+        // ViewUtils.showToast(err);
+        console.log("Err" , err)
       })
       .finally(() => {
         this.setState({showLoader: false});
@@ -93,7 +94,9 @@ class Dashboard extends React.Component {
       .getMyPatients()
       .then(response => this._filterOnlyPatients(response))
       .catch(err => {
-        ViewUtils.showToast(err);
+        // ViewUtils.showToast(err);
+        console.log("Err" , err)
+
       });
   }
 
@@ -145,7 +148,7 @@ class Dashboard extends React.Component {
             });
           }
         })
-        .catch(err => ViewUtils.showToast(err));
+        .catch(err => console.log(err));
     });
   }
 

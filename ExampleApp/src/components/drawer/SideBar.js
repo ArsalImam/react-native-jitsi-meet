@@ -6,7 +6,7 @@ import { Container, Header, Content, List, ListItem, Text, Icon, Left } from 'na
 import DrawerHeader from './AppHeader';
 import { CommonActions } from '@react-navigation/native';
 import {Roles} from '../.././Configs';
-import RealtimeDatabase from '../../RealtimeDatabase';
+// import RealtimeDatabase from '../../RealtimeDatabase';
 
 
 export default class Sidebar extends Component {
@@ -38,11 +38,12 @@ export default class Sidebar extends Component {
           button={true} onPress={() => { 
             this.props.closeDrawer();
             this.props.changeScreenHandler.navigate('PatientHistoryList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;
-            RealtimeDatabase.instance()
-            try
-            {this._getAppointment(this.props.appointmentId,-1)}
-            catch (error) { console.log("error" , error);
-            }
+            // RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)
+            // RealtimeDatabase.instance()
+            // try
+            // {this._getAppointment(this.props.appointmentId,-1)}
+            // catch (error) { console.log("error" , error);
+            // }
             }} >
           <Left>
             <Icon active name='history' type='FontAwesome' style={{ fontSize: 21}} />
@@ -55,11 +56,11 @@ export default class Sidebar extends Component {
             this.props.closeDrawer();
             this.props.changeScreenHandler.navigate('ViewReferralLetter', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;
             // RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)
-            RealtimeDatabase.instance()
-            try
-            {this._getAppointment(this.props.appointmentId,-1)}
-            catch (error) { console.log("error" , error);
-            }
+            // RealtimeDatabase.instance()
+            // try
+            // {this._getAppointment(this.props.appointmentId,-1)}
+            // catch (error) { console.log("error" , error);
+            // }
             }} >
           <Left>
             <Icon active name='newsletter' type='Entypo' style={{ fontSize: 21}} />
@@ -72,11 +73,11 @@ export default class Sidebar extends Component {
             this.props.closeDrawer();
             this.props.changeScreenHandler.navigate('ViewScanMedicalRecord', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;
             // RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)
-            RealtimeDatabase.instance()
-            try
-            {this._getAppointment(this.props.appointmentId,-1)}
-            catch (error) { console.log("error" , error);
-            }
+            // RealtimeDatabase.instance()
+            // try
+            // {this._getAppointment(this.props.appointmentId,-1)}
+            // catch (error) { console.log("error" , error);
+            // }
             
             }} >
           <Left>
@@ -90,11 +91,11 @@ export default class Sidebar extends Component {
             this.props.closeDrawer();
             this.props.changeScreenHandler.navigate('ViewResultsofLabTest', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;
             // RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)
-            RealtimeDatabase.instance()
-            try
-            {this._getAppointment(this.props.appointmentId,-1)}
-            catch (error) { console.log("error" , error);
-            }
+            // RealtimeDatabase.instance()
+            // try
+            // {this._getAppointment(this.props.appointmentId,-1)}
+            // catch (error) { console.log("error" , error);
+            // }
             
             }} >
           <Left>
@@ -108,11 +109,11 @@ export default class Sidebar extends Component {
             this.props.closeDrawer();
             this.props.changeScreenHandler.navigate('ViewXRayScan', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;
             // RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)
-            RealtimeDatabase.instance()
-            try
-            {this._getAppointment(this.props.appointmentId,-1)}
-            catch (error) { console.log("error" , error);
-            }
+            // RealtimeDatabase.instance()
+            // try
+            // {this._getAppointment(this.props.appointmentId,-1)}
+            // catch (error) { console.log("error" , error);
+            // }
             }} >
           <Left>
             <Icon active name='x-ray' type='FontAwesome5' style={{ fontSize: 21}} />
@@ -125,11 +126,11 @@ export default class Sidebar extends Component {
             this.props.closeDrawer();
             this.props.changeScreenHandler.navigate('ViewMiscImagesSkinLesion', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;
             // RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)
-            RealtimeDatabase.instance()
-            try
-            {this._getAppointment(this.props.appointmentId,-1)}
-            catch (error) { console.log("error" , error);
-            }
+            // RealtimeDatabase.instance()
+            // try
+            // {this._getAppointment(this.props.appointmentId,-1)}
+            // catch (error) { console.log("error" , error);
+            // }
             
             
             }} >
@@ -150,11 +151,11 @@ export default class Sidebar extends Component {
             this.props.closeDrawer();
             this.props.changeScreenHandler.navigate('VitalList', { appointmentId: this.props.appointmentId, patientId: this.props.requestAppointment().patientId }) ;
             // RealtimeDatabase.instance()._getAppointment(this.props.appointmentId,-1)
-            RealtimeDatabase.instance()
-            try
-            {this._getAppointment(this.props.appointmentId,-1)}
-            catch (error) { console.log("error" , error);
-            }
+            // RealtimeDatabase.instance()
+            // try
+            // {this._getAppointment(this.props.appointmentId,-1)}
+            // catch (error) { console.log("error" , error);
+            // }
           
           
           }} 
