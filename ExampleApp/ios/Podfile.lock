@@ -380,7 +380,7 @@ PODS:
     - ReactCommon/callinvoker (= 0.62.2)
   - RNCMaskedView (0.1.10):
     - React
-  - RNDateTimePicker (2.4.3):
+  - RNDateTimePicker (2.6.2):
     - React
   - RNFastImage (8.1.5):
     - React
@@ -663,7 +663,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: 4356114dbcba4ce66991096e51a66e61eda51256
   ReactCommon: ed4e11d27609d571e7eee8b65548efc191116eb3
   RNCMaskedView: f5c7d14d6847b7b44853f7acb6284c1da30a3459
-  RNDateTimePicker: 0dc22b9762b332a95eaefac5f7372f88962cb466
+  RNDateTimePicker: dc9dab744823a2c734dbc7362cdf57a3adba3c43
   RNFastImage: 35ae972d6727c84ee3f5c6897e07f84d0a3445e9
   RNFBApp: 8342c27a03bbacfbb24da163ec68434759db8415
   RNFBDatabase: 46d16016f2cca643790561173d81f120f0a6720c
@@ -681,4 +681,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 956e2ebaf7a4a40cafb62c1ffc3517fac734844a
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.0

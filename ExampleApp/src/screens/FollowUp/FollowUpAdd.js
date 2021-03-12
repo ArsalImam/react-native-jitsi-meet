@@ -11,8 +11,7 @@ import {
 } from 'native-base';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import CommonStyles from '../../CommonStyles';
-
-import {DatePicker} from 'native-base';
+import {DatePicker} from 'react-native-propel-kit';
 import Api from '../../Api';
 import Loader from '../../components/Loader';
 import {ViewUtils} from '../../Utils';
@@ -154,8 +153,9 @@ export default class FollowUpAdd extends Component {
                     placeholderTextColor="black"
                     textStyle={[CommonStyles.fontRegular]}
                     style={[CommonStyles.fontRegular, {marginTop: 20}]}
+                    intialValue={this.state.answer}
                     //                    value={this.state.answer}
-                    onDateChange={val => this.setState({answer: val})}
+                    onChange={val => this.setState({answer: val})}
                     // disabled={false}
                   />
                   <Icon active name="calendar" style={{marginLeft: 20}} />
@@ -260,8 +260,8 @@ export default class FollowUpAdd extends Component {
                     placeholder="mm/dd/yyyy"
                     placeholderTextColor="black"
                     style={[CommonStyles.fontRegular, {marginTop: 10}]}
-                    //intialValue={this.state.answer}
-                    onDateChange={date => this.setState({answer: date})}
+                    intialValue={this.state.answer}
+                    onChange={date => this.setState({answer: date})}
                     // disabled={false}
                   />
                   <Icon active name="calendar" style={{marginLeft: 20}} />

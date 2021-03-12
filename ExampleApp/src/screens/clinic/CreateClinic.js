@@ -276,12 +276,12 @@ import {
   View,
 } from 'react-native';
 import {Icon, Input, Item, Label, Picker, Text} from 'native-base';
-import {DatePicker} from 'native-base';
+// import {DatePicker} from 'native-base';
 import Api from '../../Api';
 import CommonStyles from '../../CommonStyles';
 import Loader from '../../components/Loader';
 import moment from 'moment';
-//import {DatePicker, TimePicker} from 'react-native-propel-kit';
+import {DatePicker, TimePicker} from 'react-native-propel-kit';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {ViewUtils} from '../../Utils';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
@@ -515,7 +515,7 @@ export default class CreateClinic extends Component {
       return;
     }
 
-    if (this.state.clinicTitle == '') {
+    if (this.state.clinicTitle.trim() == '') {
       ViewUtils.showToast('Please Provide Title');
       return;
     }
@@ -598,6 +598,9 @@ export default class CreateClinic extends Component {
               ]}>
               {Platform.OS === 'android' && (
                 <View>{this._renderDateAndTimeForAndroid()}</View>
+              )}
+              {Platform.OS === 'ios' && (
+                <View>{this._renderDateAndTimeForiOS()}</View>
               )}
               <Item
                 stackedLabel

@@ -55,17 +55,17 @@ class Login extends Component {
   }
   _submitForm = () => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,9})+$/;
-    if(this.state.email == '' && this.state.password == ''){
+    if(this.state.email.trim() == '' && this.state.password.trim() == ''){
       ViewUtils.showToast(
         'Please Provide Email and Password',
     );
     return;
-    }else if(this.state.email == ''){
+    }else if(this.state.email.trim() == ''){
       ViewUtils.showToast(
         'Please Provide Email',       
     );
     return;
-    }else if(this.state.password == ''){
+    }else if(this.state.password.trim() == ''){
       ViewUtils.showToast(
         'Please Provide Password',       
     );

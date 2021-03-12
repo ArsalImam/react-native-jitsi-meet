@@ -106,6 +106,14 @@ export default class Api {
     }
   }
 
+  async getClients() {
+    let response = await this.client.get(this.getUrl(`Clients`));
+    let responseData = response.data
+    
+    return responseData
+  }
+
+
   async patientRegister(item, drCode) {
     let response = await this.client.get(
       this.getUrl(`Clients?filter[where][doctorCode]=${drCode}`),
