@@ -26,7 +26,7 @@ import CommonStyles from '../../CommonStyles';
 import Api from '../../Api';
 import Loader from '../../components/Loader';
 import {ViewUtils} from '../../Utils';
-import ImagePicker from 'react-native-image-picker';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import {Configs} from '../../Configs';
 
 export default class UploadMedicalRecord extends Component {
@@ -67,7 +67,7 @@ export default class UploadMedicalRecord extends Component {
       },
     };
 
-    ImagePicker.showImagePicker(options, response => {
+    launchImageLibrary(options, response => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -113,7 +113,7 @@ export default class UploadMedicalRecord extends Component {
         path: 'images',
       },
     };
-    ImagePicker.showImagePicker(options, response => {
+    launchImageLibrary(options, response => {
       if (response.didCancel) {
       } else if (response.error) {
       } else {

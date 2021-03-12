@@ -1,6 +1,6 @@
 const Configs = {
   // Local Server
-  // baseUrl: 'http://192.168.100.150:4001/api/',
+  // baseUrl: 'http://192.168.100.96:4001/api/',
   // Muber Url
   // baseUrl: 'http://122.248.255.5:3001/api/',
  

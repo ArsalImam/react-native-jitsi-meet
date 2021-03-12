@@ -22,13 +22,12 @@ import {
   
 } from 'native-base';
 
-import {DatePicker} from 'react-native-propel-kit';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import CommonStyles from '../../CommonStyles';
 import Api from '../../Api';
 import Loader from '../../components/Loader';
 import {ViewUtils} from '../../Utils';
-import ImagePicker from 'react-native-image-picker';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import {Configs} from '../../Configs';
 
 export default class UploadIllustrations extends React.Component {
@@ -68,7 +67,7 @@ export default class UploadIllustrations extends React.Component {
       },
     };
 
-    ImagePicker.showImagePicker(options, response => {
+    launchImageLibrary(options, response => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {

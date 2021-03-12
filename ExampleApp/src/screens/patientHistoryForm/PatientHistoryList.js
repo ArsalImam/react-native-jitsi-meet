@@ -25,9 +25,6 @@ import moment from 'moment';
 import Loader from '../../components/Loader';
 import {Roles} from '../.././Configs';
 import {ViewUtils} from '../../Utils';
-
-// import { Button } from 'react-native-paper';
-
 export default class PatientHistoryList extends Component {
   constructor(props) {
     super(props);

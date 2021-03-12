@@ -22,7 +22,7 @@ import {
   
 } from 'native-base';
 
-import {DatePicker} from 'react-native-propel-kit';
+//import {DatePicker} from 'react-native-propel-kit';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import CommonStyles from '../../CommonStyles';
 import Api from '../../Api';

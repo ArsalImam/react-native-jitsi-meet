@@ -18,10 +18,7 @@ import moment from 'moment';
 import {ViewUtils} from '../../Utils';
 import Api from '../../Api';
 import Loader from '../../components/Loader';
-
 import {Roles} from '../.././Configs';
-import {cos} from 'react-native-reanimated';
-import {Button} from 'react-native-paper';
 
 export default class PatientProfile extends React.Component {
   constructor(props) {
@@ -346,7 +343,7 @@ export default class PatientProfile extends React.Component {
               }}>
               <Icon
                 name="edit"
-                type="Feather"
+                type="FontAwesome5"
                 style={{fontSize: 21, color: '#fff'}}
               />
             </TouchableOpacity>

@@ -26,8 +26,6 @@ import Api from '../../Api';
 import Loader from '../../components/Loader';
 import {ViewUtils} from '../../Utils';
 
-import {DatePicker} from 'react-native-propel-kit';
-
 export default class ProcedureAdd extends Component {
   constructor(props) {
     super(props);

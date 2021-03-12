@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TouchableOpacity, ImageBackground, ScrollView, StatusBar } from 'react-native';
-import { Container, Header, Content,  Text, Item, Label, Input, ScrollableTab, Icon, Picker } from 'native-base';
+import { DatePicker,  Container, Header, Content,  Text, Item, Label, Input, ScrollableTab, Icon, Picker } from 'native-base';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import CommonStyles from '../../CommonStyles'
 import BloodGlucose from '../../components/BloodGlucose';
 import BloodPressure from '../../components/BloodPressure';
 import BloodOxygen from '../../components/BloodOxygen';
-
-import {DatePicker} from 'react-native-propel-kit';
-
 
 export default class VitalAdd extends Component {
     constructor(props) {

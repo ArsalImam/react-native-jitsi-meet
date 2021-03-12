@@ -16,7 +16,8 @@ import {CheckBox, Item, Input, Label, Icon} from 'native-base';
 import {ViewUtils} from '../../Utils';
 import Api from '../../Api';
 import {Configs, Roles} from '../../Configs';
-import ImagePicker from 'react-native-image-picker';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+
 import Loader from '../../components/Loader';
 
 class PaymentAlert extends Component {
@@ -206,7 +207,7 @@ class PaymentAlert extends Component {
       };
     }
 
-    ImagePicker.showImagePicker(options, response => {
+    launchImageLibrary(options, response => {
       if (response.didCancel) {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);

@@ -1,3 +1,4 @@
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import React, {Component} from 'react';
 import {
   StyleSheet,
@@ -20,15 +21,14 @@ import {
   Picker,
   Form,
   Image,
-} from 'native-base';
 
-import {DatePicker} from 'react-native-propel-kit';
+} from 'native-base';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import CommonStyles from '../../CommonStyles';
 import Api from '../../Api';
 import Loader from '../../components/Loader';
 import {ViewUtils} from '../../Utils';
-import ImagePicker from 'react-native-image-picker';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import {FlatGrid} from 'react-native-super-grid';
 
 export default class AddPrescribtion extends Component {
@@ -42,13 +42,30 @@ export default class AddPrescribtion extends Component {
       frequency: '',
       route: '',
       reason: '',
-      startDate: null,
-      endDate: null,
+      startDate: '',
+      chosenDate: "", 
+      showDate: false,
+      endDate: '',
       notes: '',
+      showStartDate: false, 
       appointmentId: this.props.route.params.appointmentId,
       patientId: this.props.route.params.patientId,
       data: [],
     };
+  }
+
+  setDate(newDate) {
+    if (!newDate) {
+      newDate = new Date();
+    }
+    this.setState({ endDate: newDate.toString().substr(4, 12), showDate: false });
+  }
+
+  setDateStart(newDate) {
+    if (!newDate) {
+      newDate = new Date();
+    }
+    this.setState({ startDate: newDate.toString().substr(4, 12), showStartDate: false });
   }
 
   _savePrescribeMedication = () => {
@@ -342,7 +359,7 @@ export default class AddPrescribtion extends Component {
 
                 <Label
                   style={[
-                    {marginTop: 10, alignSelf: 'center', width: '88%'},
+                    { marginTop: 10, alignSelf: 'center', width: '88%' },
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
@@ -350,42 +367,67 @@ export default class AddPrescribtion extends Component {
                 </Label>
 
                 <Item style={[CommonStyles.container, CommonStyles.itemStyle]}>
-                  <DatePicker
-                    defaultDate={new Date()}
-                    minimumDate={new Date()}
-                    locale={'en'}
-                    timeZoneOffsetInMinutes={undefined}
-                    modalTransparent={false}
-                    animationType={'fade'}
-                    androidMode={'default'}
-                    placeholder="mm/dd/yyyy"
-                    placeholderTextColor="black"
-                    textStyle={[CommonStyles.fontRegular]}
-                    placeHolderTextStyle={[
-                      CommonStyles.fontRegular,
-                      CommonStyles.textSizeAverage,
 
-                      {
-                        paddingBottom: 12,
-                        marginLeft: -10,
-                      },
-                    ]}
-                    intialValue={this.state.startDate}
-                    onChange={val => this.setState({startDate: val})}
+                {/* <Button title={this.state.startDate || "Select Date"} onPress={() => this.setState({ showStartDate: true })} style={{ height: 20, backgroundColor: 'red' }} /> */}
+                <TouchableOpacity style={{ backgroundColor: 'transparent' }} onPress={() => this.setState({ showStartDate: true })} >
+                    <Text style={[
+                        CommonStyles.fontMedium,
+                        CommonStyles.gray,
+
+                        CommonStyles.textSizeNormal,
+
+                        ,{
+                          marginBottom:10
+                        }
+                    ]}>
+                      {this.state.startDate || "Select Date"}
+                    </Text>
+                  </TouchableOpacity>
+                  <DateTimePickerModal
+                    isVisible={this.state.showStartDate}
+                    mode="date"
+                    headerTextIOS="Start Date"
+                    onConfirm={(date) => { this.setDateStart(date); }}
+                    onCancel={() => { this.setState({ showDate: false }) }}
                   />
-                  <Icon active name="calendar" style={{marginLeft: 20}} />
+                  <Icon active name="calendar" style={{ marginLeft: 20 }} />
                 </Item>
 
                 <Label
                   style={[
-                    {marginTop: 10, alignSelf: 'center', width: '88%'},
+                    { marginTop: 10, alignSelf: 'center', width: '88%' },
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeSmall,
                   ]}>
                   End Date{' '}
                 </Label>
                 <Item style={[CommonStyles.container, CommonStyles.itemStyle]}>
-                  <DatePicker
+
+                  {/* <Button title={this.state.endDate || "Select Date"} onPress={() => this.setState({ showDate: true })} style={{ height: 20, backgroundColor: 'red' }} /> */}
+                  <TouchableOpacity style={{ backgroundColor: 'transparent' }} onPress={() => this.setState({ showDate: true })} >
+                    <Text style={[
+                        CommonStyles.fontMedium,
+                        CommonStyles.gray,
+
+                        CommonStyles.textSizeNormal,
+
+                        ,{
+                          marginBottom:10
+                        }
+                    ]}>
+                      {this.state.endDate || "Select Date"}
+                    </Text>
+                  </TouchableOpacity>
+
+
+                  <DateTimePickerModal
+                    isVisible={this.state.showDate}
+                    mode="date"
+                    headerTextIOS="End Date"
+                    onConfirm={(date) => { this.setDate(date); }}
+                    onCancel={() => { this.setState({ showDate: false }) }}
+                  />
+                  {/* <DatePicker
                     defaultDate={new Date()}
                     minimumDate={new Date()}
                     locale={'en'}
@@ -393,8 +435,7 @@ export default class AddPrescribtion extends Component {
                     modalTransparent={false}
                     animationType={'fade'}
                     androidMode={'default'}
-                    placeholder="mm/dd/yyyy"
-                    placeholderTextColor="black"
+                    placeHolderText="mm/dd/yyyy"
                     textStyle={[CommonStyles.fontRegular]}
                     placeHolderTextStyle={[
                       CommonStyles.fontRegular,
@@ -404,10 +445,11 @@ export default class AddPrescribtion extends Component {
                         marginLeft: -10,
                       },
                     ]}
-                    intialValue={this.state.endDate}
-                    onChange={val => this.setState({endDate: val})}
-                  />
-                  <Icon active name="calendar" style={{marginLeft: 20}} />
+                    value={this.state.endDate}
+                    onDateChange={val => this.setState({endDate: val})}
+                    disabled={false}
+                  /> */}
+                  <Icon active name="calendar" style={{ marginLeft: 20 }} />
                 </Item>
 
                 <Item

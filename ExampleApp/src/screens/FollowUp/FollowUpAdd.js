@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import {
   View,
   TouchableOpacity,
@@ -11,7 +12,7 @@ import {
 } from 'native-base';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import CommonStyles from '../../CommonStyles';
-import {DatePicker} from 'react-native-propel-kit';
+import {DatePicker} from 'native-base';
 import Api from '../../Api';
 import Loader from '../../components/Loader';
 import {ViewUtils} from '../../Utils';
@@ -35,6 +36,14 @@ export default class FollowUpAdd extends Component {
       };
     }
   }
+
+  setDate(newDate) {
+    if (!newDate) {
+      newDate = new Date();
+    }
+    this.setState({ answer: newDate.toString().substr(4, 12), showDate: false });
+  }
+
 
   _saveFollowUp = () => {
 
@@ -140,23 +149,14 @@ export default class FollowUpAdd extends Component {
             <View style={{flex: 8, paddingHorizontal: 18, marginTop: 33}}>
               <KeyboardAwareScrollView
                 style={[{backgroundColor: '#fff', borderRadius: 5}]}>
-                <Item style={[CommonStyles.container, CommonStyles.itemStyle]}>
-                  <DatePicker
-                    defaultDate={new Date()}
-                    minimumDate={new Date()}
-                    locale={'en'}
-                    timeZoneOffsetInMinutes={undefined}
-                    modalTransparent={false}
-                    animationType={'fade'}
-                    androidMode={'default'}
-                    placeholder="mm/dd/yyyy"
-                    placeholderTextColor="black"
-                    textStyle={[CommonStyles.fontRegular]}
-                    style={[CommonStyles.fontRegular, {marginTop: 20}]}
-                    intialValue={this.state.answer}
-                    //                    value={this.state.answer}
-                    onChange={val => this.setState({answer: val})}
-                    // disabled={false}
+                  <Item style={[CommonStyles.container, CommonStyles.itemStyle]}>
+                <Button title={this.state.answer || "Select Date"} onPress={() => this.setState({ showDate: true })} style={{ height: 20, backgroundColor: 'red' }} />
+                  <DateTimePickerModal
+                    isVisible={this.state.showDate}
+                    mode="date"
+                    headerTextIOS="Select Date"
+                    onConfirm={(date) => { this.setDate(date); }}
+                    onCancel={() => { this.setState({ showDate: false }) }}
                   />
                   <Icon active name="calendar" style={{marginLeft: 20}} />
                 </Item>

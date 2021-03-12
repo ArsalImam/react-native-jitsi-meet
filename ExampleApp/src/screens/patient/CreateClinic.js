@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Icon, Input, Item, Label, Picker, Text } from 'native-base';
+import { Icon, Input, Item, Label, Picker, Text, DatePicker } from 'native-base';
 
-import {DatePicker} from 'react-native-propel-kit';
+//import {DatePicker} from 'react-native-propel-kit';
 import Api from '../../Api';
 import CommonStyles from '../../CommonStyles';
 import Loader from '../../components/Loader';

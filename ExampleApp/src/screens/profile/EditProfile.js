@@ -1,3 +1,4 @@
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import React, {Component} from 'react';
 import {
   View,
@@ -6,16 +7,16 @@ import {
   Platform,
   Image,
 } from 'react-native';
-import {Text, Item, Label, Input, Icon, Picker} from 'native-base';
+import {Text, Item, Label, Input, Icon, Picker, DatePicker} from 'native-base';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import CommonStyles from '../../CommonStyles';
 import Api from '../../Api';
 import moment from 'moment';
 import Loader from '../../components/Loader';
 import {ViewUtils} from '../../Utils';
-import ImagePicker from 'react-native-image-picker';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import {Configs} from '../../Configs';
-import {DatePicker} from 'react-native-propel-kit';
+//import {DatePicker} from 'react-native-propel-kit';
 import {Roles} from '../.././Configs';
 
 export default class UploadIllustrations extends React.Component {
@@ -69,7 +70,7 @@ export default class UploadIllustrations extends React.Component {
       };
     }
 
-    ImagePicker.showImagePicker(options, response => {
+    launchImageLibrary(options, response => {
       if (response.didCancel) {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
@@ -135,6 +136,15 @@ export default class UploadIllustrations extends React.Component {
         this.setState({isLoading: false});
       });
   };
+
+  setDate(newDate) {
+    if (!newDate) {
+      newDate = new Date();
+    }
+    this.setState({ dateOfBirth: newDate.toString().substr(4, 12), showDate: false });
+    console.warn("this.state.chosenDate" , this.state.dateOfBirth)
+  }
+
 
   componentDidMount() {
     Api.instance()
@@ -548,15 +558,52 @@ export default class UploadIllustrations extends React.Component {
                 />
               </Item>
 
-              <Item style={[CommonStyles.container, CommonStyles.itemStyle]}>
-                <DatePicker
-                  placeholder="Date of Birth"
-                  placeholderTextColor="#000000"
-                  intialValue={moment(this.state.dateOfBirth).format('L')}
-                  onChange={val => this.setState({dateOfBirth: val})}
+              <Item style={[CommonStyles.container, CommonStyles.itemStyle ,{marginTop:30 ,marginBottom:10}]}>
+                <TouchableOpacity style={{ backgroundColor: 'transparent' }} onPress={() => this.setState({ showDate: true })} >
+                  <Text style={[
+                    CommonStyles.fontMedium,
+                    CommonStyles.gray,
+
+                    CommonStyles.textSizeNormal,
+
+                    , {
+                      marginBottom: 10
+                    }
+                  ]}>
+                    {moment(this.state.dateOfBirth).format("DD/MM/YYYY") || "Select Date"}
+                  </Text>
+                </TouchableOpacity>
+                <DateTimePickerModal
+
+                  isVisible={this.state.showDate}
+                  mode="date"
+                  headerTextIOS="Date of Birth"
+                  onConfirm={(date) => { this.setDate(date); }}
+                  onCancel={() => { this.setState({ showDate: false }) }}
                 />
-                <Icon active name="calendar" style={{marginLeft: 20}} />
+
+                {/* <DatePicker
+                      placeholder="Date of Birth"
+                      placeholderTextColor="rgb(112, 112, 112)"
+                      style={[
+                        CommonStyles.fontMedium,
+                        CommonStyles.textSizeNormal,
+
+                        { color: '#000', paddingTop: 12 },
+                      ]}
+                      initialValue={this.state.dateOfBirth}
+                      onChange={date => this.setState({ dateOfBirth: date })}
+                    /> */}
+                <Icon
+                  name="calendar"
+                  style={{
+                    color: 'rgb(112, 112, 112)',
+                    position: 'absolute',
+                    right: 5,
+                  }}
+                />
               </Item>
+
               {this.state.role == Roles.doctor && (
                 <View>
                   <Label

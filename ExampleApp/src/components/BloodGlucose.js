@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, SafeAreaView, } from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Label, Picker, Icon } from 'native-base';
-import { Dropdown } from 'react-native-material-dropdown-v2';
 import CommonStyles from '../CommonStyles';
 
 class BloodGlucose extends React.Component {

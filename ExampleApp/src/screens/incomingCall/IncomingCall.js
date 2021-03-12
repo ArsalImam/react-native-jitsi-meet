@@ -112,7 +112,7 @@ export default class IncomingCall extends React.Component {
   }
 
   _initSound() {
-    let ringtone = Api.instance().getMediaUrl('images', 'ringtone.mp3');
+    let ringtone = 'https://etibb.s3-ap-southeast-1.amazonaws.com/ringtone.mp3'
     this.whoosh = new Sound(ringtone, Sound.MAIN_BUNDLE, error => {
       if (error) {
         return;

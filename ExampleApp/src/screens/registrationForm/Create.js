@@ -1,3 +1,4 @@
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import React, { Component } from 'react';
 import {
   Text,
@@ -21,8 +22,6 @@ import {
   Icon,
   Label,
 } from 'native-base';
-
-import { DatePicker, TimePicker } from 'react-native-propel-kit';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import Api from '../../Api';
 import { ViewUtils } from '../../Utils';
@@ -40,11 +39,19 @@ class Create extends Component {
       password: '',
       confirmPasword: '',
       drCode: '',
-      dateOfBirth: new Date(),
+      dateOfBirth: '',
       mobile: '',
       personalDetails: {},
     };
   }
+
+  setDate(newDate) {
+    if (!newDate) {
+      newDate = new Date();
+    }
+    this.setState({ dateOfBirth: newDate.toString().substr(4, 12), showDate: false });
+  }
+
 
   _validateField() {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,9})+$/;
@@ -257,8 +264,30 @@ class Create extends Component {
                     CommonStyles.fontMedium,
                     CommonStyles.loginItemStyle23,
                   ]}>
+                    <TouchableOpacity style={{ backgroundColor: 'transparent' }} onPress={() => this.setState({ showDate: true })} >
+                        <Text style={[
+                          CommonStyles.fontMedium,
+                          CommonStyles.textColorWhite,
 
-                  <DatePicker
+                          CommonStyles.textSizeNormal,
+
+                          , {
+                            marginVertical: 12, marginLeft: 5
+                          }
+                        ]}>
+                          {this.state.dateOfBirth || "Select Date"}
+                        </Text>
+                      </TouchableOpacity>
+                      <DateTimePickerModal
+                        isVisible={this.state.showDate}
+                        mode="date"
+                        headerTextIOS="Date of Birth"
+                        onConfirm={(date) => { this.setDate(date); }}
+                        onCancel={() => { this.setState({ showDate: false }) }}
+                      />
+
+
+                  {/* <DatePicker
 
                     placeholder="Date of Birth"
                     placeholderTextColor="#FFF"
@@ -274,7 +303,7 @@ class Create extends Component {
                     initialValue={this.state.dateOfBirth}
                     onChange={date => this.setState({ dateOfBirth: date })}
                   // disabled={false}
-                  />
+                  /> */}
                   <Icon name="calendar" style={{ color: '#fff', position: 'absolute', right: 5 }} />
                 </Item>
 
