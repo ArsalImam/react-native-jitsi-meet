@@ -4,7 +4,7 @@ import {
   Text,
   View,
   TouchableOpacity, 
-  ImageBackground,r,
+  ImageBackground,
 } from 'react-native';
 import CommonStyles from '../../CommonStyles';
 import {
@@ -122,10 +122,7 @@ class Create extends Component {
       Api.instance()
         .getClients()
         .then(res => {
-          console.log("response returned", res)
-
           this.setState({ isLoading: false })
-
           let mapEmails = res.map(x => {
             let emails = x.email
             return emails

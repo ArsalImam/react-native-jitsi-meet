@@ -9,7 +9,6 @@ import {
   Image,
   TouchableOpacity,
   Linking,
-  AsyncStorage,
 } from 'react-native';
 import {FlatGrid} from 'react-native-super-grid';
 import CommonStyles from '../../CommonStyles';
@@ -19,6 +18,7 @@ import {ViewUtils} from '../../Utils';
 import Api from '../../Api';
 import Loader from '../../components/Loader';
 import {Roles} from '../.././Configs';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class PatientProfile extends React.Component {
   constructor(props) {

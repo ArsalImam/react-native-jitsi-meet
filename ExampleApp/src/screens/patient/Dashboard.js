@@ -6,16 +6,14 @@ import {
   Image,
   ImageBackground,
   StatusBar,
-  AsyncStorage,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import CommonStyles from '../../CommonStyles';
-import {ViewUtils} from '../../Utils';
 import Api from '../../Api';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import moment from 'moment';
 import Loader from '../../components/Loader';
-// import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class Dashboard extends React.Component {
   constructor(props) {
