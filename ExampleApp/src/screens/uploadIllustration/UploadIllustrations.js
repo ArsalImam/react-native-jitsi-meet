@@ -25,7 +25,7 @@ import {
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import CommonStyles from '../../CommonStyles';
 import Api from '../../Api';
-import Loader from '../../components/Loader';
+ import Loader from '../../components/Loader';
 import {ViewUtils} from '../../Utils';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import {Configs} from '../../Configs';

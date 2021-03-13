@@ -59,7 +59,7 @@ class BloodGlucose extends React.Component {
                     ]}>
                     <Picker
                         mode="dropdown"
-                        iosIcon={<Icon name="arrow-down" />}
+                        iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
                         textStyle={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]}
                         placeholder="Select Meal"
                         placeholderStyle={{ color: '#bfc6ea' }}
@@ -93,7 +93,7 @@ class BloodGlucose extends React.Component {
                     <Picker
                         mode="dropdown"
                         textStyle={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]}
-                        iosIcon={<Icon name="arrow-down" />}
+                        iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
                         placeholder="Choose Frequency"
                         placeholderStyle={{ color: '#bfc6ea' }}
                         placeholderIconColor="#007aff"

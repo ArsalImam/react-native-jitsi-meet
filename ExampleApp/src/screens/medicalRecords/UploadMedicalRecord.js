@@ -260,7 +260,7 @@ export default class UploadMedicalRecord extends Component {
                     mode="dropdown"
                     style={{textAlign: 'left'}}
                     focusable
-                    iosIcon={<Icon name="arrow-down" />}
+                    iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
                     placeholder="Select Vital Type"
                     placeholderStyle={{color: '#bfc6ea'}}
                     placeholderIconColor="#007aff"
@@ -445,7 +445,7 @@ export default class UploadMedicalRecord extends Component {
                     mode="dropdown"
                     style={{textAlign: 'left'}}
                     focusable
-                    iosIcon={<Icon name="arrow-down" />}
+                    iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
                     placeholder="Select Vital Type"
                     placeholderStyle={{color: '#bfc6ea',}}
                     placeholderIconColor="#007aff"

@@ -6,7 +6,8 @@ import {Icon} from 'native-base';
 import {FlatGrid} from 'react-native-super-grid';
 import {CommonActions} from '@react-navigation/native';
 import database from '@react-native-firebase/database';
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+
 import {ViewUtils} from '../../Utils';
 import {
   StyleSheet,

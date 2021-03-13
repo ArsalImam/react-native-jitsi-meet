@@ -3,20 +3,14 @@ import React, { Component } from 'react';
 import { CommonActions } from '@react-navigation/native';
 import {
   ImageBackground,
-  Platform,
-  ScrollView,
-  StyleSheet,
   TouchableOpacity,
   View,
 } from 'react-native';
 import { Icon, Input, Item, Label, Picker, Text } from 'native-base';
-import { DatePicker } from 'native-base';
 import Api from '../../Api';
 import CommonStyles from '../../CommonStyles';
 import Loader from '../../components/Loader';
 import moment from 'moment';
-//import {DatePicker, TimePicker} from 'react-native-propel-kit';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import { ViewUtils } from '../../Utils';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 
@@ -47,8 +41,6 @@ export default class CreateClinic extends Component {
       isLoading: false,
       showDate: false,
     };
-
-    // this.setDate = this.setDate.bind(this);
   }
 
   componentDidMount() {
@@ -93,12 +85,6 @@ export default class CreateClinic extends Component {
   }
 
   SelectattendAt = event => {
-    // if (event.type !== 'set') {
-    //   this.setState({
-    //     showStartTimePicker: false,
-    //   });
-    //   return;
-    // }
     let timeStamp = event;
     let attendAt = new Date(timeStamp);
     this.setState({
@@ -106,16 +92,9 @@ export default class CreateClinic extends Component {
       showStartTimePicker: false,
       startTimeText: this.getTimeFormat(attendAt),
     });
-    // event.nativeEvent.timestamp = 0;
   };
 
   SelectleftAt = event => {
-    // if (event.type !== 'set') {
-    //   this.setState({
-    //     showEndTimePicker: false,
-    //   });
-    //   return;
-    // }
     let timeStamp = event;
     let leftAt = new Date(timeStamp);
     this.setState({
@@ -383,7 +362,7 @@ export default class CreateClinic extends Component {
                 ]}>
                 <Picker
                   mode="dropdown"
-                  iosIcon={<Icon name="arrow-down" />}
+                  iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
                   style={{ width: '92%' }}
                   placeholder="Choose Frequency"
                   placeholderStyle={{ color: '#bfc6ea' }}
@@ -413,7 +392,7 @@ export default class CreateClinic extends Component {
                 ]}>
                 <Picker
                   mode="dropdown"
-                  iosIcon={<Icon name="arrow-down" />}
+                  iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
                   style={{ width: '92%' }}
                   placeholder="Choose Frequency"
                   placeholderStyle={{ color: '#bfc6ea' }}
@@ -497,108 +476,7 @@ export default class CreateClinic extends Component {
     );
   }
 
-  _renderDateAndTimeForAndroid() {
-    return (
-      <View>
-        <Item
-          style={[
-            CommonStyles.container,
-            CommonStyles.itemStyle,
-            { paddingTop: 25 },
-          ]}>
-          <DatePicker
-            defaultDate={new Date()}
-            minimumDate={new Date()}
-            locale={'en'}
-            timeZoneOffsetInMinutes={undefined}
-            modalTransparent={false}
-            animationType={'fade'}
-            androidMode={'default'}
-            placeholder="Select Date"
-            placeholderTextColor="black"
-            textStyle={[
-              CommonStyles.fontRegular,
-              { paddingLeft: -7, color: '#000' },
-            ]}
-            placeHolderTextStyle={[
-              CommonStyles.fontRegular,
-              CommonStyles.textSizeAverage,
-              {
-                marginLeft: -7,
-              },
-            ]}
-            onDateChange={this.setDate}
-          // disabled={false}
-          />
-          <Icon
-            active
-            name="calendar"
-            style={{ marginLeft: 20, marginTop: -25 }}
-          />
-        </Item>
 
-        <Item
-          stackedLabel
-          onPress={() => {
-            this.showTimepicker('start');
-          }}
-          style={[CommonStyles.container, CommonStyles.itemStyle]}>
-          <Text
-            style={[
-              CommonStyles.fontRegular,
-              CommonStyles.textSizeAverage,
-              {
-                paddingTop: 20,
-                textAlign: 'left',
-                alignSelf: 'flex-start',
-              },
-            ]}>
-            {this.state.startTimeText}
-          </Text>
-          {this.state.showStartTimePicker && (
-            <DateTimePicker
-              testID="FromTime"
-              value={this.state.attendAt}
-              mode="time"
-              is24Hour={true}
-              display="clock"
-              onChange={this.SelectattendAt}
-            />
-          )}
-        </Item>
-
-        <Item
-          stackedLabel
-          onPress={() => {
-            this.showTimepicker('end');
-          }}
-          style={[CommonStyles.container, CommonStyles.itemStyle]}>
-          <Text
-            style={[
-              CommonStyles.fontRegular,
-              CommonStyles.textSizeAverage,
-              {
-                paddingTop: 20,
-                textAlign: 'left',
-                alignSelf: 'flex-start',
-              },
-            ]}>
-            {this.state.endTimeText}
-          </Text>
-          {this.state.showEndTimePicker && (
-            <DateTimePicker
-              testID="ToTime"
-              value={this.state.leftAt}
-              mode="time"
-              is24Hour={true}
-              display="clock"
-              onChange={this.SelectleftAt}
-            />
-          )}
-        </Item>
-      </View>
-    );
-  }
   _renderDateAndTimeForiOS() {
     return (
       <View>
@@ -609,14 +487,11 @@ export default class CreateClinic extends Component {
             { paddingTop: 25 },
           ]}>
 
-          {/* <Button title={this.state.chosenDate || "Select Date"} onPress={() => this.setState({ showDate: true })} style={{ height: 20, backgroundColor: 'red' }} /> */}
           <TouchableOpacity style={{ backgroundColor: 'transparent' }} onPress={() => this.setState({ showDate: true })} >
             <Text style={[
               CommonStyles.fontMedium,
               CommonStyles.gray,
-
               CommonStyles.textSizeNormal,
-
               , {
                 marginBottom: 10
               }
@@ -625,36 +500,13 @@ export default class CreateClinic extends Component {
             </Text>
           </TouchableOpacity>
           <DateTimePickerModal
+            minimumDate={new Date()}
             isVisible={this.state.showDate}
             mode="date"
             headerTextIOS="Select Date"
             onConfirm={(date) => { this.setDate(date); }}
             onCancel={() => { this.setState({ showDate: false }) }}
           />
-          {/* <DatePicker
-            defaultDate={new Date()}
-            minimumDate={new Date()}
-            locale={'en'}
-            timeZoneOffsetInMinutes={undefined}
-            modalTransparent={false}
-            animationType={'fade'}
-            androidMode={'default'}
-            placeholder="Select Date"
-            placeholderTextColor="black"
-            textStyle={[
-              CommonStyles.fontRegular,
-              { paddingLeft: -7, color: '#000' },
-            ]}
-            placeHolderTextStyle={[
-              CommonStyles.fontRegular,
-              CommonStyles.textSizeAverage,
-              {
-                marginLeft: -7,
-              },
-            ]}
-            onChange={this.setDate}
-          // disabled={false}
-          /> */}
           <Icon
             active
             name="calendar"

@@ -1,19 +1,10 @@
 import React, { Component } from 'react';
-
-// import {} from 'react-native';
 import {
   Text,
   View,
-  StyleSheet,
   TouchableOpacity,
   Image,
-  ImageBackground,
-  TextInput,
-  StatusBar,
-  BackHandler, 
-  ActivityIndicator,
-  Alert,
-  AsyncStorage
+  ImageBackground,  
 } from 'react-native';
 import CommonStyles from '../../CommonStyles';
 import { Item, Input, Container, Icon,Toast } from 'native-base';
@@ -21,7 +12,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import Api from '../../Api';
 import { ViewUtils } from '../../Utils';
 import Loader from '../../components/Loader';
-//  import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class Login extends Component {
   state = { email: '', password: '', showLoader: false, hidePassword: true };

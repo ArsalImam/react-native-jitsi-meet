@@ -3,24 +3,15 @@ import React, { Component } from 'react';
 import {
   Text,
   View,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  ImageBackground,
-  TextInput,
-  StatusBar,
-  ActivityIndicator,
+  TouchableOpacity, 
+  ImageBackground,r,
 } from 'react-native';
 import CommonStyles from '../../CommonStyles';
-
-import moment from 'moment';
 import {
   Item,
   Input,
-  Container,
   Picker,
   Icon,
-  Label,
 } from 'native-base';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import Api from '../../Api';
@@ -158,11 +149,8 @@ class Create extends Component {
               .finally(() => {
                 this.setState({ isLoading: false });
               });
-
           }
         })
-
-
     }
   };
 
@@ -279,31 +267,13 @@ class Create extends Component {
                         </Text>
                       </TouchableOpacity>
                       <DateTimePickerModal
+                        maximumDate={new Date()}
                         isVisible={this.state.showDate}
                         mode="date"
                         headerTextIOS="Date of Birth"
                         onConfirm={(date) => { this.setDate(date); }}
                         onCancel={() => { this.setState({ showDate: false }) }}
                       />
-
-
-                  {/* <DatePicker
-
-                    placeholder="Date of Birth"
-                    placeholderTextColor="#FFF"
-                    style={[
-                      CommonStyles.fontMedium,
-                      CommonStyles.textColorWhite,
-                      CommonStyles.textSizeNormal,
-                      CommonStyles.padding13
-
-                    ]}
-
-                    // initialValue={this.state.startDate}
-                    initialValue={this.state.dateOfBirth}
-                    onChange={date => this.setState({ dateOfBirth: date })}
-                  // disabled={false}
-                  /> */}
                   <Icon name="calendar" style={{ color: '#fff', position: 'absolute', right: 5 }} />
                 </Item>
 
@@ -319,7 +289,7 @@ class Create extends Component {
                   ]}>
                   <Picker
                     textStyle={{ color: '#fff' }}
-                    itemTextStyle={{ color: 'red' }}
+                    itemTextStyle={{ color: '#000' }}
                     style={{ color: '#fff' }}
                     itemStyle={{ backgroundColor: '#fff' }}
                     placeholder="Gender*"
@@ -333,21 +303,19 @@ class Create extends Component {
                       CommonStyles.textSizeNormal,
                     ]}
                   >
-
                     <Picker.Item
                       color="grey"
                       selected={false}
                       label="Gender"
                       value=""
-
                     />
-
                     <Picker.Item label="Male" value="Male" />
                     <Picker.Item label="Female" value="Female" />
                   </Picker>
 
                   <Icon
-                    name="arrow-dropdown"
+                    name='keyboard-arrow-down'
+                    type='MaterialIcons' 
                     style={{ color: '#fff', position: 'absolute', right: 5 }}
                   />
                 </Item>

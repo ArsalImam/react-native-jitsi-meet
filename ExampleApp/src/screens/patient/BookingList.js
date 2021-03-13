@@ -9,7 +9,8 @@ import Loader from '../../components/Loader';
 import {AppointmentStatus, Roles} from '../../Configs';
 import moment from 'moment';
 import {ViewUtils} from '../../Utils';
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+
 
 export default class BookingList extends Component {
   state = {

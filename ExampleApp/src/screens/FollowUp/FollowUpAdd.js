@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import {
   View,
@@ -10,12 +10,12 @@ import {
   Item,
   Icon,
 } from 'native-base';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import CommonStyles from '../../CommonStyles';
-import {DatePicker} from 'native-base';
+import { DatePicker } from 'native-base';
 import Api from '../../Api';
 import Loader from '../../components/Loader';
-import {ViewUtils} from '../../Utils';
+import { ViewUtils } from '../../Utils';
 
 export default class FollowUpAdd extends Component {
   constructor(props) {
@@ -58,7 +58,7 @@ export default class FollowUpAdd extends Component {
       };
 
       if (this.state.answer != '') {
-        this.setState({isLoading: true});
+        this.setState({ isLoading: true });
         Api.instance()
           .createPrescription(data)
           .then(response => {
@@ -71,7 +71,7 @@ export default class FollowUpAdd extends Component {
             ViewUtils.showAlert('Unable to Perform this Action');
           })
           .finally(() => {
-            this.setState({isLoading: false});
+            this.setState({ isLoading: false });
           });
       } else {
         ViewUtils.showAlert('Please Provide FollowUp Date');
@@ -84,7 +84,7 @@ export default class FollowUpAdd extends Component {
       };
 
       if (this.state.answer != '') {
-        this.setState({isLoading: true});
+        this.setState({ isLoading: true });
         Api.instance()
           .createMedication(data)
           .then(response => {
@@ -96,7 +96,7 @@ export default class FollowUpAdd extends Component {
             ViewUtils.showAlert('Unable to Perform this Action');
           })
           .finally(() => {
-            this.setState({isLoading: false});
+            this.setState({ isLoading: false });
           });
       } else {
         ViewUtils.showAlert('Please Provide FollowUp Date');
@@ -114,18 +114,18 @@ export default class FollowUpAdd extends Component {
 
       .then(response => {
       })
-      .catch(err => {})
-      .finally(() => {});
+      .catch(err => { })
+      .finally(() => { });
   }
 
   render() {
     if (this.state.appointmentId != null) {
       return (
-        <View style={{height: '75%'}}>
+        <View style={{ height: '75%' }}>
           <ImageBackground
             style={[CommonStyles.container, CommonStyles.backgroundImage]}
             source={require('../../assets/img/background.png')}>
-            <View style={{flex: 3, backgroundColor: '#297dec'}}>
+            <View style={{ flex: 3, backgroundColor: '#297dec' }}>
               <Text
                 style={[
                   CommonStyles.fontRegular,
@@ -146,19 +146,20 @@ export default class FollowUpAdd extends Component {
               </Text>
             </View>
 
-            <View style={{flex: 8, paddingHorizontal: 18, marginTop: 33}}>
+            <View style={{ flex: 8, paddingHorizontal: 18, marginTop: 33 }}>
               <KeyboardAwareScrollView
-                style={[{backgroundColor: '#fff', borderRadius: 5}]}>
-                  <Item style={[CommonStyles.container, CommonStyles.itemStyle]}>
-                <Button title={this.state.answer || "Select Date"} onPress={() => this.setState({ showDate: true })} style={{ height: 20, backgroundColor: 'red' }} />
+                style={[{ backgroundColor: '#fff', borderRadius: 5 }]}>
+                <Item style={[CommonStyles.container, CommonStyles.itemStyle]}>
+                  <Button title={this.state.answer || "Select Date"} onPress={() => this.setState({ showDate: true })} style={{ height: 20, backgroundColor: 'red' }} />
                   <DateTimePickerModal
+                    minimumDate={new Date()}
                     isVisible={this.state.showDate}
                     mode="date"
                     headerTextIOS="Select Date"
                     onConfirm={(date) => { this.setDate(date); }}
                     onCancel={() => { this.setState({ showDate: false }) }}
                   />
-                  <Icon active name="calendar" style={{marginLeft: 20}} />
+                  <Icon active name="calendar" style={{ marginLeft: 20 }} />
                 </Item>
               </KeyboardAwareScrollView>
             </View>
@@ -182,7 +183,7 @@ export default class FollowUpAdd extends Component {
                 style={[
                   CommonStyles.container,
                   CommonStyles.centerText,
-                  {borderRightWidth: 0.5, borderColor: '#cfd2d6'},
+                  { borderRightWidth: 0.5, borderColor: '#cfd2d6' },
                 ]}>
                 <Text
                   style={[
@@ -191,7 +192,7 @@ export default class FollowUpAdd extends Component {
                     CommonStyles.centerText,
                     CommonStyles.margin,
                     CommonStyles.padding,
-                    {opacity: 0.5},
+                    { opacity: 0.5 },
                   ]}>
                   SAVE
                 </Text>
@@ -224,7 +225,7 @@ export default class FollowUpAdd extends Component {
           <ImageBackground
             style={[CommonStyles.container, CommonStyles.backgroundImage]}
             source={require('../../assets/img/bwback.png')}>
-            <View style={{flex: 2.3}}>
+            <View style={{ flex: 2.3 }}>
               <Text
                 style={[
                   CommonStyles.fontRegular,
@@ -245,9 +246,9 @@ export default class FollowUpAdd extends Component {
               </Text>
             </View>
 
-            <View style={{flex: 8, paddingHorizontal: 18, marginTop: 33}}>
+            <View style={{ flex: 8, paddingHorizontal: 18, marginTop: 33 }}>
               <KeyboardAwareScrollView
-                style={[{backgroundColor: '#fff', borderRadius: 5}]}>
+                style={[{ backgroundColor: '#fff', borderRadius: 5 }]}>
                 <Item style={[CommonStyles.container, CommonStyles.itemStyle]}>
                   <DatePicker
                     defaultDate={new Date()}
@@ -259,12 +260,12 @@ export default class FollowUpAdd extends Component {
                     androidMode={'default'}
                     placeholder="mm/dd/yyyy"
                     placeholderTextColor="black"
-                    style={[CommonStyles.fontRegular, {marginTop: 10}]}
+                    style={[CommonStyles.fontRegular, { marginTop: 10 }]}
                     intialValue={this.state.answer}
-                    onChange={date => this.setState({answer: date})}
-                    // disabled={false}
+                    onChange={date => this.setState({ answer: date })}
+                  // disabled={false}
                   />
-                  <Icon active name="calendar" style={{marginLeft: 20}} />
+                  <Icon active name="calendar" style={{ marginLeft: 20 }} />
                 </Item>
               </KeyboardAwareScrollView>
             </View>
@@ -288,7 +289,7 @@ export default class FollowUpAdd extends Component {
                 style={[
                   CommonStyles.container,
                   CommonStyles.centerText,
-                  {borderRightWidth: 0.5, borderColor: '#cfd2d6'},
+                  { borderRightWidth: 0.5, borderColor: '#cfd2d6' },
                 ]}>
                 <Text
                   style={[
@@ -297,7 +298,7 @@ export default class FollowUpAdd extends Component {
                     CommonStyles.centerText,
                     CommonStyles.margin,
                     CommonStyles.padding,
-                    {opacity: 0.5},
+                    { opacity: 0.5 },
                   ]}>
                   SAVE
                 </Text>

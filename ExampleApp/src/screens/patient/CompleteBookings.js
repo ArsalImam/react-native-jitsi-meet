@@ -182,7 +182,7 @@ export default class CompleteBookings extends Component {
             ]}>
             <Picker
               mode="dropdown"
-              iosIcon={<Icon name="arrow-down" />}
+              iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
               placeholder="Choose Frequency"
               placeholderStyle={{color: '#bfc6ea'}}
               placeholderIconColor="#007aff"
