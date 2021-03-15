@@ -107,7 +107,7 @@ export default class DiagnosisAdd extends Component {
             ViewUtils.showToast('Diagnosis has been saved successfully!');
           })
           .catch(err => {
-            ViewUtils.showAlert('Unable to Perform this Action');
+            ViewUtils.showToast('Unable to Perform this Action');
           })
           .finally(() => {
             this.setState({isLoading: false});
@@ -132,7 +132,7 @@ export default class DiagnosisAdd extends Component {
             ViewUtils.showToast('Diagnosis has been saved successfully!');
           })
           .catch(err => {
-            ViewUtils.showAlert('Unable to Perform this Action');
+            ViewUtils.showToast('Unable to Perform this Action');
           })
           .finally(() => {
             this.setState({isLoading: false});

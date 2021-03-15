@@ -113,7 +113,8 @@ export default class IncomingCall extends React.Component {
 
   _initSound() {
     let ringtone = 'https://etibb.s3-ap-southeast-1.amazonaws.com/ringtone.mp3'
-    this.whoosh = new Sound(ringtone, Sound.MAIN_BUNDLE, error => {
+  
+    this.whoosh = new Sound(ringtone, null, error => {
       if (error) {
         return;
       } else {
@@ -127,7 +128,7 @@ export default class IncomingCall extends React.Component {
       } else {
       }
     });
-
+    
     this.whoosh.setNumberOfLoops(3);
   }
 }

@@ -58,7 +58,7 @@ export default class MedicationAdd extends Component {
                 
             })
             .catch(err => {
-                ViewUtils.showAlert(
+                ViewUtils.showToast(
                     'Unable to Perform this Action',       
                 );
                 //ViewUtils.showToast(err);

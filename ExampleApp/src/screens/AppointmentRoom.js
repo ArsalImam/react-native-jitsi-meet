@@ -5,7 +5,6 @@ import JitsiMeet, {JitsiMeetView} from 'react-native-jitsi-meet';
 import Api from '../Api';
 import {Container, Drawer, Button, Icon} from 'native-base';
 import SideBar from '../components/drawer/SideBar';
-import AppHeader from '../components/drawer/AppHeader';
 
 import {
   View,
@@ -76,7 +75,9 @@ console.log("appointmentId" , appointmentId)
       .then(response => {
         if (response.status == 'Completed') {
           ViewUtils.showAlert(
-            'Call ended.',       
+            'Call ended.',
+            () => {}, 
+            () => {},      
         );
        clearInterval(this.timer)
           JitsiMeet.endCall();

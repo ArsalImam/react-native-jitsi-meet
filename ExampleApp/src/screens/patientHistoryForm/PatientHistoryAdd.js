@@ -54,7 +54,7 @@ export default class PatientHistoryAdd extends Component {
             })
             .catch(err => {
                 //ViewUtils.showToast(err);
-                ViewUtils.showAlert(
+                ViewUtils.showToast(
                     'Unable to Perform this Action',       
                 );
             })

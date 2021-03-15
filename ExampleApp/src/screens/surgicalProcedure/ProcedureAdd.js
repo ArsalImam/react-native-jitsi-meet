@@ -74,7 +74,7 @@ export default class ProcedureAdd extends Component {
             ViewUtils.showToast('Procedure has been saved successfully!');
           })
           .catch(err => {
-            ViewUtils.showAlert('Unable to Perform this Action');
+            ViewUtils.showToast('Unable to Perform this Action');
           })
           .finally(() => {
             this.setState({isLoading: false});
@@ -99,7 +99,7 @@ export default class ProcedureAdd extends Component {
             ViewUtils.showToast('Procedure has been saved successfully!');
           })
           .catch(err => {
-            ViewUtils.showAlert('Unable to Perform this Action');
+            ViewUtils.showToast('Unable to Perform this Action');
           })
           .finally(() => {
             this.setState({isLoading: false});

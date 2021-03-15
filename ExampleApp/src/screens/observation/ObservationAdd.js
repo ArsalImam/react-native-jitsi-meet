@@ -58,7 +58,7 @@ export default class ObservationAdd extends Component {
                     ViewUtils.showToast('Observation has been saved successfully!');
                 })
                 .catch(err => {
-                    ViewUtils.showAlert(
+                    ViewUtils.showToast(
                         'Unable to Perform this Action',       
                     );
                     //ViewUtils.showToast(err);
@@ -67,7 +67,7 @@ export default class ObservationAdd extends Component {
                     this.setState({ isLoading: false });
                 });
             }else {
-                ViewUtils.showAlert(
+                ViewUtils.showToast(
                     'Please Provide Observation',       
                 );    
             }
@@ -89,7 +89,7 @@ export default class ObservationAdd extends Component {
                     ViewUtils.showToast('Observation has been saved successfully!');
                 })
                 .catch(err => {
-                    ViewUtils.showAlert(
+                    ViewUtils.showToast(
                         'Unable to Perform this Action',       
                     );
                 })
@@ -97,7 +97,7 @@ export default class ObservationAdd extends Component {
                     this.setState({ isLoading: false });
                 });
             }else {
-                ViewUtils.showAlert(
+                ViewUtils.showToast(
                     'Please Provide Observation',       
                 );    
             }

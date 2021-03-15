@@ -152,7 +152,7 @@ export default class UploadMedicalRecord extends Component {
           ViewUtils.showToast('Saved successfully!');
         })
         .catch(err => {
-          ViewUtils.showAlert('Unable to Perform this Action');
+          ViewUtils.showToast('Unable to Perform this Action');
         })
         .finally(() => {
           this.setState({isLoading: false});

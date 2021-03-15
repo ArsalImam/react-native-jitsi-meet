@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 import {Icon} from 'native-base';
 import {
-  StyleSheet,
   Text,
   View,
   ImageBackground,
-  StatusBar,
   Image,
   TouchableOpacity,
   Linking,
@@ -14,7 +12,6 @@ import {FlatGrid} from 'react-native-super-grid';
 import CommonStyles from '../../CommonStyles';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import moment from 'moment';
-import {ViewUtils} from '../../Utils';
 import Api from '../../Api';
 import Loader from '../../components/Loader';
 import {Roles} from '../.././Configs';
