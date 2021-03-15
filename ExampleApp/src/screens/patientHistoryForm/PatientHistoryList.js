@@ -114,7 +114,7 @@ export default class PatientHistoryList extends Component {
         this.props.navigation.goBack();
       })
       .catch(err => {
-        ViewUtils.showAlert('Unable to Update');
+        ViewUtils.showToast('Unable to Update');
       });
   };
 

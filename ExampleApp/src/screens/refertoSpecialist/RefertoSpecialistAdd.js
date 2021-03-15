@@ -101,13 +101,13 @@ export default class RefertoSpecialistAdd extends Component {
             ViewUtils.showToast('Specialist has been referred successfully!');
           })
           .catch(err => {
-            ViewUtils.showAlert('Unable to Perform this Action');
+            ViewUtils.showToast('Unable to Perform this Action');
           })
           .finally(() => {
             this.setState({isLoading: false});
           });
       } else {
-        ViewUtils.showAlert('Please Provide Specialist Email');
+        ViewUtils.showToast('Please Provide Specialist Email');
       }
     } else {
       let data = {
@@ -126,13 +126,13 @@ export default class RefertoSpecialistAdd extends Component {
             ViewUtils.showToast('Specialist has been referred!');
           })
           .catch(err => {
-            ViewUtils.showAlert('Unable to Perform this Action');
+            ViewUtils.showToast('Unable to Perform this Action');
           })
           .finally(() => {
             this.setState({isLoading: false});
           });
       } else {
-        ViewUtils.showAlert('Please Provide Specialist Email');
+        ViewUtils.showToast('Please Provide Specialist Email');
       }
     }
   };

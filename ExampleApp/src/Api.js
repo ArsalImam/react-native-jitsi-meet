@@ -21,7 +21,7 @@ export default class Api {
       },
       function(error) {
         if (error.message == 'Network Error') {
-          ViewUtils.showAlert('Check your Internet Connectiviy.');
+          ViewUtils.showToast('Check your Internet Connectiviy.');
         } else {
           return Promise.reject();
         }

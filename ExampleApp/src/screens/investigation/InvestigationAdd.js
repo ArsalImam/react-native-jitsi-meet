@@ -107,7 +107,7 @@ export default class InvestigationAdd extends Component {
             ViewUtils.showToast('Investigation has been saved successfully!');
           })
           .catch(err => {
-            ViewUtils.showAlert('Unable to Perform this Action');
+            ViewUtils.showToast('Unable to Perform this Action');
           })
           .finally(() => {
             this.setState({isLoading: false});

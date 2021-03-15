@@ -68,13 +68,13 @@ export default class FollowUpAdd extends Component {
             ViewUtils.showToast('FollowUp has been saved successfully!');
           })
           .catch(err => {
-            ViewUtils.showAlert('Unable to Perform this Action');
+            ViewUtils.showToast('Unable to Perform this Action');
           })
           .finally(() => {
             this.setState({ isLoading: false });
           });
       } else {
-        ViewUtils.showAlert('Please Provide FollowUp Date');
+        ViewUtils.showToast('Please Provide FollowUp Date');
       }
     } else {
       let data = {
@@ -93,13 +93,13 @@ export default class FollowUpAdd extends Component {
             ViewUtils.showToast('FollowUp has been saved successfully!');
           })
           .catch(err => {
-            ViewUtils.showAlert('Unable to Perform this Action');
+            ViewUtils.showToast('Unable to Perform this Action');
           })
           .finally(() => {
             this.setState({ isLoading: false });
           });
       } else {
-        ViewUtils.showAlert('Please Provide FollowUp Date');
+        ViewUtils.showToast('Please Provide FollowUp Date');
       }
     }
   };
