@@ -42,10 +42,10 @@ export default class AddPrescribtion extends Component {
       frequency: '',
       route: '',
       reason: '',
-      startDate: '',
+      startDate: null,
       chosenDate: "", 
       showDate: false,
-      endDate: '',
+      endDate: null,
       notes: '',
       showStartDate: false, 
       appointmentId: this.props.route.params.appointmentId,
@@ -80,7 +80,9 @@ export default class AddPrescribtion extends Component {
       frequency: this.state.frequency,
       route: this.state.route,
       reason: this.state.reason,
+      // endDate: this.state.endDate,
       endDate: this.state.endDate,
+
       'setup-type': 'medication',
       active: false,
       // "id": "5f02b75d03468351d147025b",
@@ -89,39 +91,43 @@ export default class AddPrescribtion extends Component {
       description: this.state.notes,
     };
 
+    console.log("datadatadatadata" , data)
     if (this.state.medicine.trim() == '') {
       ViewUtils.showToast('Please Provide Medicine');
       return;
-    } else if (this.state.strength.trim() == '') {
-      ViewUtils.showToast('Please Provide Strength');
-      return;
-    } else if (this.state.dose.trim() == '') {
-      ViewUtils.showToast('Please Provide Dose');
-      return;
-    } else if (this.state.frequency.trim() == '') {
-      ViewUtils.showToast('Please Provide Frequency');
-      return;
-    } else if (this.state.route.trim() == '') {
-      ViewUtils.showToast(' Please Provide Route');
-      return;
-    } else if (this.state.reason.trim() == '') {
-      ViewUtils.showToast('Please Provide Reason');
-      return;
-    } else if (this.state.notes.trim() == '') {
-      ViewUtils.showToast('Please Provide Notes');
-      return;
-    }
-
+    } 
+    // else if (this.state.strength.trim() == '') {
+    //   ViewUtils.showToast('Please Provide Strength');
+    //   return;
+    // } else if (this.state.dose.trim() == '') {
+    //   ViewUtils.showToast('Please Provide Dose');
+    //   return;
+    // } else if (this.state.frequency.trim() == '') {
+    //   ViewUtils.showToast('Please Provide Frequency');
+    //   return;
+    // } else if (this.state.route.trim() == '') {
+    //   ViewUtils.showToast(' Please Provide Route');
+    //   return;
+    // } else if (this.state.reason.trim() == '') {
+    //   ViewUtils.showToast('Please Provide Reason');
+    //   return;
+    // } else if (this.state.notes.trim() == '') {
+    //   ViewUtils.showToast('Please Provide Notes');
+    //   return;
+    // }
     this.setState({isLoading: true});
     Api.instance()
       .createPrescription(data)
       .then(response => {
+        console.log("resssss ==> " , response)
+
         this.addToConsultation(data);
         this.props.navigation.goBack();
         ViewUtils.showToast('Medication has been saved successfully!');
       })
       .catch(err => {
-        ViewUtils.showToast('Please Fill Fields');
+        console.log("Prescribtion err" , err)
+        // ViewUtils.showToast('Please Fill Fields');
       })
       .finally(() => {
         this.setState({isLoading: false});
