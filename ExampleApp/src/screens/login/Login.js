@@ -1,19 +1,10 @@
 import React, { Component } from 'react';
-
-// import {} from 'react-native';
 import {
   Text,
   View,
-  StyleSheet,
   TouchableOpacity,
   Image,
-  ImageBackground,
-  TextInput,
-  StatusBar,
-  BackHandler, 
-  ActivityIndicator,
-  Alert,
-  AsyncStorage
+  ImageBackground,  
 } from 'react-native';
 import CommonStyles from '../../CommonStyles';
 import { Item, Input, Container, Icon,Toast } from 'native-base';
@@ -21,7 +12,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import Api from '../../Api';
 import { ViewUtils } from '../../Utils';
 import Loader from '../../components/Loader';
-//  import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 class Login extends Component {
@@ -43,21 +34,12 @@ class Login extends Component {
   componentDidMount() { }
 
   componentWillMount() {
-    // Api.instance()
-    // ._user()
-    // .then(token => {
-    //   console.warn("token", token)
-    //   this.props.navigation.replace('MyDrawer')
-
-    // })
     AsyncStorage.getItem('@user').then(token => {
       console.log('token', token);
-      console.warn('token in willmount', token);
       if (token) {
         console.log('token', token);
         this.props.navigation.replace('MyDrawer');
-        // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-
+   
       } else {
         console.log('error', error);
       }
@@ -65,17 +47,17 @@ class Login extends Component {
   }
   _submitForm = () => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,9})+$/;
-    if(this.state.email == '' && this.state.password == ''){
+    if(this.state.email.trim() == '' && this.state.password.trim() == ''){
       ViewUtils.showToast(
         'Please Provide Email and Password',
     );
     return;
-    }else if(this.state.email == ''){
+    }else if(this.state.email.trim() == ''){
       ViewUtils.showToast(
         'Please Provide Email',       
     );
     return;
-    }else if(this.state.password == ''){
+    }else if(this.state.password.trim() == ''){
       ViewUtils.showToast(
         'Please Provide Password',       
     );
@@ -90,7 +72,7 @@ class Login extends Component {
         this.props.navigation.replace('MyDrawer', { user: data.user });
       })
       .catch(err => {
-        console.warn('er' ,err)
+        console.log('er' ,err)
         //ViewUtils.showToast(err);
         ViewUtils.showToast(
           'Invalid Credentials.',       
@@ -281,32 +263,6 @@ class Login extends Component {
       </View>
     );
   }
-
-  // handleBackButton = () => {
-  //   Alert.alert(
-  //       'Exit App',
-  //       'Exiting the application?', [{
-  //           text: 'Cancel',
-  //           onPress: () => console.log('Cancel Pressed'),
-  //           style: 'cancel'
-  //       }, {
-  //           text: 'OK',
-  //           onPress: () => BackHandler.exitApp()
-  //       }, ], {
-  //           cancelable: false
-  //       }
-  //    )
-  //    return true;
-  //  } 
-
-  // componentDidMount() {
-  //   BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-  // }
-  
-  // componentWillUnmount() {
-  //   BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-  // }
-
 }
 
 export default Login;

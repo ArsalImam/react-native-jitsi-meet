@@ -7,9 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Icon, Input, Item, Label, Picker, Text } from 'native-base';
-
-import {DatePicker} from 'react-native-propel-kit';
+import { Icon, Input, Item, Label, Picker, Text, DatePicker } from 'native-base';
 import Api from '../../Api';
 import CommonStyles from '../../CommonStyles';
 import Loader from '../../components/Loader';
@@ -413,7 +411,7 @@ export default class CreateClinic extends Component {
                 ]}>
                 <Picker
                   mode="dropdown"
-                  iosIcon={<Icon name="arrow-down" />}
+                  iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
                   style={[CommonStyles.container, CommonStyles.itemStyle]}
                   textStyle={[
                     CommonStyles.fontRegular,
@@ -455,7 +453,7 @@ export default class CreateClinic extends Component {
                 ]}>
                 <Picker
                   mode="dropdown"
-                  iosIcon={<Icon name="arrow-down" />}
+                  iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
 
                   placeholder="Choose Frequency"
                   placeholderStyle={{ color: '#bfc6ea' }}

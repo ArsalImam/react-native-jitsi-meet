@@ -43,7 +43,6 @@ export default class TherapyList extends Component {
       Api.instance()
         .getListDuringConsultation('suggestedTherapy', this.state.patientId)
         .then(data => {
-          console.warn('=====>', data);
           this.setState({therapyList: data});
         })
         .catch(err => console.log(err))
@@ -55,7 +54,6 @@ export default class TherapyList extends Component {
       Api.instance()
         .getTherapyList()
         .then(data => {
-          console.warn('=====>', data);
           this.setState({therapyList: data});
         })
         .catch(err => console.log(err))
@@ -77,7 +75,6 @@ export default class TherapyList extends Component {
     Api.instance()
       .addReport(item, this.state.appointmentId, this.state.patientId)
       .then(response => {
-        console.warn(response);
         this.props.navigation.goBack();
       })
       .catch(err => {})

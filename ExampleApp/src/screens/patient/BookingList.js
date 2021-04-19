@@ -9,7 +9,8 @@ import Loader from '../../components/Loader';
 import {AppointmentStatus, Roles} from '../../Configs';
 import moment from 'moment';
 import {ViewUtils} from '../../Utils';
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+
 
 export default class BookingList extends Component {
   state = {
@@ -31,7 +32,7 @@ export default class BookingList extends Component {
     try {
       return JSON.parse(await AsyncStorage.getItem('@user'));
     } catch (e) {
-      console.warn(e);
+      console.log(e);
     }
   }
 
@@ -40,13 +41,10 @@ export default class BookingList extends Component {
     Api.instance()
       .getMyAppointments(AppointmentStatus.available, true, true)
       .then(appointments => {
-        console.warn('appointments :: ', appointments.slice().reverse());
-        // let data = appointments.reverse()
-        // console.warn("appointments :: ",data)
         this.setState({appointments});
       })
       .catch(err => {
-        console.warn('erororor  :: ', err);
+        console.log('erororor  :: ', err);
         ViewUtils.showToast(err);
       })
       .finally(() => {
@@ -98,9 +96,12 @@ export default class BookingList extends Component {
                       .getUserRole()
                       .then(role => {
                         if (role === Roles.patient) {
-                          this._createAppointment(item.id);
+                          this._createAppointment(
+                            item.id,
+                            item.doctor.appointmentFees,
+                            item.doctor.isPaymentEnabled,
+                          );
                         } else {
-                          console.warn('item >>>>', item);
                           this.props.navigation.navigate(`Patients`, {
                             appointmentId: item.id,
                             moveTo: 'createAppointment',
@@ -279,7 +280,6 @@ export default class BookingList extends Component {
   //       Api.instance()
   //         .getTodaysAppointments(user.id)
   //         .then(response => {
-  //           console.warn("response ::: ",response)
   //           if(response.length > 0){
   //             this.setState({todaysAppointments: response});
   //           }
@@ -291,7 +291,7 @@ export default class BookingList extends Component {
   //     });
   // }
 
-  _getScheduledAppointments(appointmentId) {
+  _getScheduledAppointments(appointmentId, appointmentFees, isPaymentEnabled) {
     let userId;
     this._user().then(data => {
       userId = data.id;
@@ -299,7 +299,6 @@ export default class BookingList extends Component {
     Api.instance()
       .getScheduledAppointments()
       .then(res => {
-        console.warn('res sss ::: ', res);
         // if(res.length > 0){
         // ViewUtils.showToast('Cannot create more than one appointment in a day.')
         // }else{
@@ -307,44 +306,69 @@ export default class BookingList extends Component {
         ViewUtils.showAlert(
           'Do you want to create appointment?',
           () => {
-            Api.instance()
-              .getPatientUtilizedSlots(userId)
-              .then(res => {
-                console.warn('res', res);
-                if (!res[0]) {
-                  that.props.navigation.navigate('Foree', {
-                    user: userId,
-                    appointmentId: appointmentId,
-                  });
-                } else {
-                  this.setState({isLoading: true});
-                  Api.instance()
-                    ._user()
-                    .then(user => {
-                      Api.instance()
-                        .updateAppointment(appointmentId, user.id)
-                        .then(() => {
-                          console.warn('user.id ::: ', user.id);
-                          ViewUtils.showToast(
-                            'Appointment has been booked successfully',
-                          );
-                          this.refreshList();
-                        })
-                        .catch(err => {
-                          ViewUtils.showToast(err);
-                        })
-                        .finally(() => that.setState({isLoading: false}));
+            if (isPaymentEnabled) {
+
+              Api.instance()
+                .getPatientUtilizedSlots(userId)
+                .then(res => {
+                  console.log('tetstststsres', res);
+                  if (!res[0] ) {
+                    that.props.navigation.navigate('PaymentAlert', {
+                      user: userId,
+                      appointmentId: appointmentId,
+                      appointmentFees: appointmentFees,
                     });
-                }
-              });
+                  } else {
+                    this.setState({isLoading: true});
+                    Api.instance()
+                      ._user()
+                      .then(user => {
+                        Api.instance()
+                          .updateAppointment(appointmentId, user.id)
+                          .then(() => {
+                            Api.instance()
+                              .updatePatientSlots(userId)
+                              .then(res => {
+                                ViewUtils.showToast(
+                                  'Appointment has been booked successfully',
+                                );
+                                // this.refreshList();
+                                this.props.navigation.replace('MyTabs', {
+                                  screen: 'Scheduled',
+                                });
+                              });
+                          })
+                          .catch(err => {
+                            ViewUtils.showToast(err);
+                          })
+                          .finally(() => that.setState({isLoading: false}));
+                      });
+                  }
+                });
+            } else {
+              this.setState({isLoading: true});
+              Api.instance()
+                ._user()
+                .then(user => {
+                  Api.instance()
+                    .updateAppointment(appointmentId, user.id)
+                    .then(() => {
+                      ViewUtils.showToast(
+                        'Appointment has been booked successfully',
+                      );
+                      this.refreshList();
+                    })
+                    .catch(err => {
+                      ViewUtils.showToast(err);
+                    })
+                    .finally(() => that.setState({isLoading: false}));
+                });
+            }
           },
           () => {},
         );
-        // }
-        //console.warn("res ::: ",res)
       })
       .catch(err => {
-        console.warn('erororor  :: ', err);
         ViewUtils.showToast(err);
       })
       .finally(() => {
@@ -352,9 +376,11 @@ export default class BookingList extends Component {
       });
   }
 
-  _createAppointment(appointmentId) {
-    this._getScheduledAppointments(appointmentId);
-
-    console.warn('this.state.isScheduled === ', this.state.isScheduled);
+  _createAppointment(appointmentId, appointmentFees, isPaymentEnabled) {
+    this._getScheduledAppointments(
+      appointmentId,
+      appointmentFees,
+      isPaymentEnabled,
+    );
   }
 }

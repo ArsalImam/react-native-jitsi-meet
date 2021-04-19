@@ -1,19 +1,9 @@
 import React, {Component} from 'react';
-import {View, TouchableOpacity, BackHandler, Alert} from 'react-native';
+import {BackHandler, Alert} from 'react-native';
 import {WebView} from 'react-native-webview';
-import {
-  Header,
-  Left,
-  Right,
-  Body,
-  Icon,
-  Container,
-  Button,
-  Title,
-} from 'native-base';
-import CommonStyles from '../../CommonStyles';
+import {Header, Left, Right, Body, Icon, Container, Button} from 'native-base';
 import {ViewUtils} from '../../Utils';
-import {Configs, Roles, AppointmentStatus} from '../../Configs';
+import {Configs} from '../../Configs';
 import Api from '../../Api';
 export default class Foree extends Component {
   state = {};
@@ -26,7 +16,6 @@ export default class Foree extends Component {
     super(props);
     this.webView = null;
   }
-
   handleBackButton = () => {
     Alert.alert(
       'E-tibb',
@@ -73,15 +62,10 @@ export default class Foree extends Component {
 
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-    // Api.instance()
-    // .getUserRole()
-    // .then(role => {
-    //   this.setState({userRole:role})
-    // })
-    console.warn('roue params', this.props.route.params.user);
     this.setState({
       userId: this.props.route.params.user,
       appointmentId: this.props.route.params.appointmentId,
+      appointmentFees: this.props.route.params.appointmentFees,
     });
   }
 
@@ -92,21 +76,20 @@ export default class Foree extends Component {
   render() {
     var Code = Math.floor(1000 + Math.random() * 9000);
 
-    const endPoint = `${Configs.foreeUrl}?amount=1000&userId=${
-      this.state.userId
-    }&createdBy=${
+    const endPoint = `${Configs.foreeUrl}?amount=${
+      this.state.appointmentFees
+    }&userId=${this.state.userId}&createdBy=${
       this.state.userId
     }&isProd=true&type=patient&slots=1&transactionCode=${Code}&paymentType=foree&url=${
       Configs.baseUrlForee
     }`;
-    //  console.warn(`${Configs.foreeUrl}?amount=1000&userId=${this.state.userId}&createdBy=${this.state.userId}&isProd=true&type=patient&slots=1&transactionCode=${Code}&paymentType=foree&url=${Configs.baseUrlForee}`);
-    //  const endPoint = 'https://github.com/react-native-community/react-native-webview';
+
+    console.log('endPoint', endPoint)
     return (
-      
-      <Container style={{flex: 1, backgroundColor: '#000'}}>
-        <Header 
-        androidStatusBarColor="#00000000"
-        style={{height: 70, backgroundColor: '#297dec',}}>
+            <Container style={{flex: 1, backgroundColor: '#000'}}>
+        <Header
+          androidStatusBarColor="#00000000"
+          style={{height: 70, backgroundColor: '#297dec'}}>
           <Left style={{}}>
             <Button
               transparent
@@ -122,35 +105,53 @@ export default class Foree extends Component {
         </Header>
 
         <WebView
-          source={{
-            uri: `${endPoint}`,
-          }}
-          startInLoadingState
+          source={{uri: `${endPoint}`}}
+          startInLoadingState={true}
           javaScriptEnabledAndroid={true}
           javaScriptEnabled={true}
           ref={webView => (this.webView = webView)}
           onMessage={event => {
-            console.warn('event === ', event);
-            if (event.nativeEvent.data == 'success') {
+            console.log('event === ', event);
+
+            if (!event.nativeEvent.canGoBack) {
+              ViewUtils.showToast('You have cancelled Payment Process!');
+              this.props.navigation.goBack();
+              return;
+            }
+
+            if (
+              event.nativeEvent.data != undefined &&
+              event.nativeEvent.canGoBack
+            ) {
+              console.log('userId:>>>', this.state.userId);
               Api.instance()
-                ._user()
-                .then(user => {
+                .postPatientUtilizedSlots(event.nativeEvent.data)
+                .then(res => {
+                  console.log('postPatientUtilizedSlots res', res);
                   Api.instance()
-                    .updateAppointment(this.state.appointmentId, user.id)
-                    .then(() => {
-                      console.warn('user.id ::: ', user.id);
+                    .updateAppointment(
+                      this.state.appointmentId,
+                      this.state.userId,
+                    )
+                    .then(res => {
+                      Api.instance()
+                      .updatePatientSlots(this.state.userId)
+                      .then(res => {
+                        console.log('updatePatientSlots res', res);
+
                       ViewUtils.showToast(
                         'Appointment has been booked successfully',
                       );
                       this.props.navigation.replace('MyTabs', {
                         screen: 'Scheduled',
                       });
-                    })
-                    .catch(err => {
-                      ViewUtils.showToast(err);
-                    })
-                    .finally();
-                });
+                    });
+                    });
+                })
+                .catch(err => {
+                  ViewUtils.showToast(err);
+                })
+                .finally();
             }
           }}
           injectedJavaScript={this.injectedJavascript}

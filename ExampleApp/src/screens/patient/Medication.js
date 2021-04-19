@@ -3,7 +3,7 @@ import { StyleSheet, View, TouchableOpacity, ImageBackground, ScrollView, Status
 import { Container, Header, Content,  Text, Item, Label, Input, ScrollableTab, } from 'native-base';
 import  CommonStyles  from '../../CommonStyles';
 
-import {DatePicker} from 'react-native-propel-kit';
+import {DatePicker} from 'native-base';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 
 export default class Madication extends React.Component {

@@ -23,8 +23,6 @@ export default class DrProfile extends React.Component {
   }
 
   render() {
-    console.warn('this.state.patient.fname == ', this.state.patient.firstName);
-    
     return (
       
       <View style={[CommonStyles.container]}>

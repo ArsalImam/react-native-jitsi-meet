@@ -22,13 +22,12 @@ import {
   
 } from 'native-base';
 
-import {DatePicker} from 'react-native-propel-kit';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import CommonStyles from '../../CommonStyles';
 import Api from '../../Api';
-import Loader from '../../components/Loader';
+ import Loader from '../../components/Loader';
 import {ViewUtils} from '../../Utils';
-import ImagePicker from 'react-native-image-picker';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import {Configs} from '../../Configs';
 
 export default class UploadIllustrations extends React.Component {
@@ -68,9 +67,7 @@ export default class UploadIllustrations extends React.Component {
       },
     };
 
-    ImagePicker.showImagePicker(options, response => {
-      console.warn('Response = ', response);
-
+    launchImageLibrary(options, response => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -90,13 +87,11 @@ export default class UploadIllustrations extends React.Component {
         Api.instance()
           .uploadImage(fileData)
           .then(response => {
-            console.warn('=====heyssssss===', JSON.stringify(response));
             this.setState({
               imageUri: Api.instance().getMediaUrl(
                 Configs.containers.images,
                 response.result.files.uploadFile[0].name,
               )});
-console.warn('uriiiii' , this.state.imageUri)
         });
 
         const source = {uri: response.uri};
@@ -118,7 +113,6 @@ console.warn('uriiiii' , this.state.imageUri)
       Api.instance()
         .createMedication(data)
         .then(response => {
-          console.warn('tesssssssssssst', response);
           this.props.route.params.onAddAnatomicalIllustration();
           this.props.navigation.goBack();
           ViewUtils.showToast('Question has been saved successfully!');

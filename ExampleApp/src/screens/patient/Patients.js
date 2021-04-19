@@ -1,7 +1,6 @@
 import {CommonActions} from '@react-navigation/native';
 import React, {Component} from 'react';
 import {
-  StyleSheet,
   Text,
   View,
   ImageBackground,
@@ -22,6 +21,7 @@ export default class Patients extends Component {
   state = {
     patients: [],
     amount: '',
+    isPaymentEnabled: false,
   };
   constructor(props) {
     super(props);
@@ -42,13 +42,12 @@ export default class Patients extends Component {
         this.setState({isLoading: false});
       });
 
-      Api.instance()
+    Api.instance()
       ._user()
       .then(user => {
         if (user == null) return;
-        console.warn('')
         this.setState({
-          
+          isPaymentEnabled: user.isPaymentEnabled,
           amount: user.appointmentFees,
         });
       })
@@ -97,7 +96,6 @@ export default class Patients extends Component {
               renderItem={({item}) => (
                 <TouchableOpacity
                   onPress={() => {
-                    console.warn('item >>>>', item);
                     if (this._moveTo === 'createAppointment') {
                       this._createAppointment(item.id);
                     } else {
@@ -200,47 +198,63 @@ export default class Patients extends Component {
     ViewUtils.showAlert(
       'Do you want to create appointment?',
       () => {
-        Api.instance()
-          .getPatientUtilizedSlots(patientId)
-          .then(res => {
-            console.warn('res >>>> getUtilized', res)
-            if (!res[0]) {
-              this.props.navigation.navigate('PaymentAlert', {
-                appointmentId: this._appointmentId,
-                patientId,
-                clinicId: this._clinicId,
-                amount: this.state.amount,
+        if (this.state.isPaymentEnabled) {
+          Api.instance()
+            .getPatientUtilizedSlots(patientId)
+            .then(res => {
+              if (!res[0]) {
+                this.props.navigation.navigate('PaymentAlert', {
+                  appointmentId: this._appointmentId,
+                  patientId,
+                  clinicId: this._clinicId,
+                  amount: this.state.amount,
+                });
+              } else {
+                this.setState({isLoading: true});
+                Api.instance()
+                  .updateAppointment(this._appointmentId, patientId)
 
-              });
-            } else {
-              this.setState({isLoading: true});
-              Api.instance()
-                .updateAppointment(this._appointmentId, patientId)
+                  .then(() => {
+                    Api.instance()
+                      .updatePatientSlots(patientId)
+                      .then(() => {
+                        ViewUtils.showToast(
+                          'Appointment has been booked successfully',
+                        );
+                        // ViewUtils.showToast('Appointment' ,this._appointmentId ,'fkahfhd',this.patientId);
+                        that.props.navigation.dispatch(
+                          CommonActions.reset({
+                            index: 1,
+                            routes: [{name: 'MyDrawer'}],
+                          }),
+                        );
+                      });
+                  })
+                  .catch(err => {
+                    //ViewUtils.showToast(err);
+                  })
+                  .finally(() => that.setState({isLoading: false}));
+              }
+            });
+        } else {
+          this.setState({isLoading: true});
+          Api.instance()
+            .updateAppointment(this._appointmentId, patientId)
 
-                .then(() => {
-                  console.warn(
-                    'appointment Id',
-                    this._appointmentId,
-                    'patient',
-                    patientId,
-                  );
-                  ViewUtils.showToast(
-                    'Appointment has been booked successfully',
-                  );
-                  // ViewUtils.showToast('Appointment' ,this._appointmentId ,'fkahfhd',this.patientId);
-                  that.props.navigation.dispatch(
-                    CommonActions.reset({
-                      index: 1,
-                      routes: [{name: 'MyDrawer'}],
-                    }),
-                  );
-                })
-                .catch(err => {
-                  //ViewUtils.showToast(err);
-                })
-                .finally(() => that.setState({isLoading: false}));
-            }
-          });
+            .then(() => {
+              ViewUtils.showToast('Appointment has been booked successfully');
+              that.props.navigation.dispatch(
+                CommonActions.reset({
+                  index: 1,
+                  routes: [{name: 'MyDrawer'}],
+                }),
+              );
+            })
+            .catch(err => {
+              ViewUtils.showToast(err);
+            })
+            .finally(() => that.setState({isLoading: false}));
+        }
       },
       () => {},
     );

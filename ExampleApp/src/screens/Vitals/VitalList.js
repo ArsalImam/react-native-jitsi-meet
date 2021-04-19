@@ -44,7 +44,6 @@ export default class VitalList extends Component {
       Api.instance()
         .getVitalListConsultation(this.state.patientId)
         .then(data => {
-          console.warn('=====>', data);
           this.setState({vitalList: data});
         })
         .catch(err => console.log(err))
@@ -56,7 +55,6 @@ export default class VitalList extends Component {
       Api.instance()
         .getVitalList()
         .then(data => {
-          console.warn('=====>', data['Vitals']);
           this.setState({vitalList: data['Vitals'].reverse()});
         })
         .catch(err => console.log(err))
@@ -79,7 +77,6 @@ export default class VitalList extends Component {
     Api.instance()
       .addReport(item, this.state.appointmentId, this.state.patientId)
       .then(response => {
-        console.warn(response);
         this.props.navigation.goBack();
       })
       .catch(err => {})
@@ -95,7 +92,6 @@ export default class VitalList extends Component {
 
   render() {
     if (this.state.appointmentId != null) {
-      console.warn('ssss');
       return (
         <View style={{height: '75%'}}>
           <ImageBackground
@@ -433,7 +429,6 @@ export default class VitalList extends Component {
         </View>
       );
     } else {
-      console.warn('nnnnn');
       return (
         <View style={[CommonStyles.container]}>
           <ImageBackground

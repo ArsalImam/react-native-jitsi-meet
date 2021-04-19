@@ -1,18 +1,12 @@
 import React, {Component} from 'react';
 import Api from '../../Api';
 import CommonStyles from '../../CommonStyles';
-import {ListItem, CheckBox, Divider} from 'react-native-elements';
 import {Icon} from 'native-base';
 import {FlatGrid} from 'react-native-super-grid';
-import {CommonActions} from '@react-navigation/native';
 import {
-  StyleSheet,
   Text,
   View,
   ImageBackground,
-  StatusBar,
-  ActivityIndicator,
-  FlatList,
   TouchableOpacity,
 } from 'react-native';
 import moment from 'moment';
@@ -25,7 +19,7 @@ export default class InvestigationList extends Component {
       this.state = {
         isLoading: true,
         diagnosisList: [],
-        disabled: false, 
+        disabled: false,
         appointmentId: this.props.route.params.appointmentId,
         patientId: this.props.route.params.patientId,
       };
@@ -38,27 +32,22 @@ export default class InvestigationList extends Component {
   }
 
   _getInvestigationList() {
-
     if (this.state.appointmentId != null) {
       this.setState({isLoading: true});
       Api.instance()
-      .getListDuringConsultation('requestMedication',this.state.patientId)
+        .getListDuringConsultation('requestMedication', this.state.patientId)
         .then(data => {
-          console.warn('=====>', data['Diagnosis']);
-          console.warn('response data == ', data);
           this.setState({diagnosisList: data});
         })
         .catch(err => console.log(err))
         .finally(() => {
           this.setState({isLoading: false});
         });
-    }else{
+    } else {
       this.setState({isLoading: true});
       Api.instance()
-        .getInvestigationList()
+        .getDataCenterlizedListDuringConsultation('investigation')
         .then(data => {
-          console.warn('=====>', data['Diagnosis']);
-          console.warn('response data == ', data);
           this.setState({diagnosisList: data});
         })
         .catch(err => console.log(err))
@@ -66,8 +55,6 @@ export default class InvestigationList extends Component {
           this.setState({isLoading: false});
         });
     }
-
-    
   }
 
   componentDidMount() {
@@ -75,28 +62,23 @@ export default class InvestigationList extends Component {
   }
 
   addDiagnosis(item) {
-    
     this.setState({
       disabled: true,
     });
-    
+
     item.setupType = 'investigation';
     Api.instance()
       .addReport(item, this.state.appointmentId, this.state.patientId)
       .then(response => {
-        console.warn(response);
         this.props.navigation.goBack();
       })
       .catch(err => {})
       .finally(() => {});
-
-      
-      // enable after 5 second
-      setTimeout(() => {
-        this.setState({
-          disabled: false,
-        });
-      }, 5000);
+    setTimeout(() => {
+      this.setState({
+        disabled: false,
+      });
+    }, 5000);
   }
   render() {
     if (this.state.appointmentId != null) {
@@ -105,24 +87,6 @@ export default class InvestigationList extends Component {
           <ImageBackground
             style={[CommonStyles.container, CommonStyles.backgroundImage]}
             source={require('../../assets/img/background.png')}>
-            {/* <View style={{ flex: 3  ,justifyContent:'flex-start' ,paddingTop:50}}>
-            
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.goBack();
-              }}>
-              <Icon
-                name="arrow-back"
-                type="MaterialIcons"
-                style={{ fontSize: 26, color: '#FFF' ,marginLeft:10 }}
-              />
-            </TouchableOpacity>
-                            <Text style={{ color: '#FFFFFF', paddingLeft: 17 }}>
-                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Investigation List\n`}</Text>
-                                <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeSmall]}>It is a list of all your Bookings </Text>
-                            </Text>
-                        </View> */}
-
             <View style={{flex: 3, backgroundColor: '#297dec'}}>
               <View>
                 <TouchableOpacity />
@@ -171,8 +135,7 @@ export default class InvestigationList extends Component {
                         onPress={() => {
                           this.addDiagnosis(item);
                         }}
-                        disabled={this.state.disabled}
-                        >
+                        disabled={this.state.disabled}>
                         <View
                           style={[
                             CommonStyles.container,
@@ -260,7 +223,7 @@ export default class InvestigationList extends Component {
                 onPress={() => {
                   this.props.navigation.navigate('InvestigationAdd', {
                     appointmentId: this.state.appointmentId,
-                    patientId:this.props.route.params.patientId,
+                    patientId: this.props.route.params.patientId,
                     onInvestigationAdd: () => this._getInvestigationList(),
                   });
                 }}

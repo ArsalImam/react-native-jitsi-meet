@@ -37,7 +37,7 @@ export default class RefertoSpecialistAdd extends Component {
         specialists: [],
         doctorEmail: '',
         data: [],
-        email: '',  
+        email: '',
         appointmentId: this.props.route.params.appointmentId,
         patientId: this.props.route.params.patientId,
       };
@@ -47,7 +47,7 @@ export default class RefertoSpecialistAdd extends Component {
         name: '',
         description: '',
         data: [],
-        email: '', 
+        email: '',
       };
     }
   }
@@ -56,20 +56,17 @@ export default class RefertoSpecialistAdd extends Component {
     Api.instance()
       ._user()
       .then(user => {
-        this.setState({email: user.email})
+        this.setState({email: user.email});
       })
       .catch(err => {
-        console.warn('error', err)
-      })
+        console.log('error', err);
+      });
   }
   _getSpecialists() {
     this.setState({isLoading: true});
     Api.instance()
       .getSpecialists()
       .then(data => {
-
-      
-        console.warn('specialist data>>>', data);
         this.setState({specialists: data, doctorEmail: data[0].email});
       })
       .catch(err => console.log(err))
@@ -80,21 +77,15 @@ export default class RefertoSpecialistAdd extends Component {
 
   componentDidMount() {
     this._getSpecialists();
-    this._getUser()
-  
+    this._getUser();
   }
 
   _addReferredSpecialist = () => {
     if (this.state.appointmentId != null) {
       let data = {
-        // date: this.state.startDate,
-        // "setupId": "",
-        // "doctorId": "5f01d90dffd17912ce896c56",
-        // "assistantId": "",
         patientId: this.state.patientId,
         answer: this.state.doctorEmail,
         notes: this.state.description,
-        // endDate: this.state.endDate,
         'setup-type': 'referToSpecialist',
         active: false,
       };
@@ -110,13 +101,13 @@ export default class RefertoSpecialistAdd extends Component {
             ViewUtils.showToast('Specialist has been referred successfully!');
           })
           .catch(err => {
-            ViewUtils.showAlert('Unable to Perform this Action');
+            ViewUtils.showToast('Unable to Perform this Action');
           })
           .finally(() => {
             this.setState({isLoading: false});
           });
       } else {
-        ViewUtils.showAlert('Please Provide Specialist Email');
+        ViewUtils.showToast('Please Provide Specialist Email');
       }
     } else {
       let data = {
@@ -135,13 +126,13 @@ export default class RefertoSpecialistAdd extends Component {
             ViewUtils.showToast('Specialist has been referred!');
           })
           .catch(err => {
-            ViewUtils.showAlert('Unable to Perform this Action');
+            ViewUtils.showToast('Unable to Perform this Action');
           })
           .finally(() => {
             this.setState({isLoading: false});
           });
       } else {
-        ViewUtils.showAlert('Please Provide Specialist Email');
+        ViewUtils.showToast('Please Provide Specialist Email');
       }
     }
   };
@@ -153,25 +144,20 @@ export default class RefertoSpecialistAdd extends Component {
         this.state.appointmentId,
         this.state.patientId,
       )
-
-      .then(response => {
-        console.warn('response', response);
-      })
+      .then(response => {})
       .catch(err => {})
       .finally(() => {});
   }
 
   _setSpecialists() {
-    //someArray = someArray.filter(person => person.name != 'John');
     let doctorEmail = this.state.specialists.map(x => x.email);
-    let doctorEmails = doctorEmail.filter(x => x != `${this.state.email}`) 
+    let doctorEmails = doctorEmail.filter(x => x != `${this.state.email}`);
     return doctorEmails.map(x => {
       return <Picker.Item label={x} value={x} />;
     });
   }
 
   render() {
-    
     if (this.state.appointmentId != null) {
       return (
         <View style={{height: '75%'}}>
@@ -211,7 +197,7 @@ export default class RefertoSpecialistAdd extends Component {
                   ]}>
                   <Picker
                     mode="dropdown"
-                    iosIcon={<Icon name="arrow-down" />}
+                    iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
                     placeholder="Choose Frequency"
                     placeholderStyle={{color: '#bfc6ea'}}
                     placeholderIconColor="#007aff"
@@ -286,22 +272,6 @@ export default class RefertoSpecialistAdd extends Component {
             </View>
 
             <Loader loading={this.state.isLoading} />
-
-            {/* <View
-                            style={[
-                                CommonStyles.backButtonStyle
-                            ]}>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    this.props.navigation.goBack();
-                                }}>
-                                <Icon
-                                    name="arrow-back"
-                                    type="MaterialIcons"
-                                    style={{ fontSize: 26, color: '#FFF' }}
-                                />
-                            </TouchableOpacity>
-                        </View> */}
           </ImageBackground>
         </View>
       );
@@ -344,7 +314,7 @@ export default class RefertoSpecialistAdd extends Component {
                   ]}>
                   <Picker
                     mode="dropdown"
-                    iosIcon={<Icon name="arrow-down" />}
+                    iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
                     placeholder="Choose Frequency"
                     placeholderStyle={{color: '#bfc6ea'}}
                     placeholderIconColor="#007aff"

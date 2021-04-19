@@ -1,31 +1,21 @@
-import React, {Component} from 'react';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import React, { Component } from 'react';
 import {
   Text,
   View,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
+  TouchableOpacity, 
   ImageBackground,
-  TextInput,
-  StatusBar,
-  ActivityIndicator,
 } from 'react-native';
 import CommonStyles from '../../CommonStyles';
-
-import moment from 'moment';
 import {
   Item,
   Input,
-  Container,
   Picker,
   Icon,
-  Label,
 } from 'native-base';
-
-import {DatePicker, TimePicker} from 'react-native-propel-kit';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import Api from '../../Api';
-import {ViewUtils} from '../../Utils';
+import { ViewUtils } from '../../Utils';
 import Loader from '../../components/Loader';
 
 class Create extends Component {
@@ -40,33 +30,41 @@ class Create extends Component {
       password: '',
       confirmPasword: '',
       drCode: '',
-      dateOfBirth: new Date(),
+      dateOfBirth: '',
       mobile: '',
       personalDetails: {},
     };
   }
 
+  setDate(newDate) {
+    if (!newDate) {
+      newDate = new Date();
+    }
+    this.setState({ dateOfBirth: newDate.toString().substr(4, 12), showDate: false });
+  }
+
+
   _validateField() {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,9})+$/;
-    if (this.state.firstName == '') {
+    if (this.state.firstName.trim() == '') {
       ViewUtils.showToast('First Name Field');
       return false;
-    } else if (this.state.lastName == '') {
+    } else if (this.state.lastName.trim() == '') {
       ViewUtils.showToast('Last Name Field');
       return false;
     } else if (this.state.gender == '') {
       ViewUtils.showToast('Gender Field');
       return false;
-    } else if (this.state.email == '') {
+    } else if (this.state.email.trim() == '') {
       ViewUtils.showToast('Email Field');
       return false;
     } else if (reg.test(this.state.email) === false) {
       ViewUtils.showToast('Please enter valid email.');
       return false;
-    } else if (this.state.password == '') {
+    } else if (this.state.password.trim() == '') {
       ViewUtils.showToast('Password Field');
       return false;
-    } else if (this.state.confirmPasword == '') {
+    } else if (this.state.confirmPasword.trim() == '') {
       ViewUtils.showToast('Confirm Password Field');
       return false;
     } else if (this.state.password != this.state.confirmPasword) {
@@ -75,13 +73,13 @@ class Create extends Component {
     } else if (this.state.dateOfBirth == '') {
       ViewUtils.showToast('DOB cannot be empty');
       return false;
-    } else if (this.state.mobile == '') {
+    } else if (this.state.mobile.trim() == '') {
       ViewUtils.showToast('Mobile Number cannot be empty');
       return false;
-    } else if (this.state.city == '') {
+    } else if (this.state.city.trim() == '') {
       ViewUtils.showToast('City cannot be empty');
       return false;
-    } else if (this.state.drCode == '') {
+    } else if (this.state.drCode.trim() == '') {
       ViewUtils.showToast('Doctor Code cannot be empty');
       return false;
     }
@@ -118,20 +116,38 @@ class Create extends Component {
     };
 
     if (this._validateField()) {
-      this.setState({isLoading: false});
+
+      this.setState({ isLoading: true })
+
       Api.instance()
-        .patientRegister(data, this.state.drCode)
-        .then(response => {
-          ViewUtils.showToast('Registration Successfully!');
-          console.warn(data);
-          this.props.navigation.goBack();
+        .getClients()
+        .then(res => {
+          this.setState({ isLoading: false })
+          let mapEmails = res.map(x => {
+            let emails = x.email
+            return emails
+          })
+          console.log("abcabcabc", mapEmails)
+          var findEmail = (mapEmails.indexOf(data.email) > -1);
+          if (findEmail == true) {
+            console.log("TrueTrueTrueTrueTrueTrue")
+            ViewUtils.showToast("Email already exist")
+
+          } else {
+            Api.instance()
+              .patientRegister(data, this.state.drCode)
+              .then(response => {
+                ViewUtils.showToast('Registration Successfully!');
+                this.props.navigation.goBack();
+              })
+              .catch(err => {
+                ViewUtils.showToast('Doctor Code is Invalid!');
+              })
+              .finally(() => {
+                this.setState({ isLoading: false });
+              });
+          }
         })
-        .catch(err => {
-          ViewUtils.showToast('Doctor Code is Invalid!');
-        })
-        .finally(() => {
-          this.setState({isLoading: false});
-        });
     }
   };
 
@@ -145,7 +161,7 @@ class Create extends Component {
             <View
               style={[
                 CommonStyles.margin,
-                {paddingTop: 30, paddingHorizontal: 10},
+                { paddingTop: 30, paddingHorizontal: 10 },
               ]}>
               <Text
                 style={[
@@ -161,12 +177,12 @@ class Create extends Component {
                 style={[
                   CommonStyles.textSizeNormal,
                   CommonStyles.textColorWhite,
-                  {marginTop: 5},
+                  { marginTop: 5 },
                 ]}>
                 Enter your details to register for Etibb
               </Text>
 
-              <View style={{marginTop: 60}}>
+              <View style={{ marginTop: 60 }}>
                 <View
                   style={[
                     CommonStyles.container,
@@ -177,11 +193,11 @@ class Create extends Component {
                     style={[
                       CommonStyles.container,
                       CommonStyles.loginItemStyle,
-                      {marginRight: 5},
+                      { marginRight: 5 },
                     ]}>
                     <Input
                       value={this.state.firstName}
-                      onChangeText={val => this.setState({firstName: val})}
+                      onChangeText={val => this.setState({ firstName: val })}
                       name="username"
                       placeholder={'First Name*'}
                       placeholderTextColor="#FFF"
@@ -203,11 +219,11 @@ class Create extends Component {
                     style={[
                       CommonStyles.container,
                       CommonStyles.loginItemStyle,
-                      {marginLeft: 5},
+                      { marginLeft: 5 },
                     ]}>
                     <Input
                       value={this.state.lastName}
-                      onChangeText={val => this.setState({lastName: val})}
+                      onChangeText={val => this.setState({ lastName: val })}
                       name="username"
                       placeholder={'Last Name*'}
                       placeholderTextColor="#FFF"
@@ -226,32 +242,36 @@ class Create extends Component {
                 </View>
 
                 <Item regular
-                 style={[
+                  style={[
                     CommonStyles.mt10,
                     CommonStyles.container,
                     CommonStyles.fontRegular,
                     CommonStyles.fontMedium,
                     CommonStyles.loginItemStyle23,
                   ]}>
-                  
-                  <DatePicker
-              
-                    placeholder="Date of Birth"
-                    placeholderTextColor="#FFF"
-                    style={[
-                      CommonStyles.fontMedium,
-                      CommonStyles.textColorWhite,
-                      CommonStyles.textSizeNormal,
-                      CommonStyles.padding13
-                      
-                    ]}
-                  
-                    // initialValue={this.state.startDate}
-                    initialValue={this.state.dateOfBirth}
-                    onChange={date => this.setState({dateOfBirth: date})}
-                    // disabled={false}
-                  />
-                  <Icon name="calendar" style={{color: '#fff', position: 'absolute', right: 5}}/>
+                    <TouchableOpacity style={{ backgroundColor: 'transparent' }} onPress={() => this.setState({ showDate: true })} >
+                        <Text style={[
+                          CommonStyles.fontMedium,
+                          CommonStyles.textColorWhite,
+
+                          CommonStyles.textSizeNormal,
+
+                          , {
+                            marginVertical: 12, marginLeft: 5
+                          }
+                        ]}>
+                          {this.state.dateOfBirth || "Select Date"}
+                        </Text>
+                      </TouchableOpacity>
+                      <DateTimePickerModal
+                        maximumDate={new Date()}
+                        isVisible={this.state.showDate}
+                        mode="date"
+                        headerTextIOS="Date of Birth"
+                        onConfirm={(date) => { this.setDate(date); }}
+                        onCancel={() => { this.setState({ showDate: false }) }}
+                      />
+                  <Icon name="calendar" style={{ color: '#fff', position: 'absolute', right: 5 }} />
                 </Item>
 
                 <Item
@@ -265,37 +285,35 @@ class Create extends Component {
                     CommonStyles.loginItemStyle23,
                   ]}>
                   <Picker
-                    textStyle={{color: '#fff'}}
-                    itemTextStyle={{color: 'red'}}
-                    style={{color: '#fff'}}
-                    itemStyle={{backgroundColor: '#fff'}}
+                    textStyle={{ color: '#fff' }}
+                    itemTextStyle={{ color: '#000' }}
+                    style={{ color: '#fff' }}
+                    itemStyle={{ backgroundColor: '#fff' }}
                     placeholder="Gender*"
-                    placeholderStyle={{color: '#FFF'}}
+                    placeholderStyle={{ color: '#FFF' }}
                     placeholderIconColor="#fff"
                     selectedValue={this.state.gender}
-                    onValueChange={txt => this.setState({gender: txt})}
+                    onValueChange={txt => this.setState({ gender: txt })}
                     style={[
                       CommonStyles.fontMedium,
                       CommonStyles.textColorWhite,
                       CommonStyles.textSizeNormal,
                     ]}
-                    >
-                      
+                  >
                     <Picker.Item
                       color="grey"
                       selected={false}
                       label="Gender"
                       value=""
-                      
                     />
-
                     <Picker.Item label="Male" value="Male" />
                     <Picker.Item label="Female" value="Female" />
                   </Picker>
 
                   <Icon
-                    name="arrow-dropdown"
-                    style={{color: '#fff', position: 'absolute', right: 5}}
+                    name='keyboard-arrow-down'
+                    type='MaterialIcons' 
+                    style={{ color: '#fff', position: 'absolute', right: 5 }}
                   />
                 </Item>
 
@@ -304,7 +322,7 @@ class Create extends Component {
                   style={[CommonStyles.loginItemStyle, CommonStyles.mt10]}>
                   <Input
                     value={this.state.email}
-                    onChangeText={val => this.setState({email: val})}
+                    onChangeText={val => this.setState({ email: val })}
                     placeholder={'Email Address*'}
                     placeholderTextColor="#FFF"
                     returnKeyType="next"
@@ -324,7 +342,7 @@ class Create extends Component {
                   style={[CommonStyles.loginItemStyle, CommonStyles.mt10]}>
                   <Input
                     value={this.state.password}
-                    onChangeText={password => this.setState({password})}
+                    onChangeText={password => this.setState({ password })}
                     secureTextEntry
                     autoCapitalize="none"
                     returnKeyType="done"
@@ -347,7 +365,7 @@ class Create extends Component {
                   style={[CommonStyles.loginItemStyle, CommonStyles.mt10]}>
                   <Input
                     value={this.state.confirmPasword}
-                    onChangeText={val => this.setState({confirmPasword: val})}
+                    onChangeText={val => this.setState({ confirmPasword: val })}
                     secureTextEntry
                     autoCapitalize="none"
                     returnKeyType="done"
@@ -378,7 +396,7 @@ class Create extends Component {
                     placeholderTextColor="#FFF"
                     keyboardType={'number-pad'}
                     value={this.state.mobile}
-                    onChangeText={val => this.setState({mobile: val})}
+                    onChangeText={val => this.setState({ mobile: val })}
                     style={[
                       CommonStyles.fontMedium,
                       CommonStyles.textColorWhite,
@@ -399,7 +417,7 @@ class Create extends Component {
                     placeholder={'City'}
                     placeholderTextColor="#FFF"
                     value={this.state.city}
-                    onChangeText={val => this.setState({city: val})}
+                    onChangeText={val => this.setState({ city: val })}
                     style={[
                       CommonStyles.fontMedium,
                       CommonStyles.textColorWhite,
@@ -413,7 +431,7 @@ class Create extends Component {
                   style={[CommonStyles.loginItemStyle, CommonStyles.mt10]}>
                   <Input
                     value={this.state.drCode}
-                    onChangeText={drCode => this.setState({drCode})}
+                    onChangeText={drCode => this.setState({ drCode })}
                     secureTextEntry={false}
                     autoCapitalize="none"
                     returnKeyType="done"
@@ -428,7 +446,7 @@ class Create extends Component {
                       CommonStyles.textColorWhite,
                       CommonStyles.textSizeNormal,
                     ]}
-                  /> 
+                  />
                 </Item>
               </View>
             </View>
@@ -459,7 +477,7 @@ class Create extends Component {
                 CommonStyles.centerText,
                 CommonStyles.margin,
                 CommonStyles.padding,
-                {opacity: 0.5},
+                { opacity: 0.5 },
               ]}>
               Submit
             </Text>

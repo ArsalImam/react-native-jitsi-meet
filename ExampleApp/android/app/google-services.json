@@ -1,9 +1,9 @@
 {
   "project_info": {
-    "project_number": "719997437676",
-    "firebase_url": "https://telmed-2cd3d.firebaseio.com",
-    "project_id": "telmed-2cd3d",
-    "storage_bucket": "telmed-2cd3d.appspot.com"
+    "project_number": "48716569267",
+    "firebase_url": "https://etibb-20b36-default-rtdb.firebaseio.com",
+    "project_id": "etibb-20b36",
+    "storage_bucket": "etibb-20b36.appspot.com"
   },
   "client": [
     {
@@ -63,16 +63,16 @@
       "client_info": {
         "mobilesdk_app_id": "1:719997437676:android:f345c99e6bff43d72307c9",
         "android_client_info": {
-          "package_name": "com.digitrends.telemedicine"
+          "package_name": "sa.digitrends.etibb"
         }
       },
       "oauth_client": [
         {
-          "client_id": "719997437676-808obj0iol4f6m2sgj7ljtm7s4boavmc.apps.googleusercontent.com",
+          "client_id": "48716569267-0u3ri31s34c5jm28drai0hkjhg399006.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.digitrends.telemedicine",
-            "certificate_hash": "90d2ff41c9bbc7022de30191b035ed00c4b97d30"
+            "package_name": "sa.digitrends.etibb",
+            "certificate_hash": "782f321ecbaf612cf68b242c3c667e57fda908a5"
           }
         },
         {
@@ -299,73 +299,25 @@
           "client_id": "719997437676-nlhhnl6bt8g7jojuc9k6cufcclccpfvd.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.telemedicine",
-            "certificate_hash": "abe916cf106debe9c48ca576af3a62cac8b01c3f"
-          }
-        },
-        {
-          "client_id": "719997437676-ipf7jt67mf7durdp5gqv45ak3ojphg49.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.telemedicine",
+            "package_name": "sa.digitrends.etibb",
             "certificate_hash": "68e0c1d3e38451547ab664427562051c36ae889f"
           }
         },
         {
-          "client_id": "719997437676-ug2ps4lrud0fv7dqg1q7b3tctuf12u18.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.telemedicine",
-            "certificate_hash": "8596e70e86d91f96e873117b3b4683bee7621fd2"
-          }
-        },
-        {
-          "client_id": "719997437676-rhmm3gi614juo65r2k30dg71trukno6v.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.telemedicine",
-            "certificate_hash": "970780324be2826ebb68ac6e2f12f69f8b4dcf83"
-          }
-        },
-        {
-          "client_id": "719997437676-ndoghturol8il21c177b8ufg7jn1a42o.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.telemedicine",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "719997437676-vkl5ujla1i5u6cd5b1lap5qfn6r630fo.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.telemedicine",
-            "certificate_hash": "e0ed1718130790062a663c93a3ed18fe5ba51d90"
-          }
-        },
-        {
-          "client_id": "719997437676-hpnq54dnpjsguhqg5k5jelb1ht7r4poe.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.telemedicine",
-            "certificate_hash": "90d2ff41c9bbc7022de30191b035ed00c4b97d30"
-          }
-        },
-        {
-          "client_id": "719997437676-udrvjishmm27d49odp47fm54cqk3cgmt.apps.googleusercontent.com",
+          "client_id": "48716569267-iplod46bm8sqqtvtlmdo9msi8ht8f9rf.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBb2vgJJgYr5uUzvpPJWQKE4RgGPDtI3FM"
+          "current_key": "AIzaSyBnv8bYMyiIfODgEvk0tNhjuuFxf3aYFtc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "719997437676-udrvjishmm27d49odp47fm54cqk3cgmt.apps.googleusercontent.com",
+              "client_id": "48716569267-iplod46bm8sqqtvtlmdo9msi8ht8f9rf.apps.googleusercontent.com",
               "client_type": 3
             },
             {

@@ -44,7 +44,6 @@ export default class MedicalRecordList extends Component {
     Api.instance()
       .getMedicalRecordList()
       .then(data => {
-        console.warn('=====>', data);
         this.setState({medicalRecordList: data});
       })
       .catch(err => console.log(err))
@@ -65,7 +64,6 @@ export default class MedicalRecordList extends Component {
     Api.instance()
       .addReport(item, this.state.appointmentId)
       .then(response => {
-        console.warn(response);
         this.props.navigation.goBack();
       })
       .catch(err => {})
@@ -87,10 +85,6 @@ export default class MedicalRecordList extends Component {
     }
   }
   render() {
-    console.warn(
-      'this.state.medicalRecordList === ',
-      this.state.medicalRecordList,
-    );
     if (this.state.appointmentId != null) {
       return (
         <View style={{height: '75%'}}>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Container, Header, Content, Form, Item, Input, Label, Picker, Icon } from 'native-base';
-import { Button } from 'native-base';
 import CommonStyles from '../CommonStyles';
 
 class BloodOxygen extends React.Component {
@@ -9,9 +8,7 @@ class BloodOxygen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
             value: '',
-
         };
     }
 
@@ -20,9 +17,6 @@ class BloodOxygen extends React.Component {
     }
  
     render() {
-
-        
-
         return (
             <View style={[CommonStyles.container]}>
                 <Item floatingLabel

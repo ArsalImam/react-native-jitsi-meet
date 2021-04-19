@@ -58,7 +58,6 @@ export default class FCM {
   }
 
   appDesroyed() {
-    console.warn('appDesroyed', 'appDesroyed');
     if (this.notificationListener) {
       this.notificationListener();
       this.notificationOpenedListener();
@@ -66,7 +65,6 @@ export default class FCM {
   }
 
   async createNotificationListeners() {
-    console.warn('createNotificationListeners');
     /*
      * Triggered when a particular notification has been received in foreground
      * */
@@ -80,7 +78,6 @@ export default class FCM {
      * */
     this.notificationOpenedListener = messaging().onNotificationOpenedApp(
       notificationOpen => {
-        console.warn('notificationOpen >>>>', notificationOpen);
         this.onMessage(null, notificationOpen.notification._data);
       },
     );
@@ -90,12 +87,11 @@ export default class FCM {
      * */
     const notificationOpen = await messaging().getInitialNotification();
     if (notificationOpen) {
-      console.warn("notificationOpen >>>>s", notificationOpen )
+      console.log("notificationOpen >>>>s", notificationOpen )
       this.onMessage(null, notificationOpen.data);
     }
 
     messaging().setBackgroundMessageHandler(async remoteMessage => {
-      //console.warn('remoteMessage >>>>', remoteMessage.data.id)
       this.onMessage(null, remoteMessage.data);
     });
 
@@ -109,10 +105,7 @@ export default class FCM {
   }
 
   onMessage(title, body) {
-    console.log('onMessage');
-    console.log(
-      '<><><><><><><><><><><><><><><><><><><body>>>>' + JSON.stringify(body),
-    );
+    console.log('<body>>>>' + JSON.stringify(body));
     if (this.notifyUser) {
       console.log('notifyUser');
       this.notifyUser(title, body);

@@ -9,7 +9,6 @@ export default class WebViewReport extends React.Component {
   render() {
     const {prescribtionUrl} = this.props.route.params;
     console.log(`prescribtionUrl ==========> ${prescribtionUrl}`);
-    console.warn(`prescribtionUrl ==========> ${prescribtionUrl}`);
     return <WebView source={{uri: prescribtionUrl}} />;
   }
 }
