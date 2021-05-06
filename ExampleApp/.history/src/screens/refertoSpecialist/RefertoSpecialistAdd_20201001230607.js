@@ -238,7 +238,7 @@ export default class RefertoSpecialistAdd extends Component {
                     value={this.state.notes}
                     onChangeText={val => this.setState({description: val})}
                     multiline={true}
-                    style={[
+                    onKeyPress={this.handleKeyDown}                    style={[
                       CommonStyles.fontRegular,
                       CommonStyles.textSizeMedium,
                     ]}
@@ -372,7 +372,7 @@ export default class RefertoSpecialistAdd extends Component {
                     value={this.state.notes}
                     onChangeText={val => this.setState({description: val})}
                     multiline={true}
-                    style={[
+                    onKeyPress={this.handleKeyDown}                    style={[
                       CommonStyles.fontRegular,
                       CommonStyles.textSizeMedium,
                     ]}

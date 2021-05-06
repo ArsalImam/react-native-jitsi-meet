@@ -9,6 +9,7 @@ import BloodOxygen from '../../components/BloodOxygen';
 import Api from '../../Api';
 import Loader from '../../components/Loader';
 import {ViewUtils} from '../../Utils';
+import { Keyboard } from 'react-native';
 
 export default class Vital extends Component {
   constructor(props) {
@@ -31,6 +32,12 @@ export default class Vital extends Component {
       };
     }
   }
+
+  handleKeyDown(e) {
+    if(e.nativeEvent.key == "Enter"){
+        Keyboard.dismiss();
+    }
+}
   _selectVitalComponenet = params => {
     switch (params) {
       case 'Blood Glucose':
@@ -62,6 +69,8 @@ export default class Vital extends Component {
         multipleValues: this.state.multipleValues,
       };
     }
+
+  
 
     let childComponentData = null;
     switch (this.state.vitalType) {
@@ -291,7 +300,7 @@ export default class Vital extends Component {
                     value={this.state.notes}
                     onChangeText={val => this.setState({notes: val})}
                     multiline={true}
-                    style={[
+                    onKeyPress={this.handleKeyDown}                    style={[
                       CommonStyles.fontRegular,
                       CommonStyles.textSizeMedium,
                       {marginLeft: 5},
@@ -433,7 +442,7 @@ export default class Vital extends Component {
                     value={this.state.notes}
                     onChangeText={val => this.setState({notes: val})}
                     multiline={true}
-                    style={[
+                    onKeyPress={this.handleKeyDown}                    style={[
                       CommonStyles.fontRegular,
                       CommonStyles.textSizeMedium,
                       {marginLeft: 5},

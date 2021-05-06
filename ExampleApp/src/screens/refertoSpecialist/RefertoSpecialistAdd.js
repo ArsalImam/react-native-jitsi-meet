@@ -25,6 +25,7 @@ import CommonStyles from '../../CommonStyles';
 import Api from '../../Api';
 import Loader from '../../components/Loader';
 import {ViewUtils} from '../../Utils';
+import { Keyboard } from 'react-native';
 
 export default class RefertoSpecialistAdd extends Component {
   constructor(props) {
@@ -74,6 +75,12 @@ export default class RefertoSpecialistAdd extends Component {
         this.setState({isLoading: false});
       });
   }
+
+  handleKeyDown(e) {
+    if(e.nativeEvent.key == "Enter"){
+        Keyboard.dismiss();
+    }
+}
 
   componentDidMount() {
     this._getSpecialists();
@@ -227,7 +234,7 @@ export default class RefertoSpecialistAdd extends Component {
                     value={this.state.notes}
                     onChangeText={val => this.setState({description: val})}
                     multiline={true}
-                    style={[
+                    onKeyPress={this.handleKeyDown}                    style={[
                       CommonStyles.fontRegular,
                       CommonStyles.textSizeMedium,
                     ]}
@@ -344,7 +351,7 @@ export default class RefertoSpecialistAdd extends Component {
                     value={this.state.notes}
                     onChangeText={val => this.setState({description: val})}
                     multiline={true}
-                    style={[
+                    onKeyPress={this.handleKeyDown}                    style={[
                       CommonStyles.fontRegular,
                       CommonStyles.textSizeMedium,
                     ]}
