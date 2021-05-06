@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { sin } from 'react-native-reanimated';
+
 
 const CommonStyles = StyleSheet.create({
   appRedColor: {

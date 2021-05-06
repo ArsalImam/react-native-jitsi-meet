@@ -1,37 +1,22 @@
-import React, {Component} from 'react';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import React, { Component } from 'react';
 import {
-  StyleSheet,
   View,
   TouchableOpacity,
   ImageBackground,
-  ScrollView,
-  StatusBar,
   Platform,
   Image,
 } from 'react-native';
-import {
-  Container,
-  Header,
-  Content,
-  Text,
-  Item,
-  Label,
-  Input,
-  ScrollableTab,
-  Icon,
-  Picker,
-  Form,
-} from 'native-base';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import { Text, Item, Label, Input, Icon, Picker, DatePicker } from 'native-base';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import CommonStyles from '../../CommonStyles';
 import Api from '../../Api';
 import moment from 'moment';
 import Loader from '../../components/Loader';
-import {ViewUtils} from '../../Utils';
-import ImagePicker from 'react-native-image-picker';
-import {Configs} from '../../Configs';
-import {DatePicker} from 'react-native-propel-kit';
-import {Roles} from '../.././Configs';
+import { ViewUtils } from '../../Utils';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { Configs } from '../../Configs';
+import { Roles } from '../.././Configs';
 
 export default class UploadIllustrations extends React.Component {
   constructor() {
@@ -64,7 +49,7 @@ export default class UploadIllustrations extends React.Component {
     if (this.state.imageUrl != '') {
       var options = {
         title: '',
-        customButtons: [{name: 'remove', title: 'Remove Profile Image'}],
+        customButtons: [{ name: 'remove', title: 'Remove Profile Image' }],
         noData: true,
         storageOption: {
           skipBackup: true,
@@ -84,16 +69,12 @@ export default class UploadIllustrations extends React.Component {
       };
     }
 
-    ImagePicker.showImagePicker(options, response => {
-      console.warn('Response = ', response);
-
+    launchImageLibrary(options, response => {
       if (response.didCancel) {
-        console.warn('User Tapped cancel');
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
-        this.setState({imageUrl: ''});
+        this.setState({ imageUrl: '' });
       } else if (response.err) {
-        console.warn('Image Picker Error ', err);
       } else {
         const fileData = new FormData();
         fileData.append('uploadFile', {
@@ -107,7 +88,6 @@ export default class UploadIllustrations extends React.Component {
           Api.instance()
             .uploadImage(fileData)
             .then(response => {
-              console.warn('reponse ==>', JSON.stringify(response));
               this.setState({
                 imageUrl: Api.instance().getMediaUrl(
                   Configs.containers.images,
@@ -116,7 +96,7 @@ export default class UploadIllustrations extends React.Component {
               });
             })
             .catch(err => {
-              console.warn('Error', err);
+              console.log('Error', err);
             });
       }
     });
@@ -145,21 +125,25 @@ export default class UploadIllustrations extends React.Component {
     Api.instance()
       .updateProfile(data)
       .then(response => {
-        console.warn('data =====>', response);
-        // this.props.navigation.navigate('PatientProfile')
         this.props.navigation.goBack();
-
         ViewUtils.showToast('Profile has been updated successfully!');
-        console.warn('dataaaaaaaaaa ===>', data);
       })
       .catch(err => {
         ViewUtils.showToast(err);
-        console.warn('ammad ali =====>', err);
       })
       .finally(() => {
-        this.setState({isLoading: false});
+        this.setState({ isLoading: false });
       });
   };
+
+  setDate(newDate) {
+    if (!newDate) {
+      newDate = new Date();
+    }
+    this.setState({ dateOfBirth: newDate.toString().substr(4, 12), showDate: false });
+    console.warn("this.state.chosenDate", this.state.dateOfBirth)
+  }
+
 
   componentDidMount() {
     Api.instance()
@@ -186,48 +170,48 @@ export default class UploadIllustrations extends React.Component {
 
     Api.instance()
       .getUserRole()
-      .then(role => this.setState({role}));
+      .then(role => this.setState({ role }));
   }
 
   render() {
     const speciality = [
-      {value: 'General Practice', viewValue: 'General Practice'},
-      {value: 'Allergy Medicine', viewValue: 'Allergy Medicine'},
+      { value: 'General Practice', viewValue: 'General Practice' },
+      { value: 'Allergy Medicine', viewValue: 'Allergy Medicine' },
       {
         value: 'Audiological Medicine',
         viewValue: 'Audiological Medicine',
       },
-      {value: 'Acute Medicine', viewValue: 'Acute Medicine'},
-      {value: '  Clinical Genetics', viewValue: '  Clinical Genetics'},
+      { value: 'Acute Medicine', viewValue: 'Acute Medicine' },
+      { value: '  Clinical Genetics', viewValue: '  Clinical Genetics' },
       {
         value: '  Clinical Neurophysiology',
         viewValue: ' Clinical Neurophysiology',
       },
-      {value: ' Cardiology', viewValue: '  Cardiology'},
-      {value: '  Clinical', viewValue: '  Clinical'},
-      {value: '   Pharmacology', viewValue: '   Pharmacology'},
+      { value: ' Cardiology', viewValue: '  Cardiology' },
+      { value: '  Clinical', viewValue: '  Clinical' },
+      { value: '   Pharmacology', viewValue: '   Pharmacology' },
       {
         value: 'Endocrinology and Diabetes',
         viewValue: '  Endocrinology and Diabetes',
       },
-      {value: '    Gastroenterology', viewValue: '   Gastroenterology'},
-      {value: '   General Internal', viewValue: '  General Internal'},
-      {value: '  Medicine', viewValue: ' Medicine'},
+      { value: '    Gastroenterology', viewValue: '   Gastroenterology' },
+      { value: '   General Internal', viewValue: '  General Internal' },
+      { value: '  Medicine', viewValue: ' Medicine' },
       {
         value: '  Genito-Urinary Medicine',
         viewValue: '  Genito-Urinary Medicine',
       },
-      {value: '  Geriatric', viewValue: '  Geriatric'},
-      {value: '  Infectious Diseases', viewValue: '  Infectious Diseases'},
-      {value: '  Intensive Care', viewValue: '  Intensive Care'},
-      {value: '  Medical Oncology', viewValue: '  Medical Oncology'},
-      {value: '  Medical Ophthalmology', viewValue: '  Medical Ophthalmology'},
-      {value: '  Neurology', viewValue: '  Neurology'},
+      { value: '  Geriatric', viewValue: '  Geriatric' },
+      { value: '  Infectious Diseases', viewValue: '  Infectious Diseases' },
+      { value: '  Intensive Care', viewValue: '  Intensive Care' },
+      { value: '  Medical Oncology', viewValue: '  Medical Oncology' },
+      { value: '  Medical Ophthalmology', viewValue: '  Medical Ophthalmology' },
+      { value: '  Neurology', viewValue: '  Neurology' },
       {
         value: '   Occupational Medicine',
         viewValue: '   Occupational Medicine',
       },
-      {value: '   Palliative Medicine', viewValue: '   Palliative Medicine'},
+      { value: '   Palliative Medicine', viewValue: '   Palliative Medicine' },
       {
         value: '   Pharmaceutical medicine',
         viewValue: '   Pharmaceutical medicine',
@@ -236,11 +220,11 @@ export default class UploadIllustrations extends React.Component {
         value: '   Rehabilitation medicine',
         viewValue: '   Rehabilitation medicine',
       },
-      {value: '  Renal', viewValue: '  Renal'},
-      {value: '  medicine - Nephrology', viewValue: '  medicine - Nephrology'},
-      {value: '   Respiratory medicine', viewValue: '   Respiratory medicine'},
-      {value: '  Rheumatology', viewValue: '  Rheumatology'},
-      {value: '  Sport and Exercise', viewValue: '  Sport and Exercise'},
+      { value: '  Renal', viewValue: '  Renal' },
+      { value: '  medicine - Nephrology', viewValue: '  medicine - Nephrology' },
+      { value: '   Respiratory medicine', viewValue: '   Respiratory medicine' },
+      { value: '  Rheumatology', viewValue: '  Rheumatology' },
+      { value: '  Sport and Exercise', viewValue: '  Sport and Exercise' },
       {
         value: '  Obstetrics and Gynaecology',
         viewValue: '  Obstetrics and Gynaecology',
@@ -249,20 +233,20 @@ export default class UploadIllustrations extends React.Component {
         value: '  Ophthalmology - Eye surgery',
         viewValue: '  Ophthalmology - Eye surgery',
       },
-      {value: '  Paediatrics', viewValue: '  Paediatrics'},
-      {value: '   Child Health', viewValue: '   Child Health'},
-      {value: '   Pathology', viewValue: '   Pathology'},
-      {value: '   Chemical Pathology', viewValue: '   Chemical Pathology'},
-      {value: '    Haematology', viewValue: '    Haematology'},
-      {value: '   Histopathology', viewValue: '   Histopathology'},
+      { value: '  Paediatrics', viewValue: '  Paediatrics' },
+      { value: '   Child Health', viewValue: '   Child Health' },
+      { value: '   Pathology', viewValue: '   Pathology' },
+      { value: '   Chemical Pathology', viewValue: '   Chemical Pathology' },
+      { value: '    Haematology', viewValue: '    Haematology' },
+      { value: '   Histopathology', viewValue: '   Histopathology' },
       {
         value: '     Microbiology and Virology',
         viewValue: '     Microbiology and Virology',
       },
-      {value: '     Psychiatry', viewValue: '     Psychiatry'},
-      {value: '    Child Psychiatry', viewValue: '    Child Psychiatry'},
-      {value: '   Pathology', viewValue: '   Pathology'},
-      {value: '    Forensic Psychiatry', viewValue: '    Forensic Psychiatry'},
+      { value: '     Psychiatry', viewValue: '     Psychiatry' },
+      { value: '    Child Psychiatry', viewValue: '    Child Psychiatry' },
+      { value: '   Pathology', viewValue: '   Pathology' },
+      { value: '    Forensic Psychiatry', viewValue: '    Forensic Psychiatry' },
       {
         value: '   General Adult Psychiatry',
         viewValue: '   General Adult Psychiatry',
@@ -275,15 +259,15 @@ export default class UploadIllustrations extends React.Component {
         value: '   Psychiatry of Learning Disability',
         viewValue: '   Psychiatry of Learning Disability',
       },
-      {value: '   Psychotherapy', viewValue: '   Psychotherapy'},
-      {value: '    Public Health', viewValue: '    Public Health'},
-      {value: '   Radiology', viewValue: '   Radiology'},
-      {value: '    Clinical Radiology', viewValue: '    Clinical Radiology'},
+      { value: '   Psychotherapy', viewValue: '   Psychotherapy' },
+      { value: '    Public Health', viewValue: '    Public Health' },
+      { value: '   Radiology', viewValue: '   Radiology' },
+      { value: '    Clinical Radiology', viewValue: '    Clinical Radiology' },
       {
         value: '   Interventional Radiology',
         viewValue: '   Interventional Radiology',
       },
-      {value: '     Nuclear Medicine', viewValue: '     Nuclear Medicine'},
+      { value: '     Nuclear Medicine', viewValue: '     Nuclear Medicine' },
       {
         value: '       Cardiothoracic Surgery',
         viewValue: '       Cardiothoracic Surgery',
@@ -300,8 +284,8 @@ export default class UploadIllustrations extends React.Component {
         value: '    Otolaryngology - Ear Nose Throat',
         viewValue: '   Otolaryngology - Ear Nose Throat',
       },
-      {value: '     Paediatric Surgery', viewValue: '      Paediatric Surgery'},
-      {value: '     Plastic Surgery', viewValue: '   Plastic Surgery'},
+      { value: '     Paediatric Surgery', viewValue: '      Paediatric Surgery' },
+      { value: '     Plastic Surgery', viewValue: '   Plastic Surgery' },
       {
         value: '      Trauma and Orthopaedic Surgery',
         viewValue: '     Trauma and Orthopaedic Surgery',
@@ -310,16 +294,16 @@ export default class UploadIllustrations extends React.Component {
         value: '    Urology - Renal or Kidney Surgery',
         viewValue: '   Urology - Renal or Kidney Surgery',
       },
-      {value: '      Clinical Oncology', viewValue: '      Clinical Oncology'},
+      { value: '      Clinical Oncology', viewValue: '      Clinical Oncology' },
     ];
 
-    const {image} = this.state;
+    const { image } = this.state;
     return (
       <View style={[CommonStyles.container]}>
         <ImageBackground
           style={[CommonStyles.container, CommonStyles.backgroundImage]}
           source={require('../../assets/img/bwback.png')}>
-          <View style={{flex: 2.3}}>
+          <View style={{ flex: 2.3 }}>
             <Text
               style={[CommonStyles.fontRegular, CommonStyles.headingTextStyle]}>
               <Text
@@ -337,19 +321,19 @@ export default class UploadIllustrations extends React.Component {
             </Text>
           </View>
 
-          <View style={{flex: 8, paddingHorizontal: 18, marginTop: 33}}>
+          <View style={{ flex: 8, paddingHorizontal: 18, marginTop: 33 }}>
             <KeyboardAwareScrollView
-              style={[{backgroundColor: '#fff', borderRadius: 5}]}>
+              style={[{ backgroundColor: '#fff', borderRadius: 5 }]}>
               <TouchableOpacity
                 onPress={() => {
                   this.handleChoosePhoto();
                 }}
-                style={{marginVertical: 20, alignSelf: 'center'}}>
+                style={{ marginVertical: 20, alignSelf: 'center' }}>
                 {this.state.imageUrl == '' ? (
                   <Icon
                     name="user-edit"
                     type="FontAwesome5"
-                    style={{fontSize: 70}}
+                    style={{ fontSize: 70 }}
                   />
                 ) : (
                   <View
@@ -366,6 +350,7 @@ export default class UploadIllustrations extends React.Component {
                       style={{
                         width: '100%',
                         height: '100%',
+                        borderRadius: 60,
                         resizeMode: 'cover',
                       }}
                     />
@@ -378,7 +363,7 @@ export default class UploadIllustrations extends React.Component {
                 style={[
                   CommonStyles.container,
                   CommonStyles.itemStyle,
-                  {marginTop: 30},
+                  { marginTop: 30 },
                 ]}>
                 <Picker
                   mode="dropdown"
@@ -386,11 +371,11 @@ export default class UploadIllustrations extends React.Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeMedium,
                   ]}
-                  iosIcon={<Icon name="arrow-down" />}
-                  placeholderStyle={{color: '#bfc6ea'}}
+                  iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
+                  placeholderStyle={{ color: '#bfc6ea' }}
                   placeholderIconColor="#007aff"
                   selectedValue={this.state.salutation}
-                  onValueChange={txt => this.setState({salutation: txt})}>
+                  onValueChange={txt => this.setState({ salutation: txt })}>
                   <Picker.Item
                     color="gray"
                     selected={true}
@@ -409,7 +394,7 @@ export default class UploadIllustrations extends React.Component {
                 style={[
                   CommonStyles.container,
                   CommonStyles.itemStyle,
-                  {marginTop: 20},
+                  { marginTop: 20 },
                 ]}>
                 <Label
                   style={[
@@ -421,7 +406,7 @@ export default class UploadIllustrations extends React.Component {
                 </Label>
                 <Input
                   value={this.state.firstName}
-                  onChangeText={val => this.setState({firstName: val})}
+                  onChangeText={val => this.setState({ firstName: val })}
                   style={[
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeMedium,
@@ -434,7 +419,7 @@ export default class UploadIllustrations extends React.Component {
                 style={[
                   CommonStyles.container,
                   CommonStyles.itemStyle,
-                  {marginTop: 10},
+                  { marginTop: 10 },
                 ]}>
                 <Label
                   style={[
@@ -446,7 +431,7 @@ export default class UploadIllustrations extends React.Component {
                 </Label>
                 <Input
                   value={this.state.lastName}
-                  onChangeText={val => this.setState({lastName: val})}
+                  onChangeText={val => this.setState({ lastName: val })}
                   style={[
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeMedium,
@@ -454,35 +439,46 @@ export default class UploadIllustrations extends React.Component {
                 />
               </Item>
               {this.state.role == Roles.doctor && (
-                <Item
-                  picker
-                  style={[
-                    CommonStyles.container,
-                    CommonStyles.itemStyle,
-                    {marginTop: 30},
-                  ]}>
-                  <Picker
-                    mode="dropdown"
-                    textStyle={[
+                <View>
+                  <Label
+                    style={[
+                      {
+                        marginTop: 10,
+                        marginBottom: -10,
+                        alignSelf: 'center',
+                        width: '88%',
+                      },
                       CommonStyles.fontRegular,
-                      CommonStyles.textSizeMedium,
-                    ]}
-                    iosIcon={<Icon name="arrow-down" />}
-                    placeholderStyle={{color: '#bfc6ea'}}
-                    placeholderIconColor="#007aff"
-                    selectedValue={this.state.speciality}
-                    onValueChange={txt => this.setState({speciality: txt})}>
-                    {speciality.map((item, index) => {
-                      return (
-                        <Picker.Item
-                          label={item.value.trim()}
-                          value={item.value.trim()}
-                          key={index}
-                        />
-                      );
-                    })}
-                  </Picker>
-                </Item>
+                      CommonStyles.textSizeSmall,
+                    ]}>
+                    Speciality
+                  </Label>
+                  <Item
+                    picker
+                    style={[CommonStyles.container, CommonStyles.itemStyle]}>
+                    <Picker
+                      mode="dropdown"
+                      textStyle={[
+                        CommonStyles.fontRegular,
+                        CommonStyles.textSizeMedium,
+                      ]}
+                      iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
+                      placeholderStyle={{ color: '#bfc6ea' }}
+                      placeholderIconColor="#007aff"
+                      selectedValue={this.state.speciality}
+                      onValueChange={txt => this.setState({ speciality: txt })}>
+                      {speciality.map((item, index) => {
+                        return (
+                          <Picker.Item
+                            label={item.value.trim()}
+                            value={item.value.trim()}
+                            key={index}
+                          />
+                        );
+                      })}
+                    </Picker>
+                  </Item>
+                </View>
               )}
 
               <Item
@@ -490,7 +486,7 @@ export default class UploadIllustrations extends React.Component {
                 style={[
                   CommonStyles.container,
                   CommonStyles.itemStyle,
-                  {marginTop: 10},
+                  { marginTop: 10 },
                 ]}>
                 <Label
                   style={[
@@ -502,7 +498,7 @@ export default class UploadIllustrations extends React.Component {
                 </Label>
                 <Input
                   value={this.state.city}
-                  onChangeText={val => this.setState({city: val})}
+                  onChangeText={val => this.setState({ city: val })}
                   style={[
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeMedium,
@@ -515,7 +511,7 @@ export default class UploadIllustrations extends React.Component {
                 style={[
                   CommonStyles.container,
                   CommonStyles.itemStyle,
-                  {marginTop: 10},
+                  { marginTop: 10 },
                 ]}>
                 <Label
                   style={[
@@ -527,7 +523,7 @@ export default class UploadIllustrations extends React.Component {
                 </Label>
                 <Input
                   value={this.state.country}
-                  onChangeText={val => this.setState({country: val})}
+                  onChangeText={val => this.setState({ country: val })}
                   style={[
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeMedium,
@@ -540,7 +536,7 @@ export default class UploadIllustrations extends React.Component {
                 style={[
                   CommonStyles.container,
                   CommonStyles.itemStyle,
-                  {marginTop: 10},
+                  { marginTop: 10 },
                 ]}>
                 <Label
                   style={[
@@ -553,7 +549,7 @@ export default class UploadIllustrations extends React.Component {
                 <Input
                   keyboardType={'number-pad'}
                   value={this.state.mobile}
-                  onChangeText={val => this.setState({mobile: val})}
+                  onChangeText={val => this.setState({ mobile: val })}
                   style={[
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeMedium,
@@ -561,46 +557,81 @@ export default class UploadIllustrations extends React.Component {
                 />
               </Item>
 
-              <Item style={[CommonStyles.container, CommonStyles.itemStyle]}>
-                <DatePicker
-                  placeholder="Date of Birth"
-                  placeholderTextColor="#000000"
-                  intialValue={moment(this.state.dateOfBirth).format('L')}
-                  onChange={val => this.setState({dateOfBirth: val})}
-                />
-                <Icon active name="calendar" style={{marginLeft: 20}} />
-              </Item>
-              {this.state.role == Roles.doctor && (
-                <Item
-                  picker
-                  style={[
-                    CommonStyles.container,
-                    CommonStyles.itemStyle,
-                    {marginTop: 30},
+              <Item style={[CommonStyles.container, CommonStyles.itemStyle, { marginTop: 30, marginBottom: 10 }]}>
+                <TouchableOpacity style={{ backgroundColor: 'transparent' }} onPress={() => this.setState({ showDate: true })} >
+                  <Text style={[
+                    CommonStyles.fontMedium,
+                    CommonStyles.gray,
+
+                    CommonStyles.textSizeNormal,
+
+                    , {
+                      marginBottom: 10
+                    }
                   ]}>
-                  <Picker
-                    mode="dropdown"
-                    textStyle={[
+                    {moment(this.state.dateOfBirth).format("DD/MM/YYYY") || "Select Date"}
+                  </Text>
+                </TouchableOpacity>
+                <DateTimePickerModal
+                  maximumDate={new Date()}
+                  isVisible={this.state.showDate}
+                  mode="date"
+                  headerTextIOS="Date of Birth"
+                  onConfirm={(date) => { this.setDate(date); }}
+                  onCancel={() => { this.setState({ showDate: false }) }}
+                />
+                <Icon
+                  name="calendar"
+                  style={{
+                    color: 'rgb(112, 112, 112)',
+                    position: 'absolute',
+                    right: 5,
+                  }}
+                />
+              </Item>
+
+              {this.state.role == Roles.doctor && (
+                <View>
+                  <Label
+                    style={[
+                      {
+                        marginTop: 10,
+                        marginBottom: -10,
+                        alignSelf: 'center',
+                        width: '88%',
+                      },
                       CommonStyles.fontRegular,
-                      CommonStyles.textSizeMedium,
-                    ]}
-                    iosIcon={<Icon name="arrow-down" />}
-                    placeholderStyle={{color: '#bfc6ea'}}
-                    placeholderIconColor="#007aff"
-                    selectedValue={this.state.isPaymentEnabled}
-                    onValueChange={txt =>
-                      this.setState({isPaymentEnabled: txt})
-                    }>
-                    <Picker.Item
-                      color="gray"
-                      selected={true}
-                      label="Allow payment for Patients?"
-                      value=""
-                    />
-                    <Picker.Item label="Yes" value={true} />
-                    <Picker.Item label="No" value={false} />
-                  </Picker>
-                </Item>
+                      CommonStyles.textSizeSmall,
+                    ]}>
+                    Allow payment for Patients?
+                  </Label>
+                  <Item
+                    picker
+                    style={[CommonStyles.container, CommonStyles.itemStyle]}>
+                    <Picker
+                      mode="dropdown"
+                      textStyle={[
+                        CommonStyles.fontRegular,
+                        CommonStyles.textSizeMedium,
+                      ]}
+                      iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
+                      placeholderStyle={{ color: '#bfc6ea' }}
+                      placeholderIconColor="#007aff"
+                      selectedValue={this.state.isPaymentEnabled}
+                      onValueChange={txt =>
+                        this.setState({ isPaymentEnabled: txt })
+                      }>
+                      <Picker.Item
+                        color="gray"
+                        selected={true}
+                        label="Allow payment for Patients?"
+                        value=""
+                      />
+                      <Picker.Item label="Yes" value={true} />
+                      <Picker.Item label="No" value={false} />
+                    </Picker>
+                  </Item>
+                </View>
               )}
             </KeyboardAwareScrollView>
           </View>
@@ -624,7 +655,7 @@ export default class UploadIllustrations extends React.Component {
               style={[
                 CommonStyles.container,
                 CommonStyles.centerText,
-                {borderRightWidth: 0.5, borderColor: '#cfd2d6'},
+                { borderRightWidth: 0.5, borderColor: '#cfd2d6' },
               ]}>
               <Text
                 style={[
@@ -633,7 +664,7 @@ export default class UploadIllustrations extends React.Component {
                   CommonStyles.centerText,
                   CommonStyles.margin,
                   CommonStyles.padding,
-                  {opacity: 0.5},
+                  { opacity: 0.5 },
                 ]}>
                 UPDATE
               </Text>
@@ -648,7 +679,7 @@ export default class UploadIllustrations extends React.Component {
               <Icon
                 name="arrow-back"
                 type="MaterialIcons"
-                style={{fontSize: 26, color: '#FFF'}}
+                style={{ fontSize: 26, color: '#FFF' }}
               />
             </TouchableOpacity>
           </View>

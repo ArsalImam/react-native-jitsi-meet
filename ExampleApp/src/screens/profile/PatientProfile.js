@@ -1,27 +1,21 @@
 import React, {Component} from 'react';
 import {Icon} from 'native-base';
 import {
-  StyleSheet,
   Text,
   View,
   ImageBackground,
-  StatusBar,
   Image,
   TouchableOpacity,
   Linking,
-  AsyncStorage,
 } from 'react-native';
 import {FlatGrid} from 'react-native-super-grid';
 import CommonStyles from '../../CommonStyles';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import moment from 'moment';
-import {ViewUtils} from '../../Utils';
 import Api from '../../Api';
 import Loader from '../../components/Loader';
-
 import {Roles} from '../.././Configs';
-import {cos} from 'react-native-reanimated';
-import {Button} from 'react-native-paper';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class PatientProfile extends React.Component {
   constructor(props) {
@@ -40,10 +34,7 @@ export default class PatientProfile extends React.Component {
   }
 
   componentWillMount() {
-    AsyncStorage.getItem('@user').then(token => {
-      console.warn('token', token);
-      console.warn('token in willmount', token);
-    });
+    AsyncStorage.getItem('@user').then(token => {});
   }
 
   componentDidMount() {
@@ -52,22 +43,18 @@ export default class PatientProfile extends React.Component {
       Api.instance()
         ._user()
         .then(user => {
-          console.warn('user res === ', user);
           if (user == null) return;
           this.setState({
             user,
           });
-          console.warn('userabc', user);
           if (this.state.user.imageUrl) {
-            console.warn('image image', this.state.user.imageUrl);
             let imageData = new FormData();
             imageData.append('file', {
               url: this.state.user.imageUrl,
               name: this.state.user.imageUrl,
             });
-            console.warn(imageData);
           } else {
-            console.warn('nothing found');
+            console.log('nothing found');
           }
         })
 
@@ -135,15 +122,6 @@ export default class PatientProfile extends React.Component {
                           }}
                           source={require('../../assets/drawable-xxxhdpi/Mask.png')}
                         />
-                        // <Icon 
-                        // style={{
-                        //       width: '100%',
-                        //       height: 105,
-                        //       resizeMode: 'cover',
-                        //     }}
-                        // name="user" type="FontAwesome5"
-                        
-                        // />
                       ) : (
                         <Image
                           style={{
@@ -240,7 +218,6 @@ export default class PatientProfile extends React.Component {
                         ]}>
                         {`Doctor Code: `} {this.state.user.doctorCode}
                         {`\n`}
-                        
                         {`\nCall: `} {this.state.user.personalDetails.mobile}{' '}
                         {`\n`}
                         {`\nAge: `}{' '}
@@ -257,32 +234,25 @@ export default class PatientProfile extends React.Component {
                         }
                         {`\n`}
                         {'\n'}
-                        {`Allow payment for Patients?`} {this.state.user.isPaymentEnabled ? ' Yes' : ' No'}
+                        {`Allow payment for Patients?`}{' '}
+                        {this.state.user.isPaymentEnabled ? ' Yes' : ' No'}
                         {`\n`}
-
                       </Text>
                     )}
-
-                    {/* <TouchableOpacity onPress={()=> this.shareToWhatsApp()}>
-                      <Text>
-                        Share Doctor Code
-                      </Text>
-                    </TouchableOpacity> */}
                   </View>
                 </View>
               </ImageBackground>
               {this.state.role == Roles.doctor && (
                 <TouchableOpacity
                   style={[
-                    
                     CommonStyles.container,
                     CommonStyles.br5,
                     {
-                      flexDirection: 'row', 
+                      flexDirection: 'row',
                       justifyContent: 'center',
                       backgroundColor: '#333333',
                       marginTop: 5,
-                      borderRadius: 25, 
+                      borderRadius: 25,
                       marginTop: -30,
                       marginHorizontal: 25,
                     },
@@ -293,7 +263,12 @@ export default class PatientProfile extends React.Component {
                   <Icon
                     name="whatsapp"
                     type="FontAwesome"
-                    style={{fontSize: 28, color: '#ece5dd', paddingVertical: 12, alignSelf: 'center'}}
+                    style={{
+                      fontSize: 28,
+                      color: '#ece5dd',
+                      paddingVertical: 12,
+                      alignSelf: 'center',
+                    }}
                   />
                   <Text
                     style={[
@@ -309,34 +284,10 @@ export default class PatientProfile extends React.Component {
                 </TouchableOpacity>
               )}
             </View>
-
-            {/* <TouchableOpacity
-              style={[
-                CommonStyles.container,
-                CommonStyles.br5,
-                {
-                  backgroundColor: '#333333',
-                  marginTop: -30,
-                  marginHorizontal: 15,
-                },
-              ]}>
-              <Text
-                style={[
-                  CommonStyles.fontRegular,
-                  CommonStyles.padding,
-                  CommonStyles.margin,
-                  CommonStyles.centerText,
-                  CommonStyles.textColorWhite,
-                ]}>
-                ONLINE CONSULTAION
-              </Text>
-            </TouchableOpacity> */}
             <View style={{paddingHorizontal: 10}}>
               <FlatGrid
                 items={this.state.user.qualifications}
                 style={[CommonStyles.container]}
-                //staticDimension={300}
-                //fixed
                 spacing={15}
                 renderItem={({item, index}) => (
                   <View
@@ -391,7 +342,7 @@ export default class PatientProfile extends React.Component {
               }}>
               <Icon
                 name="edit"
-                type="Feather"
+                type="FontAwesome5"
                 style={{fontSize: 21, color: '#fff'}}
               />
             </TouchableOpacity>

@@ -135,9 +135,9 @@ android {
         applicationId "com.etibb.aamir"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 10
+        versionCode 3
         signingConfig signingConfigs.debug
-        versionName "6.4"
+        versionName "1.2"
     }
     splits {
         abi {
@@ -221,6 +221,7 @@ dependencies {
     //noinspection GradleDynamicVersion
     // implementation project(path: ":react-native-firebase")
     implementation project(path: ":@react-native-firebase_database")
+    
 
     implementation project(':react-native-splash-screen')
     implementation "com.facebook.react:react-native:+"  // From node_modules

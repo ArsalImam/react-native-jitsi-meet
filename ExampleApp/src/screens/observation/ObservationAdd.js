@@ -29,8 +29,6 @@ export default class ObservationAdd extends Component {
                 data: []
             }
         }
-
-        console.warn("this.props.route.params ======= ",this.props.route.params)
     }
 
     _saveObservation = () => {
@@ -55,13 +53,12 @@ export default class ObservationAdd extends Component {
                 .createPrescription(data)
                 .then(response => {
                     this.addToConsultation(data);
-                   // this.props.navigation.replace('DiagnosisList');
                     this.props.route.params.onObservationAdd();
                     this.props.navigation.goBack();
                     ViewUtils.showToast('Observation has been saved successfully!');
                 })
                 .catch(err => {
-                    ViewUtils.showAlert(
+                    ViewUtils.showToast(
                         'Unable to Perform this Action',       
                     );
                     //ViewUtils.showToast(err);
@@ -70,7 +67,7 @@ export default class ObservationAdd extends Component {
                     this.setState({ isLoading: false });
                 });
             }else {
-                ViewUtils.showAlert(
+                ViewUtils.showToast(
                     'Please Provide Observation',       
                 );    
             }
@@ -92,17 +89,15 @@ export default class ObservationAdd extends Component {
                     ViewUtils.showToast('Observation has been saved successfully!');
                 })
                 .catch(err => {
-                    ViewUtils.showAlert(
+                    ViewUtils.showToast(
                         'Unable to Perform this Action',       
                     );
-                    console.warn("error :: ",err)
-                    //ViewUtils.showToast(err);
                 })
                 .finally(() => {
                     this.setState({ isLoading: false });
                 });
             }else {
-                ViewUtils.showAlert(
+                ViewUtils.showToast(
                     'Please Provide Observation',       
                 );    
             }
@@ -121,16 +116,13 @@ export default class ObservationAdd extends Component {
             this.state.patientId,
           )
     
-          .then(response => {
-            console.warn('response', response);
-            
+          .then(response => {            
           })
           .catch(err => {})
           .finally(() => {});
       }
 
     render() {
-        console.warn("this.state.appointmentId === ",this.state.appointmentId)
         if (this.state.appointmentId != null) {
             return (
 

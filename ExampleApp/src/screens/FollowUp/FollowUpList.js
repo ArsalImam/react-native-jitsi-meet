@@ -43,7 +43,6 @@ export default class FollowUpList extends Component {
       Api.instance()
       .getListDuringConsultation('followup',this.state.patientId)
         .then(data => {
-          console.warn('fooloup  =====>', data);
           this.setState({followUpList: data});
         })
         .catch(err => console.log(err))
@@ -55,7 +54,6 @@ export default class FollowUpList extends Component {
       Api.instance()
         .getFollowUpList()
         .then(data => {
-          console.warn('fooloup  =====>', data);
           this.setState({followUpList: data});
         })
         .catch(err => console.log(err))
@@ -69,20 +67,6 @@ export default class FollowUpList extends Component {
   componentDidMount() {
     this._getFollowUpList();
   }
-
-  // componentWillMount() {
-  //     Api.instance().getDiagnosisList()
-  //         .then((data) => {
-  //             console.warn('=====>', data["Diagnosis"])
-  //             this.setState({ diagnosisList: data });
-  //         }
-  //         ).catch(err => console.log(err))
-  //         .finally(() => {
-  //             this.setState({ isLoading: false });
-  //         })
-
-  // }
-
   addFollowUp(item) {
     this.setState({
       disabled: true,
@@ -92,7 +76,6 @@ export default class FollowUpList extends Component {
     Api.instance()
       .addReport(item, this.state.appointmentId, this.state.patientId)
       .then(response => {
-        console.warn('AMMAD', response);
         this.props.navigation.goBack();
       })
       .catch(err => {})
@@ -107,10 +90,7 @@ export default class FollowUpList extends Component {
       }, 5000);
   }
   render() {
-
-    console.warn("followUpList  ---- ",this.state.followUpList)
-
-    if (this.state.appointmentId != null) {
+  if (this.state.appointmentId != null) {
       return (
         <View style={{height: '75%'}}>
           <ImageBackground
@@ -282,7 +262,7 @@ export default class FollowUpList extends Component {
         </View>
       );
     } else {
-        console.warn("asad")
+        console.log("asad")
       return (
         <View style={[CommonStyles.container]}>
           <ImageBackground

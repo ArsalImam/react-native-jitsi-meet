@@ -6,7 +6,8 @@ import {Icon} from 'native-base';
 import {FlatGrid} from 'react-native-super-grid';
 import {CommonActions} from '@react-navigation/native';
 import database from '@react-native-firebase/database';
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+
 import {ViewUtils} from '../../Utils';
 import {
   StyleSheet,
@@ -58,40 +59,17 @@ export default class ChatLogs extends Component {
           return;
         }
         var firebaseEvent1 = appointmentEventObj.val();
-        // if (firebaseEvent1==null)
-        //   return
 
-          if(firebaseEvent1 == null){
-            ViewUtils.showToast('Chat Log is Emty');
-            return 
-          }
-
-
-        console.warn('_user.id === ', _user.id);
-        console.warn('patientId === ', this.props.route.params.patientId);
-        console.warn('data fireabse === ', firebaseEvent1);
-
-        var original_data = Object.keys(
-          // (this.firebaseEvent1: any).conversation
-          firebaseEvent1.conversation,
-        );
-
-        console.warn('original_data === ', original_data);
+        if (firebaseEvent1 == null) {
+          ViewUtils.showToast('Chat Log is Emty');
+          return;
+        }
+        var original_data = Object.keys(firebaseEvent1.conversation);
         this.messages = original_data.map(function(key) {
           return appointmentEventObj.val().conversation[key];
         });
 
         this.setState({messages: this.messages});
-
-        console.warn('this.messages == ', this.messages);
-
-        // this.messages.forEach((data: any) => {
-        //   this.messageArray.push({
-        //     message: data.message,
-        //     userId: data.userId,
-        //     time: data.time,
-        //   });
-        // });
       });
   }
 
@@ -99,18 +77,12 @@ export default class ChatLogs extends Component {
     try {
       return JSON.parse(await AsyncStorage.getItem('@user'));
     } catch (e) {
-      console.warn(e);
+      console.log(e);
     }
   }
 
   _getLogChat(chat) {
-    console.warn('loggsssss');
-    console.warn('chat :: ', chat);
-    console.warn('chat.userId :: ', chat.userId);
-    console.warn('this.state.doctorId :: ', this.state.doctorId);
-
     if (chat.userId == this.state.doctorId) {
-      console.warn('chat.time -- ', chat.time);
       return (
         <View
           style={[CommonStyles.container, {flexDirection: 'row', padding: 12}]}>

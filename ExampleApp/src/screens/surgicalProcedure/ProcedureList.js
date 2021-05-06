@@ -44,7 +44,6 @@ export default class ProcedureList extends Component {
       Api.instance()
       .getListDuringConsultation('surgicalProcedure',this.state.patientId)
         .then(data => {
-          console.warn('=====>', data);
           this.setState({procedureList: data});
         })
         .catch(err => console.log(err))
@@ -56,7 +55,6 @@ export default class ProcedureList extends Component {
       Api.instance()
         .getProcedureList()
         .then(data => {
-          console.warn('=====>', data);
           this.setState({procedureList: data});
         })
         .catch(err => console.log(err))
@@ -81,7 +79,6 @@ export default class ProcedureList extends Component {
     Api.instance()
       .addReport(item, this.state.appointmentId, this.state.patientId)
       .then(response => {
-        console.warn(response);
         this.props.navigation.goBack();
       })
       .catch(err => {})

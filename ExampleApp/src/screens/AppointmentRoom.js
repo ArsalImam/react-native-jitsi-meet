@@ -5,7 +5,6 @@ import JitsiMeet, {JitsiMeetView} from 'react-native-jitsi-meet';
 import Api from '../Api';
 import {Container, Drawer, Button, Icon} from 'native-base';
 import SideBar from '../components/drawer/SideBar';
-import AppHeader from '../components/drawer/AppHeader';
 
 import {
   View,
@@ -38,6 +37,7 @@ export default class AppointmentRoom extends React.Component {
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     const {appointmentId} = this.props.route.params;
+console.log("appointmentId" , appointmentId)
     this.appointmentId = appointmentId;
 
     Api.instance()
@@ -45,8 +45,7 @@ export default class AppointmentRoom extends React.Component {
       .then(user => {
         let _user = JSON.parse(JSON.stringify(user));
         this.setState({role: _user.role});
-        console.warn('user appointment == ', _user);
-
+    
         console.log(`starting conference on url =====> ${appointmentId}`);
 
         const url = `https://conference.etibb.online/${appointmentId}`;
@@ -74,11 +73,11 @@ export default class AppointmentRoom extends React.Component {
     Api.instance()
       .getAppointmentById(appointmentId)
       .then(response => {
-        console.warn("status === ",response.status)
         if (response.status == 'Completed') {
-          console.warn("complete call")
           ViewUtils.showAlert(
-            'Call ended.',       
+            'Call ended.',
+            () => {}, 
+            () => {},      
         );
        clearInterval(this.timer)
           JitsiMeet.endCall();
@@ -94,7 +93,7 @@ export default class AppointmentRoom extends React.Component {
   }
   onConferenceTerminated(nativeEvent) {
     const prescribtionUrl = Api.instance().getUrl(
-      `consultation-reports/getReport?appointmentId=${ this.appointmentId}&prescription=true&auth=1`,
+      `consultation-reports/getReport?appointmentId=${this.appointmentId}&prescription=true&auth=1`,
     );
     /* Conference terminated event */
 

@@ -189,7 +189,9 @@ export default class Routes extends React.Component {
         <Stack.Screen
           name="AppointmentRoom"
           component={AppointmentRoom}
-          options={{headerShown: false}}
+          options={{headerShown: false, 
+          gestureEnabled: false
+          }}
         />
 
         <Stack.Screen
