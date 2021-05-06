@@ -171,7 +171,7 @@ export default class TherapyAdd extends Component {
                                         value={this.state.notes}
                                         onChangeText={val => this.setState({ description: val })}
                                         multiline={true}
-                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
+                    onKeyPress={this.handleKeyDown}                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
                                 </Item>
                             </KeyboardAwareScrollView>
     
@@ -272,7 +272,7 @@ export default class TherapyAdd extends Component {
                                         value={this.state.notes}
                                         onChangeText={val => this.setState({ description: val })}
                                         multiline={true}
-                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
+                    onKeyPress={this.handleKeyDown}                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
                                 </Item>
                             </KeyboardAwareScrollView>
     
