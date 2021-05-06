@@ -363,7 +363,7 @@ export default class CreateClinic extends Component {
                 <Picker
                   mode="dropdown"
                   iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
-                  style={{ width: '92%' }}
+                  style={Platform.OS === 'android' ? {width: '88%', height: 45} : {}}
                   placeholder="Choose Frequency"
                   placeholderStyle={{ color: '#bfc6ea' }}
                   placeholderIconColor="#007aff"
@@ -393,7 +393,7 @@ export default class CreateClinic extends Component {
                 <Picker
                   mode="dropdown"
                   iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
-                  style={{ width: '92%' }}
+                  style={Platform.OS === 'android' ? {width: '88%', height: 45} : {}}
                   placeholder="Choose Frequency"
                   placeholderStyle={{ color: '#bfc6ea' }}
                   placeholderIconColor="#007aff"

@@ -252,6 +252,7 @@ export default class Vital extends Component {
                     mode="dropdown"
                     style={{textAlign: 'left'}}
                     focusable
+                    style={Platform.OS === 'android' ? {width: '88%', height: 45} : {}}
                     iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
                     placeholder="Select Vital Type"
                     placeholderStyle={{color: '#bfc6ea'}}
@@ -391,6 +392,7 @@ export default class Vital extends Component {
                     {paddingTop: 10},
                   ]}>
                   <Picker
+                  style={Platform.OS === 'android' ? {width: '88%', height: 45} : {}}
                     mode="dropdown"
                     style={{textAlign: 'left'}}
                     focusable
@@ -398,6 +400,7 @@ export default class Vital extends Component {
                     placeholder="Select Vital Type"
                     placeholderStyle={{color: '#bfc6ea'}}
                     placeholderIconColor="#007aff"
+                    style={Platform.OS === 'android' ? {width: '88%', height: 45} : {}}
                     selectedValue={this.state.vitalType}
                     onValueChange={val => {
                       this.setState({vitalType: val});
