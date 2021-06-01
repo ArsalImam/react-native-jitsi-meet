@@ -421,6 +421,7 @@ export default class CreateClinic extends Component {
                       alignSelf: 'flex-start'
                     }
                   ]}
+                  style={Platform.OS === 'android' ? {width: '88%', height: 45} : {}}
                   placeholder="Choose Frequency"
                   placeholderStyle={[
                     CommonStyles.fontRegular,
@@ -454,7 +455,7 @@ export default class CreateClinic extends Component {
                 <Picker
                   mode="dropdown"
                   iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
-
+                  style={Platform.OS === 'android' ? {width: '88%', height: 45} : {}}
                   placeholder="Choose Frequency"
                   placeholderStyle={{ color: '#bfc6ea' }}
                   placeholderIconColor="#007aff"

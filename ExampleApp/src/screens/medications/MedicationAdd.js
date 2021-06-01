@@ -6,6 +6,7 @@ import CommonStyles from '../../CommonStyles'
 import Api from '../../Api';
 import Loader from '../../components/Loader';
 import { ViewUtils } from '../../Utils'
+import { Keyboard } from 'react-native';
 
 
 export default class MedicationAdd extends Component {
@@ -33,6 +34,11 @@ export default class MedicationAdd extends Component {
                 description: '',
                 data: []
             }
+        }
+    }
+    handleKeyDown(e) {
+        if(e.nativeEvent.key == "Enter"){
+            Keyboard.dismiss();
         }
     }
     _saveMedication = () => {
@@ -127,7 +133,7 @@ export default class MedicationAdd extends Component {
                                         value={this.state.notes}
                                         onChangeText={val => this.setState({ description: val })}
                                         multiline={true}
-                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
+                    onKeyPress={this.handleKeyDown}                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
                                 </Item>
                             </KeyboardAwareScrollView>
 
@@ -235,7 +241,7 @@ export default class MedicationAdd extends Component {
                                         value={this.state.notes}
                                         onChangeText={val => this.setState({ description: val })}
                                         multiline={true}
-                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
+                    onKeyPress={this.handleKeyDown}                                        style={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]} />
                                 </Item>
                             </KeyboardAwareScrollView>
 

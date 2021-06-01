@@ -70,7 +70,7 @@ export default class VitalAdd extends Component {
                                     <Picker
                                         mode="dropdown"
                                         iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
-
+                                        style={Platform.OS === 'android' ? {width: '88%', height: 45} : {}}
                                         placeholder="Choose Frequency"
                                         placeholderStyle={{ color: '#bfc6ea' }}
                                         placeholderIconColor="#007aff"
@@ -244,7 +244,7 @@ export default class VitalAdd extends Component {
                                     <Picker
                                         mode="dropdown"
                                         iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
-
+                                        style={Platform.OS === 'android' ? {width: '88%', height: 45} : {}}
                                         placeholder="Choose Frequency"
                                         placeholderStyle={{ color: '#bfc6ea' }}
                                         placeholderIconColor="#007aff"

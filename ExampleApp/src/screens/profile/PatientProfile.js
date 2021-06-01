@@ -113,7 +113,7 @@ export default class PatientProfile extends React.Component {
                           width: 105,
                         },
                       ]}>
-                      {this.state.user.imageUrl == '' ? (
+                      {this.state.user.imageUrl == '' ?(
                         <Image
                           style={{
                             width: '100%',
@@ -130,10 +130,12 @@ export default class PatientProfile extends React.Component {
                             resizeMode: 'contain',
                           }}
                           source={{
-                            uri: this.state.user.imageUrl,
+                            uri: this.state.user.imageUrl
+                         
                           }}
                         />
                       )}
+                     
                     </View>
                     <View
                       style={[

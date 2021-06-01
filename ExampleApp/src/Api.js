@@ -107,11 +107,10 @@ export default class Api {
 
   async getClients() {
     let response = await this.client.get(this.getUrl(`Clients`));
-    let responseData = response.data
-    
-    return responseData
-  }
+    let responseData = response.data;
 
+    return responseData;
+  }
 
   async patientRegister(item, drCode) {
     let response = await this.client.get(
@@ -591,8 +590,7 @@ export default class Api {
         console.log(err);
       });
 
-
-      console.log("createPayments", response.data)
+    console.log('createPayments', response.data);
 
     return response.data;
   }
@@ -607,8 +605,8 @@ export default class Api {
     );
     let data = response.data;
     if (data.error) throw data.error.message;
-    
-    console.log("getPatientUtilizedSlots", data)
+
+    console.log('getPatientUtilizedSlots', data);
 
     return data;
   }
@@ -621,7 +619,7 @@ export default class Api {
     let data = response.data;
 
     if (data.error) throw data.error.message;
-    console.log("updatePatientSlots", data)
+    console.log('updatePatientSlots', data);
 
     return data;
   }
@@ -722,6 +720,10 @@ export default class Api {
     let clinic = '';
     let includes = '';
     let wheres = '';
+    let timeNow = '';
+    let todaysTime = new Date();
+    let now = moment(todaysTime).format('YYYY-MM-DD');
+
     if (requirePatient) {
       includes = `&filter[include]=patient`;
     }
@@ -733,9 +735,13 @@ export default class Api {
       wheres = `&filter[where][status]=${status}`;
     }
 
+    if (status == AppointmentStatus.available) {
+      timeNow = `&filter[where][date][gt]=${now}`;
+    }
+
     let response = await this.client.get(
       this.getUrl(
-        `Appointments?filter[where][${id_param}]=${userId}${includes}${clinic}${wheres}${doctorObj}&filter[order]=id%20DESC`,
+        `Appointments?filter[where][${id_param}]=${userId}${includes}${timeNow}${clinic}${wheres}${doctorObj}&filter[order]=id%20DESC`,
       ),
     );
     let data = response.data;

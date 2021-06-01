@@ -62,6 +62,7 @@ class BloodGlucose extends React.Component {
                         iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
                         textStyle={[CommonStyles.fontRegular, CommonStyles.textSizeMedium]}
                         placeholder="Select Meal"
+                        style={Platform.OS === 'android' ? {width: '88%', height: 45} : {}}
                         placeholderStyle={{ color: '#bfc6ea' }}
                         placeholderIconColor="#007aff"
                         selectedValue={this.state.selectedMeal}
@@ -97,6 +98,7 @@ class BloodGlucose extends React.Component {
                         placeholder="Choose Frequency"
                         placeholderStyle={{ color: '#bfc6ea' }}
                         placeholderIconColor="#007aff"
+                        style={Platform.OS === 'android' ? {width: '88%', height: 45} : {}}
                         selectedValue={this.state.selectedMedicine}
                         onValueChange={txt => this.setState({ selectedMedicine: txt })}>
                         <Picker.Item
