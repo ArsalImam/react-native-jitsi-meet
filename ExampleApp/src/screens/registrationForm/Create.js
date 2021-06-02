@@ -22,6 +22,7 @@ class Create extends Component {
       drCode: '',
       dateOfBirth: '',
       mobile: '',
+      city: '',
       personalDetails: {},
     };
   }
@@ -44,6 +45,9 @@ class Create extends Component {
     } else if (this.state.lastName.trim() == '') {
       ViewUtils.showToast('Last Name Field');
       return false;
+    } else if (this.state.dateOfBirth == '') {
+      ViewUtils.showToast('DOB cannot be empty');
+      return false;
     } else if (this.state.gender == '') {
       ViewUtils.showToast('Gender Field');
       return false;
@@ -61,9 +65,6 @@ class Create extends Component {
       return false;
     } else if (this.state.password != this.state.confirmPasword) {
       ViewUtils.showToast('Password and Confirm Password dont match');
-      return false;
-    } else if (this.state.dateOfBirth == '') {
-      ViewUtils.showToast('DOB cannot be empty');
       return false;
     } else if (this.state.mobile.trim() == '') {
       ViewUtils.showToast('Mobile Number cannot be empty');

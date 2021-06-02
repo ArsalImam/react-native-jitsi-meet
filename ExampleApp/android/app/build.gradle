@@ -135,9 +135,9 @@ android {
         applicationId "sa.digitrends.etibb"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 4
+        versionCode 5
         signingConfig signingConfigs.debug
-        versionName "1.3"
+        versionName "1.4"
     }
     splits {
         abi {
@@ -249,7 +249,7 @@ dependencies {
       exclude group: 'com.facebook.react',module:'react-native-sound'
       exclude group: 'com.facebook.react',module:'react-native-webview'
     //   exclude group: 'com.facebook.react',module:'react-native-linear-gradient'
-    //   exclude group: 'com.facebook.react',module:'react-native-community-async-storage'
+     exclude group: 'com.facebook.react',module:'react-native-community-async-storage'
     }
 
 
