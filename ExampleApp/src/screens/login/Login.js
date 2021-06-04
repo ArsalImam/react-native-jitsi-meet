@@ -30,20 +30,33 @@ class Login extends Component {
     this.setState({ showLoader: true });
   };
 
-  componentDidMount() { }
+  componentDidMount() {
 
-  componentWillMount() {
     AsyncStorage.getItem('@user').then(token => {
       console.log('token', token);
       if (token) {
-        console.log('token', token);
+        console.log('token =====>', token);
         this.props.navigation.replace('MyDrawer');
    
       } else {
         console.log('error', error);
       }
     });
-  }
+
+   }
+
+  // componentWillMount() {
+    // AsyncStorage.getItem('@user').then(token => {
+    //   console.log('token', token);
+    //   if (token) {
+    //     console.log('token =====>', token);
+    //     this.props.navigation.replace('MyDrawer');
+   
+    //   } else {
+    //     console.log('error', error);
+    //   }
+    // });
+  // }
   _submitForm = () => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,9})+$/;
     if(this.state.email.trim() == '' && this.state.password.trim() == ''){
