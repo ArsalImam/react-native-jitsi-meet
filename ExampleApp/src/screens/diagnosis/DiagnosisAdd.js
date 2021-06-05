@@ -26,6 +26,7 @@ import Api from '../../Api';
 import Loader from '../../components/Loader';
 import {ViewUtils} from '../../Utils';
 import {FlatGrid} from 'react-native-super-grid';
+import { Keyboard } from 'react-native';
 
 export default class DiagnosisAdd extends Component {
   constructor(props) {
@@ -65,6 +66,12 @@ export default class DiagnosisAdd extends Component {
   componentDidMount() {
     this._getMedicationList();
   }
+  handleKeyDown(e) {
+    if(e.nativeEvent.key == "Enter"){
+        Keyboard.dismiss();
+    }
+}
+
 
   setSearchText(text) {
     this.setState({isLoading: true});
@@ -251,6 +258,7 @@ export default class DiagnosisAdd extends Component {
                     value={this.state.notes}
                     onChangeText={val => this.setState({description: val})}
                     multiline={true}
+                    onKeyPress={this.handleKeyDown}               
                     style={[
                       CommonStyles.fontRegular,
                       CommonStyles.textSizeMedium,
@@ -387,6 +395,7 @@ export default class DiagnosisAdd extends Component {
                     value={this.state.notes}
                     onChangeText={val => this.setState({description: val})}
                     multiline={true}
+                    onKeyPress={this.handleKeyDown}    
                     style={[
                       CommonStyles.fontRegular,
                       CommonStyles.textSizeMedium,

@@ -41,6 +41,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    if (!__DEV__) console.log = () => null
     FCM.instance().appInit();
     RealtimeDatabase.instance().appInit();
     SplashScreen.hide();

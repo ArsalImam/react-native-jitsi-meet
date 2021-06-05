@@ -11,7 +11,6 @@ import moment from 'moment';
 import {ViewUtils} from '../../Utils';
 import AsyncStorage from '@react-native-community/async-storage';
 
-
 export default class BookingList extends Component {
   state = {
     appointments: [],
@@ -42,6 +41,7 @@ export default class BookingList extends Component {
       .getMyAppointments(AppointmentStatus.available, true, true)
       .then(appointments => {
         this.setState({appointments});
+   console.log("this.state.appointment ====>",this.state.appointment,"<=========this.state.appointment" )
       })
       .catch(err => {
         console.log('erororor  :: ', err);
@@ -95,6 +95,22 @@ export default class BookingList extends Component {
                     Api.instance()
                       .getUserRole()
                       .then(role => {
+                        let timeNow = new Date().getTime();
+                        let appointmentTime = moment(item.date).unix() * 1000;
+                        console.log(
+                          'get time',
+                          timeNow,
+                          ' + ',
+                          appointmentTime,
+                        );
+
+                        if (appointmentTime < timeNow) {
+                          ViewUtils.showToast(
+                            'Appointment time has been Passed',
+                          );
+                          return;
+                        }
+
                         if (role === Roles.patient) {
                           this._createAppointment(
                             item.id,
@@ -307,12 +323,11 @@ export default class BookingList extends Component {
           'Do you want to create appointment?',
           () => {
             if (isPaymentEnabled) {
-
               Api.instance()
                 .getPatientUtilizedSlots(userId)
                 .then(res => {
                   console.log('tetstststsres', res);
-                  if (!res[0] ) {
+                  if (!res[0]) {
                     that.props.navigation.navigate('PaymentAlert', {
                       user: userId,
                       appointmentId: appointmentId,

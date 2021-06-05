@@ -61,7 +61,7 @@ export default class ChatLogs extends Component {
         var firebaseEvent1 = appointmentEventObj.val();
 
         if (firebaseEvent1 == null) {
-          ViewUtils.showToast('Chat Log is Emty');
+          ViewUtils.showToast('Chat Log is Empty');
           return;
         }
         var original_data = Object.keys(firebaseEvent1.conversation);

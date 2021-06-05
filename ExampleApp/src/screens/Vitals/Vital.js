@@ -9,6 +9,7 @@ import BloodOxygen from '../../components/BloodOxygen';
 import Api from '../../Api';
 import Loader from '../../components/Loader';
 import {ViewUtils} from '../../Utils';
+import { Keyboard } from 'react-native';
 
 export default class Vital extends Component {
   constructor(props) {
@@ -31,6 +32,12 @@ export default class Vital extends Component {
       };
     }
   }
+
+  handleKeyDown(e) {
+    if(e.nativeEvent.key == "Enter"){
+        Keyboard.dismiss();
+    }
+}
   _selectVitalComponenet = params => {
     switch (params) {
       case 'Blood Glucose':
@@ -62,6 +69,8 @@ export default class Vital extends Component {
         multipleValues: this.state.multipleValues,
       };
     }
+
+  
 
     let childComponentData = null;
     switch (this.state.vitalType) {
@@ -252,6 +261,7 @@ export default class Vital extends Component {
                     mode="dropdown"
                     style={{textAlign: 'left'}}
                     focusable
+                    style={Platform.OS === 'android' ? {width: '88%', height: 45} : {}}
                     iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
                     placeholder="Select Vital Type"
                     placeholderStyle={{color: '#bfc6ea'}}
@@ -291,7 +301,7 @@ export default class Vital extends Component {
                     value={this.state.notes}
                     onChangeText={val => this.setState({notes: val})}
                     multiline={true}
-                    style={[
+                    onKeyPress={this.handleKeyDown}                    style={[
                       CommonStyles.fontRegular,
                       CommonStyles.textSizeMedium,
                       {marginLeft: 5},
@@ -391,6 +401,7 @@ export default class Vital extends Component {
                     {paddingTop: 10},
                   ]}>
                   <Picker
+                  style={Platform.OS === 'android' ? {width: '88%', height: 45} : {}}
                     mode="dropdown"
                     style={{textAlign: 'left'}}
                     focusable
@@ -398,6 +409,7 @@ export default class Vital extends Component {
                     placeholder="Select Vital Type"
                     placeholderStyle={{color: '#bfc6ea'}}
                     placeholderIconColor="#007aff"
+                    style={Platform.OS === 'android' ? {width: '88%', height: 45} : {}}
                     selectedValue={this.state.vitalType}
                     onValueChange={val => {
                       this.setState({vitalType: val});
@@ -433,7 +445,7 @@ export default class Vital extends Component {
                     value={this.state.notes}
                     onChangeText={val => this.setState({notes: val})}
                     multiline={true}
-                    style={[
+                    onKeyPress={this.handleKeyDown}                    style={[
                       CommonStyles.fontRegular,
                       CommonStyles.textSizeMedium,
                       {marginLeft: 5},

@@ -363,7 +363,7 @@ export default class CreateClinic extends Component {
                 <Picker
                   mode="dropdown"
                   iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
-                  style={{ width: '92%' }}
+                  style={Platform.OS === 'android' ? {width: '88%', height: 45} : {}}
                   placeholder="Choose Frequency"
                   placeholderStyle={{ color: '#bfc6ea' }}
                   placeholderIconColor="#007aff"
@@ -376,7 +376,7 @@ export default class CreateClinic extends Component {
                     value=""
                   />
 
-                  <Picker.Item label="One Off" value="172799000" />
+                  <Picker.Item label="Alternate Day" value="172799000" />
                   <Picker.Item label="Every Week" value="604799000" />
                   <Picker.Item label="Alternate Week" value="1209599000" />
                   <Picker.Item label="Every Day" value="86399000" />
@@ -393,7 +393,7 @@ export default class CreateClinic extends Component {
                 <Picker
                   mode="dropdown"
                   iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
-                  style={{ width: '92%' }}
+                  style={Platform.OS === 'android' ? {width: '88%', height: 45} : {}}
                   placeholder="Choose Frequency"
                   placeholderStyle={{ color: '#bfc6ea' }}
                   placeholderIconColor="#007aff"

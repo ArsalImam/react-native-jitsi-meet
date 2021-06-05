@@ -42,8 +42,8 @@ export default class Api {
 
   async login(email: string, password: string) {
     let response = await this.client.post(
-      this.getUrl('Clients/login?include=user'),
-      { email, password },
+      this.getUrl('Clients/AuthLogin?include=user'),
+      { emailOrPhone: email, password },
       this.getHeaders(),
     );
     let authData = response.data;
@@ -108,11 +108,10 @@ export default class Api {
 
   async getClients() {
     let response = await this.client.get(this.getUrl(`Clients`));
-    let responseData = response.data
+    let responseData = response.data;
 
-    return responseData
+    return responseData;
   }
-
 
   async patientRegister(item, drCode) {
     let response = await this.client.get(
@@ -608,7 +607,7 @@ export default class Api {
     let data = response.data;
 
     if (data.error) throw data.error.message;
-    console.log("updatePatientSlots", data)
+    console.log('updatePatientSlots', data);
 
     return data;
   }
@@ -709,6 +708,10 @@ export default class Api {
     let clinic = '';
     let includes = '';
     let wheres = '';
+    let timeNow = '';
+    let todaysTime = new Date();
+    let now = moment(todaysTime).format('YYYY-MM-DD h:mm a');
+    console.log("nownownownownow", now)
     if (requirePatient) {
       includes = `&filter[include]=patient`;
     }
@@ -720,9 +723,13 @@ export default class Api {
       wheres = `&filter[where][status]=${status}`;
     }
 
+    if (status == AppointmentStatus.available) {
+      timeNow = `&filter[where][date][gt]=${now}`;
+    }
+
     let response = await this.client.get(
       this.getUrl(
-        `Appointments?filter[where][${id_param}]=${userId}${includes}${clinic}${wheres}${doctorObj}&filter[order]=id%20DESC`,
+        `Appointments?filter[where][${id_param}]=${userId}${includes}${timeNow}${clinic}${wheres}${doctorObj}&filter[order]=id%20DESC`,
       ),
     );
     let data = response.data;

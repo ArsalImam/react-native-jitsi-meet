@@ -25,6 +25,7 @@ import CommonStyles from '../../CommonStyles';
 import Api from '../../Api';
 import Loader from '../../components/Loader';
 import {ViewUtils} from '../../Utils';
+import { Keyboard } from 'react-native';
 
 export default class TherapyAdd extends Component {
   constructor(props) {
@@ -47,6 +48,13 @@ export default class TherapyAdd extends Component {
       };
     }
   }
+
+  handleKeyDown(e) {
+    if(e.nativeEvent.key == "Enter"){
+        Keyboard.dismiss();
+    }
+}
+
 
   _saveTherapy = () => {
     if (this.state.appointmentId != null) {
@@ -189,7 +197,7 @@ export default class TherapyAdd extends Component {
                     value={this.state.notes}
                     onChangeText={val => this.setState({description: val})}
                     multiline={true}
-                    style={[
+                    onKeyPress={this.handleKeyDown}                    style={[
                       CommonStyles.fontRegular,
                       CommonStyles.textSizeMedium,
                     ]}
@@ -325,7 +333,7 @@ export default class TherapyAdd extends Component {
                     value={this.state.notes}
                     onChangeText={val => this.setState({description: val})}
                     multiline={true}
-                    style={[
+                    onKeyPress={this.handleKeyDown}                    style={[
                       CommonStyles.fontRegular,
                       CommonStyles.textSizeMedium,
                     ]}

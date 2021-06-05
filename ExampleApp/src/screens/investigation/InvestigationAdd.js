@@ -26,6 +26,7 @@ import Api from '../../Api';
 import Loader from '../../components/Loader';
 import {ViewUtils} from '../../Utils';
 import { FlatGrid} from 'react-native-super-grid'
+import { Keyboard } from 'react-native';
 
 export default class InvestigationAdd extends Component {
   constructor(props) {
@@ -48,6 +49,13 @@ export default class InvestigationAdd extends Component {
       };
     }
   }
+
+
+  handleKeyDown(e) {
+    if(e.nativeEvent.key == "Enter"){
+        Keyboard.dismiss();
+    }
+}
 
   _getMedicationList() {
     this.setState({isLoading: true});
@@ -254,7 +262,7 @@ export default class InvestigationAdd extends Component {
                     value={this.state.notes}
                     onChangeText={val => this.setState({description: val})}
                     multiline={true}
-                    style={[
+                    onKeyPress={this.handleKeyDown}                    style={[
                       CommonStyles.fontRegular,
                       CommonStyles.textSizeMedium,
                     ]}
@@ -374,7 +382,7 @@ export default class InvestigationAdd extends Component {
                     value={this.state.notes}
                     onChangeText={val => this.setState({description: val})}
                     multiline={true}
-                    style={[
+                    onKeyPress={this.handleKeyDown}                    style={[
                       CommonStyles.fontRegular,
                       CommonStyles.textSizeMedium,
                     ]}

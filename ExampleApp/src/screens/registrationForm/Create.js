@@ -1,22 +1,13 @@
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import React, { Component } from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity, 
-  ImageBackground,
-} from 'react-native';
+import { Text, View, TouchableOpacity, ImageBackground } from 'react-native';
 import CommonStyles from '../../CommonStyles';
-import {
-  Item,
-  Input,
-  Picker,
-  Icon,
-} from 'native-base';
+import { Item, Input, Picker, Icon } from 'native-base';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import Api from '../../Api';
 import { ViewUtils } from '../../Utils';
 import Loader from '../../components/Loader';
+import { Platform } from 'react-native';
 
 class Create extends Component {
   constructor(props) {
@@ -32,6 +23,7 @@ class Create extends Component {
       drCode: '',
       dateOfBirth: '',
       mobile: '',
+      city: '',
       personalDetails: {},
     };
   }
@@ -40,9 +32,11 @@ class Create extends Component {
     if (!newDate) {
       newDate = new Date();
     }
-    this.setState({ dateOfBirth: newDate.toString().substr(4, 12), showDate: false });
+    this.setState({
+      dateOfBirth: newDate.toString().substr(4, 12),
+      showDate: false,
+    });
   }
-
 
   _validateField() {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,9})+$/;
@@ -51,6 +45,9 @@ class Create extends Component {
       return false;
     } else if (this.state.lastName.trim() == '') {
       ViewUtils.showToast('Last Name Field');
+      return false;
+    } else if (this.state.dateOfBirth == '') {
+      ViewUtils.showToast('DOB cannot be empty');
       return false;
     } else if (this.state.gender == '') {
       ViewUtils.showToast('Gender Field');
@@ -69,9 +66,6 @@ class Create extends Component {
       return false;
     } else if (this.state.password != this.state.confirmPasword) {
       ViewUtils.showToast('Password and Confirm Password dont match');
-      return false;
-    } else if (this.state.dateOfBirth == '') {
-      ViewUtils.showToast('DOB cannot be empty');
       return false;
     } else if (this.state.mobile.trim() == '') {
       ViewUtils.showToast('Mobile Number cannot be empty');
@@ -116,23 +110,21 @@ class Create extends Component {
     };
 
     if (this._validateField()) {
-
-      this.setState({ isLoading: true })
+      this.setState({ isLoading: true });
 
       Api.instance()
         .getClients()
         .then(res => {
-          this.setState({ isLoading: false })
+          this.setState({ isLoading: false });
           let mapEmails = res.map(x => {
-            let emails = x.email
-            return emails
-          })
-          console.log("abcabcabc", mapEmails)
-          var findEmail = (mapEmails.indexOf(data.email) > -1);
+            let emails = x.email;
+            return emails;
+          });
+          console.log('abcabcabc', mapEmails);
+          var findEmail = mapEmails.indexOf(data.email) > -1;
           if (findEmail == true) {
-            console.log("TrueTrueTrueTrueTrueTrue")
-            ViewUtils.showToast("Email already exist")
-
+            console.log('TrueTrueTrueTrueTrueTrue');
+            ViewUtils.showToast('Email already exist');
           } else {
             Api.instance()
               .patientRegister(data, this.state.drCode)
@@ -141,13 +133,14 @@ class Create extends Component {
                 this.props.navigation.goBack();
               })
               .catch(err => {
+                console.log("err" ,err)
                 ViewUtils.showToast('Doctor Code is Invalid!');
               })
               .finally(() => {
                 this.setState({ isLoading: false });
               });
           }
-        })
+        });
     }
   };
 
@@ -241,7 +234,8 @@ class Create extends Component {
                   </Item>
                 </View>
 
-                <Item regular
+                <Item
+                  regular
                   style={[
                     CommonStyles.mt10,
                     CommonStyles.container,
@@ -249,29 +243,41 @@ class Create extends Component {
                     CommonStyles.fontMedium,
                     CommonStyles.loginItemStyle23,
                   ]}>
-                    <TouchableOpacity style={{ backgroundColor: 'transparent' }} onPress={() => this.setState({ showDate: true })} >
-                        <Text style={[
-                          CommonStyles.fontMedium,
-                          CommonStyles.textColorWhite,
+                  <TouchableOpacity
+                    style={{ backgroundColor: 'transparent' }}
+                    onPress={() => this.setState({ showDate: true })}>
+                    <Text
+                      style={[
+                        CommonStyles.fontMedium,
+                        CommonStyles.textColorWhite,
 
-                          CommonStyles.textSizeNormal,
+                        CommonStyles.textSizeNormal,
 
-                          , {
-                            marginVertical: 12, marginLeft: 5
-                          }
-                        ]}>
-                          {this.state.dateOfBirth || "Select Date"}
-                        </Text>
-                      </TouchableOpacity>
-                      <DateTimePickerModal
-                        maximumDate={new Date()}
-                        isVisible={this.state.showDate}
-                        mode="date"
-                        headerTextIOS="Date of Birth"
-                        onConfirm={(date) => { this.setDate(date); }}
-                        onCancel={() => { this.setState({ showDate: false }) }}
-                      />
-                  <Icon name="calendar" style={{ color: '#fff', position: 'absolute', right: 5 }} />
+                        ,
+                        {
+                          marginVertical: 12,
+                          marginLeft: 5,
+                        },
+                      ]}>
+                      {this.state.dateOfBirth || 'Select Date'}
+                    </Text>
+                  </TouchableOpacity>
+                  <DateTimePickerModal
+                    maximumDate={new Date()}
+                    isVisible={this.state.showDate}
+                    mode="date"
+                    headerTextIOS="Date of Birth"
+                    onConfirm={date => {
+                      this.setDate(date);
+                    }}
+                    onCancel={() => {
+                      this.setState({ showDate: false });
+                    }}
+                  />
+                  <Icon
+                    name="calendar"
+                    style={{ color: '#fff', position: 'absolute', right: 5 }}
+                  />
                 </Item>
 
                 <Item
@@ -287,7 +293,6 @@ class Create extends Component {
                   <Picker
                     textStyle={{ color: '#fff' }}
                     itemTextStyle={{ color: '#000' }}
-                    style={{ color: '#fff' }}
                     itemStyle={{ backgroundColor: '#fff' }}
                     placeholder="Gender*"
                     placeholderStyle={{ color: '#FFF' }}
@@ -295,11 +300,13 @@ class Create extends Component {
                     selectedValue={this.state.gender}
                     onValueChange={txt => this.setState({ gender: txt })}
                     style={[
+                      Platform.OS === 'android'
+                        ? { width: '80%', height: 45 }
+                        : {},
                       CommonStyles.fontMedium,
                       CommonStyles.textColorWhite,
                       CommonStyles.textSizeNormal,
-                    ]}
-                  >
+                    ]}>
                     <Picker.Item
                       color="grey"
                       selected={false}
@@ -309,12 +316,15 @@ class Create extends Component {
                     <Picker.Item label="Male" value="Male" />
                     <Picker.Item label="Female" value="Female" />
                   </Picker>
+                  {Platform.OS == "ios" &&
 
-                  <Icon
-                    name='keyboard-arrow-down'
-                    type='MaterialIcons' 
-                    style={{ color: '#fff', position: 'absolute', right: 5 }}
-                  />
+                    <Icon
+                      name="keyboard-arrow-down"
+                      type="MaterialIcons"
+                      style={{ color: '#fff', position: 'absolute', right: 5 }}
+                    />
+
+                  }
                 </Item>
 
                 <Item

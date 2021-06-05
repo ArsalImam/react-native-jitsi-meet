@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import {
   View,
-  TouchableOpacity,
+  TouchableOpacity,Button,
   ImageBackground,
 } from 'react-native';
 import {

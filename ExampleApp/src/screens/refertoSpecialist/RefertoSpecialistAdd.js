@@ -25,6 +25,7 @@ import CommonStyles from '../../CommonStyles';
 import Api from '../../Api';
 import Loader from '../../components/Loader';
 import {ViewUtils} from '../../Utils';
+import { Keyboard } from 'react-native';
 
 export default class RefertoSpecialistAdd extends Component {
   constructor(props) {
@@ -74,6 +75,12 @@ export default class RefertoSpecialistAdd extends Component {
         this.setState({isLoading: false});
       });
   }
+
+  handleKeyDown(e) {
+    if(e.nativeEvent.key == "Enter"){
+        Keyboard.dismiss();
+    }
+}
 
   componentDidMount() {
     this._getSpecialists();
@@ -196,8 +203,15 @@ export default class RefertoSpecialistAdd extends Component {
                     {marginVertical: 10, paddingTop: 10},
                   ]}>
                   <Picker
+                    style={
+                      Platform.OS === 'android'
+                        ? {width: '88%', height: 45}
+                        : {}
+                    }
                     mode="dropdown"
-                    iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
+                    iosIcon={
+                      <Icon name="keyboard-arrow-down" type="MaterialIcons" />
+                    }
                     placeholder="Choose Frequency"
                     placeholderStyle={{color: '#bfc6ea'}}
                     placeholderIconColor="#007aff"
@@ -227,7 +241,7 @@ export default class RefertoSpecialistAdd extends Component {
                     value={this.state.notes}
                     onChangeText={val => this.setState({description: val})}
                     multiline={true}
-                    style={[
+                    onKeyPress={this.handleKeyDown}                    style={[
                       CommonStyles.fontRegular,
                       CommonStyles.textSizeMedium,
                     ]}
@@ -314,7 +328,14 @@ export default class RefertoSpecialistAdd extends Component {
                   ]}>
                   <Picker
                     mode="dropdown"
-                    iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
+                    style={
+                      Platform.OS === 'android'
+                        ? {width: '88%', height: 45}
+                        : {}
+                    }
+                    iosIcon={
+                      <Icon name="keyboard-arrow-down" type="MaterialIcons" />
+                    }
                     placeholder="Choose Frequency"
                     placeholderStyle={{color: '#bfc6ea'}}
                     placeholderIconColor="#007aff"
@@ -344,7 +365,7 @@ export default class RefertoSpecialistAdd extends Component {
                     value={this.state.notes}
                     onChangeText={val => this.setState({description: val})}
                     multiline={true}
-                    style={[
+                    onKeyPress={this.handleKeyDown}                    style={[
                       CommonStyles.fontRegular,
                       CommonStyles.textSizeMedium,
                     ]}

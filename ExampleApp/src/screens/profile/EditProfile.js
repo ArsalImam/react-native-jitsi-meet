@@ -371,6 +371,7 @@ export default class UploadIllustrations extends React.Component {
                     CommonStyles.fontRegular,
                     CommonStyles.textSizeMedium,
                   ]}
+                  style={Platform.OS === 'android' ? {width: '88%', height: 45} : {}}
                   iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
                   placeholderStyle={{ color: '#bfc6ea' }}
                   placeholderIconColor="#007aff"
@@ -462,6 +463,7 @@ export default class UploadIllustrations extends React.Component {
                         CommonStyles.fontRegular,
                         CommonStyles.textSizeMedium,
                       ]}
+                      style={Platform.OS === 'android' ? {width: '88%', height: 45} : {}}
                       iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
                       placeholderStyle={{ color: '#bfc6ea' }}
                       placeholderIconColor="#007aff"
@@ -614,6 +616,7 @@ export default class UploadIllustrations extends React.Component {
                         CommonStyles.fontRegular,
                         CommonStyles.textSizeMedium,
                       ]}
+                      style={Platform.OS === 'android' ? {width: '88%', height: 45} : {}}
                       iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
                       placeholderStyle={{ color: '#bfc6ea' }}
                       placeholderIconColor="#007aff"
