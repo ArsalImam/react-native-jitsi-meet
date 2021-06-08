@@ -103,32 +103,6 @@ class Login extends Component {
   render() {
     return (
       <View style={[CommonStyles.container]}>
-        <View
-          style={[
-            CommonStyles.horizontalContainer,
-            {
-              justifyContent: 'center',
-              backgroundColor: '#fff'
-            },
-          ]}>
-          <View
-            style={{
-              width: 203,
-              height: 75,
-              marginTop: 20,
-              marginHorizontal: 5,
-            }}>
-            <Image
-              style={[
-                CommonStyles.mt10,
-                CommonStyles.container,
-                CommonStyles.backgroundImage,
-                { width: '100%', height: '100%' },
-              ]}
-              source={require('../../assets/img/etibb_logo_final_01.png')}
-            />
-          </View>
-        </View>
         <ImageBackground
           style={[CommonStyles.container, CommonStyles.backgroundImage]}
           source={require('../../assets/img/loginbg.png')}>
@@ -142,52 +116,52 @@ class Login extends Component {
 
 
               </View>
-              <View style={{ marginTop: 145 }}>
+              <View style={{ marginTop: 220 }}>
                 <View>
-                  <Item regular style={CommonStyles.loginItemStyle}>
+                  <Item regular style={CommonStyles.loginItemStyle2}>
                     <Input
                       value={this.state.email}
                       onChangeText={username => this.setState({ email: username })}
                       name="username"
                       placeholder={'Email Address'}
-                      placeholderTextColor="#FFF"
+                      placeholderTextColor="#0d252b"
                       returnKeyType="next"
                       autoCapitalize="none"
-                      selectionColor="#fff"
+                      selectionColor="#0d252b"
                       autoCompleteType="email"
                       keyboardType="email-address"
                       style={[
                         CommonStyles.fontMedium,
                         CommonStyles.textColorWhite,
                         CommonStyles.textSizeNormal,
-                      ]}
+                        ,{color:'#0d252b'}]}
                     />
                   </Item>
                   <Item
                     regular
-                    style={[CommonStyles.loginItemStyle, CommonStyles.mt10]}>
+                    style={[CommonStyles.loginItemStyle2, CommonStyles.mt10]}>
                     <Input
                       secureTextEntry={this.state.hidePassword}
                       value={this.state.password}
                       onChangeText={password => this.setState({ password })}
                       autoCapitalize="none"
                       returnKeyType="done"
-                      selectionColor="#fff"
+                      selectionColor="#0d252b"
                       autoCompleteType="password"
                       textContentType="password"
                       name="password"
                       placeholder={'Password'}
-                      placeholderTextColor="#FFF"
+                      placeholderTextColor="#0d252b"
                       style={[
                         CommonStyles.fontMedium,
-                        CommonStyles.textColorWhite,
+                        // CommonStyles.textColorWhite,
                         CommonStyles.textSizeNormal,
-                      ]}
+                      ,{color:'#0d252b'}]}
                     />
                     <Icon
                       onPress={() => this.setPasswordVisibility()}
                       name="eye"
-                      style={{ color: '#fff', position: 'absolute', right: 5 }}
+                      style={{ color: '#0d252b', position: 'absolute', right: 5 }}
                     />
                   </Item>
                 </View>
@@ -206,27 +180,7 @@ class Login extends Component {
                   </View>
 
 
-                  <View
-                    style={[
-                      CommonStyles.container,
-                      { alignItems: 'center', marginTop: 60 },
-                    ]}>
-                    <Text
-                      style={[
-                        CommonStyles.fontRegular,
-                        { marginTop: 10, color: 'white', fontSize: 12 },
-                      ]}>
-                      Powered By Pharmevo
-                </Text>
-                    <View style={{ width: 107, height: 50 }}>
-                      <Image
-                        style={[
-                          { width: '100%', height: '100%' },
-                        ]}
-                        source={require('../../assets/img/logo.png')}
-                      />
-                    </View>
-                  </View>
+                  
                 </View>
               </View>
             </View>
@@ -275,7 +229,7 @@ class Login extends Component {
                 CommonStyles.centerText,
                 CommonStyles.margin,
                 CommonStyles.padding,
-                { opacity: 0.5 },
+                { opacity: 0.5,  },
               ]}>
               Create Account
             </Text>

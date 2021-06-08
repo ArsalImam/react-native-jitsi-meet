@@ -170,6 +170,17 @@ const CommonStyles = StyleSheet.create({
       height: 1,
     },
   },
+  loginItemStyle2: {
+    borderColor: '#0d252b',
+    alignSelf: 'center',
+    borderRadius: 3,
+    borderWidth: 1,
+    shadowColor: '#8BB3E9',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+  },
   loginItemStyle23: {
     borderColor: '#C5D4E8',
     borderRadius: 6,
