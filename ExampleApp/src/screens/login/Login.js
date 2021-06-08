@@ -106,18 +106,12 @@ class Login extends Component {
         <ImageBackground
           style={[CommonStyles.container, CommonStyles.backgroundImage]}
           source={require('../../assets/img/loginbg.png')}>
-          <KeyboardAwareScrollView style={CommonStyles.container}>
+          <KeyboardAwareScrollView >
             <View style={[CommonStyles.margin, { margin: 30 }]}>
-              <View
-                style={[
-                  CommonStyles.container,
-                  { marginTop: 50, marginBottom: 40, justifyContent: 'center' },
-                ]}>
-
-
-              </View>
-              <View style={{ marginTop: 220 }}>
-                <View>
+            
+              <View style={{justifyContent:'flex-end'   ,height:460  ,flex:1}}>
+                <View 
+                >
                   <Item regular style={CommonStyles.loginItemStyle2}>
                     <Input
                       value={this.state.email}
@@ -167,7 +161,7 @@ class Login extends Component {
                 </View>
 
                 <View>
-                  <View style={{ width: 60, height: 20 }}>
+                  {/* <View style={{ width: 60, height: 20 }}>
                     <Image
                       style={[
                         CommonStyles.mt10,
@@ -177,7 +171,7 @@ class Login extends Component {
                       ]}
                       source={require('../../assets/img/etiblogo.png')}
                     />
-                  </View>
+                  </View> */}
 
 
                   

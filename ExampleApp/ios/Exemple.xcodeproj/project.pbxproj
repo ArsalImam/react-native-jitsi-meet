@@ -861,7 +861,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = sa.digitrends.etibb;
+				PRODUCT_BUNDLE_IDENTIFIER = sa.digitrends.etibb.happiness.care;
 				PRODUCT_NAME = Etibb;
 				PROVISIONING_PROFILE_SPECIFIER = "dev-etibb";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -891,7 +891,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = sa.digitrends.etibb;
+				PRODUCT_BUNDLE_IDENTIFIER = sa.digitrends.etibb.happiness.care;
 				PRODUCT_NAME = Etibb;
 				PROVISIONING_PROFILE_SPECIFIER = "dist-etibb";
 				SWIFT_VERSION = 5.0;

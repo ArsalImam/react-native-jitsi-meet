@@ -8,6 +8,42 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:48716569267:android:34508d4387fff3e2f22ec6",
+        "android_client_info": {
+          "package_name": "com.etibb.aamir"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "48716569267-iplod46bm8sqqtvtlmdo9msi8ht8f9rf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnv8bYMyiIfODgEvk0tNhjuuFxf3aYFtc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "48716569267-iplod46bm8sqqtvtlmdo9msi8ht8f9rf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "48716569267-jdna4ds7ucnngj0i6r77u33sdqcgdisv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "sa.digitrends.etibb"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:48716569267:android:1486eb09b8e02df6f22ec6",
         "android_client_info": {
           "package_name": "sa.digitrends.etibb"
@@ -46,6 +82,49 @@
             {
               "client_id": "48716569267-iplod46bm8sqqtvtlmdo9msi8ht8f9rf.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "48716569267-jdna4ds7ucnngj0i6r77u33sdqcgdisv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "sa.digitrends.etibb"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:48716569267:android:f92d92e9a92c4043f22ec6",
+        "android_client_info": {
+          "package_name": "sa.digitrends.etibb.happiness.care"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "48716569267-iplod46bm8sqqtvtlmdo9msi8ht8f9rf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnv8bYMyiIfODgEvk0tNhjuuFxf3aYFtc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "48716569267-iplod46bm8sqqtvtlmdo9msi8ht8f9rf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "48716569267-jdna4ds7ucnngj0i6r77u33sdqcgdisv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "sa.digitrends.etibb"
+              }
             }
           ]
         }
