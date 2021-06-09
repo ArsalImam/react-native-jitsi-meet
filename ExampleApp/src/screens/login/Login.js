@@ -103,67 +103,75 @@ class Login extends Component {
   render() {
     return (
       <View style={[CommonStyles.container]}>
-        <ImageBackground
+        {/* <ImageBackground
           style={[CommonStyles.container, CommonStyles.backgroundImage]}
           source={require('../../assets/img/loginbg.png')}>
-          <KeyboardAwareScrollView style={[CommonStyles.container ,{ }]}>
-          <View style={[CommonStyles.container]}>
-            <View style={[CommonStyles.container, { justifyContent:'flex-end',marginTop:'100%' }]}>
-              <View style={[CommonStyles.container, {marginHorizontal: 30 , justifyContent: 'flex-end' }]}>
-              
-                <Item regular style={CommonStyles.loginItemStyle2}>
-                  <Input
-                    value={this.state.email}
-                    onChangeText={username => this.setState({ email: username })}
-                    name="username"
-                    placeholder={'Email Address'}
-                    placeholderTextColor="#0d252b"
-                    returnKeyType="next"
-                    autoCapitalize="none"
-                    selectionColor="#0d252b"
-                    autoCompleteType="email"
-                    keyboardType="email-address"
-                    style={[
-                      CommonStyles.fontMedium,
-                      CommonStyles.textColorWhite,
-                      CommonStyles.textSizeNormal,
-                      , { color: '#0d252b' }]}
-                  />
-                </Item>
-
-                <Item
-        regular
-        style={[CommonStyles.loginItemStyle2, CommonStyles.mt10]}>
-        <Input
-          secureTextEntry={this.state.hidePassword}
-          value={this.state.password}
-          onChangeText={password => this.setState({ password })}
-          autoCapitalize="none"
-          returnKeyType="done"
-          selectionColor="#0d252b"
-          autoCompleteType="password"
-          textContentType="password"
-          name="password"
-          placeholder={'Password'}
-          placeholderTextColor="#0d252b"
-          style={[
-            CommonStyles.fontMedium,
-            // CommonStyles.textColorWhite,
-            CommonStyles.textSizeNormal,
-          ,{color:'#0d252b'}]}
-        />
-        <Icon
-          onPress={() => this.setPasswordVisibility()}
-          name="eye"
-          style={{ color: '#0d252b', position: 'absolute', right: 5 }}
-        />
-      </Item>
+               </ImageBackground> */}
+        <View style={[CommonStyles.container, { backgroundColor: "#6ED1F1" }]}>
+          <KeyboardAwareScrollView style={[CommonStyles.container]}>
+            <View style={[CommonStyles.container]}>
+              <View style={[CommonStyles.container, { height: 390 ,width:'100%' ,marginTop:-10}]}>
+                <Image
+                  style={[CommonStyles.container, { resizeMode: 'contain', height:'100%', width: '100%' }]}
+                  source={require('../../assets/img/loginbg.png')} />
+              </View>
+           
+            <View style={[CommonStyles.container, { marginVertical:10 , marginHorizontal: 30 }]}>
+              <View style={{ justifyContent: 'flex-end', flex: 1 }}>
+                <View
+                >
+                  <Item regular style={CommonStyles.loginItemStyle2}>
+                    <Input
+                      value={this.state.email}
+                      onChangeText={username => this.setState({ email: username })}
+                      name="username"
+                      placeholder={'Email Address'}
+                      placeholderTextColor="#0d252b"
+                      returnKeyType="next"
+                      autoCapitalize="none"
+                      selectionColor="#0d252b"
+                      autoCompleteType="email"
+                      keyboardType="email-address"
+                      style={[
+                        CommonStyles.fontMedium,
+                        CommonStyles.textColorWhite,
+                        CommonStyles.textSizeNormal,
+                        , { color: '#0d252b' }]}
+                    />
+                  </Item>
+                  <Item
+                    regular
+                    style={[CommonStyles.loginItemStyle2, CommonStyles.mt10]}>
+                    <Input
+                      secureTextEntry={this.state.hidePassword}
+                      value={this.state.password}
+                      onChangeText={password => this.setState({ password })}
+                      autoCapitalize="none"
+                      returnKeyType="done"
+                      selectionColor="#0d252b"
+                      autoCompleteType="password"
+                      textContentType="password"
+                      name="password"
+                      placeholder={'Password'}
+                      placeholderTextColor="#0d252b"
+                      style={[
+                        CommonStyles.fontMedium,
+                        // CommonStyles.textColorWhite,
+                        CommonStyles.textSizeNormal,
+                        , { color: '#0d252b' }]}
+                    />
+                    <Icon
+                      onPress={() => this.setPasswordVisibility()}
+                      name="eye"
+                      style={{ color: '#0d252b', position: 'absolute', right: 5 }}
+                    />
+                  </Item>
+                </View>
               </View>
             </View>
-          </View>
+            </View>
           </KeyboardAwareScrollView>
-        </ImageBackground>
-
+        </View>
         <View
           style={[
             CommonStyles.fitToBottom,
@@ -217,5 +225,72 @@ class Login extends Component {
     );
   }
 }
+
+
+
+{/* <KeyboardAwareScrollView >
+<View style={[CommonStyles.margin, { margin: 30 }]}>
+
+  <View style={{justifyContent:'flex-end'   ,height:460  ,flex:1}}>
+    <View 
+    >
+      <Item regular style={CommonStyles.loginItemStyle2}>
+        <Input
+          value={this.state.email}
+          onChangeText={username => this.setState({ email: username })}
+          name="username"
+          placeholder={'Email Address'}
+          placeholderTextColor="#0d252b"
+          returnKeyType="next"
+          autoCapitalize="none"
+          selectionColor="#0d252b"
+          autoCompleteType="email"
+          keyboardType="email-address"
+          style={[
+            CommonStyles.fontMedium,
+            CommonStyles.textColorWhite,
+            CommonStyles.textSizeNormal,
+            ,{color:'#0d252b'}]}
+        />
+      </Item>
+      <Item
+        regular
+        style={[CommonStyles.loginItemStyle2, CommonStyles.mt10]}>
+        <Input
+          secureTextEntry={this.state.hidePassword}
+          value={this.state.password}
+          onChangeText={password => this.setState({ password })}
+          autoCapitalize="none"
+          returnKeyType="done"
+          selectionColor="#0d252b"
+          autoCompleteType="password"
+          textContentType="password"
+          name="password"
+          placeholder={'Password'}
+          placeholderTextColor="#0d252b"
+          style={[
+            CommonStyles.fontMedium,
+            // CommonStyles.textColorWhite,
+            CommonStyles.textSizeNormal,
+          ,{color:'#0d252b'}]}
+        />
+        <Icon
+          onPress={() => this.setPasswordVisibility()}
+          name="eye"
+          style={{ color: '#0d252b', position: 'absolute', right: 5 }}
+        />
+      </Item>
+    </View>
+
+    <View>
+     
+      
+    </View>
+  </View>
+</View>
+</KeyboardAwareScrollView> */}
+
+
+
 
 export default Login;
