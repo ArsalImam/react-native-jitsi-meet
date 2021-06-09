@@ -110,13 +110,13 @@ class Login extends Component {
         <View style={[CommonStyles.container, { backgroundColor: "#6ED1F1" }]}>
           <KeyboardAwareScrollView style={[CommonStyles.container]}>
             <View style={[CommonStyles.container]}>
-              <View style={[CommonStyles.container, { height: 390 ,width:'100%' ,marginTop:-10}]}>
+              <View style={[CommonStyles.container, { height: 400 ,width:'100%' ,marginTop:-10}]}>
                 <Image
-                  style={[CommonStyles.container, { resizeMode: 'contain', height:'100%', width: '100%' }]}
+                  style={[CommonStyles.container, { resizeMode: 'stretch', height:'100%', width: '100%' }]}
                   source={require('../../assets/img/loginbg.png')} />
               </View>
            
-            <View style={[CommonStyles.container, { marginVertical:10 , marginHorizontal: 30 }]}>
+            <View style={[CommonStyles.container, { marginTop:30, marginHorizontal: 30 }]}>
               <View style={{ justifyContent: 'flex-end', flex: 1 }}>
                 <View
                 >
