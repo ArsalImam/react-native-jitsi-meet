@@ -116,7 +116,7 @@ class Login extends Component {
                   source={require('../../assets/img/loginbg.png')} />
               </View>
            
-            <View style={[CommonStyles.container, { marginTop:30, marginHorizontal: 30 }]}>
+            <View style={[CommonStyles.container, { marginTop:'12%', marginHorizontal: 30 }]}>
               <View style={{ justifyContent: 'flex-end', flex: 1 }}>
                 <View
                 >
