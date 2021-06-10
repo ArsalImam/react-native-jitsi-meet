@@ -167,8 +167,9 @@ class Login extends Component {
                     />
                     <Icon
                       onPress={() => this.setPasswordVisibility()}
-                      name="eye"
+                      name={this.state.hidePassword == true ? "eye-with-line" :"eye" }
                       style={{ color: '#0d252b', position: 'absolute', right: 5 }}
+                      type="Entypo"
                     />
                   </Item>
                 </View>
