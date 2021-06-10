@@ -14,7 +14,7 @@ import { ViewUtils } from '../../Utils';
 import Loader from '../../components/Loader';
 import AsyncStorage from '@react-native-community/async-storage';
 const windowHeight = Dimensions.get('window').height;
-let averageHeight = windowHeight/2+windowHeight*0.05
+let averageHeight = windowHeight/2+windowHeight*0.10
 class Login extends Component {
   state = { email: '', password: '', showLoader: false, hidePassword: true };
 
@@ -116,7 +116,7 @@ class Login extends Component {
             <View style={[CommonStyles.container]}>
               <View style={[CommonStyles.container, { height: averageHeight ,width:'100%' ,marginTop:-10}]}>
                 <Image
-                  style={[CommonStyles.container, { resizeMode: 'stretch', height:'100%', width: '100%' }]}
+                  style={[CommonStyles.container, { resizeMode: 'cover', height:'100%', width: '100%' }]}
                   source={require('../../assets/img/loginbg.png')} />
               
               </View>
