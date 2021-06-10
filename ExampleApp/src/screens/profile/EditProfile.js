@@ -167,6 +167,7 @@ export default class UploadIllustrations extends React.Component {
       .catch(err => {
         //ViewUtils.showToast(err)
       });
+    
 
     Api.instance()
       .getUserRole()
@@ -175,126 +176,67 @@ export default class UploadIllustrations extends React.Component {
 
   render() {
     const speciality = [
-      { value: 'General Practice', viewValue: 'General Practice' },
-      { value: 'Allergy Medicine', viewValue: 'Allergy Medicine' },
-      {
-        value: 'Audiological Medicine',
-        viewValue: 'Audiological Medicine',
-      },
-      { value: 'Acute Medicine', viewValue: 'Acute Medicine' },
-      { value: '  Clinical Genetics', viewValue: '  Clinical Genetics' },
-      {
-        value: '  Clinical Neurophysiology',
-        viewValue: ' Clinical Neurophysiology',
-      },
-      { value: ' Cardiology', viewValue: '  Cardiology' },
-      { value: '  Clinical', viewValue: '  Clinical' },
-      { value: '   Pharmacology', viewValue: '   Pharmacology' },
-      {
-        value: 'Endocrinology and Diabetes',
-        viewValue: '  Endocrinology and Diabetes',
-      },
-      { value: '    Gastroenterology', viewValue: '   Gastroenterology' },
-      { value: '   General Internal', viewValue: '  General Internal' },
-      { value: '  Medicine', viewValue: ' Medicine' },
-      {
-        value: '  Genito-Urinary Medicine',
-        viewValue: '  Genito-Urinary Medicine',
-      },
-      { value: '  Geriatric', viewValue: '  Geriatric' },
-      { value: '  Infectious Diseases', viewValue: '  Infectious Diseases' },
-      { value: '  Intensive Care', viewValue: '  Intensive Care' },
-      { value: '  Medical Oncology', viewValue: '  Medical Oncology' },
-      { value: '  Medical Ophthalmology', viewValue: '  Medical Ophthalmology' },
-      { value: '  Neurology', viewValue: '  Neurology' },
-      {
-        value: '   Occupational Medicine',
-        viewValue: '   Occupational Medicine',
-      },
-      { value: '   Palliative Medicine', viewValue: '   Palliative Medicine' },
-      {
-        value: '   Pharmaceutical medicine',
-        viewValue: '   Pharmaceutical medicine',
-      },
-      {
-        value: '   Rehabilitation medicine',
-        viewValue: '   Rehabilitation medicine',
-      },
-      { value: '  Renal', viewValue: '  Renal' },
-      { value: '  medicine - Nephrology', viewValue: '  medicine - Nephrology' },
-      { value: '   Respiratory medicine', viewValue: '   Respiratory medicine' },
-      { value: '  Rheumatology', viewValue: '  Rheumatology' },
-      { value: '  Sport and Exercise', viewValue: '  Sport and Exercise' },
-      {
-        value: '  Obstetrics and Gynaecology',
-        viewValue: '  Obstetrics and Gynaecology',
-      },
-      {
-        value: '  Ophthalmology - Eye surgery',
-        viewValue: '  Ophthalmology - Eye surgery',
-      },
-      { value: '  Paediatrics', viewValue: '  Paediatrics' },
-      { value: '   Child Health', viewValue: '   Child Health' },
-      { value: '   Pathology', viewValue: '   Pathology' },
-      { value: '   Chemical Pathology', viewValue: '   Chemical Pathology' },
-      { value: '    Haematology', viewValue: '    Haematology' },
-      { value: '   Histopathology', viewValue: '   Histopathology' },
-      {
-        value: '     Microbiology and Virology',
-        viewValue: '     Microbiology and Virology',
-      },
-      { value: '     Psychiatry', viewValue: '     Psychiatry' },
-      { value: '    Child Psychiatry', viewValue: '    Child Psychiatry' },
-      { value: '   Pathology', viewValue: '   Pathology' },
-      { value: '    Forensic Psychiatry', viewValue: '    Forensic Psychiatry' },
-      {
-        value: '   General Adult Psychiatry',
-        viewValue: '   General Adult Psychiatry',
-      },
-      {
-        value: '      Old Age Psychiatry',
-        viewValue: '      Old Age Psychiatry',
-      },
-      {
-        value: '   Psychiatry of Learning Disability',
-        viewValue: '   Psychiatry of Learning Disability',
-      },
-      { value: '   Psychotherapy', viewValue: '   Psychotherapy' },
-      { value: '    Public Health', viewValue: '    Public Health' },
-      { value: '   Radiology', viewValue: '   Radiology' },
-      { value: '    Clinical Radiology', viewValue: '    Clinical Radiology' },
-      {
-        value: '   Interventional Radiology',
-        viewValue: '   Interventional Radiology',
-      },
-      { value: '     Nuclear Medicine', viewValue: '     Nuclear Medicine' },
-      {
-        value: '       Cardiothoracic Surgery',
-        viewValue: '       Cardiothoracic Surgery',
-      },
-      {
-        value: '     General Surgery Neurosurgery',
-        viewValue: '     General Surgery Neurosurgery',
-      },
-      {
-        value: '    Oral and Maxillofacial Surgery',
-        viewValue: '    Oral and Maxillofacial Surgery',
-      },
-      {
-        value: '    Otolaryngology - Ear Nose Throat',
-        viewValue: '   Otolaryngology - Ear Nose Throat',
-      },
-      { value: '     Paediatric Surgery', viewValue: '      Paediatric Surgery' },
-      { value: '     Plastic Surgery', viewValue: '   Plastic Surgery' },
-      {
-        value: '      Trauma and Orthopaedic Surgery',
-        viewValue: '     Trauma and Orthopaedic Surgery',
-      },
-      {
-        value: '    Urology - Renal or Kidney Surgery',
-        viewValue: '   Urology - Renal or Kidney Surgery',
-      },
-      { value: '      Clinical Oncology', viewValue: '      Clinical Oncology' },
+   
+      {value: ' General Practice', viewValue: ' General Practice'},
+      {value: ' Allergy Medicine', viewValue: ' Allergy Medicine'},
+      {value: '   Audiological Medicine', viewValue: '   Audiological Medicine'},
+      {value: '  Acute Medicine', viewValue: '  Acute Medicine'},
+      {value: '  Clinical Genetics', viewValue: '  Clinical Genetics'},
+      {value: '  Clinical Neurophysiology', viewValue: ' Clinical Neurophysiology'},
+      {value: ' Cardiology', viewValue: '  Cardiology'},
+      {value: '  Clinical', viewValue: '  Clinical'},
+      {value: '   Pharmacology', viewValue: '   Pharmacology'},
+      {value: '  Endocrinology and Diabetes', viewValue: '  Endocrinology and Diabetes'},
+      {value: '    Gastroenterology', viewValue: '   Gastroenterology'},
+      {value: '   General Internal', viewValue: '  General Internal'},
+      {value: '  Medicine', viewValue: ' Medicine'},
+      {value: '  Genito-Urinary Medicine', viewValue: '  Genito-Urinary Medicine'},
+      {value: '  Geriatric', viewValue: '  Geriatric'},
+      {value: '  Infectious Diseases', viewValue: '  Infectious Diseases'},
+      {value: '  Intensive Care', viewValue: '  Intensive Care'},
+      {value: '  Medical Oncology', viewValue: '  Medical Oncology'},
+      {value: '  Medical Ophthalmology', viewValue: '  Medical Ophthalmology'},
+      {value: '  Neurology', viewValue: '  Neurology'},
+      {value: '   Occupational Medicine', viewValue: '   Occupational Medicine'},
+      {value: '   Palliative Medicine', viewValue: '   Palliative Medicine'},
+      {value: '   Pharmaceutical medicine', viewValue: '   Pharmaceutical medicine'},
+      {value: '   Rehabilitation medicine', viewValue: '   Rehabilitation medicine'},
+      {value: '  Renal', viewValue: '  Renal'},
+      {value: '  medicine - Nephrology', viewValue: '  medicine - Nephrology'},
+      {value: '   Respiratory medicine', viewValue: '   Respiratory medicine'},
+      {value: '  Rheumatology', viewValue: '  Rheumatology'},
+      {value: '  Sport and Exercise', viewValue: '  Sport and Exercise'},
+      {value: '  Obstetrics and Gynaecology', viewValue: '  Obstetrics and Gynaecology'},
+      {value: '  Ophthalmology - Eye surgery', viewValue: '  Ophthalmology - Eye surgery'},
+      {value: '  Paediatrics', viewValue: '  Paediatrics'},
+      {value: '   Child Health', viewValue: '   Child Health'},
+      {value: '   Pathology', viewValue: '   Pathology'},
+      {value: 'Chemical Pathology', viewValue: 'Chemical Pathology'},
+      {value: '    Haematology', viewValue: '    Haematology'},
+      {value: '   Histopathology', viewValue: '   Histopathology'},
+      {value: '     Microbiology and Virology', viewValue: '     Microbiology and Virology'},
+      {value: '     Psychiatry', viewValue: '     Psychiatry'},
+      {value: '    Child Psychiatry', viewValue: '    Child Psychiatry'},
+      {value: '   Pathology', viewValue: '   Pathology'},
+      {value: '    Forensic Psychiatry', viewValue: '    Forensic Psychiatry'},
+      {value: '   General Adult Psychiatry', viewValue: '   General Adult Psychiatry'},
+      {value: '      Old Age Psychiatry', viewValue: '      Old Age Psychiatry'},
+      {value: '   Psychiatry of Learning Disability', viewValue: '   Psychiatry of Learning Disability'},
+      {value: '   Psychotherapy', viewValue: '   Psychotherapy'},
+      {value: '    Public Health', viewValue: '    Public Health'},
+      {value: '   Radiology', viewValue: '   Radiology'},
+      {value: '    Clinical Radiology', viewValue: '    Clinical Radiology'},
+      {value: '   Interventional Radiology', viewValue: '   Interventional Radiology'},
+      {value: '     Nuclear Medicine', viewValue: '     Nuclear Medicine'},
+      {value: '       Cardiothoracic Surgery', viewValue: '       Cardiothoracic Surgery'},
+      {value: '     General Surgery Neurosurgery', viewValue: '     General Surgery Neurosurgery'},
+      {value: '    Oral and Maxillofacial Surgery', viewValue: '    Oral and Maxillofacial Surgery'},
+      {value: '    Otolaryngology - Ear Nose Throat', viewValue: '   Otolaryngology - Ear Nose Throat'},
+      {value: '     Paediatric Surgery', viewValue: '      Paediatric Surgery'},
+      {value: '     Plastic Surgery', viewValue: '   Plastic Surgery'},
+      {value: '      Trauma and Orthopaedic Surgery', viewValue: '     Trauma and Orthopaedic Surgery'},
+      {value: '    Urology - Renal or Kidney Surgery', viewValue: '   Urology - Renal or Kidney Surgery'},
+      {value: '      Clinical Oncology', viewValue: '      Clinical Oncology'}
     ];
 
     const { image } = this.state;
@@ -453,6 +395,7 @@ export default class UploadIllustrations extends React.Component {
                       CommonStyles.textSizeSmall,
                     ]}>
                     Speciality
+
                   </Label>
                   <Item
                     picker
@@ -467,7 +410,7 @@ export default class UploadIllustrations extends React.Component {
                       iosIcon={<Icon name='keyboard-arrow-down' type='MaterialIcons' />}
                       placeholderStyle={{ color: '#bfc6ea' }}
                       placeholderIconColor="#007aff"
-                      selectedValue={this.state.speciality}
+                      selectedValue={this.state.speciality.trim()}
                       onValueChange={txt => this.setState({ speciality: txt })}>
                       {speciality.map((item, index) => {
                         return (

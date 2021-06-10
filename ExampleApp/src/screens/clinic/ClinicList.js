@@ -19,14 +19,16 @@ export default class ClinicList extends Component {
     }
 
     componentDidMount() {
-        Api.instance().getClinicList()
-            .then((data) => {
-                this.setState({ clinicList: data });
-            }
-            ).catch(err => console.log(err))
-            .finally(() => {
-                this.setState({ isLoading: false });
-            })
+        this.props.navigation.addListener('focus', payLoad => {
+            Api.instance().getClinicList()
+                .then((data) => {
+                    this.setState({ clinicList: data });
+                }
+                ).catch(err => console.log(err))
+                .finally(() => {
+                    this.setState({ isLoading: false });
+                })
+        })
     }
 
     render() {
@@ -37,20 +39,20 @@ export default class ClinicList extends Component {
                     CommonStyles.backgroundImage
                 ]}
                     source={require('../../assets/img/bwback.png')}>
-                     <View style={{ flex: 2  ,justifyContent:'flex-start' ,paddingTop:50}}>
-            
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.goBack();
-              }}>
-              <Icon
-                name="arrow-back"
-                type="MaterialIcons"
-                style={{ fontSize: 26, color: '#FFF' ,marginLeft:10 }}
-              />
-            </TouchableOpacity>
-                        
-                        <Text style={{ color: '#FFFFFF', paddingLeft: 16}}>
+                    <View style={{ flex: 2, justifyContent: 'flex-start', paddingTop: 50 }}>
+
+                        <TouchableOpacity
+                            onPress={() => {
+                                this.props.navigation.goBack();
+                            }}>
+                            <Icon
+                                name="arrow-back"
+                                type="MaterialIcons"
+                                style={{ fontSize: 26, color: '#FFF', marginLeft: 10 }}
+                            />
+                        </TouchableOpacity>
+
+                        <Text style={{ color: '#FFFFFF', paddingLeft: 16 }}>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeLarge,]} >{`Clinic List\n`}</Text>
                             <Text style={[CommonStyles.fontRegular, CommonStyles.textSizeAverage]}>it is a list of all your Clinics </Text>
                         </Text>

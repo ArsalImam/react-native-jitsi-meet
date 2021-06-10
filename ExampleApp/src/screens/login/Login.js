@@ -13,6 +13,7 @@ import Api from '../../Api';
 import { ViewUtils } from '../../Utils';
 import Loader from '../../components/Loader';
 import AsyncStorage from '@react-native-community/async-storage';
+import { Roles } from '../../Configs';
 const windowHeight = Dimensions.get('window').height;
 let averageHeight = windowHeight/2+windowHeight*0.10
 class Login extends Component {
@@ -89,7 +90,16 @@ class Login extends Component {
       .login(this.state.email, this.state.password)
       //.login(this.state.email, this.state.password)
       .then(data => {
-        this.props.navigation.replace('MyDrawer', { user: data.user });
+        console.log("User rolee  =>", data.user.role)
+        if (data.user.role == Roles.assistant) {
+          console.log("user role is assistant")
+          ViewUtils.showToast(
+            'Invalid Credentials.',
+          );
+        }
+        else {
+          this.props.navigation.replace('MyDrawer', { user: data.user });
+        }
       })
       .catch(err => {
         console.log('er', err)
