@@ -159,7 +159,7 @@ class Login extends Component {
                       value={this.state.email}
                       onChangeText={username => this.setState({ email: username })}
                       name="username"
-                      placeholder={'Email Address'}
+                      placeholder={'Email Address Or Phone number'}
                       placeholderTextColor="#FFF"
                       returnKeyType="next"
                       autoCapitalize="none"
