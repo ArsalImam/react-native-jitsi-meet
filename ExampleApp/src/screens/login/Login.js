@@ -4,7 +4,7 @@ import {
   View,
   TouchableOpacity,
   Image,
-  ImageBackground,
+  ImageBackground,Dimensions,
 } from 'react-native';
 import CommonStyles from '../../CommonStyles';
 import { Item, Input, Container, Icon, Toast } from 'native-base';
@@ -13,7 +13,8 @@ import Api from '../../Api';
 import { ViewUtils } from '../../Utils';
 import Loader from '../../components/Loader';
 import AsyncStorage from '@react-native-community/async-storage';
-
+const windowHeight = Dimensions.get('window').height;
+let averageHeight = windowHeight/2+windowHeight*0.05
 class Login extends Component {
   state = { email: '', password: '', showLoader: false, hidePassword: true };
 
@@ -31,6 +32,9 @@ class Login extends Component {
   };
 
   componentDidMount() {
+
+    console.log("windowHeight" , averageHeight)
+    
     try {
       AsyncStorage.getItem('@user').then(token => {
         console.log('token', token);
@@ -110,10 +114,11 @@ class Login extends Component {
         <View style={[CommonStyles.container, { backgroundColor: "#6ED1F1" }]}>
           <KeyboardAwareScrollView style={[CommonStyles.container]}>
             <View style={[CommonStyles.container]}>
-              <View style={[CommonStyles.container, { height: 400 ,width:'100%' ,marginTop:-10}]}>
+              <View style={[CommonStyles.container, { height: averageHeight ,width:'100%' ,marginTop:-10}]}>
                 <Image
                   style={[CommonStyles.container, { resizeMode: 'stretch', height:'100%', width: '100%' }]}
                   source={require('../../assets/img/loginbg.png')} />
+              
               </View>
            
             <View style={[CommonStyles.container, { marginTop:'12%', marginHorizontal: 30 }]}>
