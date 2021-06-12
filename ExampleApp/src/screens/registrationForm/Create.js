@@ -172,7 +172,7 @@ class Create extends Component {
                   CommonStyles.textColorWhite,
                   { marginTop: 5 },
                 ]}>
-                Enter your details to register for Etibb
+                Enter your details to register for Happiness Care
               </Text>
 
               <View style={{ marginTop: 60 }}>
