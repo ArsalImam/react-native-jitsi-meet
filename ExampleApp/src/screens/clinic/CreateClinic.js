@@ -245,7 +245,7 @@ export default class CreateClinic extends Component {
       return;
     }
     if (reg.test(this.state.numberOfClinics) == false) {
-      ViewUtils.showToast('Number of clinics must be integers');
+      ViewUtils.showToast('Please Provide valid number');
       return;
     }
     // if (this.state.numberOfClinics.isInteger()) {
