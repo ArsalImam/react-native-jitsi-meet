@@ -15,7 +15,7 @@ import Loader from '../../components/Loader';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Roles } from '../../Configs';
 const windowHeight = Dimensions.get('window').height;
-let averageHeight = windowHeight/2+windowHeight*0.10
+let averageHeight = windowHeight/2 - 10
 class Login extends Component {
   state = { email: '', password: '', showLoader: false, hidePassword: true };
 
@@ -124,7 +124,7 @@ class Login extends Component {
         <View style={[CommonStyles.container, { backgroundColor: "#6ED1F1" }]}>
           <KeyboardAwareScrollView style={[CommonStyles.container]}>
             <View style={[CommonStyles.container]}>
-              <View style={[CommonStyles.container, { height: averageHeight ,width:'100%' ,marginTop:-10}]}>
+              <View style={[CommonStyles.container, { height: averageHeight  ,width:'100%' ,marginTop:-10}]}>
                 <Image
                   style={[CommonStyles.container, { resizeMode: 'cover', height:'100%', width: '100%' }]}
                   source={require('../../assets/img/loginbg.png')} />
@@ -185,6 +185,28 @@ class Login extends Component {
                 </View>
               </View>
             </View>
+
+            <View
+                    style={[
+                      CommonStyles.container,
+                      { alignItems: 'center', marginTop: 60 },
+                    ]}>
+                    <Text
+                      style={[
+                        CommonStyles.fontRegular,
+                        { marginTop: 10, color: 'white', fontSize: 12 },
+                      ]}>
+                      Powered By Pharmevo
+                </Text>
+                    <View style={{ width: 107, height: 50 }}>
+                      <Image
+                        style={[
+                          { width: '100%', height: '100%' },
+                        ]}
+                        source={require('../../assets/img/logo.png')}
+                      />
+                    </View>
+                  </View>
             </View>
           </KeyboardAwareScrollView>
         </View>

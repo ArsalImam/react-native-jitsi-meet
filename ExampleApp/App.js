@@ -55,7 +55,7 @@ class App extends React.Component {
     return (
       <Root>
         <StatusBar
-          translucent
+          translucent 
           backgroundColor="transparent"
           barStyle={'dark-content'}
         />
