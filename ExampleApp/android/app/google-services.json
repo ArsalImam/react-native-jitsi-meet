@@ -32,10 +32,10 @@
               "client_type": 3
             },
             {
-              "client_id": "48716569267-jdna4ds7ucnngj0i6r77u33sdqcgdisv.apps.googleusercontent.com",
+              "client_id": "48716569267-ga057vhteb1vnb5mhi564umkhqss7911.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "sa.digitrends.etibb"
+                "bundle_id": "sa.digitrends.etibb.happiness.care"
               }
             }
           ]
@@ -84,10 +84,10 @@
               "client_type": 3
             },
             {
-              "client_id": "48716569267-jdna4ds7ucnngj0i6r77u33sdqcgdisv.apps.googleusercontent.com",
+              "client_id": "48716569267-ga057vhteb1vnb5mhi564umkhqss7911.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "sa.digitrends.etibb"
+                "bundle_id": "sa.digitrends.etibb.happiness.care"
               }
             }
           ]
@@ -120,10 +120,46 @@
               "client_type": 3
             },
             {
-              "client_id": "48716569267-jdna4ds7ucnngj0i6r77u33sdqcgdisv.apps.googleusercontent.com",
+              "client_id": "48716569267-ga057vhteb1vnb5mhi564umkhqss7911.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "sa.digitrends.etibb"
+                "bundle_id": "sa.digitrends.etibb.happiness.care"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:48716569267:android:327eb6253bc08a22f22ec6",
+        "android_client_info": {
+          "package_name": "sa.digitrends.pharmevo.etibb.happiness.care"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "48716569267-iplod46bm8sqqtvtlmdo9msi8ht8f9rf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnv8bYMyiIfODgEvk0tNhjuuFxf3aYFtc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "48716569267-iplod46bm8sqqtvtlmdo9msi8ht8f9rf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "48716569267-ga057vhteb1vnb5mhi564umkhqss7911.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "sa.digitrends.etibb.happiness.care"
               }
             }
           ]
