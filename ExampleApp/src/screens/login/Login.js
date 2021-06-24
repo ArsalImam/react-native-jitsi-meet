@@ -4,7 +4,7 @@ import {
   View,
   TouchableOpacity,
   Image,
-  ImageBackground,Dimensions,
+  ImageBackground, Dimensions,
 } from 'react-native';
 import CommonStyles from '../../CommonStyles';
 import { Item, Input, Container, Icon, Toast } from 'native-base';
@@ -16,7 +16,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { Roles } from '../../Configs';
 const windowHeight = Dimensions.get('window').height;
 // let averageHeight = windowHeight/2 + 30
-let averageHeight = windowHeight/2 
+let averageHeight = windowHeight / 2
 
 class Login extends Component {
   state = { email: '', password: '', showLoader: false, hidePassword: true };
@@ -35,10 +35,10 @@ class Login extends Component {
   };
 
   componentDidMount() {
-    console.log("windowHeight" , windowHeight)
+    console.log("windowHeight", windowHeight)
 
-    console.log("averageHeight" , averageHeight)
-    
+    console.log("averageHeight", averageHeight)
+
     try {
       AsyncStorage.getItem('@user').then(token => {
         console.log('token', token);
@@ -120,10 +120,100 @@ class Login extends Component {
   render() {
     return (
       <View style={[CommonStyles.container]}>
-    
+
         <View style={[CommonStyles.container, { backgroundColor: "#6ED1F1" }]}>
-          <KeyboardAwareScrollView style={[CommonStyles.container]}>
-            <View style={[CommonStyles.container]}>
+          <KeyboardAwareScrollView
+            contentContainerStyle={{ flexGrow: 1 }}
+            style={[CommonStyles.container, { backgroundColor: '#6ED1F1' }]}>
+            <View style={[CommonStyles.container, {
+              flexDirection: "column"
+            }]}>
+              <View style={{height:averageHeight ,width:'100%'}} >
+                <Image
+                  style={[CommonStyles.container, { resizeMode: 'stretch', height: '100%', width: '100%' }]}
+                  source={require('../../assets/img/loginbg.png')} />
+              </View>
+              <View style={{ flex: 1, flexDirection: 'column' ,marginTop:10 }} >
+                <View style={{ flex: 1.5, alignItems: 'center', marginHorizontal: 30, justifyContent: 'center' }}>
+                  <Item regular style={CommonStyles.loginItemStyle2}>
+                    <Input
+                      value={this.state.email}
+                      onChangeText={username => this.setState({ email: username })}
+                      name="username"
+                      placeholder={'Email Address Or Phone number'}
+                      placeholderTextColor="#0d252b"
+                      returnKeyType="next"
+                      autoCapitalize="none"
+                      selectionColor="#0d252b"
+                      autoCompleteType="email"
+                      keyboardType="email-address"
+                      style={[
+                        CommonStyles.fontMedium,
+                        CommonStyles.textColorWhite,
+                        CommonStyles.textSizeNormal,
+                        , { color: '#0d252b' }]}
+                    />
+                  </Item>
+
+                  <Item
+                    regular
+                    style={[CommonStyles.loginItemStyle2, CommonStyles.mt10]}>
+                    <Input
+                      secureTextEntry={this.state.hidePassword}
+                      value={this.state.password}
+                      onChangeText={password => this.setState({ password })}
+                      autoCapitalize="none"
+                      returnKeyType="done"
+                      selectionColor="#0d252b"
+                      autoCompleteType="password"
+                      textContentType="password"
+                      name="password"
+                      placeholder={'Password'}
+                      placeholderTextColor="#0d252b"
+                      style={[
+                        CommonStyles.fontMedium,
+                        // CommonStyles.textColorWhite,
+                        CommonStyles.textSizeNormal,
+                        , { color: '#0d252b' }]}
+                    />
+                    <Icon
+                      onPress={() => this.setPasswordVisibility()}
+                      name={this.state.hidePassword == true ? "eye-with-line" : "eye"}
+                      style={{ color: '#0d252b', position: 'absolute', right: 5 }}
+                      type="Entypo"
+                    />
+                  </Item>
+                </View>
+                <View style={{ flex: 1, marginBottom:20}}>
+                  <View
+                    style={[
+                      CommonStyles.container,
+                      { alignItems: 'center' ,justifyContent:'flex-end'},
+                    ]}>
+                    <Text
+                      style={[
+                        CommonStyles.fontRegular,
+                        {
+                          marginTop: 10, color: 'white', fontSize: 11, fontStyle: 'italic'
+                        },
+                      ]}>
+                      Powered By Pharmevo
+                    </Text>
+                    <View style={{ width: 100, height: 50 }}>
+                      <Image
+                        style={[
+                          { width: '100%', height: '100%', resizeMode: 'contain' },
+                        ]}
+                        source={require('../../assets/img/logo.png')}
+                      />
+                    </View>
+                  </View>
+
+                </View>
+
+              </View>
+            </View>
+            {/* <View style={[CommonStyles.container]}>
               <View style={[CommonStyles.container, { height: averageHeight  ,width:'100%' ,marginTop:-10}]}>
                 <Image
                   style={[CommonStyles.container, { resizeMode: 'stretch', height:'100%', width: '100%' }]}
@@ -188,7 +278,7 @@ class Login extends Component {
             <View
                     style={[
                       CommonStyles.container,
-                      { alignItems: 'center', marginTop: 50 ,marginBottom:20 },
+                      { alignItems: 'center',backgroundColor:'red', marginTop: '15%' ,marginBottom:20 },
                     ]}>
                     <Text
                       style={[
@@ -208,6 +298,8 @@ class Login extends Component {
                     </View>
                   </View>
             </View>
+         */}
+
           </KeyboardAwareScrollView>
         </View>
         <View
@@ -263,72 +355,5 @@ class Login extends Component {
     );
   }
 }
-
-
-
-{/* <KeyboardAwareScrollView >
-<View style={[CommonStyles.margin, { margin: 30 }]}>
-
-  <View style={{justifyContent:'flex-end'   ,height:460  ,flex:1}}>
-    <View 
-    >
-      <Item regular style={CommonStyles.loginItemStyle2}>
-        <Input
-          value={this.state.email}
-          onChangeText={username => this.setState({ email: username })}
-          name="username"
-          placeholder={'Email Address'}
-          placeholderTextColor="#0d252b"
-          returnKeyType="next"
-          autoCapitalize="none"
-          selectionColor="#0d252b"
-          autoCompleteType="email"
-          keyboardType="email-address"
-          style={[
-            CommonStyles.fontMedium,
-            CommonStyles.textColorWhite,
-            CommonStyles.textSizeNormal,
-            ,{color:'#0d252b'}]}
-        />
-      </Item>
-      <Item
-        regular
-        style={[CommonStyles.loginItemStyle2, CommonStyles.mt10]}>
-        <Input
-          secureTextEntry={this.state.hidePassword}
-          value={this.state.password}
-          onChangeText={password => this.setState({ password })}
-          autoCapitalize="none"
-          returnKeyType="done"
-          selectionColor="#0d252b"
-          autoCompleteType="password"
-          textContentType="password"
-          name="password"
-          placeholder={'Password'}
-          placeholderTextColor="#0d252b"
-          style={[
-            CommonStyles.fontMedium,
-            // CommonStyles.textColorWhite,
-            CommonStyles.textSizeNormal,
-          ,{color:'#0d252b'}]}
-        />
-        <Icon
-          onPress={() => this.setPasswordVisibility()}
-          name="eye"
-          style={{ color: '#0d252b', position: 'absolute', right: 5 }}
-        />
-      </Item>
-    </View>
-
-    <View>
-     
-      
-    </View>
-  </View>
-</View>
-</KeyboardAwareScrollView> */}
-
-
-
 
 export default Login;
