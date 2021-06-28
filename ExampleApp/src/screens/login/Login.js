@@ -130,7 +130,7 @@ class Login extends Component {
             }]}>
               <View style={{height:averageHeight ,width:'100%'}} >
                 <Image
-                  style={[CommonStyles.container, { resizeMode: 'stretch', height: '100%', width: '100%' }]}
+                  style={[CommonStyles.container, { resizeMode: 'cover', height: '100%', width: '100%' }]}
                   source={require('../../assets/img/loginbg.png')} />
               </View>
               <View style={{ flex: 1, flexDirection: 'column' ,marginTop:10 }} >
@@ -190,21 +190,13 @@ class Login extends Component {
                       CommonStyles.container,
                       { alignItems: 'center' ,justifyContent:'flex-end'},
                     ]}>
-                    <Text
-                      style={[
-                        CommonStyles.fontRegular,
-                        {
-                          marginTop: 10, color: 'white', fontSize: 11, fontStyle: 'italic'
-                        },
-                      ]}>
-                      Powered By Pharmevo
-                    </Text>
+                    
                     <View style={{ width: 100, height: 50 }}>
                       <Image
                         style={[
                           { width: '100%', height: '100%', resizeMode: 'contain' },
                         ]}
-                        source={require('../../assets/img/logo.png')}
+                        source={require('../../assets/img/pharmevo_logo_it_new.png')}
                       />
                     </View>
                   </View>
