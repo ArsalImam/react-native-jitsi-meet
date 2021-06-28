@@ -4,15 +4,16 @@ import {
   View,
   TouchableOpacity,
   Image,
-  ImageBackground,  
+  ImageBackground,
 } from 'react-native';
 import CommonStyles from '../../CommonStyles';
-import { Item, Input, Container, Icon,Toast } from 'native-base';
+import { Item, Input, Container, Icon, Toast } from 'native-base';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import Api from '../../Api';
 import { ViewUtils } from '../../Utils';
 import Loader from '../../components/Loader';
 import AsyncStorage from '@react-native-community/async-storage';
+import { Roles } from '../../Configs';
 
 
 class Login extends Component {
@@ -31,52 +32,78 @@ class Login extends Component {
     this.setState({ showLoader: true });
   };
 
-  componentDidMount() { }
-
-  componentWillMount() {
-    AsyncStorage.getItem('@user').then(token => {
-      console.log('token', token);
-      if (token) {
+  componentDidMount() {
+    try {
+      AsyncStorage.getItem('@user').then(token => {
         console.log('token', token);
-        this.props.navigation.replace('MyDrawer');
-   
-      } else {
-        console.log('error', error);
-      }
-    });
+        if (token) {
+          console.log('token =====>', token);
+          this.props.navigation.replace('MyDrawer');
+
+        } else {
+          console.log('error', error);
+        }
+      });
+
+    } catch (error) {
+      console.log("Err", error)
+    }
+
   }
+
+  // componentWillMount() {
+  // AsyncStorage.getItem('@user').then(token => {
+  //   console.log('token', token);
+  //   if (token) {
+  //     console.log('token =====>', token);
+  //     this.props.navigation.replace('MyDrawer');
+
+  //   } else {
+  //     console.log('error', error);
+  //   }
+  // });
+  // }
   _submitForm = () => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,9})+$/;
-    if(this.state.email.trim() == '' && this.state.password.trim() == ''){
+    if (this.state.email.trim() == '' && this.state.password.trim() == '') {
       ViewUtils.showToast(
         'Please Provide Email and Password',
-    );
-    return;
-    }else if(this.state.email.trim() == ''){
+      );
+      return;
+    } else if (this.state.email.trim() == '') {
       ViewUtils.showToast(
-        'Please Provide Email',       
-    );
-    return;
-    }else if(this.state.password.trim() == ''){
+        'Please Provide Email',
+      );
+      return;
+    } else if (this.state.password.trim() == '') {
       ViewUtils.showToast(
-        'Please Provide Password',       
-    );
-    return;
+        'Please Provide Password',
+      );
+      return;
     }
-    
+
     this.showLoader();
-      Api.instance()
+    Api.instance()
       .login(this.state.email, this.state.password)
       //.login(this.state.email, this.state.password)
       .then(data => {
-        this.props.navigation.replace('MyDrawer', { user: data.user });
+        console.log("User rolee  =>", data.user.role)
+        if (data.user.role == Roles.assistant) {
+          console.log("user role is assistant")
+          ViewUtils.showToast(
+            'Invalid Credentials.',
+          );
+        }
+        else {
+          this.props.navigation.replace('MyDrawer', { user: data.user });
+        }
       })
       .catch(err => {
-        console.log('er' ,err)
+        console.log('er', err)
         //ViewUtils.showToast(err);
         ViewUtils.showToast(
-          'Invalid Credentials.',       
-      );
+          'Invalid Credentials.',
+        );
       })
       .finally(() => {
         this.setState({ showLoader: false });
@@ -143,68 +170,79 @@ class Login extends Component {
        
            
               </View>
-              <View style={{marginTop: 145}}>
+              <View style={{ marginTop: 145 }}>
                 <View>
-                <Item regular style={CommonStyles.loginItemStyle}>
-                  <Input
-                    value={this.state.email}
-                    onChangeText={username => this.setState({ email: username })}
-                    name="username"
-                    placeholder={'Email Address'}
-                    placeholderTextColor="#FFF"
-                    returnKeyType="next"
-                    autoCapitalize="none"
-                    selectionColor="#fff"
-                    autoCompleteType="email"
-                    keyboardType="email-address"
-                    style={[
-                      CommonStyles.fontMedium,
-                      CommonStyles.textColorWhite,
-                      CommonStyles.textSizeNormal,
-                    ]}
-                  />
-                </Item>
-                <Item
-                  regular
-                  style={[CommonStyles.loginItemStyle, CommonStyles.mt10]}>
-                  <Input
-                    secureTextEntry={this.state.hidePassword}
-                    value={this.state.password}
-                    onChangeText={password => this.setState({ password })}
-                    autoCapitalize="none"
-                    returnKeyType="done"
-                    selectionColor="#fff"
-                    autoCompleteType="password"
-                    textContentType="password"
-                    name="password"
-                    placeholder={'Password'}
-                    placeholderTextColor="#FFF"
-                    style={[
-                      CommonStyles.fontMedium,
-                      CommonStyles.textColorWhite,
-                      CommonStyles.textSizeNormal,
-                    ]}
-                  />
-                  <Icon
-                    onPress={() => this.setPasswordVisibility()}
-                    name="eye"
-                    style={{ color: '#fff', position: 'absolute', right: 5 }}
-                  />
-                </Item>
-              </View>
+                  <Item regular style={CommonStyles.loginItemStyle}>
+                    <Input
+                      value={this.state.email}
+                      onChangeText={username => this.setState({ email: username })}
+                      name="username"
+                      placeholder={'Email Address Or Phone number'}
+                      placeholderTextColor="#FFF"
+                      returnKeyType="next"
+                      autoCapitalize="none"
+                      selectionColor="#fff"
+                      autoCompleteType="email"
+                      keyboardType="email-address"
+                      style={[
+                        CommonStyles.fontMedium,
+                        CommonStyles.textColorWhite,
+                        CommonStyles.textSizeNormal,
+                      ]}
+                    />
+                  </Item>
+                  <Item
+                    regular
+                    style={[CommonStyles.loginItemStyle, CommonStyles.mt10]}>
+                    <Input
+                      secureTextEntry={this.state.hidePassword}
+                      value={this.state.password}
+                      onChangeText={password => this.setState({ password })}
+                      autoCapitalize="none"
+                      returnKeyType="done"
+                      selectionColor="#fff"
+                      autoCompleteType="password"
+                      textContentType="password"
+                      name="password"
+                      placeholder={'Password'}
+                      placeholderTextColor="#FFF"
+                      style={[
+                        CommonStyles.fontMedium,
+                        CommonStyles.textColorWhite,
+                        CommonStyles.textSizeNormal,
+                      ]}
+                    />
+                    <Icon
+                      onPress={() => this.setPasswordVisibility()}
+                      name="eye"
+                      style={{ color: '#fff', position: 'absolute', right: 5 }}
+                    />
+                  </Item>
+                </View>
 
-              <View>
-                <View style={{width: 60, height: 20}}>
-                  <Image
+                <View>
+                  <View style={{ width: 60, height: 20 }}>
+                    <Image
+                      style={[
+                        CommonStyles.mt10,
+                        CommonStyles.container,
+                        CommonStyles.backgroundImage,
+                        { width: '100%', height: '100%' },
+                      ]}
+                      source={require('../../assets/img/etiblogo.png')}
+                    />
+                  </View>
+
+
+                  {/* <View
                     style={[
-                      CommonStyles.mt10,
                       CommonStyles.container,
                       CommonStyles.backgroundImage,
                       { width: '100%', height: '100%' },
                     ]}
                     source={require('../../assets/img/etiblogo.png')}
                   />
-                </View>             
+                </View>              */}
               </View>
             </View>
             </View>

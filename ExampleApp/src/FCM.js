@@ -6,7 +6,7 @@ export default class FCM {
   notifyUser: (title, message) => {};
 
   /**
-   * @returns {Api}
+   * @returns {FCM}
    */
   static instance() {
     if (FCM.myInstance == null) {
@@ -38,8 +38,11 @@ export default class FCM {
     let fcmToken = '';
     try {
       fcmToken = await messaging().getToken();
+      console.log("getTokennnnn =>" ,fcmToken)
     } catch (error) {
       console.error(error);
+      console.log("getTokennnnn error=>" ,error)
+    
     }
     if (fcmToken) {
       await Api.instance().updateFcmToken(fcmToken);

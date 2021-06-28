@@ -81,7 +81,10 @@ export default class CreateClinic extends Component {
       newDate = new Date();
     }
     this.setState({ chosenDate: newDate.toString().substr(4, 12), showDate: false });
-    console.warn("this.state.chosenDate", this.state.chosenDate)
+    console.log("chosen date", this.state.chosenDate)
+
+    console.log("this.state.chosenDate with utc", moment.utc(this.state.chosenDate))
+    console.log("this.state.chosenDate", moment(this.state.chosenDate))
   }
 
   SelectattendAt = event => {
@@ -149,6 +152,8 @@ export default class CreateClinic extends Component {
   };
 
   createClinic() {
+    let reg = /^\d+$/;
+
     let appSlot = parseInt(this.state.appointmentSlots);
     switch (appSlot) {
       case 300000:
@@ -214,6 +219,12 @@ export default class CreateClinic extends Component {
     this.state.clinicObj.frequencyText = this.state.clinicFrequencyText;
     this.state.clinicObj.appointmentSlotsText = this.state.appointmentSlotsText;
 
+
+    if (this.state.chosenDate == '') {
+      ViewUtils.showToast('Please select Date');
+      return;
+    }
+
     if (this.state.startTimeText == 'From') {
       ViewUtils.showToast('Please select Start Time');
       return;
@@ -224,15 +235,24 @@ export default class CreateClinic extends Component {
       return;
     }
 
-    if (this.state.leftAt < this.state.attendAt) {
+    if ((this.state.leftAt < this.state.attendAt) || (this.state.leftAt == this.state.attendAt)) {
       ViewUtils.showToast('End time must be greater than start time!');
       return;
     }
 
-    if (this.state.numberOfClinics == 0) {
+    if (this.state.numberOfClinics <= 0) {
       ViewUtils.showToast('Please Provide Number of Clinics');
       return;
     }
+    if (reg.test(this.state.numberOfClinics) == false) {
+      ViewUtils.showToast('Please Provide valid number');
+      return;
+    }
+    // if (this.state.numberOfClinics.isInteger()) {
+    //   ViewUtils.showToast('is not an integer');
+    //   return;
+    // }
+
 
     if (this.state.clinicTitle.trim() == '') {
       ViewUtils.showToast('Please Provide Title');
@@ -250,9 +270,11 @@ export default class CreateClinic extends Component {
     }
 
     this.setState({ isLoading: true });
+    console.log("this.state.clinicObj" ,this.state.clinicObj)
     Api.instance()
       .createClinic(this.state.clinicObj)
       .then(res => {
+        console.log("resres ===>" , JSON.stringify(res))
         ViewUtils.showToast('Clinic has been created successfully!');
         this.props.navigation.dispatch(
           CommonActions.reset({

@@ -115,7 +115,7 @@ export default class UploadIllustrations extends React.Component {
         .then(response => {
           this.props.route.params.onAddAnatomicalIllustration();
           this.props.navigation.goBack();
-          ViewUtils.showToast('Question has been saved successfully!');
+          ViewUtils.showToast('Anatomical Illustration created');
         })
         .catch(err => {
           //ViewUtils.showToast(err);

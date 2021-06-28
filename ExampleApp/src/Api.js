@@ -1,10 +1,11 @@
 import axios from 'axios';
 // import https from 'https';
 import AsyncStorage from '@react-native-community/async-storage';
-import {Configs, Roles, AppointmentStatus} from './Configs';
+import { Configs, Roles, AppointmentStatus } from './Configs';
 import * as AxiosLogger from 'axios-logger';
 import moment from 'moment';
-import {ViewUtils} from './Utils';
+import { ViewUtils } from './Utils';
+import FCM from './FCM';
 export default class Api {
   static myInstance = null;
   client;
@@ -16,10 +17,10 @@ export default class Api {
     this.client.interceptors.request.use(AxiosLogger.requestLogger);
     this.client.interceptors.response.use(AxiosLogger.responseLogger);
     this.client.interceptors.response.use(
-      function(response) {
+      function (response) {
         return response;
       },
-      function(error) {
+      function (error) {
         if (error.message == 'Network Error') {
           ViewUtils.showToast('Check your Internet Connectiviy.');
         } else {
@@ -41,8 +42,8 @@ export default class Api {
 
   async login(email: string, password: string) {
     let response = await this.client.post(
-      this.getUrl('Clients/login?include=user'),
-      {email, password},
+      this.getUrl('Clients/AuthLogin?include=user'),
+      { emailOrPhone: email, password },
       this.getHeaders(),
     );
     let authData = response.data;
@@ -61,7 +62,7 @@ export default class Api {
     try {
       let response = await this.client.post(
         this.getUrl('Clinics/CreateClinic'),
-        {data: data},
+        { data: data },
         this.getHeaders(),
       );
       return response.data;
@@ -107,11 +108,10 @@ export default class Api {
 
   async getClients() {
     let response = await this.client.get(this.getUrl(`Clients`));
-    let responseData = response.data
-    
-    return responseData
-  }
+    let responseData = response.data;
 
+    return responseData;
+  }
 
   async patientRegister(item, drCode) {
     let response = await this.client.get(
@@ -160,7 +160,7 @@ export default class Api {
       let _user = JSON.parse(JSON.stringify(user));
       let response = await this.client.post(
         this.getUrl('notifies/NotifyAppointment'),
-        {userId: _user.id, appointmentId},
+        { userId: _user.id, appointmentId },
         this.getHeaders(),
       );
       return response.data;
@@ -184,8 +184,7 @@ export default class Api {
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
       this.getUrl(
-        `Clinics?filter[where][doctorId]=${
-          _user.id
+        `Clinics?filter[where][doctorId]=${_user.id
         }&filter[order]=createdAt%20DESC`,
       ),
     );
@@ -216,8 +215,7 @@ export default class Api {
 
     let response = await this.client.get(
       this.getUrl(
-        `Clients/${
-          _user.id
+        `Clients/${_user.id
         }?filter[include]=Vitals&filter[order]=createdAt%20DESC`,
       ),
     );
@@ -246,8 +244,7 @@ export default class Api {
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
       this.getUrl(
-        `setups-patients?filter[where][and][0][doctorId]=${
-          _user.id
+        `setups-patients?filter[where][and][0][doctorId]=${_user.id
         }&filter[where][and][1][patientId]=${patientId}&filter[where][and][2][setup-type]=${setupType}&filter[order]=id%20DESC`,
       ),
     );
@@ -289,8 +286,7 @@ export default class Api {
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
       this.getUrl(
-        `Setups?filter[where][doctorId]=${
-          _user.id
+        `Setups?filter[where][doctorId]=${_user.id
         }&filter[where][setupType]=medication&filter[order]=createdAt%20DESC`,
       ),
     );
@@ -305,8 +301,7 @@ export default class Api {
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
       this.getUrl(
-        `Setups?filter[where][doctorId]=${
-          _user.id
+        `Setups?filter[where][doctorId]=${_user.id
         }&filter[where][setupType]=diagnosis&filter[order]=createdAt%20DESC`,
       ),
     );
@@ -320,8 +315,7 @@ export default class Api {
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
       this.getUrl(
-        `Setups?filter[where][doctorId]=${
-          _user.id
+        `Setups?filter[where][doctorId]=${_user.id
         }&filter[where][setupType]=observation&filter[order]=createdAt%20DESC`,
       ),
     );
@@ -335,8 +329,7 @@ export default class Api {
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
       this.getUrl(
-        `Setups?filter[where][doctorId]=${
-          _user.id
+        `Setups?filter[where][doctorId]=${_user.id
         }&filter[where][setupType]=referToSpecialist&filter[order]=createdAt%20DESC`,
       ),
     );
@@ -363,8 +356,7 @@ export default class Api {
 
     let response = await this.client.get(
       this.getUrl(
-        `Setups?filter[where][doctorId]=${
-          _user.id
+        `Setups?filter[where][doctorId]=${_user.id
         }&filter[where][setupType]=followUp&filter[order]=createdAt%20DESC`,
       ),
     );
@@ -380,8 +372,7 @@ export default class Api {
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
       this.getUrl(
-        `Setups?filter[where][doctorId]=${
-          _user.id
+        `Setups?filter[where][doctorId]=${_user.id
         }&filter[where][setupType]=investigation&filter[order]=createdAt%20DESC`,
       ),
     );
@@ -407,8 +398,7 @@ export default class Api {
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
       this.getUrl(
-        `Setups?filter[where][doctorId]=${
-          _user.id
+        `Setups?filter[where][doctorId]=${_user.id
         }&filter[where][setupType]=suggestedTherapy&filter[order]=createdAt%20DESC`,
       ),
     );
@@ -423,8 +413,7 @@ export default class Api {
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
       this.getUrl(
-        `Setups?filter[where][doctorId]=${
-          _user.id
+        `Setups?filter[where][doctorId]=${_user.id
         }&filter[where][setupType]=surgicalProcedure&filter[order]=createdAt%20DESC`,
       ),
     );
@@ -439,8 +428,7 @@ export default class Api {
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
       this.getUrl(
-        `Setups?filter[where][doctorId]=${
-          role == Roles.patient ? _user.doctorId : _user.id
+        `Setups?filter[where][doctorId]=${role == Roles.patient ? _user.doctorId : _user.id
         }&filter[where][setupType]=patientHistoryForm&filter[order]=createdAt%20DESC`,
       ),
     );
@@ -469,8 +457,7 @@ export default class Api {
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
       this.getUrl(
-        `Setups?filter[where][doctorId]=${
-          _user.id
+        `Setups?filter[where][doctorId]=${_user.id
         }&filter[where][setupType]=anatomicalIllustration&filter[order]=createdAt%20DESC`,
       ),
     );
@@ -485,8 +472,7 @@ export default class Api {
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
       this.getUrl(
-        `MedicalRecords?filter[where][patientId]=${
-          _user.id
+        `MedicalRecords?filter[where][patientId]=${_user.id
         }&filter[order]=createdAt%20DESC`,
       ),
     );
@@ -584,7 +570,7 @@ export default class Api {
     let response = await this.client
       .post(
         this.getUrl('TransactionLogs/RequestTransaction'),
-        {data},
+        { data },
         this.getHeaders(),
       )
       .catch(err => {
@@ -592,7 +578,7 @@ export default class Api {
       });
 
 
-      console.log("createPayments", response.data)
+    console.log("createPayments", response.data)
 
     return response.data;
   }
@@ -607,7 +593,7 @@ export default class Api {
     );
     let data = response.data;
     if (data.error) throw data.error.message;
-    
+
     console.log("getPatientUtilizedSlots", data)
 
     return data;
@@ -616,12 +602,12 @@ export default class Api {
   async updatePatientSlots(patientId) {
     let response = await this.client.post(
       this.getUrl(`PatientSlots/UpdatePatientSlot?`),
-      {patientId: patientId},
+      { patientId: patientId },
     );
     let data = response.data;
 
     if (data.error) throw data.error.message;
-    console.log("updatePatientSlots", data)
+    console.log('updatePatientSlots', data);
 
     return data;
   }
@@ -632,7 +618,7 @@ export default class Api {
       this.getUrl(
         `PatientSlots/update?[where][transactionId]=${transactionId}`,
       ),
-      {isUtilized: false},
+      { isUtilized: false },
       this.getHeaders(),
     );
     let data = response.data;
@@ -667,9 +653,11 @@ export default class Api {
   }
 
   async updateFcmToken(fcmToken: string) {
-    console.log('fcmToken fcm :: ', fcmToken);
+    console.log('fcmToken fcm Bisma ', fcmToken);
     if (!fcmToken) {
-      throw 'token not token';
+      console.log("NULLLL")
+      fcmToken = await FCM.instance().getToken()
+      console.log("!fcmToken not fcm token", fcmToken)
     }
     await AsyncStorage.setItem('fcmToken', fcmToken);
     let user = await this._user();
@@ -691,10 +679,8 @@ export default class Api {
     let _user = JSON.parse(JSON.stringify(user));
     let response = await this.client.get(
       this.getUrl(
-        `Appointments?filter[where][doctorId]=${
-          _user.doctorId
-        }&filter[where][patientId]=${
-          _user.id
+        `Appointments?filter[where][doctorId]=${_user.doctorId
+        }&filter[where][patientId]=${_user.id
         }&filter[where][status]=Scheduled&filter[include]=clinic`,
       ),
     );
@@ -722,6 +708,10 @@ export default class Api {
     let clinic = '';
     let includes = '';
     let wheres = '';
+    let timeNow = '';
+    let todaysTime = new Date();
+    let now = moment(todaysTime).format('YYYY-MM-DD h:mm a');
+    console.log("nownownownownow", now)
     if (requirePatient) {
       includes = `&filter[include]=patient`;
     }
@@ -733,9 +723,13 @@ export default class Api {
       wheres = `&filter[where][status]=${status}`;
     }
 
+    if (status == AppointmentStatus.available) {
+      timeNow = `&filter[where][date][gt]=${now}`;
+    }
+
     let response = await this.client.get(
       this.getUrl(
-        `Appointments?filter[where][${id_param}]=${userId}${includes}${clinic}${wheres}${doctorObj}&filter[order]=id%20DESC`,
+        `Appointments?filter[where][${id_param}]=${userId}${includes}${timeNow}${clinic}${wheres}${doctorObj}&filter[order]=id%20DESC`,
       ),
     );
     let data = response.data;
@@ -832,8 +826,7 @@ export default class Api {
     let id_param = this._relationalParamByRole(_user.role);
     let response = await this.client.get(
       this.getUrl(
-        `Clients?filter[where][${id_param}]=${_user.id}&[where]][role]${
-          Roles.patient
+        `Clients?filter[where][${id_param}]=${_user.id}&[where]][role]${Roles.patient
         }&filter[order]=id%20DESC`,
       ),
     );
