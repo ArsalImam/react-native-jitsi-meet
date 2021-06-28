@@ -16,7 +16,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { Roles } from '../../Configs';
 const windowHeight = Dimensions.get('window').height;
 // let averageHeight = windowHeight/2 + 30
-let averageHeight = windowHeight / 2
+let averageHeight = windowHeight / 2 
 
 class Login extends Component {
   state = { email: '', password: '', showLoader: false, hidePassword: true };
@@ -130,7 +130,7 @@ class Login extends Component {
             }]}>
               <View style={{height:averageHeight ,width:'100%'}} >
                 <Image
-                  style={[CommonStyles.container, { resizeMode: 'cover', height: '100%', width: '100%' }]}
+                  style={[CommonStyles.container, { resizeMode: 'stretch', height: '100%', width: '100%' }]}
                   source={require('../../assets/img/loginbg.png')} />
               </View>
               <View style={{ flex: 1, flexDirection: 'column' ,marginTop:10 }} >
