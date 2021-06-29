@@ -19,14 +19,18 @@
                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eQf-UL-HQh">
+                    <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="eQf-UL-HQh">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="7ZZ-Ug-wT6">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="7ZZ-Ug-wT6">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" red="0.51239252089999998" green="0.81693416829999999" blue="0.92773634199999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.51239252089999998" green="0.81693416829999999" blue="0.92773634199999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="414" id="2yM-od-0DU"/>
                                     <constraint firstAttribute="height" constant="896" id="elH-PI-RRf"/>
                                     <constraint firstAttribute="width" constant="414" id="tfA-HG-v4b"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="896" id="v3f-o1-gve"/>
                                 </constraints>
                             </imageView>
                         </subviews>
@@ -34,6 +38,10 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="896" id="Iq6-Iz-jY8"/>
                             <constraint firstAttribute="bottom" secondItem="7ZZ-Ug-wT6" secondAttribute="bottom" id="Ngh-kO-xDd"/>
+                            <constraint firstAttribute="trailing" secondItem="7ZZ-Ug-wT6" secondAttribute="trailing" id="QCt-pd-ssx"/>
+                            <constraint firstAttribute="bottom" secondItem="7ZZ-Ug-wT6" secondAttribute="bottom" id="URj-No-WvU"/>
+                            <constraint firstItem="7ZZ-Ug-wT6" firstAttribute="leading" secondItem="eQf-UL-HQh" secondAttribute="leading" id="W12-n3-8qu"/>
+                            <constraint firstItem="7ZZ-Ug-wT6" firstAttribute="top" secondItem="eQf-UL-HQh" secondAttribute="top" id="ZJu-tv-ycJ"/>
                             <constraint firstItem="7ZZ-Ug-wT6" firstAttribute="leading" secondItem="eQf-UL-HQh" secondAttribute="leading" id="ffp-8d-JmD"/>
                             <constraint firstAttribute="trailing" secondItem="7ZZ-Ug-wT6" secondAttribute="trailing" id="pV0-Rw-iTL"/>
                             <constraint firstAttribute="width" constant="414" id="w5u-JS-WrG"/>
