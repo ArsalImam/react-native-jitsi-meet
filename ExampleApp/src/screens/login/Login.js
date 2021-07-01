@@ -113,7 +113,7 @@ class Login extends Component {
   render() {
     return (
       <View style={[CommonStyles.container]}>
-        <View
+        {/* <View
           style={[
             CommonStyles.horizontalContainer,
             {
@@ -138,13 +138,85 @@ class Login extends Component {
               source={require('../../assets/img/etibb_logo_final_01.png')}
             />
           </View>
-        </View>
+        </View> */}
         <ImageBackground
           style={[CommonStyles.container, CommonStyles.backgroundImage]}
-          source={require('../../assets/img/loginbg.png')}>
-          <KeyboardAwareScrollView style={CommonStyles.container}>
-            <View style={[CommonStyles.margin, { margin: 30 }]}>
-              <View
+          source={require('../../assets/img/splash.png')}>
+          <KeyboardAwareScrollView
+            contentContainerStyle={{ flexGrow: 1 }}
+            style={CommonStyles.container}>
+            <View style={[CommonStyles.margin, CommonStyles.container, { margin: 30, justifyContent: 'space-between' }]}>
+              <View style={{ flex: 2, justifyContent: 'flex-end' }}>
+
+                <View>
+                  <Item regular style={CommonStyles.loginItemStyle}>
+                    <Input
+                      value={this.state.email}
+                      onChangeText={username => this.setState({ email: username })}
+                      name="username"
+                      placeholder={'Email Address Or Phone number'}
+                      placeholderTextColor="#FFF"
+                      returnKeyType="next"
+                      autoCapitalize="none"
+                      selectionColor="#fff"
+                      autoCompleteType="email"
+                      keyboardType="email-address"
+                      style={[
+                        CommonStyles.fontMedium,
+                        CommonStyles.textColorWhite,
+                        CommonStyles.textSizeNormal,
+                      ]}
+                    />
+                  </Item>
+                  <Item
+                    regular
+                    style={[CommonStyles.loginItemStyle, CommonStyles.mt10]}>
+                    <Input
+                      secureTextEntry={this.state.hidePassword}
+                      value={this.state.password}
+                      onChangeText={password => this.setState({ password })}
+                      autoCapitalize="none"
+                      returnKeyType="done"
+                      selectionColor="#fff"
+                      autoCompleteType="password"
+                      textContentType="password"
+                      name="password"
+                      placeholder={'Password'}
+                      placeholderTextColor="#FFF"
+                      style={[
+                        CommonStyles.fontMedium,
+                        CommonStyles.textColorWhite,
+                        CommonStyles.textSizeNormal,
+                      ]}
+                    />
+                    <Icon
+                      onPress={() => this.setPasswordVisibility()}
+                      name="eye"
+                      style={{ color: '#fff', position: 'absolute', right: 5 }}
+                    />
+                  </Item>
+                </View>
+              </View>
+              {/* <View style={{ flex: 1 }}> */}
+              {/* <View style={{ flex: 1, marginBottom: 10 }}> */}
+                <View
+                  style={[
+                    CommonStyles.container,
+                    { alignItems: 'center', justifyContent: 'flex-end' ,marginTop:10},
+                  ]}>
+
+                  <View style={{ width: 100, height: 50 }}>
+                    <Image
+                      style={[
+                        { width: '100%', height: '100%', resizeMode: 'contain' },
+                      ]}
+                      source={require('../../assets/img/pharmevo_logo_it_new.png')}
+                    />
+                  {/* </View> */}
+                </View>
+                {/* </View> */}
+              </View>
+              {/* <View
                 style={[
                   CommonStyles.container,
                   { marginTop: 50, marginBottom: 40, justifyContent: 'center' },
@@ -238,7 +310,7 @@ class Login extends Component {
                     </View>
                   </View>
                 </View>
-              </View>
+              </View> */}
             </View>
           </KeyboardAwareScrollView>
         </ImageBackground>
