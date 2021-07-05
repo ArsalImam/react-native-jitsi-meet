@@ -388,7 +388,7 @@ PODS:
     - React
   - RNCPicker (1.8.1):
     - React-Core
-  - RNDateTimePicker (3.4.3):
+  - RNDateTimePicker (3.2.0):
     - React-Core
   - RNFastImage (8.3.4):
     - React-Core
@@ -407,7 +407,7 @@ PODS:
     - RNFBApp
   - RNGestureHandler (1.10.3):
     - React-Core
-  - RNReanimated (1.13.3):
+  - RNReanimated (1.13.2):
     - React-Core
   - RNScreens (2.18.1):
     - React-Core
@@ -418,7 +418,7 @@ PODS:
     - RNSound/Core (= 0.11.0)
   - RNSound/Core (0.11.0):
     - React
-  - RNSoundPlayer (0.10.7):
+  - RNSoundPlayer (0.10.6):
     - React
   - SDWebImage (5.10.4):
     - SDWebImage/Core (= 5.10.4)
@@ -680,17 +680,17 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: cb9a623793918c6699586281f0b51cbc38f046f9
   RNCMaskedView: f5c7d14d6847b7b44853f7acb6284c1da30a3459
   RNCPicker: 914b557e20b3b8317b084aca9ff4b4edb95f61e4
-  RNDateTimePicker: e1c24487ab8aa0850403bd90dba75eff8a4e9b84
+  RNDateTimePicker: da3ca5b9a16d6d1b287e42c61cef7b7dd7c23a64
   RNFastImage: d4870d58f5936111c56218dbd7fcfc18e65b58ff
   RNFBApp: e979a237a43b86e3d9b7ecab156ad2c4ff54db73
   RNFBDatabase: d5bdbced96d1e01d4af227486318f938222d9e89
   RNFBMessaging: d2d1bd60be7245cf2d639e7f3ac1ba08400eb3a9
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
-  RNReanimated: 514a11da3a2bcc6c3dfd9de32b38e2b9bf101926
+  RNReanimated: e03f7425cb7a38dcf1b644d680d1bfc91c3337ad
   RNScreens: f7ad633b2e0190b77b6a7aab7f914fad6f198d8d
   RNSketchCanvas: 6939b18677cd1794151cc3d8eb5a0a2158a4a05b
   RNSound: c980916b596cc15c8dcd2f6ecd3b13c4881dbe20
-  RNSoundPlayer: a567e8049e0952f55c6b7b059628cf3d1a60c488
+  RNSoundPlayer: f8fac77be9918b41db7d0a1c3bbfd89a2353abb5
   SDWebImage: c666b97e1fa9c64b4909816a903322018f0a9c84
   SDWebImageWebPCoder: d0dac55073088d24b2ac1b191a71a8f8d0adac21
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
