@@ -87,7 +87,7 @@ class Login extends Component {
             <View
               style={[
                 CommonStyles.container,
-                {margin: 30, justifyContent: 'center', paddingTop: '40%'},
+                {margin: 30, justifyContent: 'center', paddingTop: '30%'},
               ]}>
               <View>
                 <Item regular style={CommonStyles.loginItemStyle}>
