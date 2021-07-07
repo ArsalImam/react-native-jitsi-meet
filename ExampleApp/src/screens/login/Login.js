@@ -82,7 +82,7 @@ class Login extends Component {
           contentContainerStyle={{flexGrow: 1}}
           style={[CommonStyles.container]}>
           <ImageBackground
-            style={[CommonStyles.container, CommonStyles.backgroundImage, {marginBottom: -45,}]}
+            style={[CommonStyles.container, CommonStyles.backgroundImage, {marginBottom: -30,}]}
             source={require('../../assets/img/splash.png')}>
             <View
               style={[

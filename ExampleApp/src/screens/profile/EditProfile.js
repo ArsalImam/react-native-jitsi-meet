@@ -394,7 +394,7 @@ export default class UploadIllustrations extends React.Component {
                       CommonStyles.fontRegular,
                       CommonStyles.textSizeSmall,
                     ]}>
-                    Speciality{this.state.speciality}
+                    Speciality
 
                   </Label>
                   <Item
